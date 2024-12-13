@@ -29,6 +29,6 @@ export const plugins: LimePlugin[] = [
     ChangeNode,
     RemoteSupport,
     Pirania,
+    MeshConfigPage,
     Fbw, // does not have menu item
-    MeshConfigPage, // does not have menu item
 ];

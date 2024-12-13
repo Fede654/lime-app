@@ -5,4 +5,5 @@ export default {
     name: "MeshWide",
     page: MeshWidePage,
     menu: MeshWideMenu,
+    menuGroup: "meshwide",
 } as LimePlugin;

@@ -2,8 +2,9 @@ import { MeshUpgradeMenu } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshU
 import MeshUpgradePage from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage";
 
 export default {
-    name: "MeshWideUpgrade",
+    name: "meshwide/upgrade",
     page: MeshUpgradePage,
     menu: MeshUpgradeMenu,
     isCommunityProtected: true,
+    menuGroup: "meshwide",
 } as LimePlugin;
