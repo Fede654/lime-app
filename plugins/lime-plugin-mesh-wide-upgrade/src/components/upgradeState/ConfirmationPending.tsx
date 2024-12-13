@@ -2,8 +2,9 @@ import { Trans } from "@lingui/macro";
 
 import {
     ParallelErrors,
-    UpgradeState,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+    StepState,
+} from "components/mesh-wide-wizard/StepState";
+
 import { useParallelConfirmUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
 export const ConfirmationPending = () => {
@@ -17,7 +18,7 @@ export const ConfirmationPending = () => {
     );
 
     return (
-        <UpgradeState title={title}>
+        <StepState title={title}>
             <>
                 <Trans>
                     Check if network is working properly and confirm the upgrade
@@ -27,6 +28,6 @@ export const ConfirmationPending = () => {
                 </Trans>
                 {errors?.length > 0 && <ParallelErrors errors={errors} />}
             </>
-        </UpgradeState>
+        </StepState>
     );
 };

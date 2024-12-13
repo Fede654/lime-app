@@ -3,10 +3,24 @@ import {
     SharedStateDataTypeKeys,
 } from "components/shared-state/SharedStateTypes";
 
-const getFromSharedStateKey = ["shared-state-async", "get"];
-const insertIntoSharedStateKey = ["shared-state-async", "insert"];
-export const syncFromSharedStateKey = ["shared-state-async", "sync"];
-const publishAllFromSharedStateKey = ["shared-state-async", "publish_all"];
+import { ApiServiceParamsType } from "utils/standarizedApi";
+
+const getFromSharedStateKey: ApiServiceParamsType = [
+    "shared-state-async",
+    "get",
+];
+const insertIntoSharedStateKey: ApiServiceParamsType = [
+    "shared-state-async",
+    "insert",
+];
+export const syncFromSharedStateKey: ApiServiceParamsType = [
+    "shared-state-async",
+    "sync",
+];
+const publishAllFromSharedStateKey: ApiServiceParamsType = [
+    "shared-state-async",
+    "publish_all",
+];
 
 /**
  * Use this constant to get the query keys to be used as api call parameters.

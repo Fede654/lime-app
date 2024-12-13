@@ -1,7 +1,7 @@
 import { useState } from "preact/hooks";
 import React, { useCallback } from "react";
 
-export interface ButtonProps {
+export type ButtonProps = {
     onClick?: ((e) => void) | ((e) => Promise<void>);
     children?: any; // type error with Trans component
     size?: "sm" | "md" | "lg";
@@ -9,7 +9,7 @@ export interface ButtonProps {
     href?: string;
     outline?: boolean;
     disabled?: boolean;
-}
+} & Omit<React.JSX.HTMLAttributes<HTMLDivElement>, "size">;
 
 export const Button = ({
     size = "md",
@@ -72,10 +72,9 @@ export const Button = ({
     const cls = `cursor-pointer font-semibold rounded-xl text-center place-content-center transition-all duration-300
     justify-center border-0 ${sizeClasses}  ${colorClasses}`;
 
-    // useCallback for button click
     const handleClick = useCallback(
         async (e) => {
-            if (innerIsLoading || disabled) return;
+            if (innerIsLoading || disabled || !onClick) return;
             setInnerIsLoading(true);
             try {
                 await onClick(e);
@@ -83,10 +82,10 @@ export const Button = ({
                 setInnerIsLoading(false);
             }
         },
-        [disabled, innerIsLoading, onClick]
+        [innerIsLoading, disabled, onClick]
     );
 
-    const Btn = () => (
+    const btn = (
         <div
             type="button"
             onClick={(e) => handleClick(e)}
@@ -96,11 +95,10 @@ export const Button = ({
             {children}
         </div>
     );
-    return href ? (
-        <a href={href}>
-            <Btn />
-        </a>
-    ) : (
-        <Btn />
-    );
+
+    if (href) {
+        return <a href={href}>{btn}</a>;
+    }
+
+    return <>{btn}</>;
 };

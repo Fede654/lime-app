@@ -7,7 +7,7 @@ import { RemoteNodeCallError } from "components/shared-state/SharedStateApi";
 import queryCache from "utils/queryCache";
 import { useSharedData } from "utils/useSharedData";
 
-interface IMutationFnVariables<TVariables> {
+export interface IMutationFnVariables<TVariables> {
     ip: string;
     variables?: TVariables;
 }

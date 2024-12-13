@@ -1,19 +1,46 @@
-import { useState } from "preact/hooks";
 import React from "react";
 
-import { Button } from "components/elements/button";
+import { AbortedNotification } from "components/mesh-wide-wizard/StepState";
+import WizardWrapper from "components/mesh-wide-wizard/WizardWrapper";
 
-import EditConfiguration from "plugins/lime-plugin-mesh-wide-config/src/containers/EditConfiguration";
+import NextStepFooter from "plugins/lime-plugin-mesh-wide-config/src/containers/NextStepFooter";
+import NodesListPage from "plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage";
+import StatusPage from "plugins/lime-plugin-mesh-wide-config/src/containers/StatusPage";
+import {
+    ConfigProvider,
+    useMeshConfig,
+} from "plugins/lime-plugin-mesh-wide-config/src/providers/useMeshConfigProvider";
 
-const MeshConfigPage = () => {
-    // State to show modal
-    const [showEditConfig, setShowEditConfig] = useState(false);
+const MeshConfig = () => {
+    const {
+        isLoading: meshConfigLoading,
+        meshInfo,
+        nodeInfo,
+        wizardState,
+        isError,
+        error,
+    } = useMeshConfig();
 
-    if (showEditConfig) {
-        return <EditConfiguration onClose={() => setShowEditConfig(false)} />;
-    }
+    const isLoading =
+        meshConfigLoading || nodeInfo === undefined || meshInfo === undefined;
 
-    return <Button onClick={() => setShowEditConfig(true)}>Show modal</Button>;
+    return (
+        <WizardWrapper
+            error={error}
+            isError={isError}
+            isLoading={isLoading}
+            banner={wizardState === "ABORTED" ? AbortedNotification : null}
+            statusPage={StatusPage}
+            nodesList={NodesListPage}
+            footer={NextStepFooter}
+        />
+    );
 };
+
+const MeshConfigPage = () => (
+    <ConfigProvider>
+        <MeshConfig />
+    </ConfigProvider>
+);
 
 export default MeshConfigPage;

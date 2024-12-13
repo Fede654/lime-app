@@ -1,8 +1,7 @@
 import { VNode } from "preact";
 
 import Loading from "components/loading";
-
-import { UpgradeState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+import { StepState } from "components/mesh-wide-wizard/StepState";
 
 export const LoadingPage = ({
     title,
@@ -12,8 +11,8 @@ export const LoadingPage = ({
     description?: VNode;
 }) => {
     return (
-        <UpgradeState title={title} icon={<Loading />}>
+        <StepState title={title} icon={<Loading />}>
             {description}
-        </UpgradeState>
+        </StepState>
     );
 };

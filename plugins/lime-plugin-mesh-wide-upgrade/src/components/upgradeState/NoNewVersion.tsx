@@ -2,12 +2,12 @@ import { Trans } from "@lingui/macro";
 
 import {
     MeshUpgradeSuccessIcon,
-    UpgradeState,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+    StepState,
+} from "components/mesh-wide-wizard/StepState";
 
 export const NoNewVersionAvailable = () => {
     return (
-        <UpgradeState
+        <StepState
             title={<Trans>No new version available!</Trans>}
             icon={<MeshUpgradeSuccessIcon />}
         />

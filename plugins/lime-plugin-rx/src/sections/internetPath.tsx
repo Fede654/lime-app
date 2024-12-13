@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { useCallback } from "react";
 
-import { Button } from "components/elements/button";
+import { Button } from "components/buttons/button";
 import { GlobeIcon } from "components/icons/globeIcon";
 import Loading from "components/loading";
 

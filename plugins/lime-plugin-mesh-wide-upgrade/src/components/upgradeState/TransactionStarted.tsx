@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 
-import { UpgradeState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+import { StepState } from "components/mesh-wide-wizard/StepState";
+
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 
 export const TransactionStarted = () => {
@@ -12,7 +13,7 @@ export const TransactionStarted = () => {
     );
 
     return (
-        <UpgradeState title={title}>
+        <StepState title={title}>
             {someNodeDownloading && (
                 <div>
                     <Trans>
@@ -22,6 +23,6 @@ export const TransactionStarted = () => {
                     </Trans>
                 </div>
             )}
-        </UpgradeState>
+        </StepState>
     );
 };

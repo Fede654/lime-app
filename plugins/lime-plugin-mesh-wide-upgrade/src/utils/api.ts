@@ -1,4 +1,8 @@
 import {
+    MeshWideConfigState,
+    NodeMeshConfigInfo,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import {
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
@@ -12,6 +16,25 @@ export const getNodeIpsByCondition = (
     nodes: MeshWideUpgradeInfo,
     // status: UpgradeStatusType
     condition: (node: NodeMeshUpgradeInfo) => boolean
+) => {
+    if (!nodes) return [];
+    return Object.values(nodes)
+        .filter(
+            (node) =>
+                node.node_ip !== null &&
+                node.node_ip !== undefined &&
+                node.node_ip.trim() !== "" &&
+                condition(node)
+        )
+        .map((node) => node.node_ip as string); // 'as string' is safe here due to the filter condition
+};
+
+// todo: merge with the upper and move it to util library
+// Use TS to know the type you are going to return on the condition callback using only the nodes type
+export const getNodeIpsByConfigCondition = (
+    nodes: MeshWideConfigState,
+    // status: UpgradeStatusType
+    condition: (node: NodeMeshConfigInfo) => boolean
 ) => {
     if (!nodes) return [];
     return Object.values(nodes)

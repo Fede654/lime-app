@@ -1,5 +1,4 @@
 import { ComponentChildren } from "preact";
-import { route } from "preact-router";
 
 import Loading from "components/loading";
 
@@ -20,8 +19,8 @@ export const FullScreenModal = ({
     onClose,
 }: IFullScreenModalProps) => {
     return (
-        <div className="flex flex-col min-h-screen w-full">
-            <div className="fixed top-0 left-0 right-0 bg-white z-50 py-7 px-4 flex items-center font-medium">
+        <div className="fixed top-0 left-0 right-0 flex flex-col min-h-screen max-h-full w-full overflow-auto">
+            <div className="bg-white z-50 py-7 px-4 flex items-center font-medium">
                 <div
                     className={`flex items-center justify-items-start cursor-pointer w-10 h-10 text-black text-3xl`}
                     onClick={onClose}
@@ -30,15 +29,13 @@ export const FullScreenModal = ({
                 </div>
                 <div className={"text-4xl text-black"}>{title}</div>
             </div>
-            {isLoading ? (
-                <div class="flex items-center h-full items-center justify-center">
-                    <Loading />
-                </div>
-            ) : (
-                <div className={"pt-2 bg-white w-full h-full px-4"}>
-                    {children}
-                </div>
-            )}
+            <div
+                className={
+                    "flex flex-col pt-2 bg-white w-full min-h-full h-screen px-4"
+                }
+            >
+                {isLoading ? <Loading /> : children}
+            </div>
         </div>
     );
 };

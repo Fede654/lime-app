@@ -51,8 +51,8 @@ export const EditOrDelete = ({
     onEdit,
     onDelete,
 }: {
-    onEdit: (e) => void;
-    onDelete: (e) => void;
+    onEdit?: (e) => void;
+    onDelete?: (e) => void;
 }) => {
     const runCb = (e, cb) => {
         e.stopPropagation();
@@ -60,14 +60,18 @@ export const EditOrDelete = ({
     };
     return (
         <div className={"flex flex-row gap-3"}>
-            <EditIcon
-                className={"cursor-pointer"}
-                onClick={(e) => runCb(e, onEdit)}
-            />
-            <BinIcon
-                className={"cursor-pointer"}
-                onClick={(e) => runCb(e, onDelete)}
-            />
+            {!!onEdit && (
+                <EditIcon
+                    className={"cursor-pointer"}
+                    onClick={(e) => runCb(e, onEdit)}
+                />
+            )}
+            {!!onDelete && (
+                <BinIcon
+                    className={"cursor-pointer"}
+                    onClick={(e) => runCb(e, onDelete)}
+                />
+            )}
         </div>
     );
 };

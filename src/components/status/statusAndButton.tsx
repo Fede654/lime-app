@@ -1,6 +1,6 @@
 import { VNode } from "preact";
 
-import { Button } from "components/buttons/button";
+import { Button, ButtonProps } from "components/buttons/button";
 import { IStatusMessage, StatusMessage } from "components/status/statusMessage";
 
 export type IStatusAndButton = {
@@ -8,6 +8,7 @@ export type IStatusAndButton = {
     btnCancel?: VNode | string;
     onClick?: () => void;
     onClickCancel?: () => void;
+    btnProps?: ButtonProps;
 } & IStatusMessage;
 
 export const StatusAndButton = ({
@@ -17,6 +18,7 @@ export const StatusAndButton = ({
     btnCancel,
     onClick,
     onClickCancel,
+    btnProps,
 }: IStatusAndButton) => {
     const containerClasses =
         "flex flex-col items-center justify-center text-center bg-white py-5 gap-3";
@@ -26,11 +28,19 @@ export const StatusAndButton = ({
             <StatusMessage status={status}>{children}</StatusMessage>
             <div className={"flex flex-row items-center justify-center gap-3"}>
                 {btnCancel && (
-                    <Button color={"danger"} onClick={onClickCancel}>
+                    <Button
+                        color={"danger"}
+                        onClick={onClickCancel}
+                        {...btnProps}
+                    >
                         {btnCancel}
                     </Button>
                 )}
-                {btn && <Button onClick={onClick}>{btn}</Button>}
+                {btn && (
+                    <Button onClick={onClick} {...btnProps}>
+                        {btn}
+                    </Button>
+                )}
             </div>
         </div>
     );

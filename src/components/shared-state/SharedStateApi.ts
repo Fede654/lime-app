@@ -7,9 +7,8 @@ import {
     SharedStateReturnType,
 } from "components/shared-state/SharedStateTypes";
 
-import { MeshUpgradeApiErrorTypes } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
-
 import { login } from "utils/queries";
+import { StandarizedApiError } from "utils/standarizedApi";
 import { UhttpdService, default as defaultApi } from "utils/uhttpd.service";
 
 async function syncDataType({
@@ -92,7 +91,7 @@ export async function callToRemoteNode<T>({
         return await apiCall(customApi);
     } catch (error) {
         let additionalInfo = "";
-        if (error instanceof MeshUpgradeApiError) {
+        if (error instanceof StandarizedApiError) {
             additionalInfo = `: ${error.message}`;
         }
         throw new RemoteNodeCallError(
@@ -114,17 +113,5 @@ export class RemoteNodeCallError extends Error {
 
         // Set the prototype explicitly.
         Object.setPrototypeOf(this, RemoteNodeCallError.prototype);
-    }
-}
-
-export class MeshUpgradeApiError extends Error {
-    message: string;
-    code: MeshUpgradeApiErrorTypes;
-    constructor(message: string, code: MeshUpgradeApiErrorTypes) {
-        super(message); // Pass the message to the Error constructor
-        this.name = "MeshUpgradeApiError"; // Set the name of the error
-        this.message = message;
-        this.code = code;
-        Object.setPrototypeOf(this, MeshUpgradeApiError.prototype);
     }
 }

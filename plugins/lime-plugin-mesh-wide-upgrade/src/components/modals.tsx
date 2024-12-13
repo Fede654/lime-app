@@ -1,13 +1,7 @@
 import { Trans } from "@lingui/macro";
-import { ComponentChildren, VNode } from "preact";
-import { useCallback } from "react";
+import { ComponentChildren } from "preact";
 
-import {
-    CallbackFn,
-    Modal,
-    ModalProps,
-    useModal,
-} from "components/Modal/Modal";
+import { CallbackFn, Modal, ModalProps } from "components/Modal/Modal";
 
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 import {
@@ -15,7 +9,7 @@ import {
     useParallelScheduleUpgrade,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
-type IUseParallelQueriesModalProps = {
+export type IUseParallelQueriesModalProps = {
     isSuccess: boolean;
 } & Pick<ModalProps, "isOpen" | "onClose">;
 

@@ -3,16 +3,16 @@ import { VNode } from "preact";
 
 import {
     MeshUpgradeErrorIcon,
-    UpgradeState,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+    StepState,
+} from "components/mesh-wide-wizard/StepState";
 
 export const ErrorState = ({ msg }: { msg: string | VNode }) => {
     return (
-        <UpgradeState
+        <StepState
             title={<Trans>Error!</Trans>}
             icon={<MeshUpgradeErrorIcon />}
         >
             {msg}
-        </UpgradeState>
+        </StepState>
     );
 };

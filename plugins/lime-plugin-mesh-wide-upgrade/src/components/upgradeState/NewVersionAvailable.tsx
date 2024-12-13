@@ -1,9 +1,9 @@
 import { Trans } from "@lingui/macro";
 
 import LineChart, { LineChartStep } from "components/PathChart";
+import { StepState } from "components/mesh-wide-wizard/StepState";
 
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
-import { UpgradeState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
 
 import { useBoardData } from "utils/queries";
 
@@ -73,10 +73,10 @@ export const NewVersionAvailable = ({
     }
 
     return (
-        <UpgradeState title={title} icon={false}>
+        <StepState title={title} icon={false}>
             <div className="flex flex-col items-center ">
                 <LineChart steps={steps} />
             </div>
-        </UpgradeState>
+        </StepState>
     );
 };

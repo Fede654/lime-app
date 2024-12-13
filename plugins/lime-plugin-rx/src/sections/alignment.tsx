@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 
-import { Button } from "components/elements/button";
+import { Button } from "components/buttons/button";
 
 import {
     IconsClassName,

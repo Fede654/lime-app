@@ -2,7 +2,7 @@ import { Trans } from "@lingui/macro";
 import { ComponentChildren } from "preact";
 
 import { GlobeIcon } from "components/icons/globeIcon";
-import { Tick, Warning } from "components/icons/status";
+import { StatusIcon, Tick, Warning } from "components/icons/status";
 import { RemoteNodeCallError } from "components/shared-state/SharedStateApi";
 import { StatusMessage } from "components/status/statusMessage";
 
@@ -14,7 +14,7 @@ interface UpgradeStateProps {
     children?: ComponentChildren;
 }
 
-export const UpgradeState = ({
+export const StepState = ({
     icon = <GlobeIcon size={80} className={`fill-internet`} />,
     title,
     children,
@@ -58,3 +58,14 @@ export const MeshUpgradeSuccessIcon = () => {
 export const MeshUpgradeErrorIcon = () => {
     return <Warning className={"w-32 h-32 text-9xl border-4 mx-auto"} />;
 };
+
+export const AbortedNotification = () => (
+    <div
+        className={
+            "flex flex-row gap-3 justify-start content-center px-4 py-4 w-full bg-primary-card "
+        }
+    >
+        <StatusIcon status={"success"} />
+        <Trans>This node aborted successfully</Trans>
+    </div>
+);

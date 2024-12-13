@@ -4,8 +4,9 @@ import {
     MeshUpgradeErrorIcon,
     MeshUpgradeSuccessIcon,
     ParallelErrors,
-    UpgradeState,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+    StepState,
+} from "components/mesh-wide-wizard/StepState";
+
 import { useParallelConfirmUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
 export const Confirmed = () => {
@@ -21,9 +22,9 @@ export const Confirmed = () => {
     }
 
     return (
-        <UpgradeState title={title} icon={icon}>
+        <StepState title={title} icon={icon}>
             {desc}
             {errors?.length > 0 && <ParallelErrors errors={errors} />}
-        </UpgradeState>
+        </StepState>
     );
 };
