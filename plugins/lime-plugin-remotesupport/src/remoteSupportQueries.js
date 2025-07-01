@@ -5,18 +5,24 @@ import queryCache from "utils/queryCache";
 import { closeSession, getSession, openSession } from "./remoteSupportApi";
 
 export function useSession(queryConfig) {
-    return useQuery(["tmate", "get_session"], getSession, queryConfig);
+    return useQuery({
+        queryKey: ["tmate", "get_session"],
+        queryFn: getSession,
+        ...queryConfig,
+    });
 }
 
 export function useOpenSession() {
-    return useMutation(openSession, {
+    return useMutation({
+        mutationFn: openSession,
         onSuccess: () => queryCache.invalidateQueries(["tmate", "get_session"]),
         onError: () => queryCache.setQueryData(["tmate", "get_session"], null),
     });
 }
 
 export function useCloseSession() {
-    return useMutation(closeSession, {
+    return useMutation({
+        mutationFn: closeSession,
         onSuccess: () => queryCache.invalidateQueries(["tmate", "get_session"]),
     });
 }

@@ -13,14 +13,18 @@ import {
 } from "./FbwApi";
 
 export function useDismissFbw() {
-    return useMutation(dismissFbw, {
+    return useMutation({
+        mutationFn: dismissFbw,
         onSuccess: () =>
             queryCache.setQueryData(["lime-fbw", "status"], { lock: false }),
     });
 }
 
 export function useCreateNetwork(params) {
-    return useMutation(createNetwork, params);
+    return useMutation({
+        mutationFn: createNetwork,
+        ...params,
+    });
 }
 
 const _getApName = ({ ap = "", file = "" }) => {
@@ -50,7 +54,11 @@ async function _scanStatus() {
 }
 
 export function useFbwStatus(params) {
-    return useQuery(["lime-fbw", "scan-status"], _scanStatus, params);
+    return useQuery({
+        queryKey: ["lime-fbw", "scan-status"],
+        queryFn: _scanStatus,
+        ...params,
+    });
 }
 
 // Backend can return status false i some error is found doing
@@ -63,23 +71,35 @@ function _checkBackendResponseStatus(res) {
 }
 
 export function useScanStart(params) {
-    return useMutation(async () => {
-        _checkBackendResponseStatus(await scanStart());
-    }, params);
+    return useMutation({
+        mutationFn: async () => {
+            _checkBackendResponseStatus(await scanStart());
+        },
+        ...params,
+    });
 }
 
 export function useScanRestart(params) {
-    return useMutation(async () => {
-        _checkBackendResponseStatus(await scanRestart());
-    }, params);
+    return useMutation({
+        mutationFn: async () => {
+            _checkBackendResponseStatus(await scanRestart());
+        },
+        ...params,
+    });
 }
 
 export function useScanStop(params) {
-    return useMutation(async () => {
-        _checkBackendResponseStatus(await scanStop());
-    }, params);
+    return useMutation({
+        mutationFn: async () => {
+            _checkBackendResponseStatus(await scanStop());
+        },
+        ...params,
+    });
 }
 
 export function useSetNetwork(params) {
-    return useMutation(setNetwork, params);
+    return useMutation({
+        mutationFn: setNetwork,
+        ...params,
+    });
 }

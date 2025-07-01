@@ -15,7 +15,11 @@ import queryCache from "./queryCache";
 import api from "./uhttpd.service";
 
 export function useSession() {
-    return useQuery(["session", "get"], getSession, { staleTime: Infinity });
+    return useQuery({
+        queryKey: ["session", "get"],
+        queryFn: getSession,
+        staleTime: Infinity,
+    });
 }
 
 function login({ username, password }) {
@@ -23,7 +27,8 @@ function login({ username, password }) {
 }
 
 export function useLogin() {
-    return useMutation(login, {
+    return useMutation({
+        mutationFn: login,
         onSuccess: (res) => {
             queryCache.setQueryData(["session", "get"], () => res.data);
         },
@@ -31,38 +36,42 @@ export function useLogin() {
 }
 
 export function useBoardData(config) {
-    return useQuery(["system", "board"], getBoardData, config);
+    return useQuery({
+        queryKey: ["system", "board"],
+        queryFn: getBoardData,
+        ...config,
+    });
 }
 
 export function useCommunitySettings() {
     // @ts-ignore
-    return useQuery(
-        ["lime-utils", "get_community_settings"],
-        getCommunitySettings,
-        {
-            initialData: DEFAULT_COMMUNITY_SETTINGS,
-            initialStale: true,
-        }
-    );
+    return useQuery({
+        queryKey: ["lime-utils", "get_community_settings"],
+        queryFn: getCommunitySettings,
+        initialData: DEFAULT_COMMUNITY_SETTINGS,
+        initialStale: true,
+    });
 }
 
 export function useBatHost(mac, outgoingIface, queryConfig) {
-    return useQuery(
-        ["bat-hosts", "get_bathost", mac, outgoingIface],
-        async () => getBatHost(mac, outgoingIface),
-        {
-            retry: 3,
-            ...queryConfig,
-        }
-    );
+    return useQuery({
+        queryKey: ["bat-hosts", "get_bathost", mac, outgoingIface],
+        queryFn: async () => getBatHost(mac, outgoingIface),
+        retry: 3,
+        ...queryConfig,
+    });
 }
 
 export function useNeedReboot() {
-    return useQuery(["changes-need-reboot"], getChangesNeedReboot);
+    return useQuery({
+        queryKey: ["changes-need-reboot"],
+        queryFn: getChangesNeedReboot,
+    });
 }
 
 export function useSetNeedReboot() {
-    return useMutation(setChangesNeedReboot, {
+    return useMutation({
+        mutationFn: setChangesNeedReboot,
         onSuccess: () => {
             queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
         },
@@ -70,7 +79,8 @@ export function useSetNeedReboot() {
 }
 
 export function useReboot() {
-    return useMutation(reboot, {
+    return useMutation({
+        mutationFn: reboot,
         onSuccess: () => {
             setChangesNeedReboot("no");
             queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
@@ -79,5 +89,8 @@ export function useReboot() {
 }
 
 export function useCheckInternet() {
-    return useQuery(["check-internet", "is_connected"], checkInternet);
+    return useQuery({
+        queryKey: ["check-internet", "is_connected"],
+        queryFn: checkInternet,
+    });
 }
