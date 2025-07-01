@@ -101,7 +101,7 @@ const AlignSingle = ({ iface, mac }) => {
 
     const station = assocList && getStation(assocList, mac);
     const fromRadio = ifaceToRadioNumber(iface);
-    const toRadio = bathost.iface && ifaceToRadioNumber(bathost.iface);
+    const toRadio = bathost?.iface ? ifaceToRadioNumber(bathost.iface) : null;
 
     return (
         <div className="d-flex flex-grow-1 flex-column container-padded">

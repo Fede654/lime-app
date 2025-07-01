@@ -15,6 +15,7 @@ import queryCache from "utils/queryCache";
 import SubHeader from "../containers/SubHeader";
 
 i18n.load({
+    // @ts-ignore - Lingui message format compatibility
     en: messages,
 });
 i18n.loadLocaleData({
