@@ -65,15 +65,16 @@ npm run create-plugin <pluginName>  # Bootstrap new plugin structure
 ### Plugin Structure
 ```
 plugins/lime-plugin-<name>/
-├── index.ts                    # Plugin entry point
+├── index.js                 # Plugin entry point
 ├── src/
-│   ├── <name>Page.js          # Main component
-│   ├── <name>Api.js           # API endpoints
-│   ├── <name>Queries.js       # React Query hooks
-│   └── style.less             # Component styles
-├── <name>.spec.js             # Component tests
-├── <name>.stories.js          # Storybook stories
-└── src/<name>Api.spec.js      # API tests
+│   ├── <name>Page.js       # Main page component
+│   ├── <name>Api.js        # API endpoints
+│   ├── <name>Api.spec.js   # API tests
+│   ├── <name>Queries.js    # TanStack Query hooks
+│   ├── <name>Menu.js       # Menu item definition
+│   └── <name>Style.less    # Component styles
+├── <name>.spec.js          # Component tests
+└── <name>.stories.js       # Storybook stories
 ```
 
 ## Path Aliases
@@ -132,9 +133,11 @@ plugins/ → plugins/
 
 ## State Management
 
-- **Primary**: React Query for data fetching and caching
+- **Primary**: TanStack Query for data fetching and caching
 - **Legacy**: Redux + RxJS (being phased out)
 - **Global cache**: Managed by `@tanstack/react-query`
+
+For comprehensive technical debt resolution strategy, see [LIBREMESH_INTERVENTION_PLAN.md](LIBREMESH_INTERVENTION_PLAN.md).
 
 ## Styling
 

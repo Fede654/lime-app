@@ -56,11 +56,11 @@ Risk Assessment:
 ```
 Package              Current    Latest    Behind    Risk Level
 ─────────────────────────────────────────────────────────────
-@lingui/*            3.x        5.x       2 major   HIGH
-@storybook/*         6.x        9.x       3 major   CRITICAL  
-Jest                 27.x       30.x      3 major   HIGH
-TypeScript           4.9        5.8       1 major   MEDIUM
-React Query          4.x        5.x       1 major   MEDIUM
+@lingui/*            3.17       5.3       2 major   HIGH
+@storybook/*         6.5        9.0       3 major   CRITICAL  
+Jest                 27.5       29.7      2 major   HIGH
+TypeScript           4.9        5.7       1 major   MEDIUM
+TanStack Query       4.6        5.8       1 major   MEDIUM
 Webpack              4.x        5.x       1 major   HIGH
 ```
 
@@ -71,7 +71,7 @@ Webpack              4.x        5.x       1 major   HIGH
 #### Dual State Management Debt
 ```javascript
 Current Architecture Complexity:
-├── React Query (Modern) - 70% of components ✅
+├── TanStack Query (Modern) - 70% of components ✅
 ├── Redux + RxJS (Legacy) - 30% of components ❌
 └── Mixed Testing Patterns - Dual strategies required ❌
 
@@ -164,7 +164,7 @@ Debt Accumulation Begins:
 ### Phase 3: Modernization Attempts (2022-2024) 🟡 **PARTIAL SUCCESS**
 ```
 Modernization Efforts:
-├── React Query adoption (70% complete) ✅
+├── TanStack Query adoption (70% complete) ✅
 ├── TypeScript integration ✅
 ├── Modern component patterns ✅
 └── Testing improvements ✅
@@ -247,12 +247,12 @@ Expected Outcome:
 ```javascript
 // Week 9: Redux Elimination Planning
 // Audit remaining Redux usage (notes, changeNode plugins)
-// Create React Query migration templates
+// Create TanStack Query migration templates
 // Update testing utilities for single pattern
 
 // Week 10-11: Component Migration
-// Convert lime-plugin-notes to React Query
-// Convert lime-plugin-changeNode to React Query  
+// Convert lime-plugin-notes to TanStack Query
+// Convert lime-plugin-changeNode to TanStack Query  
 // Remove Redux/RxJS from bundle entirely
 
 // Week 12: Pattern Consolidation
@@ -387,7 +387,7 @@ Mitigation:
 ### For New Contributors
 1. **Documentation First**: Current comprehensive guides are valuable foundation
 2. **Testing Focus**: Expand test coverage during modernization
-3. **Modern Patterns**: Contribute only to React Query-based components
+3. **Modern Patterns**: Contribute only to TanStack Query-based components
 4. **Security Awareness**: Prioritize security-related contributions
 
 ### For Community

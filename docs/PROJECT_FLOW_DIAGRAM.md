@@ -18,7 +18,7 @@ graph TB
     end
     
     subgraph "Data Layer"
-        ReactQuery[📊 React Query Cache]
+        ReactQuery[📊 TanStack Query Cache]
         Redux[🗄️ Redux Store<br/><i>Legacy</i>]
         LocalState[💾 Component State]
     end
@@ -44,7 +44,7 @@ graph TD
         PluginIndex --> PluginMenu[Menu Item]
         PluginIndex --> Routes[Additional Routes]
         
-        PluginPage --> Queries[React Query Hooks]
+        PluginPage --> Queries[TanStack Query Hooks]
         PluginPage --> Components[UI Components]
         
         Queries --> API[API Endpoints]

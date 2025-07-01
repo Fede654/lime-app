@@ -20,7 +20,7 @@ LimeApp is a Preact-based web application that provides a geek-free interface fo
 - **Preact**: React-like framework (3kB bundle size)
 - **JSX**: Component templates
 - **CSS Modules**: Scoped styling via `.less` imports
-- **React Query**: Modern data fetching and caching
+- **TanStack Query**: Modern data fetching and caching
 - **Redux + RxJS**: Legacy state management (being phased out)
 
 ### Component Hierarchy
@@ -43,13 +43,14 @@ LimeApp uses a plugin-based architecture where each feature is implemented as a 
 ### Plugin Structure
 ```
 plugins/lime-plugin-<name>/
-├── index.ts                 # Plugin definition and exports
+├── index.js                 # Plugin definition and exports
 ├── src/
 │   ├── <name>Page.js       # Main page component
 │   ├── <name>Api.js        # Backend API endpoints
-│   ├── <name>Queries.js    # React Query hooks
+│   ├── <name>Api.spec.js   # API tests
+│   ├── <name>Queries.js    # TanStack Query hooks
 │   ├── <name>Menu.js       # Menu item definition
-│   └── components/         # Plugin-specific components
+│   └── <name>Style.less    # Component styles
 ├── <name>.spec.js          # Component tests
 └── <name>.stories.js       # Storybook stories
 ```
@@ -79,7 +80,7 @@ export default {
 
 ## Data Flow Architecture
 
-### Modern Approach (React Query)
+### Modern Approach (TanStack Query)
 ```
 Component ◄─── useQuery/useMutation ◄─── API Endpoint ◄─── uHTTPd Client ◄─── Router
     │                   │                     │
@@ -107,6 +108,8 @@ Component ◄─── Redux Store ◄─── Reducers ◄─── Actions �
 
 ## Backend Communication
 
+For detailed LibreMesh backend integration, see [LIBREMESH_INTEGRATION.md](LIBREMESH_INTEGRATION.md).
+
 ### uHTTPd Client
 - **Singleton service**: `utils/uhttpd.service.js`
 - **JSON-RPC protocol**: Standardized communication format
@@ -131,7 +134,7 @@ export function getSystemInfo() {
 - **Service calls**: `api.call(service, method, params)`
 - **Session handling**: Automatic login/logout
 - **Error propagation**: Network and ubus errors bubble up
-- **Caching**: React Query handles response caching
+- **Caching**: TanStack Query handles response caching
 
 ## Routing Architecture
 
@@ -163,12 +166,12 @@ additionalRoutes.concat(
 ## State Management Evolution
 
 ### Current Strategy
-- **React Query**: Primary for server state
+- **TanStack Query**: Primary for server state
 - **Local component state**: For UI-only state
 - **Context API**: For global UI state (themes, locale)
 
 ### Migration from Redux
-- **Gradual transition**: New features use React Query
+- **Gradual transition**: New features use TanStack Query
 - **Legacy support**: Existing Redux code remains functional
 - **Simplified mental model**: Less boilerplate, clearer data flow
 

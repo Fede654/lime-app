@@ -192,11 +192,29 @@ Located in `jest.config.js`:
 
 ### Test Utilities
 `utils/test_utils.js` provides:
-- `render()`: Renders components with React Query context
+- `render()`: Renders components with TanStack Query context
 - Mock providers for testing
 - Common test setup functions
+- Query cache management (`queryCache.clear()` in cleanup)
 
 ## Common Testing Patterns
+
+For security testing practices, see [SECURITY_GUIDE.md](SECURITY_GUIDE.md).
+
+### Testing TanStack Query Integration
+```javascript
+it('invalidates cache after mutation', async () => {
+  const mockMutation = jest.fn(() => Promise.resolve());
+  
+  render(<ComponentWithMutation />);
+  
+  fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+  
+  await waitFor(() => {
+    expect(queryCache.invalidateQueries).toHaveBeenCalledWith(['resource', 'list']);
+  });
+});
+```
 
 ### Testing Loading States
 ```javascript

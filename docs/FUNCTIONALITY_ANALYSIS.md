@@ -94,7 +94,7 @@ All core functionalities are **production-ready** with comprehensive testing, in
 ## Technical Implementation Quality
 
 ### Architecture Maturity
-- **✅ Modern React Query**: Primary data fetching pattern
+- **✅ Modern TanStack Query**: Primary data fetching pattern
 - **✅ Plugin Architecture**: Extensible and modular design
 - **✅ Component Testing**: Comprehensive test coverage
 - **✅ Internationalization**: 22+ language support
@@ -114,7 +114,7 @@ All core functionalities are **production-ready** with comprehensive testing, in
 The following are **potential improvements** rather than missing functionality, as all core features are complete:
 
 ### 🔄 Technical Debt Reduction
-- **Redux Migration**: Convert remaining Redux components to React Query
+- **Redux Migration**: Convert remaining Redux components to TanStack Query
   - `lime-plugin-notes` - Simple migration candidate
   - `lime-plugin-changeNode` - Minimal Redux usage
   - *Impact*: Reduced bundle size, simplified state management
