@@ -9,3 +9,4 @@ build
 i18n/*/messages.js
 i18n/_build
 core
+CLAUDE.md
