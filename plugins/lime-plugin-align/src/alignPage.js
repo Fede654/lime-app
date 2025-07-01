@@ -26,7 +26,9 @@ export const AssocRow = ({ station, iface }) => {
         route(`/align-single/${iface}/${station.mac}`);
     }
 
-    const radioNumber = bathost?.iface && ifaceToRadioNumber(bathost.iface);
+    const radioNumber = bathost?.iface
+        ? ifaceToRadioNumber(bathost.iface)
+        : null;
     return (
         <ListItem onClick={goToAlignSingle}>
             <div>
