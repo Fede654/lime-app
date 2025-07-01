@@ -4,11 +4,11 @@ import { getAssocList, getMeshIfaces } from "./alignApi";
 import { markAssociated, sortBySignal } from "./utils";
 
 export function useMeshIfaces(queryConfig) {
-    return useQuery({
-        queryKey: ["lime-utils", "get_mesh_ifaces"],
-        queryFn: getMeshIfaces,
-        ...queryConfig,
-    });
+    return useQuery(
+        ["lime-utils", "get_mesh_ifaces"],
+        getMeshIfaces,
+        queryConfig
+    );
 }
 
 async function _getAssocList(iface) {
@@ -19,9 +19,9 @@ async function _getAssocList(iface) {
 }
 
 export function useAssocList(iface, queryConfig) {
-    return useQuery({
-        queryKey: ["iwinfo", "assoclist", iface],
-        queryFn: async () => await _getAssocList(iface),
-        ...queryConfig,
-    });
+    return useQuery(
+        ["iwinfo", "assoclist", iface],
+        async () => await _getAssocList(iface),
+        queryConfig
+    );
 }

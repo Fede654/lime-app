@@ -15,27 +15,19 @@ import {
 } from "./piraniaApi";
 
 export const usePortalConfig = () =>
-    useQuery({
-        queryKey: ["pirania", "get_portal_config"],
-        queryFn: getPortalConfig,
-    });
+    useQuery(["pirania", "get_portal_config"], getPortalConfig);
 
 export const useSetPortalConfig = () =>
-    useMutation({
-        mutationFn: setPortalConfig,
+    useMutation(setPortalConfig, {
         onSuccess: () =>
             queryCache.invalidateQueries(["pirania", "get_portal_config"]),
     });
 
 export const usePortalContent = () =>
-    useQuery({
-        queryKey: ["pirania", "get_portal_page_content"],
-        queryFn: getPortalContent,
-    });
+    useQuery(["pirania", "get_portal_page_content"], getPortalContent);
 
 export const useSetPortalContent = () =>
-    useMutation({
-        mutationFn: setPortalContent,
+    useMutation(setPortalContent, {
         onSuccess: () =>
             queryCache.invalidateQueries([
                 "pirania",
@@ -44,13 +36,10 @@ export const useSetPortalContent = () =>
     });
 
 export const useLogoCompression = () =>
-    useQuery({
-        queryKey: ["local-service", "logo_compression"],
-    });
+    useQuery(["local-service", "logo_compression"]);
 
 export const useCreateCompression = () =>
-    useMutation({
-        mutationFn: createCompression,
+    useMutation(createCompression, {
         onSuccess: (compression) =>
             queryCache.setQueryData(
                 ["local-service", "logo_compression"],
@@ -59,15 +48,11 @@ export const useCreateCompression = () =>
     });
 
 export function useListVouchers() {
-    return useQuery({
-        queryKey: ["pirania", "list_vouchers"],
-        queryFn: listVouchers,
-    });
+    return useQuery(["pirania", "list_vouchers"], listVouchers);
 }
 
 export function useAddVoucher() {
-    return useMutation({
-        mutationFn: addVoucher,
+    return useMutation(addVoucher, {
         onSuccess: (data) => {
             queryCache.invalidateQueries(["pirania", "list_vouchers"]);
             return data;
@@ -76,8 +61,7 @@ export function useAddVoucher() {
 }
 
 export function useRename() {
-    return useMutation({
-        mutationFn: rename,
+    return useMutation(rename, {
         onSuccess: (data) => {
             queryCache.invalidateQueries(["pirania", "list_vouchers"]);
             return data;
@@ -86,8 +70,7 @@ export function useRename() {
 }
 
 export function useInvalidate() {
-    return useMutation({
-        mutationFn: invalidate,
+    return useMutation(invalidate, {
         onSuccess: (data) => {
             queryCache.invalidateQueries(["pirania", "list_vouchers"]);
             return data;

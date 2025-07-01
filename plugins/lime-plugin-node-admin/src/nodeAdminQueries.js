@@ -12,8 +12,7 @@ import {
 } from "./nodeAdminApi";
 
 export const useChangeHostname = () =>
-    useMutation({
-        mutationFn: changeHostname,
+    useMutation(changeHostname, {
         onSuccess: () => {
             setChangesNeedReboot("yes");
             queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
@@ -21,20 +20,13 @@ export const useChangeHostname = () =>
     });
 
 export const useWifiData = () =>
-    useQuery({
-        queryKey: ["lime-utils", "get_wifi_data"],
-        queryFn: getAPsData,
-    });
+    useQuery(["lime-utils", "get_wifi_data"], getAPsData);
 
 export const useAdminWifiData = () =>
-    useQuery({
-        queryKey: ["lime-utils-admin", "get_wifi_data"],
-        queryFn: getAdminApsData,
-    });
+    useQuery(["lime-utils-admin", "get_wifi_data"], getAdminApsData);
 
 export const useChangeAPPassword = () =>
-    useMutation({
-        mutationFn: changeApNamePassword,
+    useMutation(changeApNamePassword, {
         onSuccess: () => {
             setChangesNeedReboot("yes");
             queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
@@ -44,8 +36,7 @@ export const useChangeAPPassword = () =>
     });
 
 export const useSetupRoamingAP = () =>
-    useMutation({
-        mutationFn: setupRoamingAP,
+    useMutation(setupRoamingAP, {
         onSuccess: () => {
             setChangesNeedReboot("yes");
             queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npx jest:*)",
+      "Bash(npx tsc:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh pr list:*)"
+    ],
+    "deny": []
+  }
+}

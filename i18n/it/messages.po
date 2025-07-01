@@ -1171,27 +1171,22 @@ msgstr ""
 msgid "Your node has no internet connection"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:207
 #: plugins/lime-plugin-locate/src/locatePage.tsx:225
 msgid "cancel"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:193
 #: plugins/lime-plugin-locate/src/locatePage.tsx:211
 msgid "confirm location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:209
 #: plugins/lime-plugin-locate/src/locatePage.tsx:227
 msgid "edit location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:199
 #: plugins/lime-plugin-locate/src/locatePage.tsx:217
 msgid "hide community"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:212
 #: plugins/lime-plugin-locate/src/locatePage.tsx:230
 msgid "locate my node"
 msgstr ""
@@ -1200,7 +1195,6 @@ msgstr ""
 msgid "more than a minute ago"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:201
 #: plugins/lime-plugin-locate/src/locatePage.tsx:219
 msgid "show community"
 msgstr ""

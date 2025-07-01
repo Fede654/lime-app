@@ -13,11 +13,7 @@ import {
 } from "./firmwareApi";
 
 export function useUpgradeInfo(params) {
-    return useQuery({
-        queryKey: ["lime-utils", "get_upgrade_info"],
-        queryFn: getUpgradeInfo,
-        ...params,
-    });
+    return useQuery(["lime-utils", "get_upgrade_info"], getUpgradeInfo, params);
 }
 
 function resetSuCounter() {
@@ -28,38 +24,31 @@ function resetSuCounter() {
 }
 
 export function useUpgradeConfirm() {
-    return useMutation({
-        mutationFn: upgradeConfirm,
+    return useMutation(upgradeConfirm, {
         onSuccess: resetSuCounter,
     });
 }
 
 export function useUpgradeRevert() {
-    return useMutation({
-        mutationFn: upgradeRevert,
+    return useMutation(upgradeRevert, {
         onSuccess: resetSuCounter,
     });
 }
 
 export function useNewVersion(params) {
-    return useQuery({
-        queryKey: ["eupgrade", "is_new_version_available"],
-        queryFn: getNewVersion,
-        ...params,
-    });
+    return useQuery(
+        ["eupgrade", "is_new_version_available"],
+        getNewVersion,
+        params
+    );
 }
 
 export function useDownloadStatus(params) {
-    return useQuery({
-        queryKey: ["eupgrade", "download_status"],
-        queryFn: getDownloadStatus,
-        ...params,
-    });
+    return useQuery(["eupgrade", "download_status"], getDownloadStatus, params);
 }
 
 export function useDownloadRelease() {
-    return useMutation({
-        mutationFn: downloadRelease,
+    return useMutation(downloadRelease, {
         onSuccess: () =>
             queryCache.setQueryData(["eupgrade", "download_status"], {
                 download_status: "downloading",
@@ -68,5 +57,5 @@ export function useDownloadRelease() {
 }
 
 export function useUpgradeFirwmare() {
-    return useMutation({ mutationFn: upgradeFirmware });
+    return useMutation(upgradeFirmware);
 }

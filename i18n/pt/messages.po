@@ -1171,27 +1171,22 @@ msgstr "Tente conectar-se a rede wifi %{network} para completar a instalação."
 msgid "Your node has no internet connection"
 msgstr "Seu nó não tem conexão com a internet"
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:207
 #: plugins/lime-plugin-locate/src/locatePage.tsx:225
 msgid "cancel"
 msgstr "cancelar"
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:193
 #: plugins/lime-plugin-locate/src/locatePage.tsx:211
 msgid "confirm location"
 msgstr "confirmar localização"
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:209
 #: plugins/lime-plugin-locate/src/locatePage.tsx:227
 msgid "edit location"
 msgstr "editar localização"
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:199
 #: plugins/lime-plugin-locate/src/locatePage.tsx:217
 msgid "hide community"
 msgstr "esconder comunidade"
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:212
 #: plugins/lime-plugin-locate/src/locatePage.tsx:230
 msgid "locate my node"
 msgstr "localizar meu nó"
@@ -1200,7 +1195,6 @@ msgstr "localizar meu nó"
 msgid "more than a minute ago"
 msgstr "faz mais de um minuto"
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:201
 #: plugins/lime-plugin-locate/src/locatePage.tsx:219
 msgid "show community"
 msgstr "mostrar comunidade"
