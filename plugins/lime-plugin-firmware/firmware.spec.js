@@ -35,15 +35,11 @@ const noSecureRollbackText =
 async function stepSelectFile(fileName = "test.bin") {
     const file = new File(["(⌐□_□)"], fileName);
     const fileInput = await screen.findByLabelText(/select file/i);
-    fireEvent.change(fileInput, {
-        target: { files: [file] },
-    });
-    Object.defineProperty(fileInput, "files", {
-        value: [file],
-    });
-    Object.defineProperty(fileInput, "value", {
-        value: file.name,
-    });
+
+    // Use userEvent.upload for better file input simulation
+    const user = userEvent.setup({ delay: null });
+    await user.upload(fileInput, file);
+
     return file;
 }
 
@@ -51,7 +47,8 @@ async function stepSubmit() {
     const submitButton = await screen.findByRole("button", {
         name: /upgrade/i,
     });
-    fireEvent.click(submitButton);
+    const user = userEvent.setup({ delay: null });
+    await user.click(submitButton);
 }
 
 async function triggerUpgrade() {
@@ -70,8 +67,8 @@ describe("firmware form", () => {
             suCounter: -1,
             is_upgrade_confirm_supported: true,
         }));
-        uploadFile.mockImplementation(async () => true);
-        upgradeFirmware.mockImplementation(async () => true);
+        uploadFile.mockImplementation(async () => "/tmp/uploaded_firmware.bin");
+        upgradeFirmware.mockImplementation(async () => ({ success: true }));
         getDownloadStatus.mockImplementation(async () => ({
             download_status: "not-initiated",
         }));
@@ -131,10 +128,10 @@ describe("firmware form", () => {
 
     it("shows error if upgrading without selecting a file", async () => {
         render(<FirmwarePage />);
-        expect(screen.queryByText("Please select a file", "i")).toBeNull();
-        stepSubmit();
+        expect(screen.queryByText(/Please select a file/i)).toBeNull();
+        await stepSubmit();
         expect(
-            await screen.findByText("Please select a file", "i")
+            await screen.findByText(/Please select a file/i)
         ).toBeInTheDocument();
     });
 
@@ -143,8 +140,8 @@ describe("firmware form", () => {
         expect(
             screen.queryByText("Please select a .sh or .bin file", "i")
         ).toBeNull();
-        stepSelectFile("myfile.unsupportedextension");
-        stepSubmit();
+        await stepSelectFile("myfile.unsupportedextension");
+        await stepSubmit();
         expect(
             await screen.findByText("Please select a .sh or .bin file", "i")
         ).toBeInTheDocument();
@@ -161,7 +158,7 @@ describe("firmware form", () => {
     it("calls the firmware upgrade endpoint with the path returned by upload file", async () => {
         uploadFile.mockImplementation(async () => "/tmp/some/given/path");
         render(<FirmwarePage />);
-        triggerUpgrade();
+        await triggerUpgrade();
         await waitFor(() => {
             expect(upgradeFirmware).toHaveBeenCalledWith(
                 "/tmp/some/given/path"
@@ -177,14 +174,14 @@ describe("firmware form", () => {
             /The selected image is not valid for the target device/i;
         render(<FirmwarePage />);
         expect(screen.queryByText(noteText)).not.toBeInTheDocument();
-        triggerUpgrade();
+        await triggerUpgrade();
         expect(await screen.findByText(noteText)).toBeInTheDocument();
     });
 
     it("shows up a legend asking the user to wait for the upgrade to finish", async () => {
         render(<FirmwarePage />);
-        triggerUpgrade();
-        const noteText1 = new RegExp("The firmware is being upgraded...", "i");
+        await triggerUpgrade();
+        const noteText1 = /The firmware is being upgraded\.\.\./i;
         expect(await screen.findByText(noteText1)).toBeInTheDocument();
         const noteText2 = new RegExp(
             "Please wait patiently for .* seconds and do not disconnect the device",
@@ -195,8 +192,8 @@ describe("firmware form", () => {
 
     it("shows a button to reload app after upgrade", async () => {
         render(<FirmwarePage />);
-        triggerUpgrade();
-        const noteText1 = new RegExp("The firmware is being upgraded...", "i");
+        await triggerUpgrade();
+        const noteText1 = /The firmware is being upgraded\.\.\./i;
         await screen.findByText(noteText1);
         act(() => {
             jest.advanceTimersByTime(181 * 1000);
@@ -210,8 +207,8 @@ describe("firmware form", () => {
 
     it("shows up a legend telling the user to confirm the upgrade when it is needed", async () => {
         render(<FirmwarePage />);
-        triggerUpgrade();
-        const noteText1 = new RegExp("The firmware is being upgraded...", "i");
+        await triggerUpgrade();
+        const noteText1 = /The firmware is being upgraded\.\.\./i;
         await screen.findByText(noteText1);
         act(() => {
             jest.advanceTimersByTime(181 * 1000);
