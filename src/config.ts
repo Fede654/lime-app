@@ -2,6 +2,7 @@ import Align from "plugins/lime-plugin-align";
 import ChangeNode from "plugins/lime-plugin-changeNode";
 import Fbw from "plugins/lime-plugin-fbw";
 import Firmware from "plugins/lime-plugin-firmware";
+import GroundRouting from "plugins/lime-plugin-ground-routing";
 import Locate from "plugins/lime-plugin-locate";
 import Metrics from "plugins/lime-plugin-metrics";
 import NetworkAdmin from "plugins/lime-plugin-network-admin";
@@ -20,6 +21,7 @@ export const plugins: LimePlugin[] = [
     Notes,
     NodeAdmin,
     NetworkAdmin,
+    GroundRouting,
     Firmware,
     ChangeNode,
     RemoteSupport,

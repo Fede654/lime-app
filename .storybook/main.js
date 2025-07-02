@@ -1,6 +1,4 @@
 const path = require("path");
-const clientConfig = require("preact-cli/lib/lib/webpack/webpack-client-config");
-const transformConfig = require("preact-cli/lib/lib/webpack/transform-config");
 
 module.exports = {
     framework: "@storybook/preact",
@@ -18,52 +16,32 @@ module.exports = {
     features: {
         interactionsDebugger: true,
     },
-    webpackFinal: async (config, { configType }) => {
-        // Load preact config
-        const isProd = configType === "PRODUCTION";
-        const cwd = process.env.PWD;
-        const src = path.resolve(cwd, "src");
-        const source = (dir) => path.resolve(cwd, "src", dir);
-        const env = {
-            isProd,
-            isWatch: !isProd,
-            cwd,
-            src,
-            source,
-            config: "preact.config.js",
-            esm: false,
-        };
-        preactConfig = await clientConfig(env);
-        await transformConfig(env, preactConfig);
-
-        // Add custom alias
+    webpackFinal: async (config) => {
+        // Add path aliases to match preact.config.js
         config.resolve.alias = {
             ...config.resolve.alias,
-            ...preactConfig.resolve.alias,
+            "~": path.resolve(__dirname, "../src"),
+            components: path.resolve(__dirname, "../src/components"),
+            containers: path.resolve(__dirname, "../src/containers"),
+            utils: path.resolve(__dirname, "../src/utils"),
+            plugins: path.resolve(__dirname, "../plugins"),
         };
 
-        // Add proxy
-        config.devServer = {
-            ...config.devServer,
-            ...preactConfig.devServer,
-        };
-
-        // Parse .less files
+        // Add .less file support
         config.resolve.extensions.push(".less");
         config.module.rules.push({
-            test: /\.(p?css|less|s[ac]ss|styl)$/,
+            test: /\.less$/,
             use: [
-                require.resolve("style-loader"),
+                "style-loader",
                 {
-                    loader: require.resolve("css-loader"),
+                    loader: "css-loader",
                     options: {
-                        importLoaders: 1,
                         modules: {
                             localIdentName: "[name]__[local]___[hash:base64:5]",
                         },
                     },
                 },
-                require.resolve("less-loader"),
+                "less-loader",
             ],
         });
 

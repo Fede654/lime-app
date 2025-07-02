@@ -1,10 +1,10 @@
 import style from "./style.less";
 
 type LoadingProps = {
-    color?: string
-}
+    color?: string;
+};
 
-export const Loading = ({ color } : LoadingProps) => {
+export const Loading = ({ color }: LoadingProps) => {
     const styleOverride = color ? { backgroundColor: color } : undefined;
     return (
         <div

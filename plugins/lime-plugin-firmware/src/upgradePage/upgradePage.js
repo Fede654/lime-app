@@ -87,10 +87,6 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
             <h6>
                 <Trans>{versionName} is now available</Trans>🎉
             </h6>
-            <p>
-                SPAM - {JSON.stringify(newVersion)} -{" "}
-                {JSON.stringify(downloadStatus)}
-            </p>
             {status === "not-initiated" && (
                 <button onClick={onDownload}>
                     <Trans>Download</Trans>
@@ -169,6 +165,9 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
     }
 
     function isValidExtname(value) {
+        if (!value || value.length === 0 || !value[0] || !value[0].name) {
+            return false;
+        }
         const extname = path.extname(value[0].name);
         return extname === ".sh" || extname === ".bin";
     }

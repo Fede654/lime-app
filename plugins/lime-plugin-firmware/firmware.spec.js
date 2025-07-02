@@ -35,15 +35,11 @@ const noSecureRollbackText =
 async function stepSelectFile(fileName = "test.bin") {
     const file = new File(["(⌐□_□)"], fileName);
     const fileInput = await screen.findByLabelText(/select file/i);
+
     fireEvent.change(fileInput, {
         target: { files: [file] },
     });
-    Object.defineProperty(fileInput, "files", {
-        value: [file],
-    });
-    Object.defineProperty(fileInput, "value", {
-        value: file.name,
-    });
+
     return file;
 }
 
