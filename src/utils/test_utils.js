@@ -8,6 +8,8 @@ import { messages } from "i18n/en/messages";
 import { en } from "make-plural/plurals";
 import { setImmediate } from "timers";
 
+import { ToastProvider } from "components/toast/toastProvider";
+
 import queryCache from "utils/queryCache";
 
 import SubHeader from "../containers/SubHeader";
@@ -25,8 +27,10 @@ const AllTheProviders = ({ children }) => {
         <I18nProvider i18n={i18n}>
             {/* @ts-ignore */}
             <QueryClientProvider client={queryCache}>
-                <SubHeader />
-                {children}
+                <ToastProvider>
+                    <SubHeader />
+                    {children}
+                </ToastProvider>
             </QueryClientProvider>
         </I18nProvider>
     );

@@ -10,7 +10,7 @@ register("it", it);
 
 type TimeAgoProps = {
     timestamp: number;
-}
+};
 
 export const TimeAgo = ({ timestamp }: TimeAgoProps) => {
     const { i18n } = useLingui();

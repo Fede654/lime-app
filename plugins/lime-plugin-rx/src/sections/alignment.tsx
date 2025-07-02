@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { Fragment } from "preact";
 
 import { Button } from "components/buttons/button";
 
@@ -34,7 +35,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
     return (
         <div className={"flex flex-row mt-6 justify-between md:px-8"}>
             {hasMostActive && (
-                <>
+                <Fragment>
                     <div className={"flex-1 text-7xl text-center text-primary"}>
                         <SignalColor
                             className={"font-bold"}
@@ -79,7 +80,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                             <span className={"font-bold"}> {traffic}MB/s</span>
                         </div>
                     </div>
-                </>
+                </Fragment>
             )}
             {!hasMostActive && (
                 <div className={"flex-1 flex justify-center"}>

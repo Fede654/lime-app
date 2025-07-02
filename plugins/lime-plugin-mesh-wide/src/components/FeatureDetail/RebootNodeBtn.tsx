@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { useMutation } from "@tanstack/react-query";
+import { Fragment } from "preact";
 import { useCallback, useState } from "preact/hooks";
 
 import { Modal, ModalProps } from "components/Modal/Modal";
@@ -100,7 +101,7 @@ const RemoteRebootBtn = ({ node }: { node: INodeInfo }) => {
     const { open, onOpen, onClose } = useDisclosure();
 
     return (
-        <>
+        <Fragment>
             <Button
                 color={"danger"}
                 outline={true}
@@ -110,7 +111,7 @@ const RemoteRebootBtn = ({ node }: { node: INodeInfo }) => {
                 <PowerIcon />
             </Button>
             <RebootNodeModal node={node} isOpen={open} onClose={onClose} />
-        </>
+        </Fragment>
     );
 };
 

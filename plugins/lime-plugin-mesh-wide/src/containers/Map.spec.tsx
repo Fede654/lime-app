@@ -9,8 +9,8 @@ import { nodesReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideM
 
 import { render } from "utils/test_utils";
 
-jest.mock("plugins/lime-plugin-mesh-wide/src/meshWideApi.ts");
 jest.mock("leaflet");
+jest.mock("components/shared-state/SharedStateApi");
 
 const mockedDoSharedStateApiCall = jest.mocked(doSharedStateApiCall);
 

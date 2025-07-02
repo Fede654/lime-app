@@ -14,7 +14,7 @@ import { useDismissFbw } from "../FbwQueries";
 
 type FbwBannerProps = {
     toggleForm?: (route: string) => () => void;
-}
+};
 
 export const FbwBanner = ({ toggleForm }: FbwBannerProps) => {
     const [notShowAgain, setnotShowAgain] = useState(false);

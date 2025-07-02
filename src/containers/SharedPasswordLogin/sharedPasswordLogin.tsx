@@ -1,9 +1,9 @@
 import { Trans } from "@lingui/macro";
 import { useEffect, useState } from "preact/hooks";
 
-import { useLogin } from "utils/queries";
-
 import Loading from "components/loading";
+
+import { useLogin } from "utils/queries";
 
 const loadingBoxStyle = {
     position: "fixed" as const,

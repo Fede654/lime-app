@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import React from "react";
+import { Fragment } from "preact";
 
 import { GlobeIcon } from "components/icons/globeIcon";
 import LoadingDots from "components/loading/loading-dots";
@@ -58,7 +58,7 @@ const Circle = ({
                     className={className}
                 />
             ) : (
-                <>
+                <Fragment>
                     <circle
                         cx={circleSpacing}
                         cy={cy}
@@ -71,16 +71,16 @@ const Circle = ({
                         r={innerCircleRadius}
                         fill="#FFFFFF"
                     />
-                </>
+                </Fragment>
             )}
             <text
                 x={textSpacingX}
                 y={textSpacingY(index)}
                 className={className}
             >
-                <>
+                <Fragment>
                     {text} {isLoading && <LoadingDots />}
-                </>
+                </Fragment>
             </text>
         </g>
     );
@@ -105,7 +105,7 @@ const NodeHop = ({ ip, index, text }: CircleProps) => {
 
     const { y1, y2 } = calcLinePositionByIndex(index - 1);
     return (
-        <>
+        <Fragment>
             {y1 >= 0 && (
                 <line
                     x1={circleSpacing}
@@ -124,7 +124,7 @@ const NodeHop = ({ ip, index, text }: CircleProps) => {
                 text={text}
                 isLoading={isFetching}
             />
-        </>
+        </Fragment>
     );
 };
 
@@ -165,7 +165,7 @@ const InternetLastHop = ({
     const internetText = <Trans>Internet</Trans>;
 
     return (
-        <>
+        <Fragment>
             <line
                 x1={circleSpacing}
                 y1={y1}
@@ -181,7 +181,7 @@ const InternetLastHop = ({
                 text={internetText}
                 internet={true}
             />
-        </>
+        </Fragment>
     );
 };
 
