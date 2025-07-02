@@ -5,7 +5,7 @@
 > Geek-free Web App for setup and mantainance of Libremesh nodes built on Preact
 
 <p align="center"><br><br>
-    <img height="480" src="docs/assets/screenshots.gif" alt="Screenshots" />
+    <img height="480" src="assets/screenshots.gif" alt="Screenshots" />
 </p>
 
 ## Development Environment Installation
@@ -71,4 +71,4 @@ npm run tests
 ### Contribute
 
 Plase, read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation.
-We also have a [Tutorial](docs/Tutorial.md) for newcomers :)
+We also have a [Tutorial](TUTORIAL.md) for newcomers :)

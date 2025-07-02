@@ -1,6 +1,6 @@
 # Developer Guide
 
-Quick reference for LimeApp development. For a comprehensive tutorial, see [Tutorial.md](Tutorial.md).
+Quick reference for LimeApp development. For a comprehensive tutorial, see [Tutorial.md](../TUTORIAL.md).
 
 ## Quick Setup
 

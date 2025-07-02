@@ -12,7 +12,7 @@ You can also learn by doing, following this guide and encouraging you to try mak
 
 ## Architectural Design
 <figure>
-	<img src="architecture.svg">
+	<img src="docs/architecture.svg">
 	<figcaption>Architectural Design of the LimeApp</figcaption>
 </figure>
 
