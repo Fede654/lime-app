@@ -137,12 +137,12 @@ describe("firmware form", () => {
     it("shows error if upgrading with a file with invalid extension", async () => {
         render(<FirmwarePage />);
         expect(
-            screen.queryByText("Please select a .sh or .bin file", "i")
+            screen.queryByText(/Please select a \.sh or \.bin file/i)
         ).toBeNull();
         stepSelectFile("myfile.unsupportedextension");
         stepSubmit();
         expect(
-            await screen.findByText("Please select a .sh or .bin file", "i")
+            await screen.findByText(/Please select a \.sh or \.bin file/i)
         ).toBeInTheDocument();
     });
 
@@ -180,19 +180,17 @@ describe("firmware form", () => {
     it("shows up a legend asking the user to wait for the upgrade to finish", async () => {
         render(<FirmwarePage />);
         triggerUpgrade();
-        const noteText1 = new RegExp("The firmware is being upgraded...", "i");
+        const noteText1 = /The firmware is being upgraded\.\.\./i;
         expect(await screen.findByText(noteText1)).toBeInTheDocument();
-        const noteText2 = new RegExp(
-            "Please wait patiently for .* seconds and do not disconnect the device",
-            "i"
-        );
+        const noteText2 =
+            /Please wait patiently for \d+ seconds and do not disconnect the device\./i;
         expect(await screen.findByText(noteText2)).toBeInTheDocument();
     });
 
     it("shows a button to reload app after upgrade", async () => {
         render(<FirmwarePage />);
         triggerUpgrade();
-        const noteText1 = new RegExp("The firmware is being upgraded...", "i");
+        const noteText1 = /The firmware is being upgraded\.\.\./i;
         await screen.findByText(noteText1);
         act(() => {
             jest.advanceTimersByTime(181 * 1000);
@@ -207,16 +205,13 @@ describe("firmware form", () => {
     it("shows up a legend telling the user to confirm the upgrade when it is needed", async () => {
         render(<FirmwarePage />);
         triggerUpgrade();
-        const noteText1 = new RegExp("The firmware is being upgraded...", "i");
+        const noteText1 = /The firmware is being upgraded\.\.\./i;
         await screen.findByText(noteText1);
         act(() => {
             jest.advanceTimersByTime(181 * 1000);
         });
-        const noteText2 = new RegExp(
-            "When reloading the app you will be asked to confirm the upgrade," +
-                " otherwise it will be reverted",
-            "i"
-        );
+        const noteText2 =
+            /When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted/i;
         expect(await screen.findByText(noteText2)).toBeInTheDocument();
     });
 

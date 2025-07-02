@@ -57,7 +57,7 @@ export const ScanList = ({
 
     useEffect(() => {
         if (scanResults === undefined) scanStart();
-    }, []);
+    }, [scanResults, scanStart]);
 
     function _rescan() {
         cancelSelectedNetwork();

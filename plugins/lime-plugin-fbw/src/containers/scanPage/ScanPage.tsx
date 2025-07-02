@@ -12,7 +12,7 @@ import { SelectForm } from "./SelectForm";
 
 interface SelectedNetwork {
     hostname: string;
-    file?: any;
+    file?: string;
     apname?: string;
     community?: string;
 }
