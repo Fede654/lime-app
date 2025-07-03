@@ -26,6 +26,10 @@
         "test": "jest",
         "clear-jest": "jest --clearCache",
         "create-plugin": "node ./devTools/plugins create",
+        "qemu:deploy": "./scripts/deploy-to-qemu.sh",
+        "qemu:start": "./scripts/deploy-to-qemu.sh --start-qemu",
+        "qemu:dev": "./scripts/dev-with-qemu.sh dev",
+        "qemu:check": "./scripts/dev-with-qemu.sh check",
         "prepare": "husky install"
     },
     "devDependencies": {

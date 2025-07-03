@@ -165,7 +165,7 @@ msgstr "Estas seguro que quieres borrar el atributo <0>{prop}</0> ?"
 msgid "Are you sure you want to edit the <0>{prop}</0> property?"
 msgstr "Estas seguro que quieres editar el atributo <0>{prop}</0> ?"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:71
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:72
 msgid "Are you sure you want to reboot this node? This action will disconnect the node from the network for a few minutes. <0/>Add shared password or let it empty if no password is set."
 msgstr "¿Con seguridad desea reiniciar este nodo? Esta acción desconectará el nodo de la red durante unos minutos. <0/>Agregue una contraseña compartida o deje el campo en blanco si no quiere establecer ninguna contraseña."
 
@@ -310,7 +310,7 @@ msgstr "Verifique que la red este funcionando correctamente y luego confirme la 
 msgid "Check if network is working properly and confirm the upgrade<0/>If not confirmed, the upgrade will be rolled back after a while"
 msgstr "Verifique si la red funciona correctamente y confirme la actualización. <0/>Si no se confirma, la actualización se revertirá luego de un tiempo."
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:91
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:92
 msgid "Check<0/>Alignment"
 msgstr "Chequear<0/>Alineación"
 
@@ -674,11 +674,11 @@ msgstr "Error al descargar lime community."
 msgid "Error getting scan results"
 msgstr "Error recibiendo los resultados del escaneo."
 
-#: plugins/lime-plugin-mesh-wide/src/meshWidePage.tsx:41
+#: plugins/lime-plugin-mesh-wide/src/meshWidePage.tsx:39
 msgid "Error loading leaflet"
 msgstr "Error cargando leaflet."
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:89
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:90
 msgid "Error performing reboot: {error}"
 msgstr "Error al reiniciar: {error}"
 
@@ -761,7 +761,7 @@ msgstr "Expira en {0}"
 
 #: plugins/lime-plugin-align/src/alignPage.js:37
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:67
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:68
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
 
@@ -804,12 +804,12 @@ msgid "Get an additional cell phone to the one you are currently using that has 
 msgstr "Consiga otro teléfono que tenga conexión a internet por datos móviles."
 
 #: src/containers/Menu/menu.js:48
-msgid "Go to Community View"
-msgstr "Ir a la página de la comunidad"
+#~ msgid "Go to Community View"
+#~ msgstr "Ir a la página de la comunidad"
 
 #: src/containers/Menu/menu.js:51
-msgid "Go to Node View"
-msgstr "Ir a la página del nodo"
+#~ msgid "Go to Node View"
+#~ msgstr "Ir a la página del nodo"
 
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:27
 msgid "Go!"
@@ -876,7 +876,7 @@ msgstr "En el estado de referencia este nodo está encendido."
 #~ msgid "Interface"
 #~ msgstr "Interfaz"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:72
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:73
 msgid "Interface:"
 msgstr "Interface:"
 
@@ -1025,6 +1025,10 @@ msgstr "Midiendo enlaces"
 msgid "Mesh Map"
 msgstr "Mapa de la red mesh"
 
+#: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:9
+msgid "Mesh Wide Config"
+msgstr ""
+
 #: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:9
 msgid "Mesh Wide Upgrade"
 msgstr "Sistema de la red"
@@ -1075,7 +1079,7 @@ msgstr "Más de 10 caracteres"
 #~ msgid "Most Active"
 #~ msgstr "Enlace más activo"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:60
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:61
 msgid "Most active link"
 msgstr "Link más activo"
 
@@ -1235,7 +1239,6 @@ msgstr "O, si tu nodo ya está bien configurado, puedes saltear este paso."
 msgid "Or upgrade to latest release"
 msgstr "O actualiza a la última versión del sistema (firmware)."
 
-#: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:167
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:95
 msgid "Other nodes will download the firmware from it"
 msgstr "Esto significa que otros nodos descargarán el archivo alojado en este nodo."
@@ -1321,12 +1324,12 @@ msgstr "Listo para distribuir la actualización a toda la red"
 msgid "Ready to start mesh wide<0/>firmware upgrade"
 msgstr "Listo para iniciar la actualización de sistema de toda la red"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:68
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:69
 #: src/containers/RebootBanner/rebootBanner.js:17
 msgid "Reboot"
 msgstr "Reiniciar"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:67
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:68
 msgid "Reboot node {0}"
 msgstr "Reiniciar nodo {0}"
 
@@ -1531,7 +1534,6 @@ msgstr "Establecer el estado de referencia para este nodo."
 msgid "Setting network"
 msgstr "Configurando red"
 
-#: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:159
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:87
 msgid "Setting up main node"
 msgstr "Configurando el nodo principal"
@@ -1694,7 +1696,6 @@ msgstr "El portal comunitario permite mostrar una pantalla de bienvenida en el n
 msgid "The are not mesh interfaces available"
 msgstr "No hay interfaces mesh disponibles."
 
-#: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:161
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:89
 msgid "The become main node process is starting on this node"
 msgstr "El proceso para convertir este nodo en el principal está comenzando."
@@ -1822,7 +1823,7 @@ msgstr "Este campo no puede estar vacío"
 msgid "This field is required"
 msgstr "Este campo es requerido"
 
-#: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:165
+#: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:159
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:93
 msgid "This is a main node"
 msgstr "Este es un nodo principal"
@@ -1884,6 +1885,10 @@ msgstr "Este nodo está descargando un nuevo archivo de sistema (firmware)."
 msgid "This node is not registered on the reference state"
 msgstr "Este nodo no está registrado en el estado de referencia."
 
+#: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:161
+msgid "This node is sending new configuration to others"
+msgstr ""
+
 #: plugins/lime-plugin-metrics/src/components/showPathButton.js:16
 msgid "This node is the gateway"
 msgstr "Este nodo es el gateway."
@@ -1936,7 +1941,7 @@ msgstr "Para posibilitar el acceso remoto es necesaria una conexión a internet.
 #~ msgid "Traffic"
 #~ msgstr "Tráfico"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:78
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:79
 msgid "Traffic:"
 msgstr "Tráfico:"
 
@@ -2135,7 +2140,7 @@ msgstr "Debe ingresar la contraseña compartida para seguir"
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr "Intente conectarse a la red wifi {wifiSsid} para completar la instalación."
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:113
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:114
 msgid "Your Alignment"
 msgstr "Su alineación"
 

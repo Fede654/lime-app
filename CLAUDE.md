@@ -34,6 +34,7 @@ npm run clear-jest              # Clear Jest cache
 npm run test plugins/lime-plugin-name/plugin.spec.js  # Run specific plugin test
 npm run test -- --watch         # Run tests in watch mode
 npm run test -- --coverage      # Run tests with coverage report
+npm run test -- --testPathPattern="filename.spec.tsx"  # Run specific test file
 ```
 
 ### Linting and Code Quality
@@ -60,18 +61,28 @@ npm run storybook:deploy       # Deploy to GitHub Pages
 npm run create-plugin <pluginName>  # Bootstrap new plugin structure
 ```
 
+### QEMU LibreMesh Integration
+```bash
+npm run qemu:deploy                  # Build and deploy lime-app to lime-packages
+npm run qemu:start                   # Build, deploy, and start QEMU LibreMesh
+npm run qemu:check                   # Check if QEMU LibreMesh is running
+npm run qemu:dev                     # Start development server connected to QEMU
+```
+
 ## Architecture
 
 ### Plugin System
 - Each plugin lives in `plugins/lime-plugin-<name>/`
-- Plugin structure: `index.ts` exports `{ name, page, menu, additionalRoutes?, additionalProtectedRoutes? }`
+- Plugin structure: `index.ts` exports `{ name, page, menu, additionalRoutes?, additionalProtectedRoutes?, menuGroup? }`
 - Plugins are registered in `src/config.ts`
 - Menu items are automatically generated from plugin definitions
+- **Menu Groups**: Plugins can be grouped using `menuGroup` property (e.g., "meshwide" for mesh-wide related plugins)
 
 ### State Management
-- **React Query**: Primary data fetching and caching (modern approach)
+- **TanStack Query** (formerly React Query): Primary data fetching and caching (modern approach)
 - **Redux + RxJS**: Legacy state management (being phased out)
 - Global query cache managed by `@tanstack/react-query`
+- **Shared State**: Mesh-wide components use shared state synchronization via `components/shared-state/`
 
 ### Component Architecture
 - **Preact**: React-like framework with smaller bundle size (3kB)
@@ -136,6 +147,10 @@ plugins/ → plugins/
 - `tailwind.config.js`: Tailwind CSS setup
 - `postcss.config.js`: PostCSS configuration
 
+### Development Scripts
+- `scripts/deploy-to-qemu.sh`: Official LibreMesh integration script
+- `scripts/dev-with-qemu.sh`: Development workflow automation
+
 ## Development Workflow
 
 ### Adding a New Plugin
@@ -179,9 +194,67 @@ plugins/lime-plugin-<name>/
 ### Testing Best Practices
 - Mock API calls using `jest.mock('./src/<name>Api')`
 - Clean up query cache after each test: `act(() => queryCache.clear())`
-- Use `render()` from `utils/test_utils` for consistent provider setup
+- Use `render()` from `utils/test_utils` for consistent provider setup (includes ToastProvider, I18nProvider, QueryClientProvider)
 - Test user interactions with `@testing-library/preact`
 - Verify UI state changes with `screen.findBy*` async queries
+- **Preact-specific**: Use `Fragment` from `preact` instead of React fragments (`<>`) to avoid "React is not defined" errors
+- **Test utilities**: `flushPromises()` available for async test scenarios
 
 ## Production Deployment
 Built bundles are served from `/www/app/` on LibreMesh routers via uHTTPd webserver at `thisnode.info` or router IP address. The production build includes translation compilation and asset optimization.
+
+### Deployment to Router
+```bash
+npm run build:production
+ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/app
+```
+
+## Development Environment Notes
+
+### QEMU LibreMesh Integration (Official Workflow)
+
+**Prerequisites:**
+1. Clone `lime-packages` repository in parent directory: `../lime-packages/`
+2. Download LibreMesh development images to `../lime-packages/build/`:
+   - `libremesh-2024.1-ow23.05.5-default-x86-64-generic-squashfs-rootfs.img.gz`
+   - `libremesh-2024.1-ow23.05.5-default-x86-64-generic-initramfs-kernel.bin`
+3. Install `qemu-system-x86_64` package
+
+**Official Development Commands:**
+```bash
+# Deploy lime-app to QEMU (official LibreMesh method)
+npm run qemu:deploy                    # Build and deploy lime-app
+npm run qemu:start                     # Build, deploy, and start QEMU
+npm run qemu:check                     # Check QEMU status
+npm run qemu:dev                       # Start development server with QEMU backend
+
+# Manual workflow (following lime-packages/TESTING.md)
+npm run build:production
+cp -r build/* ../lime-packages/packages/lime-app/files/www/app/
+cd ../lime-packages
+sudo ./tools/qemu_dev_start --libremesh-workdir . build/rootfs.img.gz build/kernel.bin
+```
+
+**Development Workflow:**
+1. **Deploy to QEMU**: `npm run qemu:deploy` builds and copies lime-app to lime-packages
+2. **Start QEMU**: `npm run qemu:start` launches LibreMesh at `http://10.13.0.1`
+3. **Development Server**: `npm run qemu:dev` runs lime-app dev server connected to QEMU
+4. **Access Points**:
+   - **QEMU LibreMesh**: `http://10.13.0.1` (production lime-app)
+   - **Development Server**: `http://localhost:8080` (live-reload lime-app with QEMU backend)
+
+**Network Configuration:**
+- QEMU creates LibreMesh node at `10.13.0.1`
+- Development server proxies `/ubus` and `/cgi-bin/**` to QEMU
+- Real ubus JSON-RPC API endpoints for complete testing
+
+### Frontend-Only Development
+Without a LibreMesh backend, expect these console errors (normal behavior):
+- `/ubus` endpoint 500 errors - no router backend available
+- WebSocket connection failures - hot-reload limitation
+- JSON parsing errors from API calls - HTML error pages instead of JSON responses
+
+### Common Fixes for Development Issues
+- **I18n warnings**: Ensure `i18n.activate()` is called before rendering I18nProvider
+- **React fragments in Preact**: Use `import { Fragment } from "preact"` instead of `<>` syntax
+- **Missing providers in tests**: Use `render()` from `utils/test_utils` which includes all necessary providers
