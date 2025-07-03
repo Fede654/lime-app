@@ -104,6 +104,11 @@ const App = () => {
 
 const AppDefault = () => {
     useEffect(() => {
+        // Set default locale immediately to avoid I18nProvider warning
+        if (!i18n.locale) {
+            i18n.activate("en");
+        }
+        // Then load dynamic locale
         dynamicActivate(fromNavigator().split("-")[0] as Locales);
     }, []);
     return (
