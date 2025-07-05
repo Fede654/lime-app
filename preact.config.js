@@ -85,10 +85,8 @@ export default function (config, env, helpers) {
                 },
             },
         };
-    }
 
-    // Disable Critters plugin to fix CSS parsing error
-    if (isProd) {
+        // Disable Critters plugin to fix CSS parsing error
         const crittersPlugins = helpers.getPluginsByName(
             config,
             "CrittersPlugin"
