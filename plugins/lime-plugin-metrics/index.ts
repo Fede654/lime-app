@@ -5,4 +5,4 @@ export default {
     name: "Metrics",
     page: Metrics,
     menu: MetricsMenu,
-};
+} as LimePlugin;

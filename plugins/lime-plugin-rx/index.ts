@@ -5,4 +5,4 @@ export default {
     name: "Rx",
     page: Rx,
     menu: RxMenu,
-};
+} as LimePlugin;
