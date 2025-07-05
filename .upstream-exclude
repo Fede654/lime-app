@@ -4,6 +4,13 @@
 # Internal Development Documentation (entire directory)
 /docs/dev-internal/
 
+# QEMU Testing Documentation (moved to internal)
+# Note: QEMU scripts remain available for upstream contribution
+# but documentation is now part of our internal dev workflow
+
+# Move component credits to internal docs
+/docs/dev-internal/references/teenny-icons-attribution.md
+
 # AI Development Infrastructure
 /scripts/ai-*.sh
 /.cursorrules

@@ -1,30 +1,38 @@
-# QEMU LibreMesh Testing Setup
+# 🖥️ Guía QEMU - Entorno de Testing LibreMesh
 
-## Overview
+## 🎯 Propósito
 
-This document describes the persistent QEMU LibreMesh testing environment for lime-app integration testing. The setup provides authenticated testing against a real LibreMesh backend running in QEMU.
+Esta guía describe el entorno persistente de testing QEMU LibreMesh integrado con nuestro flujo de desarrollo IA+Humano. Permite testing autenticado contra un backend LibreMesh real ejecutándose en QEMU.
+
+**Integración con nuestro stack de desarrollo:**
+- Compatible con scripts `npm run verify:qemu` y `npm run qa:ai`
+- Optimizado para desarrollo colaborativo con Claude Code
+- Parte del framework de testing comprehensivo del equipo
 
 ## Quick Start
 
 ```bash
-# 1. Setup persistent QEMU configuration
-./scripts/qemu-persistent-setup.sh setup
+# 1. Verificación completa del entorno (incluye QEMU)
+npm run verify:setup
 
-# 2. Run authenticated integration tests
+# 2. Testing con IA y QEMU integrados
+npm run qa:ai
+
+# 3. Testing específico QEMU
 npm run test:authenticated
 
-# 3. Test QEMU accessibility
-./scripts/qemu-persistent-setup.sh test
+# 4. Desarrollo con backend real
+npm run qemu:dev
 ```
 
 ## Architecture
 
-### Components
+### System Components
 
-1. **QEMU LibreMesh**: Real LibreMesh instance running in QEMU
-2. **Authentication Helpers**: Automated login and session management
-3. **Test Infrastructure**: Jest tests with real backend integration
-4. **Persistent Configuration**: Reusable setup for faster testing
+1. **QEMU LibreMesh**: Authentic LibreMesh instance in virtual environment
+2. **Authentication System**: Automated login and session management
+3. **Test Infrastructure**: Jest framework with real backend integration
+4. **Persistent Configuration**: Reusable setup for accelerated testing cycles
 
 ### Network Configuration
 
@@ -275,7 +283,7 @@ ubus list
 | Test execution | ~10 seconds | ~1.25 seconds |
 | Total cycle time | ~60 seconds | ~3.35 seconds |
 
-**18x speed improvement** for development testing cycles.
+**18x performance improvement** for development testing cycles.
 
 ## Integration with CI/CD
 
@@ -354,6 +362,6 @@ This persistent QEMU setup provides:
 ✅ **Authenticated API testing**  
 ✅ **Automatic fallback to mocks**  
 ✅ **Development server integration**  
-✅ **CI/CD ready**  
+✅ **CI/CD compatible**  
 
-The setup transforms lime-app testing from slow, manual processes to fast, automated integration testing with real LibreMesh functionality.
+This setup transforms LiMeApp testing from slow, manual processes to fast, automated integration testing with authentic LibreMesh functionality.

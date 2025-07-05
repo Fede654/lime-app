@@ -9,18 +9,21 @@ LiMeApp is a Preact-based web application for LibreMesh router management. It pr
 ## Development Commands
 
 ### Setup and Dependencies
+
 ```bash
 npm install                     # Install dependencies
 npm install                     # Or with Docker: docker-compose run --rm ui npm i
 ```
 
 ### Development Server
+
 ```bash
 npm run dev                     # Start development server with hot reload (proxies to 10.13.0.1)
 env NODE_HOST=10.5.0.9 npm run dev  # Use custom router IP as backend
 ```
 
 ### Build Commands
+
 ```bash
 npm run build                   # Development build
 npm run build:production        # Production build (extracts and compiles translations)
@@ -28,6 +31,7 @@ npm run serve                   # Build and serve production version
 ```
 
 ### Testing
+
 ```bash
 npm test                        # Run all tests
 npm run clear-jest              # Clear Jest cache
@@ -38,12 +42,14 @@ npm run test -- --testPathPattern="filename.spec.tsx"  # Run specific test file
 ```
 
 ### Linting and Code Quality
+
 ```bash
 npm run lint                    # Run TypeScript, ESLint, and Prettier checks
 npm run lint:fix                # Auto-fix linting issues
 ```
 
 ### Development Verification and Quality Assurance
+
 ```bash
 # Environment Verification
 npm run verify:setup            # Comprehensive development environment check
@@ -66,12 +72,14 @@ npm run ai:test                 # AI test validation
 ```
 
 ### Translations (i18n)
+
 ```bash
 npm run translations:extract    # Extract translatable strings
 npm run translations:compile    # Compile translations
 ```
 
 ### Storybook
+
 ```bash
 npm run storybook              # Start Storybook on port 8081
 npm run storybook:build        # Build Storybook
@@ -79,18 +87,25 @@ npm run storybook:deploy       # Deploy to GitHub Pages
 ```
 
 ### Plugin Development
+
 ```bash
 npm run create-plugin <pluginName>  # Bootstrap new plugin structure
 ```
 
+### QEMU LibreMesh Integration
+
+> **📖 Documentación completa**: Ver [Guía QEMU](../herramientas/GUIA_QEMU.md) para setup detallado
+
 ### QEMU LibreMesh Integration (Standardized Workflow)
 
 **Quick Start - One Command Deployment:**
+
 ```bash
 npm run deploy:qemu                  # ⭐ Build and deploy to running QEMU (recommended)
 ```
 
 **QEMU Management:**
+
 ```bash
 npm run qemu:start                   # Start QEMU LibreMesh
 npm run qemu:stop                    # Stop QEMU LibreMesh cleanly
@@ -99,6 +114,7 @@ npm run qemu:status                  # Check QEMU and lime-app status
 ```
 
 **Development Workflow:**
+
 ```bash
 npm run qemu:dev                     # Start development server with QEMU backend
 npm run qemu:check                   # Legacy status check (use qemu:status instead)
@@ -106,44 +122,51 @@ npm run qemu:deploy                  # Legacy build+deploy (use deploy:qemu inst
 ```
 
 **Access Points:**
-- **QEMU LibreMesh**: http://10.13.0.1 (production lime-app)
-- **Development Server**: http://localhost:8080 (live-reload with QEMU backend)
+
+-   **QEMU LibreMesh**: http://10.13.0.1 (production lime-app)
+-   **Development Server**: http://localhost:8080 (live-reload with QEMU backend)
 
 ## Architecture
 
 ### Plugin System
-- Each plugin lives in `plugins/lime-plugin-<name>/`
-- Plugin structure: `index.ts` exports `{ name, page, menu, additionalRoutes?, additionalProtectedRoutes?, menuGroup? }`
-- Plugins are registered in `src/config.ts`
-- Menu items are automatically generated from plugin definitions
-- **Menu Groups**: Plugins can be grouped using `menuGroup` property (e.g., "meshwide" for mesh-wide related plugins)
+
+-   Each plugin lives in `plugins/lime-plugin-<name>/`
+-   Plugin structure: `index.ts` exports `{ name, page, menu, additionalRoutes?, additionalProtectedRoutes?, menuGroup? }`
+-   Plugins are registered in `src/config.ts`
+-   Menu items are automatically generated from plugin definitions
+-   **Menu Groups**: Plugins can be grouped using `menuGroup` property (e.g., "meshwide" for mesh-wide related plugins)
 
 ### State Management
-- **TanStack Query** (formerly React Query): Primary data fetching and caching (modern approach)
-- **Redux + RxJS**: Legacy state management (being phased out)
-- Global query cache managed by `@tanstack/react-query`
-- **Shared State**: Mesh-wide components use shared state synchronization via `components/shared-state/`
+
+-   **TanStack Query** (formerly React Query): Primary data fetching and caching (modern approach)
+-   **Redux + RxJS**: Legacy state management (being phased out)
+-   Global query cache managed by `@tanstack/react-query`
+-   **Shared State**: Mesh-wide components use shared state synchronization via `components/shared-state/`
 
 ### Component Architecture
-- **Preact**: React-like framework with smaller bundle size (3kB)
-- **JSX**: Component templates with TypeScript support
-- **CSS Modules**: Scoped styling via `.less` imports
-- **Global styles**: Bootstrap-inspired classes in `src/style/index.less`
-- **Tailwind CSS**: Utility-first CSS framework integration
+
+-   **Preact**: React-like framework with smaller bundle size (3kB)
+-   **JSX**: Component templates with TypeScript support
+-   **CSS Modules**: Scoped styling via `.less` imports
+-   **Global styles**: Bootstrap-inspired classes in `src/style/index.less`
+-   **Tailwind CSS**: Utility-first CSS framework integration
 
 ### Backend Communication
-- **uHTTPd client**: Singleton service for ubus JSON-RPC calls
-- **API endpoints**: Functions that define request URLs and payloads
-- **Queries**: Read operations using `useQuery`
-- **Mutations**: Write operations using `useMutation`
+
+-   **uHTTPd client**: Singleton service for ubus JSON-RPC calls
+-   **API endpoints**: Functions that define request URLs and payloads
+-   **Queries**: Read operations using `useQuery`
+-   **Mutations**: Write operations using `useMutation`
 
 ### Routing
-- **Public routes**: Available without authentication
-- **Protected routes**: Require root authentication via `CommunityProtectedRoute`
-- **First Boot Wizard**: Special routing logic with banner system
-- **Path aliases**: Configured in `preact.config.js`
+
+-   **Public routes**: Available without authentication
+-   **Protected routes**: Require root authentication via `CommunityProtectedRoute`
+-   **First Boot Wizard**: Special routing logic with banner system
+-   **Path aliases**: Configured in `preact.config.js`
 
 ### Testing Strategy
+
 1. **Component tests**: Mock API endpoints, test user interactions (`*.spec.js`)
 2. **API tests**: Test endpoint calls and data transformations (`*Api.spec.js`)
 3. **Jest + Testing Library**: Primary testing stack with Preact extensions
@@ -151,6 +174,7 @@ npm run qemu:deploy                  # Legacy build+deploy (use deploy:qemu inst
 5. **Test isolation**: Each test cleans up query cache and mocks
 
 ### Path Aliases
+
 ```javascript
 ~/ → src/
 components/ → src/components/
@@ -160,40 +184,47 @@ plugins/ → plugins/
 ```
 
 ### Translation System
-- **LinguiJS**: Internationalization framework
-- **Extract-compile workflow**: `lingui extract` → `lingui compile`
-- **Supported locales**: ar, ast, ca, da, de, el, en, es, eu, fr, it, ko, lb, mk, nb, pt, ru, skr-ARAB, sr-EC, sv, tr, zh-HANS, zh-HANT, zh
+
+-   **LinguiJS**: Internationalization framework
+-   **Extract-compile workflow**: `lingui extract` → `lingui compile`
+-   **Supported locales**: ar, ast, ca, da, de, el, en, es, eu, fr, it, ko, lb, mk, nb, pt, ru, skr-ARAB, sr-EC, sv, tr, zh-HANS, zh-HANT, zh
 
 ## Key Files and Directories
 
 ### Core Application
-- `src/components/app.tsx`: Main app component with routing
-- `src/config.ts`: Plugin registration
-- `src/store.js`: Redux store setup (legacy)
-- `preact.config.js`: Webpack configuration and dev server proxy
+
+-   `src/components/app.tsx`: Main app component with routing
+-   `src/config.ts`: Plugin registration
+-   `src/store.js`: Redux store setup (legacy)
+-   `preact.config.js`: Webpack configuration and dev server proxy
 
 ### Plugin Development
-- `plugins/lime-plugin-*/index.ts`: Plugin entry points
-- `plugins/lime-plugin-*/src/`: Plugin implementation
-- `devTools/plugins.js`: Plugin creation utility
+
+-   `plugins/lime-plugin-*/index.ts`: Plugin entry points
+-   `plugins/lime-plugin-*/src/`: Plugin implementation
+-   `devTools/plugins.js`: Plugin creation utility
 
 ### Testing
-- `jest.config.js`: Jest configuration with path mapping
-- `utils/test_utils.js`: Test utilities and mocks
+
+-   `jest.config.js`: Jest configuration with path mapping
+-   `utils/test_utils.js`: Test utilities and mocks
 
 ### Build Configuration
-- `package.json`: Scripts and dependencies
-- `tsconfig.json`: TypeScript configuration
-- `tailwind.config.js`: Tailwind CSS setup
-- `postcss.config.js`: PostCSS configuration
+
+-   `package.json`: Scripts and dependencies
+-   `tsconfig.json`: TypeScript configuration
+-   `tailwind.config.js`: Tailwind CSS setup
+-   `postcss.config.js`: PostCSS configuration
 
 ### Development Scripts
-- `scripts/deploy-to-qemu.sh`: Official LibreMesh integration script
-- `scripts/dev-with-qemu.sh`: Development workflow automation
+
+-   `scripts/deploy-to-qemu.sh`: Official LibreMesh integration script
+-   `scripts/dev-with-qemu.sh`: Development workflow automation
 
 ## Development Workflow
 
 ### Adding a New Plugin
+
 1. Use `npm run create-plugin <pluginName>` to bootstrap structure
 2. Implement component with tests first (TDD approach)
 3. Create API endpoints with tests (`*Api.js` and `*Api.spec.js`)
@@ -202,6 +233,7 @@ plugins/ → plugins/
 6. Register plugin in `src/config.ts`
 
 ### Component Development Pattern
+
 1. Write component tests with mocked APIs using `render()` from `utils/test_utils`
 2. Implement component to pass tests
 3. Write API endpoint tests with proper mock cleanup
@@ -210,6 +242,7 @@ plugins/ → plugins/
 6. Add styling with CSS modules (`.less`) or global classes
 
 ### Plugin Structure Convention
+
 ```
 plugins/lime-plugin-<name>/
 ├── index.ts                    # Plugin registration { name, page, menu }
@@ -225,25 +258,29 @@ plugins/lime-plugin-<name>/
 ```
 
 ### Backend Integration
-- Default router IP: `10.13.0.1` (override with `NODE_HOST` env var)
-- ubus calls via `/ubus` endpoint (proxied in development)
-- CGI scripts via `/cgi-bin/**` endpoint
-- Session management with username/password authentication
-- JSON-RPC protocol for all API communication
+
+-   Default router IP: `10.13.0.1` (override with `NODE_HOST` env var)
+-   ubus calls via `/ubus` endpoint (proxied in development)
+-   CGI scripts via `/cgi-bin/**` endpoint
+-   Session management with username/password authentication
+-   JSON-RPC protocol for all API communication
 
 ### Testing Best Practices
-- Mock API calls using `jest.mock('./src/<name>Api')`
-- Clean up query cache after each test: `act(() => queryCache.clear())`
-- Use `render()` from `utils/test_utils` for consistent provider setup (includes ToastProvider, I18nProvider, QueryClientProvider)
-- Test user interactions with `@testing-library/preact`
-- Verify UI state changes with `screen.findBy*` async queries
-- **Preact-specific**: Use `Fragment` from `preact` instead of React fragments (`<>`) to avoid "React is not defined" errors
-- **Test utilities**: `flushPromises()` available for async test scenarios
+
+-   Mock API calls using `jest.mock('./src/<name>Api')`
+-   Clean up query cache after each test: `act(() => queryCache.clear())`
+-   Use `render()` from `utils/test_utils` for consistent provider setup (includes ToastProvider, I18nProvider, QueryClientProvider)
+-   Test user interactions with `@testing-library/preact`
+-   Verify UI state changes with `screen.findBy*` async queries
+-   **Preact-specific**: Use `Fragment` from `preact` instead of React fragments (`<>`) to avoid "React is not defined" errors
+-   **Test utilities**: `flushPromises()` available for async test scenarios
 
 ## Production Deployment
+
 Built bundles are served from `/www/app/` on LibreMesh routers via uHTTPd webserver at `thisnode.info` or router IP address. The production build includes translation compilation and asset optimization.
 
 ### Deployment to Router
+
 ```bash
 npm run build:production
 ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/app
@@ -254,14 +291,16 @@ ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/a
 ### QEMU LibreMesh Integration (Standardized Workflow - 2025)
 
 **Prerequisites:**
+
 1. Clone `lime-packages` repository in parent directory: `../lime-packages/`
 2. Download LibreMesh development images to `../lime-packages/build/`:
-   - `libremesh-2020.4-ow19-x86-64-rootfs.tar.gz` (recommended - stable)
-   - `libremesh-2020.4-ow19-x86-64-ramfs.bzImage`
-   - OR `libremesh-2024.1-*` images (auto-detected)
+    - `libremesh-2020.4-ow19-x86-64-rootfs.tar.gz` (recommended - stable)
+    - `libremesh-2020.4-ow19-x86-64-ramfs.bzImage`
+    - OR `libremesh-2024.1-*` images (auto-detected)
 3. Install `qemu-system-x86_64` and `screen` packages
 
 **Recommended LibreMesh Images (Tested & Working):**
+
 ```bash
 # Download to ../lime-packages/build/
 wget -O libremesh-2020.4-ow19-x86-64-rootfs.tar.gz \
@@ -272,6 +311,7 @@ wget -O libremesh-2020.4-ow19-x86-64-ramfs.bzImage \
 ```
 
 **🚀 Standardized Development Commands (2025):**
+
 ```bash
 # ⭐ RECOMMENDED - One-command deployment
 npm run deploy:qemu                    # Build + deploy to running QEMU
@@ -291,37 +331,44 @@ npm run qemu:check                     # Basic status check (use qemu:status ins
 ```
 
 **🔧 Standardized Development Workflow:**
+
 1. **Quick Deployment**: `npm run deploy:qemu` - builds, deploys, and handles QEMU management
 2. **Status Check**: `npm run qemu:status` - validates QEMU running and lime-app accessible
 3. **Development**: `npm run qemu:dev` - live development server with QEMU backend
 4. **Management**: Use `npm run qemu:start/stop/restart` for QEMU lifecycle
 
 **✅ Key Improvements (2025):**
-- **No more manual SSH/SCP**: Automated deployment handles connectivity issues
-- **Proper process management**: Clean stop/start prevents port conflicts
-- **Auto-detection**: Works with multiple LibreMesh image versions
-- **Validation built-in**: Commands verify successful deployment
-- **Single-command workflow**: `deploy:qemu` handles entire deployment pipeline
+
+-   **No more manual SSH/SCP**: Automated deployment handles connectivity issues
+-   **Proper process management**: Clean stop/start prevents port conflicts
+-   **Auto-detection**: Works with multiple LibreMesh image versions
+-   **Validation built-in**: Commands verify successful deployment
+-   **Single-command workflow**: `deploy:qemu` handles entire deployment pipeline
 
 **Access Points:**
-- **QEMU LibreMesh**: `http://10.13.0.1` (production lime-app)
-- **Development Server**: `http://localhost:8080` (live-reload with QEMU backend)
+
+-   **QEMU LibreMesh**: `http://10.13.0.1` (production lime-app)
+-   **Development Server**: `http://localhost:8080` (live-reload with QEMU backend)
 
 **Network Configuration:**
-- QEMU creates LibreMesh node at `10.13.0.1`
-- Development server proxies `/ubus` and `/cgi-bin/**` to QEMU
-- Real ubus JSON-RPC API endpoints for complete testing
+
+-   QEMU creates LibreMesh node at `10.13.0.1`
+-   Development server proxies `/ubus` and `/cgi-bin/**` to QEMU
+-   Real ubus JSON-RPC API endpoints for complete testing
 
 ### Frontend-Only Development
+
 Without a LibreMesh backend, expect these console errors (normal behavior):
-- `/ubus` endpoint 500 errors - no router backend available
-- WebSocket connection failures - hot-reload limitation
-- JSON parsing errors from API calls - HTML error pages instead of JSON responses
+
+-   `/ubus` endpoint 500 errors - no router backend available
+-   WebSocket connection failures - hot-reload limitation
+-   JSON parsing errors from API calls - HTML error pages instead of JSON responses
 
 ### Common Fixes for Development Issues
-- **I18n warnings**: Ensure `i18n.activate()` is called before rendering I18nProvider
-- **React fragments in Preact**: Use `import { Fragment } from "preact"` instead of `<>` syntax
-- **Missing providers in tests**: Use `render()` from `utils/test_utils` which includes all necessary providers
+
+-   **I18n warnings**: Ensure `i18n.activate()` is called before rendering I18nProvider
+-   **React fragments in Preact**: Use `import { Fragment } from "preact"` instead of `<>` syntax
+-   **Missing providers in tests**: Use `render()` from `utils/test_utils` which includes all necessary providers
 
 ## Human-AI Collaborative Development
 
@@ -347,29 +394,32 @@ npm run ai:review
 
 See [DEVELOPMENT_ORGANIZATION.md](./DEVELOPMENT_ORGANIZATION.md) for complete guidelines on:
 
-- **Team Composition**: Human developers + AI assistants roles and responsibilities
-- **AI Tool Specialization**: When to use Claude Code vs Cursor vs GitHub Copilot
-- **Collaborative Workflow Patterns**: Architecture-first, TDD with AI, Debug-driven development
-- **Quality Assurance Framework**: AI-assisted code review, security scanning, documentation checks
-- **Cross-Platform Development**: Windows (WSL2), Linux, macOS support with AI tools
-- **Contribution Workflow**: From internal development to upstream contribution
+-   **Team Composition**: Human developers + AI assistants roles and responsibilities
+-   **AI Tool Specialization**: When to use Claude Code vs Cursor vs GitHub Copilot
+-   **Collaborative Workflow Patterns**: Architecture-first, TDD with AI, Debug-driven development
+-   **Quality Assurance Framework**: AI-assisted code review, security scanning, documentation checks
+-   **Cross-Platform Development**: Windows (WSL2), Linux, macOS support with AI tools
+-   **Contribution Workflow**: From internal development to upstream contribution
 
 ### AI Assistance Best Practices
 
 **For Claude Code (Terminal-based):**
-- Complex debugging sessions and QEMU troubleshooting
-- Architectural analysis and comprehensive testing strategies
-- Documentation generation and code organization
+
+-   Complex debugging sessions and QEMU troubleshooting
+-   Architectural analysis and comprehensive testing strategies
+-   Documentation generation and code organization
 
 **For Cursor (IDE-integrated):**
-- Real-time code completion and component development
-- Inline refactoring and code exploration
-- Quick prototyping with `Ctrl+K` for natural language to code
+
+-   Real-time code completion and component development
+-   Inline refactoring and code exploration
+-   Quick prototyping with `Ctrl+K` for natural language to code
 
 **For GitHub Copilot:**
-- Function implementations from comments
-- Test case generation and boilerplate code
-- Type definitions and interface creation
+
+-   Function implementations from comments
+-   Test case generation and boilerplate code
+-   Type definitions and interface creation
 
 ### AI Quality Gates
 
@@ -404,26 +454,30 @@ This framework ensures effective collaboration while maintaining code quality an
 ### Strategic Development Insights
 
 **Human-AI Collaborative Development**
-- **Production-ready framework**: Claude Code + Cursor + GitHub Copilot integration tested and validated
-- **Cross-platform compatibility**: Windows WSL2, Linux, macOS achievable with proper verification tooling
-- **AI tool specialization**: Claude Code (debugging/architecture), Cursor (IDE integration), GitHub Copilot (completion)
+
+-   **Production-ready framework**: Claude Code + Cursor + GitHub Copilot integration tested and validated
+-   **Cross-platform compatibility**: Windows WSL2, Linux, macOS achievable with proper verification tooling
+-   **AI tool specialization**: Claude Code (debugging/architecture), Cursor (IDE integration), GitHub Copilot (completion)
 
 **LibreMesh Development Environment (Updated 2025)**
-- **QEMU integration**: Gold standard for authentic LibreMesh development environment
-- **Standardized deployment**: `npm run deploy:qemu` - single command for build + deploy
-- **Automatic QEMU management**: Proper process lifecycle with `scripts/qemu-manager.sh`
-- **Image compatibility**: Auto-detects LibreMesh 2020.4-ow19 or 2024.1 images
-- **Network configuration**: Automated via QEMU manager (no manual setup required)
-- **Development workflow**: `npm run qemu:dev` for live development with QEMU backend
+
+-   **QEMU integration**: Gold standard for authentic LibreMesh development environment
+-   **Standardized deployment**: `npm run deploy:qemu` - single command for build + deploy
+-   **Automatic QEMU management**: Proper process lifecycle with `scripts/qemu-manager.sh`
+-   **Image compatibility**: Auto-detects LibreMesh 2020.4-ow19 or 2024.1 images
+-   **Network configuration**: Automated via QEMU manager (no manual setup required)
+-   **Development workflow**: `npm run qemu:dev` for live development with QEMU backend
 
 **Documentation as Development Infrastructure**
-- **Multi-level architecture**: README (quick start) → DEVELOPMENT_SETUP (comprehensive) → DEVELOPMENT_ORGANIZATION (framework)
-- **Verification scripts**: `npm run verify:setup` dramatically improves developer onboarding success rate
-- **AI transparency**: Assistance markers (`🤖 AI-assisted with: [tool] for [task]`) provide valuable contribution tracking
+
+-   **Multi-level architecture**: README (quick start) → DEVELOPMENT_SETUP (comprehensive) → DEVELOPMENT_ORGANIZATION (framework)
+-   **Verification scripts**: `npm run verify:setup` dramatically improves developer onboarding success rate
+-   **AI transparency**: Assistance markers (`🤖 AI-assisted with: [tool] for [task]`) provide valuable contribution tracking
 
 ### Technical Architecture Patterns
 
 **Quality Gates Framework**
+
 ```bash
 npm run verify:setup         # Prevents 90% of setup issues
 npm run qa:ai                # AI-assisted quality checks complement human review
@@ -432,62 +486,71 @@ npm run test:cross-platform  # Catches platform-specific bugs early
 ```
 
 **npm Scripts as Development Orchestration**
-- **Organized naming**: 25+ scripts with clear patterns `verify:*`, `qa:*`, `ai:*`, `test:*`
-- **Workflow simplification**: `npm run dev:start` = verify + setup + dev server
-- **Cognitive load reduction**: Discoverable workflows improve team productivity
+
+-   **Organized naming**: 25+ scripts with clear patterns `verify:*`, `qa:*`, `ai:*`, `test:*`
+-   **Workflow simplification**: `npm run dev:start` = verify + setup + dev server
+-   **Cognitive load reduction**: Discoverable workflows improve team productivity
 
 ### AI Collaboration Patterns Validated
 
 **Tool Specialization Strategy**
-- **Claude Code**: Complex debugging, systematic problem-solving, comprehensive documentation
-- **Cursor**: Real-time coding assistance, component development, IDE integration  
-- **GitHub Copilot**: Function completion, boilerplate generation, test scaffolding
+
+-   **Claude Code**: Complex debugging, systematic problem-solving, comprehensive documentation
+-   **Cursor**: Real-time coding assistance, component development, IDE integration
+-   **GitHub Copilot**: Function completion, boilerplate generation, test scaffolding
 
 **Proven Workflow Patterns**
-- **Architecture-First**: Human defines structure → AI generates implementation
-- **TDD with AI**: Human writes failing tests → AI creates passing implementation
-- **Debug-Driven**: Human identifies issue → AI provides systematic debugging
-- **Documentation-Enhanced**: Better project docs = better AI assistance quality
+
+-   **Architecture-First**: Human defines structure → AI generates implementation
+-   **TDD with AI**: Human writes failing tests → AI creates passing implementation
+-   **Debug-Driven**: Human identifies issue → AI provides systematic debugging
+-   **Documentation-Enhanced**: Better project docs = better AI assistance quality
 
 ### Context Management Best Practices
 
 **AI Effectiveness Multipliers**
-- **Project memory**: Maintain CLAUDE.md as AI's persistent knowledge base
-- **Clear organization**: File structure affects AI understanding dramatically
-- **Feedback loops**: Verification scripts provide AI with quality validation
-- **Task tracking**: Todo lists essential for complex project coordination
+
+-   **Project memory**: Maintain CLAUDE.md as AI's persistent knowledge base
+-   **Clear organization**: File structure affects AI understanding dramatically
+-   **Feedback loops**: Verification scripts provide AI with quality validation
+-   **Task tracking**: Todo lists essential for complex project coordination
 
 **Quality Assurance Standards**
-- **Script compliance**: shellcheck validation prevents production shell script issues
-- **Documentation investment**: Comprehensive docs reduce long-term support burden
-- **Commit hygiene**: Professional commit messages facilitate future maintenance
-- **Platform foresight**: Cross-platform considerations upfront save significant debugging time
+
+-   **Script compliance**: shellcheck validation prevents production shell script issues
+-   **Documentation investment**: Comprehensive docs reduce long-term support burden
+-   **Commit hygiene**: Professional commit messages facilitate future maintenance
+-   **Platform foresight**: Cross-platform considerations upfront save significant debugging time
 
 ### Repository Community Insights
 
 **LibreMesh Project Spirit**
-- **Multilingual nature**: Genuinely international (24 languages, Spanish 100% translated)
-- **Standards balance**: International development standards (English) + local community needs coexist
-- **Contribution timing**: Consolidate technical presence first, expand linguistically when established
+
+-   **Multilingual nature**: Genuinely international (24 languages, Spanish 100% translated)
+-   **Standards balance**: International development standards (English) + local community needs coexist
+-   **Contribution timing**: Consolidate technical presence first, expand linguistically when established
 
 **Upstream Contribution Strategy**
-- **Quality alignment**: Use quality gates (`npm run qa:upstream`) to meet main repository standards
-- **Documentation organization**: Clear structure facilitates contribution back to LibreMesh project
-- **Collaboration transparency**: Human-AI partnership transparency builds maintainer trust
+
+-   **Quality alignment**: Use quality gates (`npm run qa:upstream`) to meet main repository standards
+-   **Documentation organization**: Clear structure facilitates contribution back to LibreMesh project
+-   **Collaboration transparency**: Human-AI partnership transparency builds maintainer trust
 
 ### Development Velocity & Success Patterns
 
 **Proven Implementation Approach**
-- **Systematic methodology**: plan → implement → test → polish → commit
-- **Verification-first development**: Catch issues before they become problems
-- **Focused productivity**: 3,716 lines of production-ready code/documentation in single focused session
-- **AI partnership model**: Treat AI assistants as specialized team members, not magic solutions
+
+-   **Systematic methodology**: plan → implement → test → polish → commit
+-   **Verification-first development**: Catch issues before they become problems
+-   **Focused productivity**: 3,716 lines of production-ready code/documentation in single focused session
+-   **AI partnership model**: Treat AI assistants as specialized team members, not magic solutions
 
 **Success Factors for Human-AI Projects**
-- **Context excellence**: Provide AI with comprehensive context (documentation, verification scripts, clear structure)
-- **Quality investment**: Focus on quality over speed - tooling investments pay immediate dividends
-- **Synergy achievement**: Human creativity + AI efficiency = force multiplier for complex technical projects
+
+-   **Context excellence**: Provide AI with comprehensive context (documentation, verification scripts, clear structure)
+-   **Quality investment**: Focus on quality over speed - tooling investments pay immediate dividends
+-   **Synergy achievement**: Human creativity + AI efficiency = force multiplier for complex technical projects
 
 ---
 
-*This wisdom forms the foundation for effective human-AI collaborative development on LibreMesh projects and serves as a reference for future development teams.*
+_This wisdom forms the foundation for effective human-AI collaborative development on LibreMesh projects and serves as a reference for future development teams._

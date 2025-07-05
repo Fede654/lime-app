@@ -15,27 +15,35 @@ docs/dev-internal/
 ## Documentation Categories
 
 ### 📋 Decisions (`decisions/`)
+
 Numbered decision records documenting important choices:
-- `001-upstream-separation-strategy.md` - How we separate dev tools from upstream
-- `002-technical-debt-analysis.md` - Technical debt assessment and solutions
-- `003-qemu-testing-implementation.md` - QEMU development environment setup
+
+-   `001-upstream-separation-strategy.md` - How we separate dev tools from upstream
+-   `002-technical-debt-analysis.md` - Technical debt assessment and solutions
+-   `003-qemu-testing-implementation.md` - QEMU development environment setup
 
 **Naming Convention**: `NNN-decision-title.md` (three-digit prefix for sorting)
 
 ### 🔄 Workflows (`workflows/`)
+
 Development processes and team practices:
-- `DEVELOPMENT_ORGANIZATION.md` - Human-AI collaborative development framework
-- Future: PR workflows, release processes, testing strategies
+
+-   `DEVELOPMENT_ORGANIZATION.md` - Human-AI collaborative development framework
+-   Future: PR workflows, release processes, testing strategies
 
 ### 🤖 AI Development (`ai-development/`)
+
 AI-assisted development documentation:
-- `CLAUDE.md` - Context for Claude AI assistant
-- Future: Cursor setup, GitHub Copilot patterns, AI prompt templates
+
+-   `CLAUDE.md` - Context for Claude AI assistant
+-   Future: Cursor setup, GitHub Copilot patterns, AI prompt templates
 
 ### 🏗️ Architecture (`architecture/`)
+
 Internal architecture documentation and diagrams:
-- `ARQUITECTURA.md` - Spanish architecture documentation
-- Future: Component diagrams, data flow, decision trees
+
+-   `ARQUITECTURA.md` - Spanish architecture documentation
+-   Future: Component diagrams, data flow, decision trees
 
 ## Documentation Standards
 
@@ -51,15 +59,19 @@ Use this template for new decisions:
 **Tags**: #category #topic
 
 ## Context
+
 What is the issue that we're seeing that is motivating this decision?
 
 ## Decision
+
 What is the change that we're proposing/doing?
 
 ## Consequences
+
 What becomes easier or more difficult as a result?
 
 ## Alternatives Considered
+
 What other options were evaluated?
 ```
 
@@ -79,14 +91,14 @@ What other options were evaluated?
 
 ## Upstream vs Internal Docs
 
-| Type | Location | Purpose | Upstream? |
-|------|----------|---------|-----------|
-| User guides | `/docs/` | Help users use the app | ✅ Yes |
-| API docs | `/docs/` | Technical reference | ✅ Yes |
-| Tutorials | `/docs/` | Getting started guides | ✅ Yes |
-| Dev decisions | `/docs/dev-internal/` | Team choices | ❌ No |
-| AI workflows | `/docs/dev-internal/` | Productivity tools | ❌ No |
-| Personal prefs | `/docs/dev-internal/` | Team practices | ❌ No |
+| Type           | Location              | Purpose                | Upstream? |
+| -------------- | --------------------- | ---------------------- | --------- |
+| User guides    | `/docs/`              | Help users use the app | ✅ Yes    |
+| API docs       | `/docs/`              | Technical reference    | ✅ Yes    |
+| Tutorials      | `/docs/`              | Getting started guides | ✅ Yes    |
+| Dev decisions  | `/docs/dev-internal/` | Team choices           | ❌ No     |
+| AI workflows   | `/docs/dev-internal/` | Productivity tools     | ❌ No     |
+| Personal prefs | `/docs/dev-internal/` | Team practices         | ❌ No     |
 
 ## Adding New Documentation
 
@@ -99,11 +111,12 @@ What other options were evaluated?
 ## Future Organization
 
 As documentation grows, consider:
-- Sub-categories within each folder
-- Cross-referencing index
-- Search functionality
-- Auto-generated documentation site (for internal use)
+
+-   Sub-categories within each folder
+-   Cross-referencing index
+-   Search functionality
+-   Auto-generated documentation site (for internal use)
 
 ---
 
-*Remember: This documentation helps our team work efficiently. Keep it organized, current, and focused on our actual practices.*
+_Remember: This documentation helps our team work efficiently. Keep it organized, current, and focused on our actual practices._

@@ -1,14 +1,18 @@
-# LimeApp's Developer Tutorial
-Wellcome, this the developer tutorial for LimeApp developers!
+# LiMeApp Developer Tutorial
 
-## What do I need to know to collaborate in the LimeApp?
+Welcome! This is the developer tutorial for LiMeApp contributors.
 
-The LimeApp is written in Javascript, HTML and CSS.
-Having a basic knowledge of these languages will help you to collaborate in the  in the development. You can follow these resources to learn about these languages:
-- Javascript tutorial: https://javascript.info/
-	- We particularly recommend you to read about [Promises](https://es.javascript.info/promise-basics)
+## Prerequisites for LiMeApp Development
+
+LiMeApp is built with JavaScript, HTML, and CSS using the Preact framework.
+Basic knowledge of these technologies will help you contribute effectively:
+
+- **JavaScript Tutorial**: https://javascript.info/
+- **Promises** (essential): https://javascript.info/promise-basics
+- **Preact Documentation**: https://preactjs.com/
+- **React Query**: https://tanstack.com/query/
  
-You can also learn by doing, following this guide and encouraging you to try making changes or adding new screens.
+This tutorial provides hands-on learning - follow along and experiment with adding new functionality.
 
 ## Architectural Design
 <figure>
@@ -16,52 +20,88 @@ You can also learn by doing, following this guide and encouraging you to try mak
 	<figcaption>Architectural Design of the LimeApp</figcaption>
 </figure>
 
-The LimeApp is a web application built on top of the [Preact framework](https://preactjs.com/) which is very similar to React, yet we chose it because it takes less space (3kB).
-The application bundle, which includes all the application code executable by a web browser, is hosted in `/www/app` and is served by the uHTTPd webserver when visiting the IP address of the router or the domain associated with it, typically: thisnode.info.
+LiMeApp is a web application built with [Preact](https://preactjs.com/), a React-compatible framework chosen for its compact size (3kB bundle).
+The compiled application bundle is hosted at `/www/app` on LibreMesh routers and served by uHTTPd. Access it via the router's IP address or the default domain `thisnode.info`.
 
 uHTTPd has a plugin for [ubus](https://openwrt.org/docs/techref/ubus) that allows us to make ubus calls to the different libremesh services/modules through HTTP POST requests using the JSON RPC (Remote Procedure Call) message protocol.
 This is the interface used in the LimeApp to make calls to the `backend` (the router).
 
 It does not matter if you are not familiar with these technologies right now, you will discover them through practice.
 
-## The elements of the LimeApp
-A typical LimeApp functionality implements a screen composed of one or more Preact `Components`.
-The `Components` define what is rendered on screen, specifying the visual aspect of the screen (HTML + css) and the logical one: what is displayed, when, and which action each button performs.
-In the LimeApp screens we commonly want to display information that is available on the router, (e.g. how long ago it was turned on), and perform actions that modify the router configuration (e.g. change the administration password). This is what we mean by `backend` calls.
-To connect the interface with `backend` calls the `Components` use `Queries` and `Mutations` from the [React Query](https://react-query.tanstack.com/) library.
-This library allows us to declaratively indicate what data (`Queries`) each component uses and what actions (`Mutations`) each component performs. And it also relieves us from the complexity of: re-rendering each screen component that depends on a data that was updated in the `backend`, de-duplicating repeated calls, and managing the cache of these calls to avoid asking twice for the same data unnecessarily.
+## LiMeApp Component Architecture
 
-The `Queries` and `Mutations` call asynchronous functions that define the url endpoints and the body of the requests to the backend. We call these functions API endpoints. They match one by one with the `backend` endpoints.
-All of them use a common interface, the `uHTTPd client`, a singleton that abstracts us from handling the ubus session id, the base url address of the webserver and the details of the JSON RPC protocol.
+LiMeApp functionality is implemented as screens composed of one or more Preact `Components`.
+Components define screen rendering by specifying:
+- **Visual aspects**: HTML structure and CSS styling
+- **Logic**: What displays when, and button action handlers
+LiMeApp screens typically:
+- **Display router information** (e.g., uptime, network status)
+- **Modify router configuration** (e.g., change admin password)
+
+These operations require communication with the router backend.
+Components communicate with the backend using `Queries` and `Mutations` from the [TanStack Query](https://tanstack.com/query/) library (formerly React Query).
+TanStack Query provides:
+- **Declarative data fetching**: Specify what data each component needs
+- **Automatic re-rendering**: Components update when backend data changes
+- **Request deduplication**: Prevents duplicate API calls
+- **Intelligent caching**: Avoids unnecessary repeated requests
+
+Queries and Mutations call asynchronous functions that define:
+- **API endpoints**: URL paths and request bodies
+- **Backend mapping**: One-to-one correspondence with router services
+
+All API calls use the `uHTTPd client` singleton, which abstracts:
+- ubus session ID management
+- Base URL configuration
+- JSON-RPC protocol details
 
 ## Example
 
-To better understand how all these pieces interact with each other, let's see an example:
-Remote Access. Remote Access allows you to open a terminal session on the router to be accessed remotely by another person to help diagnose problems on the network. In the LimeApp we implemented this functionality based on [tmate](tmate.io). The screen allows you to view the current session token, close the current session or open a new session.
-Let's start the tour!
+## Complete Implementation Example: Remote Support
+
+To demonstrate how these components work together, we'll build a Remote Support feature that:
+- Opens terminal sessions via [tmate](https://tmate.io/)
+- Displays session tokens for remote access
+- Manages session lifecycle (create/close)
+
+This enables remote troubleshooting by allowing external users to access the router terminal.
 
 ### Tests
 
-The LimeApp has a growing test battery. This battery provides a testing setup and sample tests that allow us to develop new functionality using [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development).
+LiMeApp uses comprehensive testing with [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) methodology.
 
-To implement the tests we use the Testing Framework [Jest](https://jestjs.io/) together with the  [Testing Library](https://testing-library.com/).
-This library allows us to write tests that verify the performance of our components from the user's perspective, and are resistant to implementation changes.
+**Testing Stack:**
+- **[Jest](https://jestjs.io/)**: Testing framework
+- **[Testing Library](https://testing-library.com/)**: User-centric testing utilities
 
-The testing strategy is as follows:
-We test two things separately:
-- 1) the component that renders the functionality we are testing, by mocking the API endpoints that call the `backend`.
-- 2) the API endpoints that call the `backend`.
-This way, if the tests for the API endpoints pass, the endpoint mocks in the component tests match the tested implementation and the component tests also pass, we are guaranteed that the component works as expected, from the interface to the backend calls.
+This combination enables tests that:
+- Verify component behavior from user perspective
+- Remain stable despite implementation changes
 
-The reason for doing this two-step split is that it fits very well with Jest's mocking capabilities.
+**Testing Strategy:**
+
+We test components and APIs separately:
+
+1. **Component Tests**: Mock API endpoints to test UI behavior
+2. **API Tests**: Test actual backend endpoint calls
+
+When both test suites pass and mocks match real implementations, we ensure end-to-end functionality works correctly.
+
+This separation leverages Jest's powerful mocking system for reliable, fast tests.
 
 #### Component Tests
-The main tip for writing component tests is to think about the requirements it has to fulfill from the user's perspective. They are usually of the type:
-"If I click button A, it shows me text B".
-"If I submit form B, and the backend reports an error, it shows me the error."
-We also test that the endpoints are called with the correct parameters.
+**Component Test Approach:**
 
-In order to mock the API endpoints, we first have to define them. We can postpone the actual implementation for later.
+Think from the user's perspective:
+- *"When I click this button, I see this result"*
+- *"When the backend returns an error, I see an error message"*
+- *"When I submit this form, the correct API is called"*
+
+Test both user interactions and API parameter validation.
+
+**Step 1: Define API Interfaces**
+
+First, create empty API functions for mocking (implement later):
 
 ```javascript
 // File at: lime-plugin-remotesupport/src/remoteSupportApi.js
@@ -71,9 +111,11 @@ export function openSession() {}
 export function closeSession() {}
 ```
 
-These are the functions that our `Queries` and `Mutations` will use later, for the moment they don't do anything, they only allow us to mock them.
+These empty functions enable mocking while we develop the component tests.
 
-Now we are ready to define the tests of the component. Each part is explained in the comments.
+**Step 2: Component Tests**
+
+Define comprehensive tests before implementation:
 
 ```javascript
 // File at: lime-plugin-remotesupport/remoteSupport.spec.js
@@ -138,14 +180,17 @@ describe('Remote Support Page', () => {
 });
 ```
 
-Once we have the component tests we can get into the component implementation itself (`RemoteSupportPage`).
+**Step 3: Implement Component**
 
-> Tip: Using `it.skip(...)` we can mark the tests so that they are not executed, and gradually unmark from the simplest to the most complex, as we advance in the implementation.
+With tests defined, implement the `RemoteSupportPage` component.
 
-> Tip: be careful if you are using the `render()` function from `utils/test_utils`, it include the `ReactQueryCacheProvider`, which have to be clear `afterEach` test in order to reset the query cache. See the example above. 
+**💡 Development Tips:**
+- Use `it.skip(...)` to gradually enable tests from simple to complex
+- Always call `queryCache.clear()` in `afterEach` when using `render()` from `utils/test_utils`
+- The render function includes TanStack Query providers automatically 
 
-To run the tests we do:
-```
+**Run Tests:**
+```bash
 npm run test plugins/lime-plugin-remotesupport/remoteSupport.spec.js
 ```
 

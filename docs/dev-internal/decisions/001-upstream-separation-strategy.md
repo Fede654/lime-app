@@ -32,12 +32,12 @@ The `.upstream-exclude` file tracks components that should not be included in up
 
 Run `./scripts/setup-upstream-aliases.sh` to configure git aliases:
 
-- `git upstream-status` - Show only upstream-safe changes
-- `git upstream-add` - Stage only upstream-safe files
-- `git upstream-commit` - Create marked upstream-ready commits
-- `git upstream-diff` - Show diff excluding development files
-- `git upstream-patch` - Generate clean patch files
-- `git upstream-check` - Verify commit upstream compatibility
+-   `git upstream-status` - Show only upstream-safe changes
+-   `git upstream-add` - Stage only upstream-safe files
+-   `git upstream-commit` - Create marked upstream-ready commits
+-   `git upstream-diff` - Show diff excluding development files
+-   `git upstream-patch` - Generate clean patch files
+-   `git upstream-check` - Verify commit upstream compatibility
 
 ### 3. Branch Strategy
 
@@ -99,6 +99,7 @@ Transform development tools into optional upstream contributions:
 4. **Remove Personal Preferences**: Keep tools generic and configurable
 
 Example transformation:
+
 ```
 scripts/qemu-manager.sh → contrib/qemu-dev/qemu-manager.sh
 scripts/ai-*.sh         → (probably never upstream)
@@ -121,4 +122,4 @@ CLAUDE.md              → contrib/dev-tools/ai-context-example.md
 
 ---
 
-*This strategy ensures we can work efficiently while respecting upstream project standards.*
+_This strategy ensures we can work efficiently while respecting upstream project standards._
