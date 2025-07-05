@@ -52,6 +52,15 @@ export default function (config, env, helpers) {
     config.resolve.alias.utils = path.resolve(__dirname, "src/utils");
     config.resolve.alias.plugins = path.resolve(__dirname, "plugins");
 
+    // Suppress timeago.js source map warnings
+    config.stats = {
+        ...config.stats,
+        warningsFilter: [
+            /Failed to parse source map.*timeago\.js/,
+            /ENOENT.*timeago\.js/,
+        ],
+    };
+
     // Disable Critters plugin to fix CSS parsing error
     if (isProd) {
         const crittersPlugins = helpers.getPluginsByName(

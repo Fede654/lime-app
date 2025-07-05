@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 import { screen, waitFor, within } from "@testing-library/preact";
 
-import { getPath } from "plugins/lime-plugin-metrics/src/metricsApi";
 import {
     getInternetStatus,
     getNodeStatus,
@@ -19,7 +18,11 @@ jest.mock("plugins/lime-plugin-metrics/src/metricsQueries", () => ({
     useLoss: jest.fn(),
 }));
 
-import { usePath, usePathLoss, useLoss } from "plugins/lime-plugin-metrics/src/metricsQueries";
+import {
+    useLoss,
+    usePath,
+    usePathLoss,
+} from "plugins/lime-plugin-metrics/src/metricsQueries";
 
 const mockedNodeStatus = jest.mocked(getNodeStatus);
 const mockedInternetStatus = jest.mocked(getInternetStatus);
@@ -39,7 +42,7 @@ describe("align page", () => {
             isError: false,
             error: null,
             isSuccess: true,
-            status: 'success',
+            status: "success",
         } as any);
         mockedUsePathLoss.mockReturnValue({
             refetch: jest.fn(),
@@ -48,7 +51,7 @@ describe("align page", () => {
             isError: false,
             error: null,
             isSuccess: true,
-            status: 'success',
+            status: "success",
         } as any);
         mockedUseLoss.mockReturnValue({
             data: 0,
@@ -57,7 +60,7 @@ describe("align page", () => {
             isError: false,
             error: null,
             isSuccess: true,
-            status: 'success',
+            status: "success",
         } as any);
     });
 
@@ -90,7 +93,7 @@ describe("align page", () => {
 
     it("look that every node is painted on the path", async () => {
         render(<InternetPath />);
-        
+
         // Check that usePath hook was called and returned data
         expect(mockedUsePath).toHaveBeenCalled();
 
