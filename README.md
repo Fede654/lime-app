@@ -2,51 +2,66 @@
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/libremesh/lime-app.svg)](https://greenkeeper.io/) [![Build Status](https://travis-ci.org/libremesh/lime-app.svg?branch=develop)](https://travis-ci.org/libremesh/lime-app) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-> Geek-free Web App for setup and mantainance of Libremesh nodes built on Preact
+> Geek-free Web App for setup and maintenance of LibreMesh nodes built on Preact
 
 <p align="center"><br><br>
     <img height="480" src="docs/assets/screenshots.gif" alt="Screenshots" />
 </p>
 
-## Development Environment Installation
+## Quick Start
+
+**For complete development setup with QEMU LibreMesh backend, see [DEVELOPMENT_SETUP.md](./DEVELOPMENT_SETUP.md)**
+
+### Basic Installation
 
 **Clone this repo:**
-
 ```bash
 git clone https://github.com/libremesh/lime-app.git limeapp
 cd limeapp
+npm install
 ```
 
-**Install the dependencies:**
+### Development Options
+
+#### Option 1: Full LibreMesh Development Environment (Recommended)
+
+For developing with a real LibreMesh backend:
 
 ```bash
-npm install
-
-# Or with docker
-docker-compose run --rm ui npm i
+# Complete setup - see DEVELOPMENT_SETUP.md for details
+npm run qemu:start    # Sets up LibreMesh in QEMU
+npm run qemu:dev      # Development server with real backend
 ```
 
-## Development Workflow
+**Provides:**
+- Real LibreMesh backend with ubus API
+- Complete mesh networking features
+- Authentic development environment
+- Access to all LibreMesh services
 
-### Start a live-reload development server
+#### Option 2: Frontend-Only Development
 
-The LiMeApp is a frontend application for services running on a LibreMesh router.
-By running:
+For UI development with mocked backend:
 
 ```bash
 npm run dev
-
-# Or with docker
-docker-compose up
 ```
 
-we can serve the LiMeApp with hot reloading and it will proxy every backend request to http://10.13.0.1, the default ip address for LibreMesh routers.
+**Provides:**
+- Hot-reload development server
+- Mocked API responses for UI testing
+- Faster iteration for frontend changes
+- No backend dependencies
 
-If you already have a LibreMesh router reachable at any given IP address, let's say 10.5.0.9, you can use it as a backend with:
+#### Option 3: Existing LibreMesh Router
+
+If you have a LibreMesh router available:
 
 ```bash
-env NODE_HOST=10.5.0.9 npm run dev
+env NODE_HOST=192.168.1.1 npm run dev
 ```
+
+**Replace `192.168.1.1` with your router's IP address.**
 
 If you want, you can also setup a virtual LibreMesh node following [lime-packages: TESTING.md](https://github.com/libremesh/lime-packages/blob/master/TESTING.md#development-with-qemu-virtual-machine), which will be available at http://10.13.0.1 by default.
 
@@ -65,10 +80,32 @@ ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/a
 ### Run tests
 
 ```bash
-npm run tests
+npm test
 ```
+
+### Development Verification
+
+Ensure your development environment is properly set up:
+
+```bash
+npm run verify:setup     # Comprehensive setup verification
+npm run verify:qemu      # QEMU LibreMesh environment check
+npm run qa:full          # Complete quality assurance
+```
+
+### AI-Assisted Development
+
+This project supports human-AI collaborative development:
+
+```bash
+npm run verify:ai        # Check AI tools integration
+npm run ai:review        # AI-assisted code review
+npm run qa:ai            # AI quality checks
+```
+
+See [DEVELOPMENT_ORGANIZATION.md](./DEVELOPMENT_ORGANIZATION.md) for complete AI collaboration guidelines.
 
 ### Contribute
 
-Plase, read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation.
+Please read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation.
 We also have a [Tutorial](docs/Tutorial.md) for newcomers :)

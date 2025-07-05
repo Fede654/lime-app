@@ -43,6 +43,28 @@ npm run lint                    # Run TypeScript, ESLint, and Prettier checks
 npm run lint:fix                # Auto-fix linting issues
 ```
 
+### Development Verification and Quality Assurance
+```bash
+# Environment Verification
+npm run verify:setup            # Comprehensive development environment check
+npm run verify:qemu             # QEMU LibreMesh environment validation
+npm run verify:ai               # AI tools integration check
+npm run verify:cross-platform   # Cross-platform compatibility check
+
+# Quality Assurance
+npm run qa:fast                 # Quick quality checks (lint)
+npm run qa:full                 # Complete QA (test + lint + build + integration)
+npm run qa:ai                   # AI-assisted quality analysis
+npm run qa:cross-platform       # Cross-platform testing
+npm run qa:upstream             # Upstream contribution readiness
+
+# AI-Assisted Development
+npm run ai:review               # AI code review and suggestions
+npm run ai:security             # AI security vulnerability scan
+npm run ai:docs                 # AI documentation completeness check
+npm run ai:test                 # AI test validation
+```
+
 ### Translations (i18n)
 ```bash
 npm run translations:extract    # Extract translatable strings
@@ -216,9 +238,19 @@ ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/a
 **Prerequisites:**
 1. Clone `lime-packages` repository in parent directory: `../lime-packages/`
 2. Download LibreMesh development images to `../lime-packages/build/`:
-   - `libremesh-2024.1-ow23.05.5-default-x86-64-generic-squashfs-rootfs.img.gz`
-   - `libremesh-2024.1-ow23.05.5-default-x86-64-generic-initramfs-kernel.bin`
-3. Install `qemu-system-x86_64` package
+   - `libremesh-2020.4-ow19-x86-64-rootfs.tar.gz` (recommended)
+   - `libremesh-2020.4-ow19-x86-64-ramfs.bzImage`
+3. Install `qemu-system-x86_64` and `screen` packages
+
+**Recommended LibreMesh Images (Tested & Working):**
+```bash
+# Download to ../lime-packages/build/
+wget -O libremesh-2020.4-ow19-x86-64-rootfs.tar.gz \
+  "https://downloads.libremesh.org/releases/2020.4-ow19/targets/x86/64/libremesh-2020.4-ow19-default-x86-64-generic-rootfs.tar.gz"
+
+wget -O libremesh-2020.4-ow19-x86-64-ramfs.bzImage \
+  "https://downloads.libremesh.org/releases/2020.4-ow19/targets/x86/64/libremesh-2020.4-ow19-default-x86-64-ramfs.bzImage"
+```
 
 **Official Development Commands:**
 ```bash
@@ -228,11 +260,16 @@ npm run qemu:start                     # Build, deploy, and start QEMU
 npm run qemu:check                     # Check QEMU status
 npm run qemu:dev                       # Start development server with QEMU backend
 
-# Manual workflow (following lime-packages/TESTING.md)
-npm run build:production
-cp -r build/* ../lime-packages/packages/lime-app/files/www/app/
-cd ../lime-packages
-sudo ./tools/qemu_dev_start --libremesh-workdir . build/rootfs.img.gz build/kernel.bin
+# Manual workflow with recommended images
+screen -S libremesh -d -m sudo ../lime-packages/tools/qemu_dev_start \
+  --libremesh-workdir ../lime-packages \
+  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz \
+  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage
+
+# Configure LibreMesh network (in screen session)
+screen -r libremesh
+ip addr add 10.13.0.1/16 dev br-lan
+/etc/init.d/uhttpd start
 ```
 
 **Development Workflow:**
@@ -258,3 +295,79 @@ Without a LibreMesh backend, expect these console errors (normal behavior):
 - **I18n warnings**: Ensure `i18n.activate()` is called before rendering I18nProvider
 - **React fragments in Preact**: Use `import { Fragment } from "preact"` instead of `<>` syntax
 - **Missing providers in tests**: Use `render()` from `utils/test_utils` which includes all necessary providers
+
+## Human-AI Collaborative Development
+
+This project supports **human-AI collaborative development** across multiple platforms and AI tools. The framework is designed for teams using Claude Code, Cursor, GitHub Copilot, and other AI assistants.
+
+### Quick Start for AI Collaboration
+
+```bash
+# Verify AI tools integration
+npm run verify:ai
+
+# Start development with environment verification
+npm run dev:start
+
+# AI-assisted quality checks
+npm run qa:ai
+
+# AI code review
+npm run ai:review
+```
+
+### Development Organization Framework
+
+See [DEVELOPMENT_ORGANIZATION.md](./DEVELOPMENT_ORGANIZATION.md) for complete guidelines on:
+
+- **Team Composition**: Human developers + AI assistants roles and responsibilities
+- **AI Tool Specialization**: When to use Claude Code vs Cursor vs GitHub Copilot
+- **Collaborative Workflow Patterns**: Architecture-first, TDD with AI, Debug-driven development
+- **Quality Assurance Framework**: AI-assisted code review, security scanning, documentation checks
+- **Cross-Platform Development**: Windows (WSL2), Linux, macOS support with AI tools
+- **Contribution Workflow**: From internal development to upstream contribution
+
+### AI Assistance Best Practices
+
+**For Claude Code (Terminal-based):**
+- Complex debugging sessions and QEMU troubleshooting
+- Architectural analysis and comprehensive testing strategies
+- Documentation generation and code organization
+
+**For Cursor (IDE-integrated):**
+- Real-time code completion and component development
+- Inline refactoring and code exploration
+- Quick prototyping with `Ctrl+K` for natural language to code
+
+**For GitHub Copilot:**
+- Function implementations from comments
+- Test case generation and boilerplate code
+- Type definitions and interface creation
+
+### AI Quality Gates
+
+The project includes automated AI-assisted quality checks:
+
+```bash
+npm run qa:ai           # Comprehensive AI quality analysis
+npm run ai:review       # Code review with AI suggestions
+npm run ai:security     # AI security vulnerability scanning
+npm run ai:docs         # AI documentation completeness check
+```
+
+### Commit Message Format for AI Assistance
+
+When AI tools assist with development, use this format:
+
+```bash
+git commit -m "feat(component): add mesh node status visualization
+
+- Implemented TypeScript React component with real-time updates
+- Added comprehensive test suite with 95% coverage
+- Created Storybook stories for all component states
+
+🤖 AI-assisted with: Cursor for component structure
+🤖 AI-assisted with: Claude Code for testing strategy"
+```
+
+This framework ensures effective collaboration while maintaining code quality and preparing for upstream contributions to the LibreMesh project.
