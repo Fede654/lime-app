@@ -28,7 +28,10 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
                 return (
                     <div key={role} className={"flex flex-col h-fit"}>
                         <h2 className={"font-bold"}>{role.toUpperCase()}</h2>
-                        <h2>{ports[role][0].device.toLowerCase()}</h2>
+                        <h2>
+                            {ports[role][0]?.device?.toLowerCase() ||
+                                "Unknown Device"}
+                        </h2>
                         <div className={"flex flex-row gap-5 "}>
                             {ports[role].map((port) => {
                                 const link =
