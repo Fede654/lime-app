@@ -43,14 +43,29 @@ describe("Feature bottom sheet", () => {
         mockedUseMeshWideNodesReference.mockReturnValue({
             data: nodesReferenceState,
             isError: false,
-        });
+            isLoading: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUseMeshWideNodes.mockReturnValue({
             data: nodes(),
             isError: false,
-        });
+            isLoading: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUseSetNodeInfoReferenceState.mockReturnValue({
             mutateAsync: jest.fn(),
-        });
+            data: undefined,
+            error: null,
+            isError: false,
+            isIdle: true,
+            isLoading: false,
+            isSuccess: false,
+            status: 'idle',
+        } as any);
     });
     
     beforeAll(() => {

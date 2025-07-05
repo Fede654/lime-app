@@ -47,10 +47,20 @@ describe("Map component", () => {
         // Mock the mesh-wide queries
         mockedUseMeshWideNodesReference.mockReturnValue({
             data: nodesReferenceState,
-        });
+            isLoading: false,
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUseMeshWideNodes.mockReturnValue({
             data: nodesReferenceState,
-        });
+            isLoading: false,
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUseSelectedMapFeature.mockReturnValue({
             data: null,
             setData: jest.fn(),
@@ -60,11 +70,19 @@ describe("Map component", () => {
         mockedUseLoadLeaflet.mockReturnValue({
             isLoading: false,
             data: { leaflet: true },
-        });
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUseLocation.mockReturnValue({
-            data: { location: { lat: "0", lon: "0" } },
+            data: { location: { lat: "0", lon: "0" }, default: false },
             isLoading: false,
-        });
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         
         // Mock data errors hook
         mockedUseMeshWideDataErrors.mockReturnValue({
@@ -89,10 +107,20 @@ describe("Map component", () => {
         // Update mocks to return data with invalid coordinates
         mockedUseMeshWideNodesReference.mockReturnValue({
             data: {},  // Empty reference state
-        });
+            isLoading: false,
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUseMeshWideNodes.mockReturnValue({
             data: invalidNodesState,  // Actual state with invalid coordinates
-        });
+            isLoading: false,
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         
         render(
             <NodesProvider>

@@ -37,14 +37,28 @@ describe("align page", () => {
             data: last_internet_path_mock,
             isLoading: false,
             isError: false,
-        });
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUsePathLoss.mockReturnValue({
             refetch: jest.fn(),
-        });
+            data: {},
+            isLoading: false,
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
         mockedUseLoss.mockReturnValue({
             data: 0,
             isFetching: false,
-        });
+            isLoading: false,
+            isError: false,
+            error: null,
+            isSuccess: true,
+            status: 'success',
+        } as any);
     });
 
     it("Shows diagnose and map buttons", async () => {
