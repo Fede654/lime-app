@@ -37,7 +37,7 @@ Este índice maestro organiza toda la documentación interna de desarrollo, opti
 | Documento                                                         | Propósito                       | Estado       |
 | ----------------------------------------------------------------- | ------------------------------- | ------------ |
 | [Guía de Colaboración IA](ai-development/GUIA_COLABORACION_IA.md) | Cómo trabajar con Claude/Cursor | 🔄 Por crear |
-| [Contexto Claude](ai-development/CLAUDE.md)                       | Memoria persistente para IA     | ✅ Existente |
+| [Contexto Claude](../../CLAUDE.md)                       | Memoria persistente para IA     | ✅ Existente |
 | [Plantillas de Prompts](ai-development/PLANTILLAS_PROMPTS.md)     | Prompts efectivos probados      | 🔄 Por crear |
 | [Casos de Éxito](ai-development/CASOS_EXITO.md)                   | Ejemplos reales de colaboración | 🔄 Por crear |
 
@@ -96,7 +96,7 @@ Este índice maestro organiza toda la documentación interna de desarrollo, opti
 ### 🤖 Para Desarrollo con IA
 
 1. [Guía de Colaboración IA](ai-development/GUIA_COLABORACION_IA.md)
-2. [Contexto Claude](ai-development/CLAUDE.md)
+2. [Contexto Claude](../../CLAUDE.md)
 3. [Plantillas de Prompts](ai-development/PLANTILLAS_PROMPTS.md)
 4. [Herramientas IA](herramientas/HERRAMIENTAS_IA.md)
 

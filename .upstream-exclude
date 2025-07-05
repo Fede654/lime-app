@@ -14,6 +14,7 @@
 # AI Development Infrastructure
 /scripts/ai-*.sh
 /.cursorrules
+/CLAUDE.md
 
 # Personal Development Scripts (could be made optional later)
 /scripts/verify-ai-tools.sh

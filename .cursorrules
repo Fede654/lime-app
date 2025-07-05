@@ -1,9 +1,34 @@
 # LibreMesh LiMeApp - Cursor IDE Rules
 
-## Project Context
-LiMeApp is a Preact-based web application for LibreMesh router management. It provides a geek-free interface for setup and maintenance of LibreMesh mesh networking nodes, built with a plugin architecture that communicates with router services via ubus JSON-RPC calls.
+> **Contexto actualizado para Cursor IDE - Julio 2025**  
+> **Estado del proyecto**: v4-foundation con arquitectura de documentación completa
 
-## Development Framework
+## 🎯 Project Overview
+
+LiMeApp es una aplicación web moderna construida con **Preact** para la gestión de routers LibreMesh. Proporciona una interfaz libre de complejidades técnicas para configuración y mantenimiento de nodos LibreMesh, con arquitectura de plugins que se comunica con servicios del router via llamadas ubus JSON-RPC.
+
+### 🌟 Estado Actual del Proyecto
+
+- **Rama activa**: `f/v4-foundation`
+- **Documentación**: Sistema integral en español en `docs/dev-internal/`
+- **Desarrollo colaborativo**: Framework IA+Humano completamente implementado
+- **Testing**: Integración QEMU con 140+ tests y cobertura 85%+
+- **Internacionalización**: 24 idiomas soportados (Español 100%, English 100%)
+
+## 📚 Navegación de Documentación
+
+### 🚀 Para desarrollo interno (team members):
+- **[📖 Índice Maestro](docs/dev-internal/INDICE_MAESTRO.md)** - Navegación central de toda la documentación
+- **[🛠️ Configuración Desarrollo](docs/dev-internal/guias/CONFIGURACION_DESARROLLO.md)** - Setup completo con IA+QEMU
+- **[🤖 Guía Colaboración IA](docs/dev-internal/ai-development/GUIA_COLABORACION_IA.md)** - Workflows con Claude/Cursor/Copilot
+- **[🖥️ Guía QEMU](docs/dev-internal/herramientas/GUIA_QEMU.md)** - Entorno testing LibreMesh auténtico
+
+### 🌍 Para contribución upstream:
+- **[📘 Tutorial](docs/Tutorial.md)** - Guía completa de desarrollo
+- **[🛠️ Development Setup](DEVELOPMENT_SETUP.md)** - Configuración básica upstream-ready
+- **[🤝 Contributing](CONTRIBUTING.md)** - Proceso de contribución
+
+## 🏗️ Development Framework
 - **Frontend**: Preact (React-like framework, 3kB bundle)
 - **TypeScript**: Full type safety with path aliases configured
 - **State Management**: TanStack Query (modern) + Redux (legacy)
@@ -27,19 +52,69 @@ npm run qemu:restart       # Clean restart (stop + start)
 npm run qemu:status        # Check QEMU and lime-app status
 ```
 
-### Development Commands
+### 🛠️ Development Commands
+
+#### Setup y Dependencias
 ```bash
-npm run dev                # Development server (proxies to 10.13.0.1)
-npm run qemu:dev           # Development with QEMU backend
-npm test                   # Run test suite
-npm run lint               # TypeScript + ESLint + Prettier
-npm run build:production   # Production build with i18n compilation
+npm install                     # Instalar dependencias del proyecto
+npm run verify:setup           # ⭐ Verificación completa del entorno
+npm run verify:qemu             # Verificar entorno QEMU LibreMesh
+npm run verify:ai               # Verificar herramientas IA
 ```
 
-### Integration Testing
+#### Servidor de Desarrollo
 ```bash
-./scripts/lime-app-integration-tests.sh    # Comprehensive API testing (50+ tests)
-npm run qa:full                            # Complete quality assurance
+# Desarrollo básico (frontend + mocks)
+npm run dev                     # Servidor con hot-reload (proxies a 10.13.0.1)
+
+# Desarrollo avanzado (con backend real)
+npm run qemu:start              # Iniciar LibreMesh en QEMU
+npm run qemu:dev                # Servidor desarrollo con backend QEMU real
+npm run deploy:qemu             # ⭐ Build + deploy a QEMU (comando único)
+
+# Desarrollo con router personalizado
+env NODE_HOST=192.168.1.1 npm run dev
+```
+
+#### Build Commands
+```bash
+npm run build                   # Build de desarrollo
+npm run build:production        # Build de producción (incluye compilación i18n)
+npm run serve                   # Build y servir versión de producción
+```
+
+#### Testing Comprehensivo
+```bash
+# Testing básico
+npm test                        # Ejecutar todos los tests
+npm run test -- --watch         # Modo watch para desarrollo
+npm run test -- --coverage      # Tests con reporte de cobertura
+
+# Testing específico
+npm run test plugins/lime-plugin-name/  # Tests de plugin específico
+npm run test:authenticated      # Tests autenticados contra QEMU real
+npm run test:integration        # Tests de integración completos
+
+# Limpieza de cache
+npm run clear-jest              # Limpiar cache de Jest
+```
+
+#### Quality Assurance
+```bash
+# QA rápido (desarrollo iterativo)
+npm run qa:fast                 # Lint + tests básicos
+
+# QA completo (pre-commit)
+npm run qa:full                 # Tests + lint + build + integración
+
+# QA con IA (análisis avanzado)
+npm run qa:ai                   # Review IA + security + documentación
+
+# QA multiplataforma
+npm run qa:cross-platform       # Tests en múltiples entornos
+
+# QA para upstream
+npm run qa:upstream             # Preparación para contribución upstream
 ```
 
 ## Code Patterns & Conventions
@@ -107,18 +182,47 @@ plugins/ → plugins/
 - Follow plugin structure conventions for new plugins
 - Use `npm run create-plugin <name>` for bootstrapping
 
-## AI Collaboration Context
+## 🤖 Human-AI Collaborative Development
 
-This project supports human-AI collaborative development:
-- **Architecture-first approach**: Human defines structure → AI generates implementation
-- **TDD with AI**: Human writes failing tests → AI creates passing implementation  
-- **Systematic debugging**: Human identifies issue → AI provides systematic resolution
+Este proyecto soporta **desarrollo colaborativo humano-IA** across múltiples plataformas y herramientas AI.
 
-### Quality Gates
+### 🚀 Quick Start para Colaboración IA
+```bash
+# Verificar integración herramientas IA
+npm run verify:ai
+
+# Iniciar desarrollo con verificación de entorno
+npm run dev:start
+
+# Verificaciones de calidad asistidas por IA
+npm run qa:ai
+
+# Review de código con IA
+npm run ai:review
+```
+
+### 🎯 Mejores Prácticas IA para Cursor
+
+**Cursor IDE Specialization:**
+- **Completado código real-time**: Aprovecha `Ctrl+L` para chat contextual
+- **Refactoring inline**: `Ctrl+K` para natural language to code
+- **Exploración código**: `Ctrl+Shift+L` para análisis de archivos
+- **Prototipado rápido**: Templates y snippets inteligentes
+
+**Patterns efectivos:**
+- Describe la intención antes de escribir código
+- Usa comentarios como prompts para generación
+- Aprovecha el contexto del editor para sugerencias precisas
+- Combina con Claude Code para debugging complejo
+
+### 🔧 AI Quality Gates
 ```bash
 npm run verify:setup         # Development environment verification
 npm run qa:ai                # AI-assisted quality checks
 npm run qa:upstream          # Upstream contribution readiness
+npm run ai:review            # Code review con sugerencias IA
+npm run ai:security          # Escaneo vulnerabilidades seguridad IA
+npm run ai:docs              # Verificación completeness documentación IA
 ```
 
 ## LibreMesh Integration
@@ -154,21 +258,80 @@ Without LibreMesh backend, expect:
 - Jest test explorer enabled with coverage on load
 - File nesting patterns for cleaner explorer view
 
-## Contribution Standards
+## 🎯 Cursor-Specific Development Patterns
 
-### Commit Message Format
+### 🚀 Effective Cursor Usage
+
+**Code Generation:**
+- Use `Ctrl+K` with specific, actionable prompts
+- Describe component behavior before implementation
+- Leverage file context for accurate suggestions
+- Combine with existing code patterns for consistency
+
+**Debugging with Cursor:**
+- Use `Ctrl+L` for contextual debugging help
+- Share error messages with surrounding code context
+- Ask for step-by-step debugging approaches
+- Request specific test cases for issue reproduction
+
+**Refactoring Patterns:**
+- Select code blocks and use `Ctrl+K` for transformation
+- Ask for TypeScript interface improvements
+- Request performance optimizations with explanations
+- Get suggestions for modern React patterns
+
+### 📝 Cursor Prompt Templates
+
+**For Component Creation:**
+```
+Create a Preact component for [functionality] that:
+- Uses TypeScript with proper interfaces
+- Follows our CSS Modules pattern
+- Includes comprehensive PropTypes
+- Has proper error handling
+- Is testable with our test utilities
+```
+
+**For API Integration:**
+```
+Implement ubus JSON-RPC endpoint for [feature] that:
+- Follows our API patterns in [similar file]
+- Uses TanStack Query for state management
+- Includes proper error handling
+- Has comprehensive tests
+- Supports our authentication flow
+```
+
+## 🏆 Contribution Standards
+
+### 📝 Formato Commit Message para Asistencia IA
 ```bash
 git commit -m "feat(component): add mesh node status visualization
 
 - Implemented TypeScript React component with real-time updates
-- Added comprehensive test suite with 95% coverage  
+- Added comprehensive test suite with 95% coverage
 - Created Storybook stories for all component states
 
-🤖 AI-assisted with: Cursor for component structure"
+🤖 AI-assisted with: Cursor for component structure
+🤖 AI-assisted with: Claude Code for testing strategy"
 ```
 
-### Upstream Preparation
+### 🌐 Upstream Preparation
 - Use `npm run qa:upstream` for contribution readiness
 - Follow LibreMesh project standards and conventions
 - Maintain multilingual documentation capabilities
 - Ensure cross-platform compatibility (Linux, WSL2, macOS)
+- Check `.upstream-exclude` for internal-only files
+
+### 🧠 Development Wisdom & Best Practices
+
+**Framework Desarrollo Humano-IA Colaborativo**
+- Framework clase producción: Integración Claude Code + Cursor + GitHub Copilot validada
+- Especialización herramientas IA: Claude Code (debugging/arquitectura), Cursor (integración IDE), GitHub Copilot (completion)
+- Compatibilidad multiplataforma: Windows WSL2, Linux, macOS alcanzable con tooling verificación apropiado
+
+**Context Management Best Practices**
+- **Memoria proyecto**: Mantener CLAUDE.md como base conocimiento persistente IA
+- **Organización clara**: Estructura archivos afecta comprensión IA dramáticamente
+- **Feedback loops**: Scripts verificación proporcionan IA con validación calidad
+- **Task tracking**: Listas todo esenciales para coordinación proyecto complejo
