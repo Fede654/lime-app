@@ -6,8 +6,5 @@ export default {
     name: "Align",
     page: Page,
     menu: AlignMenu,
-    store: {
-        name: "align",
-    },
     additionalRoutes: [["align-single/:iface/:mac", AlignSingle]],
 } as LimePlugin;

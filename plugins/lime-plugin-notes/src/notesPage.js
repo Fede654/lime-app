@@ -1,17 +1,16 @@
 /* eslint @typescript-eslint/no-empty-function: "off" */
 import { Trans } from "@lingui/macro";
 import { useEffect, useState } from "preact/hooks";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import { useBoardData } from "utils/queries";
 
-import { getNotes, setNotes } from "./notesActions";
-import { getNotesState } from "./notesSelectors";
+import { useNotes, useSetNotes } from "./notesQueries";
 import style from "./style.less";
 
-export const Page = ({ setNotes, getNotes, notes, loading }) => {
+export const Page = () => {
     const { data: boardData } = useBoardData();
+    const { data: notes = "", isLoading } = useNotes();
+    const setNotesMutation = useSetNotes();
     const [value, setValue] = useState(notes || "");
 
     function handleChange(event) {
@@ -19,16 +18,10 @@ export const Page = ({ setNotes, getNotes, notes, loading }) => {
     }
 
     function saveNotes() {
-        setNotes(value);
+        setNotesMutation.mutate(value);
     }
 
-    //Only once
-    useEffect(() => {
-        getNotes();
-        return () => {};
-    }, [getNotes]);
-
-    //After notes reload
+    // Update local state when notes data changes
     useEffect(() => {
         setValue(notes);
         return () => {};
@@ -40,28 +33,21 @@ export const Page = ({ setNotes, getNotes, notes, loading }) => {
                 <span>
                     <Trans>Notes of</Trans>
                 </span>{" "}
-                {boardData.hostname}
+                {boardData?.hostname || "Loading..."}
             </h4>
             <textarea
                 onChange={handleChange}
                 className={style.notes}
                 value={value}
             />
-            <button disabled={loading} onClick={saveNotes}>
+            <button
+                disabled={isLoading || setNotesMutation.isLoading}
+                onClick={saveNotes}
+            >
                 <Trans>Save notes</Trans>
             </button>
         </div>
     );
 };
 
-const mapStateToProps = (state) => ({
-    notes: getNotesState(state),
-    loading: state.notes.loading,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    getNotes: bindActionCreators(getNotes, dispatch),
-    setNotes: bindActionCreators(setNotes, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+export default Page;

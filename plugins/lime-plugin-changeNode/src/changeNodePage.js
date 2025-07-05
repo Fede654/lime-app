@@ -1,30 +1,26 @@
 import { Trans } from "@lingui/macro";
 import { useEffect, useState } from "preact/hooks";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import { useBoardData } from "utils/queries";
 
-import { loadStations } from "./changeNodeActions";
-import { getStations } from "./changeNodeSelectors";
+import { useCloudNodes } from "./changeNodeQueries";
 
-export const ChangeNode = ({ stations, loadStations }) => {
+export const ChangeNode = () => {
     const { data: boardData } = useBoardData();
+    const { data: stations = [] } = useCloudNodes();
 
     const [state, setState] = useState({
         station: boardData && boardData.hostname,
     });
 
     useEffect(() => {
-        setState({
-            station: boardData.hostname,
-        });
+        if (boardData?.hostname) {
+            setState({
+                station: boardData.hostname,
+            });
+        }
         return () => {};
     }, [boardData]);
-
-    useEffect(() => {
-        loadStations();
-    }, [loadStations]);
 
     function handleChange(e) {
         setState({ station: e.target.value });
@@ -39,6 +35,7 @@ export const ChangeNode = ({ stations, loadStations }) => {
     }
 
     function sortStations(stations) {
+        if (!boardData?.hostname) return stations.sort();
         const result = stations.filter((x) => x !== boardData.hostname).sort();
         result.push(boardData.hostname);
         return result;
@@ -79,16 +76,4 @@ export const ChangeNode = ({ stations, loadStations }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    stations: getStations(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    loadStations: bindActionCreators(loadStations, dispatch),
-});
-
-const changeNodeConnected = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ChangeNode);
-export default changeNodeConnected;
+export default ChangeNode;

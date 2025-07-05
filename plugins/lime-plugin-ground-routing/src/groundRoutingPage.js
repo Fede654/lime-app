@@ -1,15 +1,10 @@
 import { Trans } from "@lingui/macro";
-import { useEffect } from "preact/hooks";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
-import { getGroundRouting } from "./groundRoutingActions";
+import { useGroundRouting } from "./groundRoutingQueries";
 import "./style.less";
 
-const Page = ({ getGroundRouting, loading, configuration }) => {
-    useEffect(() => {
-        getGroundRouting();
-    }, [getGroundRouting]);
+const Page = () => {
+    const { data: configuration, isLoading, refetch } = useGroundRouting();
 
     const preStyle = {
         backgroundColor: "#f5f5f5",
@@ -24,24 +19,15 @@ const Page = ({ getGroundRouting, loading, configuration }) => {
                 <Trans>Ground Routing configuration</Trans>
             </h4>
             <pre style={preStyle}>
-                {loading
+                {isLoading
                     ? "Loading..."
                     : JSON.stringify(configuration, null, "  ")}
             </pre>
-            <button onClick={getGroundRouting}>
+            <button onClick={() => refetch()} disabled={isLoading}>
                 <Trans>Reload</Trans>
             </button>
         </div>
     );
 };
 
-const mapStateToProps = (state) => ({
-    configuration: state.groundrouting.configuration,
-    loading: state.groundrouting.loading,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    getGroundRouting: bindActionCreators(getGroundRouting, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+export default Page;
