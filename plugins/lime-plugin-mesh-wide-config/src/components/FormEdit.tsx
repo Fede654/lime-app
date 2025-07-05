@@ -22,7 +22,7 @@ export const EditableField = ({
     isList: boolean;
     name: string;
 }) => {
-    const { control, setValue, watch, getValues } = useFormContext();
+    const { control, setValue, watch } = useFormContext();
 
     const value = watch(name);
     // Hack to force re-render when the list changes
@@ -60,7 +60,7 @@ export const EditableField = ({
             // Sync keys with values length on every render
             syncKeysWithValues();
         }
-    }, [isList, value, name, setValue]);
+    }, [isList, value, name, setValue, syncKeysWithValues]);
 
     if (isList) {
         return (

@@ -10,7 +10,6 @@ import { AddNewConfigSection } from "plugins/lime-plugin-mesh-wide-config/src/co
 import { OptionContainer } from "plugins/lime-plugin-mesh-wide-config/src/components/FormOption";
 import {
     DeletePropModal,
-    EditPropModal,
 } from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
 import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 

@@ -18,6 +18,24 @@ export const readableBytes = (bytes: number) => {
 };
 
 /**
+ * Convert WiFi rate from bytes/second to Mbit/s for display
+ * WiFi rates are typically expressed in Mbit/s not bytes
+ */
+export const readableWifiRate = (bytesPerSecond: number) => {
+    if (bytesPerSecond === 0) return "0 Mbit/s";
+
+    // Convert bytes to bits (multiply by 8) then to Mbit/s (divide by 1,000,000)
+    const mbitsPerSecond = (bytesPerSecond * 8) / 1000000;
+
+    if (mbitsPerSecond >= 1000) {
+        return `${(mbitsPerSecond / 1000).toFixed(1)} Gbit/s`;
+    } else if (mbitsPerSecond >= 1) {
+        return `${mbitsPerSecond.toFixed(1)} Mbit/s`;
+    }
+    return `${(mbitsPerSecond * 1000).toFixed(0)} Kbit/s`;
+};
+
+/**
  * Get the strings that appear on the first array but not on the second one
  * @param array1
  * @param array2
