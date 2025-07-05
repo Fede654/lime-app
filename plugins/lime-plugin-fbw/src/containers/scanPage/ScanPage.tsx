@@ -17,11 +17,17 @@ interface SelectedNetwork {
     community?: string;
 }
 
+interface ScanPageProps {
+    toggleForm: (route: string | null) => () => void;
+    setExpectedHost: (host: string) => void;
+    setExpectedNetwork: (network: any) => void;
+}
+
 export const ScanPage = ({
     toggleForm,
     setExpectedHost,
     setExpectedNetwork,
-}) => {
+}: ScanPageProps) => {
     const { data: boardData } = useBoardData();
 
     const [selectedNetwork, setSelectedNetwork] = useState<SelectedNetwork>({
