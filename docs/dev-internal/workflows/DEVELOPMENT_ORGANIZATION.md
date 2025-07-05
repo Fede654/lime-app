@@ -17,18 +17,21 @@ This document outlines the organization and processes for **human-AI collaborati
 ## Team Composition
 
 ### Human Developers
-- **Platforms:** Windows (WSL2), Linux, macOS
-- **IDEs:** VS Code, JetBrains, vim/neovim
-- **Responsibilities:** Architecture, business logic, code review, user experience
+
+-   **Platforms:** Windows (WSL2), Linux, macOS
+-   **IDEs:** VS Code, JetBrains, vim/neovim
+-   **Responsibilities:** Architecture, business logic, code review, user experience
 
 ### AI Assistants
-- **Claude Code:** Terminal-based development, debugging, complex problem-solving
-- **Cursor:** IDE-integrated coding, real-time assistance, refactoring
-- **Other tools:** As they become available and useful
+
+-   **Claude Code:** Terminal-based development, debugging, complex problem-solving
+-   **Cursor:** IDE-integrated coding, real-time assistance, refactoring
+-   **Other tools:** As they become available and useful
 
 ## Development Environment Setup
 
 ### Quick Start Verification
+
 Run this comprehensive setup check:
 
 ```bash
@@ -46,6 +49,7 @@ npm run verify:ai       # Checks AI tools integration
 ### Platform-Specific Setup
 
 #### Linux (Primary Platform)
+
 ```bash
 # Ubuntu/Debian
 sudo apt update && sudo apt install -y \
@@ -63,6 +67,7 @@ npm run verify:linux
 ```
 
 #### Windows Development
+
 ```powershell
 # Option 1: WSL2 (Recommended for full development)
 wsl --install -d Ubuntu
@@ -81,6 +86,7 @@ npm run verify:windows
 ```
 
 #### macOS Development
+
 ```bash
 # Install via Homebrew
 brew install node git qemu screen
@@ -92,6 +98,7 @@ npm run verify:macos
 ### AI Tools Integration
 
 #### Claude Code Setup
+
 ```bash
 # Install Claude Code CLI (if available)
 # Configure for project-specific context
@@ -102,30 +109,32 @@ focus_areas: [debugging, testing, documentation]" > .claude-config.yml
 ```
 
 #### Cursor IDE Setup
+
 ```json
 // .cursor/settings.json
 {
-  "cursor.ai.enabled": true,
-  "cursor.ai.model": "claude-4-sonnet",
-  "cursor.ai.contextWindow": "large",
-  "cursor.ai.codebase": {
-    "indexing": true,
-    "focusAreas": ["src/", "plugins/", "tests/"]
-  }
+    "cursor.ai.enabled": true,
+    "cursor.ai.model": "claude-4-sonnet",
+    "cursor.ai.contextWindow": "large",
+    "cursor.ai.codebase": {
+        "indexing": true,
+        "focusAreas": ["src/", "plugins/", "tests/"]
+    }
 }
 ```
 
 #### VS Code + AI Extensions
+
 ```json
 // .vscode/settings.json
 {
-  "github.copilot.enable": {
-    "*": true,
-    "yaml": false,
-    "plaintext": false
-  },
-  "cursor.ai.autocomplete": true,
-  "claude.contextFiles": ["DEVELOPMENT_ORGANIZATION.md", "README.md"]
+    "github.copilot.enable": {
+        "*": true,
+        "yaml": false,
+        "plaintext": false
+    },
+    "cursor.ai.autocomplete": true,
+    "claude.contextFiles": ["DEVELOPMENT_ORGANIZATION.md", "README.md"]
 }
 ```
 
@@ -134,15 +143,17 @@ focus_areas: [debugging, testing, documentation]" > .claude-config.yml
 ### Collaborative Workflow Patterns
 
 #### Pattern 1: Architecture-First Development
+
 ```
 1. Human: Define component architecture and interfaces
-2. AI: Generate component scaffolding and initial structure  
+2. AI: Generate component scaffolding and initial structure
 3. Human: Implement complex business logic
 4. AI: Generate comprehensive test suite
 5. Both: Review, refine, and optimize
 ```
 
 #### Pattern 2: TDD with AI Assistance
+
 ```
 1. Human: Write failing test for feature requirement
 2. AI: Generate initial implementation to pass test
@@ -152,6 +163,7 @@ focus_areas: [debugging, testing, documentation]" > .claude-config.yml
 ```
 
 #### Pattern 3: Debug-Driven Development
+
 ```
 1. Human: Identify bug or issue
 2. AI (Claude Code): Analyze and debug systematically
@@ -163,14 +175,17 @@ focus_areas: [debugging, testing, documentation]" > .claude-config.yml
 ### AI Tool Specialization
 
 #### Claude Code (Terminal-based)
+
 **Best for:**
-- Complex debugging sessions
-- QEMU LibreMesh setup and troubleshooting
-- Architectural analysis and planning
-- Comprehensive testing strategies
-- Documentation generation
+
+-   Complex debugging sessions
+-   QEMU LibreMesh setup and troubleshooting
+-   Architectural analysis and planning
+-   Comprehensive testing strategies
+-   Documentation generation
 
 **Usage patterns:**
+
 ```bash
 # Effective prompts
 "Debug the failing mesh-wide tests step by step"
@@ -180,20 +195,24 @@ focus_areas: [debugging, testing, documentation]" > .claude-config.yml
 ```
 
 #### Cursor (IDE-integrated)
+
 **Best for:**
-- Real-time code completion and suggestions
-- Component development and refactoring
-- Inline documentation and comments
-- Code exploration and understanding
-- Quick prototyping
+
+-   Real-time code completion and suggestions
+-   Component development and refactoring
+-   Inline documentation and comments
+-   Code exploration and understanding
+-   Quick prototyping
 
 **Usage patterns:**
-- `Ctrl+K`: Generate code from natural language
-- `Ctrl+L`: Explain selected code
-- `@codebase`: Ask questions about the entire project
-- `@file`: Focus on specific file context
+
+-   `Ctrl+K`: Generate code from natural language
+-   `Ctrl+L`: Explain selected code
+-   `@codebase`: Ask questions about the entire project
+-   `@file`: Focus on specific file context
 
 **Usage patterns:**
+
 ```javascript
 // Comment-driven development
 // TODO: Create a React component for mesh node status display
@@ -203,6 +222,7 @@ focus_areas: [debugging, testing, documentation]" > .claude-config.yml
 ### Quality Assurance with AI
 
 #### Pre-commit AI Checks
+
 ```bash
 # AI-assisted quality gates
 npm run ai:review      # AI code review suggestions
@@ -212,9 +232,10 @@ npm run ai:security    # AI security vulnerability scan
 ```
 
 #### Commit Message Standards for AI-Assisted Work
+
 ```bash
 # Format: type(scope): description
-# 
+#
 # body explaining what was done and AI assistance used
 #
 # 🤖 AI-assisted with: [tool] for [specific task]
@@ -244,95 +265,99 @@ git commit -m "fix(qemu): resolve network connectivity issues
 ### Automated Quality Gates
 
 #### Development Quality Checks
+
 ```json
 {
-  "scripts": {
-    "qa:fast": "npm run lint && npm run type-check",
-    "qa:full": "npm run test && npm run lint && npm run build && npm run test:integration",
-    "qa:ai": "npm run ai:review && npm run ai:security",
-    "qa:cross-platform": "npm run test:windows && npm run test:linux && npm run test:macos",
-    "qa:upstream": "npm run qa:full && npm run qa:cross-platform && npm run qa:ai"
-  }
+    "scripts": {
+        "qa:fast": "npm run lint && npm run type-check",
+        "qa:full": "npm run test && npm run lint && npm run build && npm run test:integration",
+        "qa:ai": "npm run ai:review && npm run ai:security",
+        "qa:cross-platform": "npm run test:windows && npm run test:linux && npm run test:macos",
+        "qa:upstream": "npm run qa:full && npm run qa:cross-platform && npm run qa:ai"
+    }
 }
 ```
 
 #### Pre-commit Hooks
+
 ```yaml
 # .pre-commit-config.yaml
 repos:
-  - repo: local
-    hooks:
-      - id: npm-test
-        name: Run npm tests
-        entry: npm test
-        language: system
-        pass_filenames: false
-      
-      - id: ai-review
-        name: AI-assisted code review
-        entry: npm run ai:review
-        language: system
-        pass_filenames: false
-      
-      - id: cross-platform-check
-        name: Cross-platform compatibility check
-        entry: npm run verify:cross-platform
-        language: system
-        pass_filenames: false
+    - repo: local
+      hooks:
+          - id: npm-test
+            name: Run npm tests
+            entry: npm test
+            language: system
+            pass_filenames: false
+
+          - id: ai-review
+            name: AI-assisted code review
+            entry: npm run ai:review
+            language: system
+            pass_filenames: false
+
+          - id: cross-platform-check
+            name: Cross-platform compatibility check
+            entry: npm run verify:cross-platform
+            language: system
+            pass_filenames: false
 ```
 
 #### Continuous Integration
+
 ```yaml
 # .github/workflows/development-qa.yml
 name: Development Quality Assurance
 on: [push, pull_request]
 
 jobs:
-  human-ai-collaboration-test:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        ai-tools: [with-ai, without-ai]
-    
-    runs-on: ${{ matrix.os }}
-    
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Run quality checks
-        run: npm run qa:full
-      
-      - name: Test QEMU integration (Linux only)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get install qemu-system-x86 screen
-          npm run test:qemu
-      
-      - name: AI-assisted checks
-        if: matrix.ai-tools == 'with-ai'
-        run: npm run qa:ai
-        
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
+    human-ai-collaboration-test:
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+                ai-tools: [with-ai, without-ai]
+
+        runs-on: ${{ matrix.os }}
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run quality checks
+              run: npm run qa:full
+
+            - name: Test QEMU integration (Linux only)
+              if: matrix.os == 'ubuntu-latest'
+              run: |
+                  sudo apt-get install qemu-system-x86 screen
+                  npm run test:qemu
+
+            - name: AI-assisted checks
+              if: matrix.ai-tools == 'with-ai'
+              run: npm run qa:ai
+
+            - name: Upload coverage
+              uses: codecov/codecov-action@v3
 ```
 
 ### Testing Standards
 
 #### Test Categories and Coverage
+
 ```bash
 # Unit tests (90% coverage minimum)
 npm run test:unit          # Jest + Testing Library
 
-# Integration tests (80% coverage minimum)  
+# Integration tests (80% coverage minimum)
 npm run test:integration   # Real LibreMesh API tests
 
 # AI-generated test validation
@@ -349,38 +374,49 @@ npm run test:visual        # Storybook + Chromatic
 ```
 
 #### AI-Assisted Testing Workflow
+
 ```javascript
 // Example: AI-generated test with human review
-describe('MeshNodeStatus Component (AI-generated + human-reviewed)', () => {
-  // 🤖 AI-generated: Basic component rendering tests
-  it('renders without crashing', () => {
-    render(<MeshNodeStatus nodeId="test-node" />);
-    expect(screen.getByTestId('mesh-node-status')).toBeInTheDocument();
-  });
-
-  // 🤖 AI-generated: Props validation tests  
-  it('displays node information correctly', () => {
-    const mockNode = { id: 'node-1', status: 'online', signal: 85 };
-    render(<MeshNodeStatus node={mockNode} />);
-    expect(screen.getByText('node-1')).toBeInTheDocument();
-    expect(screen.getByText('85%')).toBeInTheDocument();
-  });
-
-  // 👤 Human-written: Complex interaction tests
-  it('handles node status changes with proper animations', async () => {
-    const onStatusChange = jest.fn();
-    const { rerender } = render(
-      <MeshNodeStatus node={{...mockNode, status: 'online'}} onStatusChange={onStatusChange} />
-    );
-    
-    // Test complex state transitions that require domain knowledge
-    rerender(<MeshNodeStatus node={{...mockNode, status: 'offline'}} onStatusChange={onStatusChange} />);
-    
-    await waitFor(() => {
-      expect(screen.getByTestId('status-indicator')).toHaveClass('status-offline');
+describe("MeshNodeStatus Component (AI-generated + human-reviewed)", () => {
+    // 🤖 AI-generated: Basic component rendering tests
+    it("renders without crashing", () => {
+        render(<MeshNodeStatus nodeId="test-node" />);
+        expect(screen.getByTestId("mesh-node-status")).toBeInTheDocument();
     });
-    expect(onStatusChange).toHaveBeenCalledWith('offline');
-  });
+
+    // 🤖 AI-generated: Props validation tests
+    it("displays node information correctly", () => {
+        const mockNode = { id: "node-1", status: "online", signal: 85 };
+        render(<MeshNodeStatus node={mockNode} />);
+        expect(screen.getByText("node-1")).toBeInTheDocument();
+        expect(screen.getByText("85%")).toBeInTheDocument();
+    });
+
+    // 👤 Human-written: Complex interaction tests
+    it("handles node status changes with proper animations", async () => {
+        const onStatusChange = jest.fn();
+        const { rerender } = render(
+            <MeshNodeStatus
+                node={{ ...mockNode, status: "online" }}
+                onStatusChange={onStatusChange}
+            />
+        );
+
+        // Test complex state transitions that require domain knowledge
+        rerender(
+            <MeshNodeStatus
+                node={{ ...mockNode, status: "offline" }}
+                onStatusChange={onStatusChange}
+            />
+        );
+
+        await waitFor(() => {
+            expect(screen.getByTestId("status-indicator")).toHaveClass(
+                "status-offline"
+            );
+        });
+        expect(onStatusChange).toHaveBeenCalledWith("offline");
+    });
 });
 ```
 
@@ -389,6 +425,7 @@ describe('MeshNodeStatus Component (AI-generated + human-reviewed)', () => {
 ### Platform-Specific Considerations
 
 #### File System Handling
+
 ```javascript
 // ✅ Good: Cross-platform path handling
 const path = require('path');
@@ -399,17 +436,19 @@ const configPath = __dirname + '/config/development.json'; // Fails on Windows
 ```
 
 #### Environment Variables
+
 ```json
 {
-  "scripts": {
-    "dev:linux": "NODE_ENV=development npm start",
-    "dev:windows": "set NODE_ENV=development && npm start",
-    "dev:cross-platform": "cross-env NODE_ENV=development npm start"
-  }
+    "scripts": {
+        "dev:linux": "NODE_ENV=development npm start",
+        "dev:windows": "set NODE_ENV=development && npm start",
+        "dev:cross-platform": "cross-env NODE_ENV=development npm start"
+    }
 }
 ```
 
 #### Git Configuration
+
 ```bash
 # Essential cross-platform Git settings
 git config --global core.autocrlf false    # Prevents Windows line ending issues
@@ -420,6 +459,7 @@ git config --global core.filemode false   # Ignore file permission changes
 ### Platform Testing Strategy
 
 #### Automated Cross-Platform Testing
+
 ```bash
 # Test matrix for different platforms
 npm run test:matrix
@@ -427,39 +467,44 @@ npm run test:matrix
 # Platform-specific test commands
 npm run test:windows:native    # Native Windows testing
 npm run test:windows:wsl       # WSL2 testing
-npm run test:linux:ubuntu      # Ubuntu testing  
+npm run test:linux:ubuntu      # Ubuntu testing
 npm run test:linux:fedora      # Fedora testing
 npm run test:macos:intel       # Intel Mac testing
 npm run test:macos:arm         # Apple Silicon testing
 ```
 
 #### Manual Testing Checklist
+
 ```markdown
 ### Pre-release Cross-Platform Checklist
 
 #### Windows Testing
-- [ ] Native Windows development works (frontend-only)
-- [ ] WSL2 development works (full stack with QEMU)
-- [ ] Git line endings are correct
-- [ ] Build process succeeds
-- [ ] All tests pass
 
-#### Linux Testing  
-- [ ] Ubuntu/Debian development works
-- [ ] Fedora development works
-- [ ] QEMU LibreMesh integration works
-- [ ] All quality gates pass
+-   [ ] Native Windows development works (frontend-only)
+-   [ ] WSL2 development works (full stack with QEMU)
+-   [ ] Git line endings are correct
+-   [ ] Build process succeeds
+-   [ ] All tests pass
+
+#### Linux Testing
+
+-   [ ] Ubuntu/Debian development works
+-   [ ] Fedora development works
+-   [ ] QEMU LibreMesh integration works
+-   [ ] All quality gates pass
 
 #### macOS Testing
-- [ ] Intel Mac development works
-- [ ] Apple Silicon development works
-- [ ] QEMU setup functions properly
-- [ ] Performance is acceptable
+
+-   [ ] Intel Mac development works
+-   [ ] Apple Silicon development works
+-   [ ] QEMU setup functions properly
+-   [ ] Performance is acceptable
 
 #### AI Tools Testing
-- [ ] Claude Code works on all platforms
-- [ ] Cursor integration functions properly
-- [ ] AI-generated code works cross-platform
+
+-   [ ] Claude Code works on all platforms
+-   [ ] Cursor integration functions properly
+-   [ ] AI-generated code works cross-platform
 ```
 
 ## Documentation Standards
@@ -467,26 +512,31 @@ npm run test:macos:arm         # Apple Silicon testing
 ### Multi-Level Documentation Architecture
 
 #### 1. Quick Reference (README.md)
-- Development options overview
-- Quick start commands
-- Links to detailed documentation
+
+-   Development options overview
+-   Quick start commands
+-   Links to detailed documentation
 
 #### 2. Comprehensive Setup (DEVELOPMENT_SETUP.md)
-- Complete installation instructions
-- Environment configuration
-- Troubleshooting guides
+
+-   Complete installation instructions
+-   Environment configuration
+-   Troubleshooting guides
 
 #### 3. Contribution Guidelines (CONTRIBUTING.md)
-- Git workflow and standards
-- Code review process
-- Translation contributions
+
+-   Git workflow and standards
+-   Code review process
+-   Translation contributions
 
 #### 4. Organization & Process (This Document)
-- Human-AI collaboration patterns
-- Quality assurance framework
-- Cross-platform development
+
+-   Human-AI collaboration patterns
+-   Quality assurance framework
+-   Cross-platform development
 
 #### 5. Technical Documentation
+
 ```
 docs/
 ├── api/                 # API documentation
@@ -499,6 +549,7 @@ docs/
 ### AI-Assisted Documentation
 
 #### Documentation Generation Workflow
+
 ```bash
 # AI-generated documentation
 npm run docs:generate:api        # Generate API docs from code
@@ -511,20 +562,23 @@ npm run docs:validate          # Validate documentation completeness
 ```
 
 #### Documentation Quality Standards
+
 ```markdown
 ### Documentation Review Checklist
 
 #### AI-Generated Documentation
-- [ ] **Accuracy**: All generated content is factually correct
-- [ ] **Completeness**: Covers all public APIs and components
-- [ ] **Examples**: Includes working code examples
-- [ ] **Context**: Provides appropriate context for LibreMesh
 
-#### Human-Enhanced Documentation  
-- [ ] **User Experience**: Written from user perspective
-- [ ] **Troubleshooting**: Includes common issues and solutions
-- [ ] **Best Practices**: Documents recommended approaches
-- [ ] **Cross-Platform**: Addresses platform-specific considerations
+-   [ ] **Accuracy**: All generated content is factually correct
+-   [ ] **Completeness**: Covers all public APIs and components
+-   [ ] **Examples**: Includes working code examples
+-   [ ] **Context**: Provides appropriate context for LibreMesh
+
+#### Human-Enhanced Documentation
+
+-   [ ] **User Experience**: Written from user perspective
+-   [ ] **Troubleshooting**: Includes common issues and solutions
+-   [ ] **Best Practices**: Documents recommended approaches
+-   [ ] **Cross-Platform**: Addresses platform-specific considerations
 ```
 
 ## Contribution Workflow
@@ -532,6 +586,7 @@ npm run docs:validate          # Validate documentation completeness
 ### Internal Development Workflow
 
 #### 1. Feature Planning
+
 ```bash
 # Create feature branch
 git checkout -b feature/mesh-node-dashboard
@@ -543,6 +598,7 @@ git checkout -b feature/mesh-node-dashboard
 ```
 
 #### 2. Collaborative Implementation
+
 ```bash
 # Daily development cycle
 npm run dev:start              # Start development environment
@@ -557,46 +613,51 @@ npm run ai:assist:active       # Activate AI assistance for session
 ```
 
 #### 3. Quality Assurance
+
 ```bash
 # Pre-commit checks
 npm run qa:pre-commit          # Fast quality checks
 git add . && git commit        # Trigger pre-commit hooks
 
-# Pre-push checks  
+# Pre-push checks
 npm run qa:full                # Comprehensive testing
 npm run qa:cross-platform      # Cross-platform validation
 git push origin feature/mesh-node-dashboard
 ```
 
 #### 4. Code Review Process
+
 ```markdown
 ### Code Review Checklist
 
 #### Human Reviewer Focus
-- [ ] **Business Logic**: Requirements implementation correctness
-- [ ] **User Experience**: Interface design and usability
-- [ ] **Architecture**: Design patterns and maintainability
-- [ ] **Security**: Potential vulnerabilities or issues
-- [ ] **Performance**: Impact on application performance
+
+-   [ ] **Business Logic**: Requirements implementation correctness
+-   [ ] **User Experience**: Interface design and usability
+-   [ ] **Architecture**: Design patterns and maintainability
+-   [ ] **Security**: Potential vulnerabilities or issues
+-   [ ] **Performance**: Impact on application performance
 
 #### AI-Assisted Review Areas
-- [ ] **Code Style**: Consistent formatting and conventions
-- [ ] **Test Coverage**: Comprehensive test implementation
-- [ ] **Documentation**: Code comments and API documentation
-- [ ] **Type Safety**: TypeScript usage and type correctness
-- [ ] **Cross-Platform**: Compatibility across environments
+
+-   [ ] **Code Style**: Consistent formatting and conventions
+-   [ ] **Test Coverage**: Comprehensive test implementation
+-   [ ] **Documentation**: Code comments and API documentation
+-   [ ] **Type Safety**: TypeScript usage and type correctness
+-   [ ] **Cross-Platform**: Compatibility across environments
 ```
 
 ### Upstream Contribution Preparation
 
 #### Upstream Readiness Checklist
+
 ```bash
 # Quality gates for upstream contribution
 npm run qa:upstream:preparation
 
 # Includes:
 # ✅ Zero ESLint errors (warnings documented)
-# ✅ 95%+ test coverage for new features  
+# ✅ 95%+ test coverage for new features
 # ✅ TypeScript strict mode compliance
 # ✅ Cross-browser compatibility verified
 # ✅ Mobile responsiveness tested
@@ -606,6 +667,7 @@ npm run qa:upstream:preparation
 ```
 
 #### Upstream Contribution Process
+
 ```bash
 # 1. Prepare upstream branch
 git checkout -b upstream/feature-name
@@ -631,55 +693,64 @@ git rebase upstream/develop
 ### Roles and Responsibilities
 
 #### Human Developers
-- **Lead Developer**: Architecture decisions, code review, release management
-- **Frontend Specialists**: UI/UX implementation, responsive design, accessibility
-- **Backend Integration**: LibreMesh API integration, networking features
-- **DevOps**: CI/CD, deployment, cross-platform compatibility
-- **Quality Assurance**: Testing strategies, quality gates, performance
+
+-   **Lead Developer**: Architecture decisions, code review, release management
+-   **Frontend Specialists**: UI/UX implementation, responsive design, accessibility
+-   **Backend Integration**: LibreMesh API integration, networking features
+-   **DevOps**: CI/CD, deployment, cross-platform compatibility
+-   **Quality Assurance**: Testing strategies, quality gates, performance
 
 #### AI Assistants
-- **Primary AI (Claude Code)**: Complex debugging, architecture analysis, documentation
-- **IDE AI (Cursor)**: Real-time coding assistance, refactoring, exploration
-- **Code Completion (Copilot)**: Function implementation, test generation, boilerplate
+
+-   **Primary AI (Claude Code)**: Complex debugging, architecture analysis, documentation
+-   **IDE AI (Cursor)**: Real-time coding assistance, refactoring, exploration
+-   **Code Completion (Copilot)**: Function implementation, test generation, boilerplate
 
 ### Communication and Coordination
 
 #### Daily Standup Template
+
 ```markdown
 ### Human Developer Update
-- **Yesterday**: [What was accomplished]
-- **Today**: [What will be worked on]
-- **Blockers**: [Any issues or dependencies]
-- **AI Assistance Used**: [Which AI tools for what tasks]
+
+-   **Yesterday**: [What was accomplished]
+-   **Today**: [What will be worked on]
+-   **Blockers**: [Any issues or dependencies]
+-   **AI Assistance Used**: [Which AI tools for what tasks]
 
 ### AI Assistance Summary
-- **Code Generation**: [Lines of code generated by AI]
-- **Test Coverage**: [Tests written by AI vs human]  
-- **Documentation**: [AI-generated vs human-written docs]
-- **Issues Resolved**: [Bugs fixed with AI assistance]
+
+-   **Code Generation**: [Lines of code generated by AI]
+-   **Test Coverage**: [Tests written by AI vs human]
+-   **Documentation**: [AI-generated vs human-written docs]
+-   **Issues Resolved**: [Bugs fixed with AI assistance]
 ```
 
 #### Sprint Planning with AI
+
 ```markdown
 ### Sprint Planning Considerations
 
 #### Human-Led Tasks
-- [ ] **User story definition** and acceptance criteria
-- [ ] **Architecture decisions** and technical planning
-- [ ] **Code review** and quality assurance
-- [ ] **Integration testing** with real LibreMesh environment
 
-#### AI-Assisted Tasks  
-- [ ] **Component scaffolding** and boilerplate generation
-- [ ] **Test implementation** with comprehensive coverage
-- [ ] **Documentation generation** from code comments
-- [ ] **Bug reproduction** and systematic debugging
+-   [ ] **User story definition** and acceptance criteria
+-   [ ] **Architecture decisions** and technical planning
+-   [ ] **Code review** and quality assurance
+-   [ ] **Integration testing** with real LibreMesh environment
+
+#### AI-Assisted Tasks
+
+-   [ ] **Component scaffolding** and boilerplate generation
+-   [ ] **Test implementation** with comprehensive coverage
+-   [ ] **Documentation generation** from code comments
+-   [ ] **Bug reproduction** and systematic debugging
 
 #### Collaborative Tasks
-- [ ] **Feature implementation** (human logic + AI structure)
-- [ ] **Refactoring efforts** (human decisions + AI execution)
-- [ ] **Performance optimization** (human analysis + AI implementation)
-- [ ] **Cross-platform validation** (human testing + AI automation)
+
+-   [ ] **Feature implementation** (human logic + AI structure)
+-   [ ] **Refactoring efforts** (human decisions + AI execution)
+-   [ ] **Performance optimization** (human analysis + AI implementation)
+-   [ ] **Cross-platform validation** (human testing + AI automation)
 ```
 
 ---
@@ -687,6 +758,7 @@ git rebase upstream/develop
 ## Getting Started
 
 ### For New Human Developers
+
 1. **Read** this document and [CONTRIBUTING.md](./CONTRIBUTING.md)
 2. **Set up** development environment using [DEVELOPMENT_SETUP.md](./DEVELOPMENT_SETUP.md)
 3. **Configure** AI tools for your platform and IDE
@@ -694,6 +766,7 @@ git rebase upstream/develop
 5. **Start** with a good first issue to learn the workflow
 
 ### For AI Tool Integration
+
 1. **Configure** AI tools according to platform-specific sections
 2. **Test** AI assistance with simple tasks first
 3. **Learn** project-specific patterns and conventions
@@ -701,14 +774,15 @@ git rebase upstream/develop
 5. **Document** AI assistance usage in commits and PRs
 
 ### For Cross-Platform Development
+
 1. **Verify** setup works on your target platform
-2. **Test** QEMU integration if applicable  
+2. **Test** QEMU integration if applicable
 3. **Validate** build and test processes
 4. **Check** Git configuration for cross-platform compatibility
 5. **Report** any platform-specific issues found
 
 ---
 
-*Document maintained by: Human-AI collaborative development team*  
-*Last updated: December 2024*  
-*Review cycle: Monthly or after significant process changes*
+_Document maintained by: Human-AI collaborative development team_  
+_Last updated: December 2024_  
+_Review cycle: Monthly or after significant process changes_

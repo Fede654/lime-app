@@ -1,0 +1,45 @@
+# Files and directories to exclude from upstream contributions
+# This helps maintain clean separation between development infrastructure and upstream-ready code
+
+# Internal Development Documentation (entire directory)
+/docs/dev-internal/
+
+# QEMU Testing Documentation (moved to internal)
+# Note: QEMU scripts remain available for upstream contribution
+# but documentation is now part of our internal dev workflow
+
+# Move component credits to internal docs
+/docs/dev-internal/references/teenny-icons-attribution.md
+
+# AI Development Infrastructure
+/scripts/ai-*.sh
+/.cursorrules
+
+# Personal Development Scripts (could be made optional later)
+/scripts/verify-ai-tools.sh
+/scripts/verify-cross-platform.sh
+
+# Development-specific configs
+/.env.askpass
+/scripts/setup-askpass.sh
+/scripts/setup-sudo.sh
+/scripts/setup-upstream-aliases.sh
+
+# Upstream separation files (meta - about the process itself)
+/.upstream-exclude
+
+# QEMU Scripts (consider making these optional/contrib in future)
+# Currently useful for development but may be too opinionated for upstream
+#/scripts/qemu-*.sh
+#/scripts/dev-with-qemu.sh
+#/scripts/deploy-to-qemu.sh
+
+# Test artifacts that shouldn't be committed
+/lime-app.enc
+/size-plugin.json
+
+# AI-specific npm scripts section in package.json
+# Note: These would need manual removal from package.json before upstream PR
+# - ai:*
+# - verify:ai
+# - qa:ai

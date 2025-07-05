@@ -1,185 +1,58 @@
-# LiMeApp Development Setup Guide
+# LiMeApp Development Setup
 
-Complete guide for setting up a full LibreMesh development environment with QEMU for lime-app development.
+Complete guide for setting up a LibreMesh development environment for lime-app.
 
 ## Prerequisites
 
-Ensure you have these installed:
 - **Node.js** (v20 or later)
-- **npm** (latest version)
+- **npm** (latest version)  
 - **Git**
-- **QEMU** (`qemu-system-x86_64`)
-- **screen** or **tmux**
-- **sudo** access for QEMU networking
 
-### Install QEMU
+### Install Node.js
 ```bash
 # Ubuntu/Debian
-sudo apt install qemu-system-x86 screen
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
 # Fedora/RHEL
-sudo dnf install qemu-system-x86 screen
+sudo dnf install nodejs npm
 
 # macOS
-brew install qemu screen
+brew install node
 ```
 
-## Complete Development Environment Setup
+## Quick Start
 
-### Step 1: Clone Repositories
+### 1. Clone and Install
 
-**Set up the workspace:**
 ```bash
-# Create workspace directory
-mkdir libremesh-dev && cd libremesh-dev
-
-# Clone lime-app (main project)
+# Clone the repository
 git clone https://github.com/libremesh/lime-app.git
 cd lime-app
 
-# Clone lime-packages (for QEMU LibreMesh)
-cd ..
-git clone https://github.com/libremesh/lime-packages.git
-cd lime-app
-```
-
-**Your directory structure should be:**
-```
-libremesh-dev/
-├── lime-app/          # Main development project
-└── lime-packages/     # LibreMesh QEMU environment
-```
-
-### Step 2: Install Dependencies
-
-```bash
-# Install lime-app dependencies
-cd lime-app
+# Install dependencies
 npm install
 ```
 
-### Step 3: Download LibreMesh Images
-
-Download the recommended LibreMesh images for QEMU development:
+### 2. Start Development
 
 ```bash
-# Create build directory
-mkdir -p ../lime-packages/build
-cd ../lime-packages/build
+# Start development server
+npm run dev
 
-# Download LibreMesh 2020.4 (recommended for development)
-wget -O libremesh-2020.4-ow19-x86-64-rootfs.tar.gz \
-  "https://downloads.libremesh.org/releases/2020.4-ow19/targets/x86/64/libremesh-2020.4-ow19-default-x86-64-generic-rootfs.tar.gz"
-
-wget -O libremesh-2020.4-ow19-x86-64-ramfs.bzImage \
-  "https://downloads.libremesh.org/releases/2020.4-ow19/targets/x86/64/libremesh-2020.4-ow19-default-x86-64-ramfs.bzImage"
-
-# Return to lime-app directory
-cd ../../lime-app
+# Access the application at http://localhost:8080
 ```
 
-### Step 4: Start LibreMesh QEMU Environment
+The development server provides:
+- **Hot-reload**: Automatic browser refresh on code changes
+- **Mock backend**: Simulated LibreMesh API responses for development
+- **Proxy configuration**: Redirects API calls when real backend available
 
-**Start QEMU LibreMesh in a screen session:**
-```bash
-screen -S libremesh -d -m sudo ../lime-packages/tools/qemu_dev_start \
-  --libremesh-workdir ../lime-packages \
-  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz \
-  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage
-```
+## Development Workflow
 
-**Wait for boot (30-60 seconds), then connect to console:**
-```bash
-screen -r libremesh
-```
+### Plugin Development
 
-**In the LibreMesh console:**
-1. **Wait for boot messages to complete**
-2. **Press Enter** when you see "Please press Enter to activate this console"
-3. **Configure the network:**
-   ```bash
-   # Add expected IP address for development
-   ip addr add 10.13.0.1/16 dev br-lan
-   
-   # Start web server
-   /etc/init.d/uhttpd start
-   
-   # Test internal connectivity
-   ping -c 2 10.13.0.2
-   ```
-4. **Detach from screen:** Press `Ctrl+A`, then `D`
-
-### Step 5: Verify QEMU Setup
-
-**Test connectivity from host:**
-```bash
-# Test ping
-ping -c 3 10.13.0.1
-
-# Test web interface
-curl -s http://10.13.0.1
-
-# Use the built-in check script
-npm run qemu:check
-```
-
-**Expected output:**
-```
-✓ QEMU LibreMesh reachable at 10.13.0.1
-✓ LibreMesh web interface accessible
-✓ Ready for development
-```
-
-## Development Workflows
-
-### Frontend Development (Recommended)
-
-**Start development server with QEMU backend:**
-```bash
-npm run qemu:dev
-```
-
-This provides:
-- **Hot-reload development:** http://localhost:8080
-- **Real LibreMesh backend:** Proxied to QEMU at 10.13.0.1
-- **Live API testing:** Real ubus calls and LibreMesh services
-
-### Direct QEMU Testing
-
-**Access LibreMesh directly:**
-- **LibreMesh interface:** http://10.13.0.1
-- **lime-app:** http://10.13.0.1/app
-
-**Deploy your changes to QEMU:**
-```bash
-# Build and deploy lime-app to LibreMesh
-npm run qemu:deploy
-
-# Access the deployed version
-curl http://10.13.0.1/app
-```
-
-### Development Commands
-
-```bash
-# Core development
-npm run dev                    # Frontend-only development (mocked backend)
-npm run qemu:dev              # Development with real LibreMesh backend
-
-# QEMU management
-npm run qemu:check            # Verify QEMU LibreMesh is running
-npm run qemu:deploy           # Deploy lime-app to QEMU
-npm run qemu:start            # Build, deploy, and start QEMU
-
-# Testing and quality
-npm test                      # Run test suite
-npm run lint                  # Code quality checks
-npm run storybook            # Component development environment
-```
-
-## Plugin Development Workflow
-
-### Creating a New Plugin
+LiMeApp uses a plugin-based architecture. Create new functionality as plugins:
 
 ```bash
 # Generate plugin structure
@@ -197,62 +70,8 @@ plugins/lime-plugin-myfeature/
     └── style.less        # Styles
 ```
 
-### Development Process
+### Testing
 
-1. **Write component tests:**
-   ```bash
-   npm run test plugins/lime-plugin-myfeature/myfeature.spec.js -- --watch
-   ```
-
-2. **Develop component in Storybook:**
-   ```bash
-   npm run storybook
-   # Visit http://localhost:8081
-   ```
-
-3. **Test with real LibreMesh:**
-   ```bash
-   npm run qemu:dev
-   # Visit http://localhost:8080
-   ```
-
-4. **Deploy and test in QEMU:**
-   ```bash
-   npm run qemu:deploy
-   # Visit http://10.13.0.1/app
-   ```
-
-### API Development
-
-**Example plugin API structure:**
-```javascript
-// src/MyFeatureApi.js
-import api from 'utils/uhttpd';
-
-export const getMyFeatureData = () => 
-  api.call('myfeature', 'get_data', {});
-
-export const setMyFeatureConfig = (config) => 
-  api.call('myfeature', 'set_config', { config });
-```
-
-**Test your APIs:**
-```javascript
-// myfeature.spec.js
-import { getMyFeatureData } from './src/MyFeatureApi';
-
-// Mock the API
-jest.mock('./src/MyFeatureApi');
-
-test('loads feature data', async () => {
-  getMyFeatureData.mockResolvedValue({ status: 'ok', data: {} });
-  // Test component behavior
-});
-```
-
-## Testing Strategy
-
-### Unit Tests
 ```bash
 # Run all tests
 npm test
@@ -260,219 +79,152 @@ npm test
 # Run specific plugin tests
 npm run test plugins/lime-plugin-myfeature/
 
-# Run tests with coverage
+# Run with coverage
 npm run test -- --coverage
 
 # Watch mode for development
 npm run test -- --watch
 ```
 
-### Integration Testing with QEMU
+### Code Quality
+
 ```bash
-# Start QEMU environment
-npm run qemu:start
+# Lint code
+npm run lint
 
-# Run integration tests against real LibreMesh
-npm run test:integration  # If available
+# Fix auto-fixable issues
+npm run lint:fix
 
-# Manual testing in browser
-npm run qemu:dev
-# Test at http://localhost:8080
+# Type checking (if using TypeScript)
+npm run build
 ```
 
-### Visual Testing
+### Component Development
+
+Use Storybook for isolated component development:
+
 ```bash
-# Start Storybook for component development
+# Start Storybook
 npm run storybook
 
-# Build Storybook for deployment
-npm run storybook:build
+# Access at http://localhost:8081
 ```
 
-## Troubleshooting
+## API Development
 
-### QEMU Network Issues
+### Backend Communication
 
-**If `npm run qemu:check` fails:**
+LiMeApp communicates with LibreMesh routers via ubus JSON-RPC calls:
 
-1. **Check QEMU is running:**
-   ```bash
-   ps aux | grep qemu
-   screen -list
-   ```
+```javascript
+// Example API endpoint
+import api from 'utils/uhttpd';
 
-2. **Reconnect to console:**
-   ```bash
-   screen -r libremesh
-   # Check network: ip addr show
-   # Reconfigure: ip addr add 10.13.0.1/16 dev br-lan
-   ```
+export const getSystemInfo = () => 
+  api.call('system', 'board', {});
 
-3. **Restart QEMU if needed:**
-   ```bash
-   screen -S libremesh -X quit
-   npm run qemu:start
-   ```
-
-### Development Server Issues
-
-**If development server doesn't connect to QEMU:**
-
-1. **Verify QEMU connectivity:**
-   ```bash
-   ping 10.13.0.1
-   curl http://10.13.0.1/ubus
-   ```
-
-2. **Check proxy configuration:**
-   ```bash
-   # Development server should proxy to 10.13.0.1
-   grep -r "10.13.0.1" preact.config.js
-   ```
-
-3. **Use custom backend:**
-   ```bash
-   env NODE_HOST=10.13.0.1 npm run dev
-   ```
-
-### Build Issues
-
-**If builds fail:**
-
-1. **Clean and reinstall:**
-   ```bash
-   npm run clean
-   rm -rf node_modules package-lock.json
-   npm install
-   ```
-
-2. **Check Node.js version:**
-   ```bash
-   node --version  # Should be v20+
-   npm --version   # Should be latest
-   ```
-
-## Advanced Configuration
-
-### Custom LibreMesh Configuration
-
-**Modify LibreMesh before starting QEMU:**
-```bash
-# Edit configuration files in lime-packages
-vim ../lime-packages/packages/lime-system/files/etc/config/lime-defaults
-
-# Restart QEMU to apply changes
-npm run qemu:start
+export const setConfig = (config) => 
+  api.call('uci', 'set', { config });
 ```
 
-### Multiple QEMU Instances
+### Testing APIs
 
-**Run multiple LibreMesh nodes:**
-```bash
-# Start second instance with different node ID
-sudo ../lime-packages/tools/qemu_dev_start --node-id 1 \
-  --libremesh-workdir ../lime-packages \
-  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz \
-  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage
+Mock APIs in component tests:
+
+```javascript
+// Mock the API module
+jest.mock('./src/MyFeatureApi');
+
+test('component loads data', async () => {
+  getSystemInfo.mockResolvedValue({ status: 'ok', data: {} });
+  // Test component behavior
+});
 ```
 
-### Production Builds
+## Build and Deployment
 
-**Build for deployment:**
+### Development Build
+
 ```bash
-# Production build
+npm run build
+```
+
+### Production Build
+
+```bash
+npm run build:production
+```
+
+Production builds include:
+- Code minification
+- Asset optimization  
+- Translation compilation
+- Bundle analysis
+
+### Deploy to Router
+
+```bash
+# Build production version
 npm run build:production
 
-# Deploy to real LibreMesh router
-scp -r build/* root@192.168.1.1:/www/app/
+# Copy to LibreMesh router
+scp -r build/* root@router-ip:/www/app/
 ```
 
-## IDE Integration
+## Project Structure
 
-### VS Code Setup
-
-**Recommended VS Code extensions:**
-- ES7+ React/Redux/React-Native snippets
-- Prettier - Code formatter
-- ESLint
-- Jest
-- Auto Import - ES6, TS, JSX, TSX
-
-**VS Code settings (`.vscode/settings.json`):**
-```json
-{
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "jest.jestCommandLine": "npm test",
-  "jest.autoRun": "watch"
-}
+```
+lime-app/
+├── src/                    # Core application code
+│   ├── components/         # Reusable UI components
+│   ├── containers/         # Page-level components
+│   ├── utils/             # Utilities and helpers
+│   └── config.ts          # Plugin registration
+├── plugins/               # Plugin modules
+│   └── lime-plugin-*/     # Individual plugins
+├── i18n/                  # Translation files
+└── docs/                  # Documentation
 ```
 
-### Debug Configuration
+## Contributing
 
-**VS Code debug configuration (`.vscode/launch.json`):**
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Debug Tests",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["--runInBand", "--no-cache"],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    }
-  ]
-}
-```
+### Development Process
 
-## Getting Help
+1. **Fork** the repository on GitHub
+2. **Create** a feature branch: `git checkout -b feature/my-feature`
+3. **Write tests** for new functionality
+4. **Implement** the feature following existing patterns
+5. **Test** thoroughly with `npm test` and `npm run lint`
+6. **Submit** a pull request with clear description
 
-### Resources
-- **LibreMesh Documentation:** https://libremesh.org/docs/
-- **lime-app GitHub:** https://github.com/libremesh/lime-app
-- **LibreMesh Community:** https://libremesh.org/community.html
+### Code Standards
 
-### Community Support
-- **Matrix:** #libremesh:matrix.org
-- **Mailing List:** lime-users@lists.libremesh.org
-- **GitHub Issues:** Report bugs and feature requests
+- **ES6+** JavaScript with modern features
+- **Preact** components with hooks
+- **CSS Modules** for component styling
+- **Jest** for testing with Testing Library
+- **ESLint** and **Prettier** for code formatting
 
-### Contributing
-- **Code Style:** Follow existing patterns and ESLint rules
-- **Testing:** Write tests for new features
-- **Documentation:** Update docs for new plugins or features
-- **Pull Requests:** Create PRs against the `develop` branch
+### Plugin Guidelines
+
+- Follow the standard plugin structure
+- Include comprehensive tests
+- Add Storybook stories for components
+- Document API endpoints
+- Support internationalization
+
+## Resources
+
+### Documentation
+- **LibreMesh**: https://libremesh.org/docs/
+- **Preact**: https://preactjs.com/guide/
+- **Testing Library**: https://testing-library.com/docs/preact-testing-library/intro/
+
+### Community
+- **GitHub**: https://github.com/libremesh/lime-app
+- **Matrix**: #libremesh:matrix.org
+- **Mailing List**: lime-users@lists.libremesh.org
 
 ---
 
-## Quick Reference
-
-### Essential Commands
-```bash
-# Complete setup
-npm install
-npm run qemu:start
-
-# Daily development
-npm run qemu:dev          # Start development with QEMU backend
-npm test -- --watch       # Run tests in watch mode
-npm run storybook         # Visual component development
-
-# QEMU management
-npm run qemu:check        # Verify QEMU status
-screen -r libremesh       # Access LibreMesh console
-npm run qemu:deploy       # Deploy changes to QEMU
-```
-
-### Key URLs
-- **Development Server:** http://localhost:8080
-- **QEMU LibreMesh:** http://10.13.0.1
-- **lime-app in QEMU:** http://10.13.0.1/app
-- **Storybook:** http://localhost:8081
-
-*This setup provides a complete, production-like development environment for lime-app with real LibreMesh backend integration.*
+*For advanced development setups including QEMU integration and debugging tools, see the internal development documentation.*

@@ -234,6 +234,73 @@ Also, do not hesitate to contact developers directly :)
 For more information, please see [Collaborating on projects using issues and pull requests](https://help.github.com/categories/collaborating-on-projects-using-issues-and-pull-requests/) in the GitHub help guide.
 
 
+## Development Branch Strategy for Upstream Contribution
+
+This fork maintains additional development infrastructure to enhance productivity while working toward eventual upstream contribution. We use a clear separation strategy to ensure clean PRs when ready.
+
+### Branch Organization
+
+- `tech-debt/*` - Bug fixes and technical improvements (upstream-ready)
+- `feature/*` - New features and enhancements (evaluate case-by-case)
+- `dev-infra/*` - Development infrastructure (AI tools, QEMU scripts)
+- `upstream/*` - Clean branches prepared for upstream PRs
+
+### Upstream Contribution Workflow
+
+1. **Setup Git Aliases** (one-time setup):
+   ```bash
+   ./scripts/setup-upstream-aliases.sh
+   ```
+
+2. **Check Upstream Compatibility**:
+   ```bash
+   git upstream-check HEAD  # Check if current commit is upstream-safe
+   git upstream-status      # Show only upstream-safe changes
+   ```
+
+3. **Create Upstream-Ready Commits**:
+   ```bash
+   git upstream-add         # Stage only upstream-safe files
+   git upstream-commit "fix: resolve TypeScript errors"
+   ```
+
+4. **Prepare Clean PR Branch**:
+   ```bash
+   git checkout -b upstream/fix-typescript-errors
+   git cherry-pick <upstream-ready-commits>
+   git push origin upstream/fix-typescript-errors
+   ```
+
+### What's Upstream-Ready vs Development-Only
+
+**Upstream-Ready** ✅:
+- Bug fixes, test improvements
+- Translation completions
+- Performance optimizations
+- Documentation in English
+- General feature improvements
+
+**Development-Only** 🔧 (tracked in `.upstream-exclude`):
+- AI development scripts (`scripts/ai-*.sh`)
+- Personal workflow docs (CLAUDE.md, .cursorrules)
+- Development infrastructure (unless made optional)
+- Language-specific technical docs
+
+### Making Development Features Upstream-Compatible
+
+To prepare development features for upstream:
+
+1. Make scripts optional/modular
+2. Move to `contrib/` or `dev-tools/` directories
+3. Document as "optional development utilities"
+4. Ensure they don't affect core functionality
+
+### Example: QEMU Scripts
+Currently development-only, but could become upstream-ready by:
+- Moving to `contrib/qemu-dev/`
+- Making them fully optional
+- Adding documentation to main README as "Optional Development Tools"
+
 ## Code of Conduct
 
 ### Our Pledge

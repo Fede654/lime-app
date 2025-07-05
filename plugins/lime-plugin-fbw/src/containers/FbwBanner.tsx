@@ -47,8 +47,9 @@ export const FbwBanner = ({ toggleForm }: FbwBannerProps) => {
         if (toggleForm != null) route("/");
     }
 
-    function onNotShowAgain(e) {
-        setnotShowAgain(e.target.checked);
+    function onNotShowAgain(e: Event) {
+        const target = e.target as HTMLInputElement;
+        setnotShowAgain(target.checked);
     }
 
     const title = <Trans>Welcome to LimeApp</Trans>;

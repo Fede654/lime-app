@@ -27,7 +27,8 @@ const Copy = ({ text, className }) => {
         if ("clipboard" in navigator) {
             return await navigator.clipboard.writeText(ref.current.innerText);
         }
-        // clipboard API works only on https sites
+        // Fallback for non-HTTPS environments
+        // Note: execCommand is deprecated but needed for non-secure contexts
         selectText(ref.current.firstChild);
         return document.execCommand("copy");
     }

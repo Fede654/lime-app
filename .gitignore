@@ -1,11 +1,105 @@
-/node_modules
-/npm-debug.log
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# Build outputs
+build/
+dist/
+out/
+storybook-static/
+
+# Environment variables and local configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
 .DS_Store
-/coverage
-/.idea
-storybook-static
-.vscode
-build
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# i18n generated files
 i18n/*/messages.js
-i18n/_build
+i18n/_build/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# QEMU and LibreMesh specific
+qemu-*.log
+/tmp/qemu-libremesh.log
 core
+
+# Package manager lock files (team decision: keep package-lock.json, ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# Jest coverage
+coverage/
+.nyc_output/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Archives
+*.tar.gz
+*.zip
+*.rar
+
+# Local development overrides (add your personal files here)
+.local/
+local.*
+*.local
