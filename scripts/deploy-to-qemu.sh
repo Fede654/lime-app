@@ -98,24 +98,30 @@ deploy_to_lime_packages() {
 start_qemu() {
     print_status "Starting QEMU LibreMesh with lime-app integration..."
     
-    # Use the official LibreMesh development method
-    print_status "Command: sudo $LIME_PACKAGES_DIR/tools/qemu_dev_start --libremesh-workdir $LIME_PACKAGES_DIR $ROOTFS_PATH $KERNEL_PATH"
-    print_warning "Note: This will start QEMU with sudo privileges"
     print_warning "LibreMesh will be available at: http://10.13.0.1"
     print_warning "lime-app will be available at: http://10.13.0.1/app"
     
-    # Check if running as root, if not, use sudo
-    if [ "$EUID" -ne 0 ]; then
+    # Check if running as root
+    if [ "$EUID" -eq 0 ]; then
+        print_status "Running as root..."
+        "$LIME_PACKAGES_DIR/tools/qemu_dev_start" \
+            --libremesh-workdir "$LIME_PACKAGES_DIR" \
+            "$ROOTFS_PATH" \
+            "$KERNEL_PATH"
+    # Check if sudo is available and user is in sudoers
+    elif command -v sudo >/dev/null 2>&1 && sudo -l >/dev/null 2>&1; then
         print_status "Running with sudo..."
         sudo "$LIME_PACKAGES_DIR/tools/qemu_dev_start" \
             --libremesh-workdir "$LIME_PACKAGES_DIR" \
             "$ROOTFS_PATH" \
             "$KERNEL_PATH"
     else
-        "$LIME_PACKAGES_DIR/tools/qemu_dev_start" \
-            --libremesh-workdir "$LIME_PACKAGES_DIR" \
-            "$ROOTFS_PATH" \
-            "$KERNEL_PATH"
+        print_warning "sudo not available or user not in sudoers"
+        print_status "Using 'su' to run as root..."
+        print_warning "You will be prompted for the root password"
+        
+        QEMU_CMD="$LIME_PACKAGES_DIR/tools/qemu_dev_start --libremesh-workdir $LIME_PACKAGES_DIR $ROOTFS_PATH $KERNEL_PATH"
+        su -c "$QEMU_CMD"
     fi
 }
 
