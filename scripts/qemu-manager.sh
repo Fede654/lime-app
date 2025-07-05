@@ -16,10 +16,12 @@ KERNEL_PATH="$LIME_PACKAGES_DIR/build/libremesh-2024.1-ow23.05.5-default-x86-64-
 
 # Try to detect available rootfs/kernel images if default paths don't exist
 if [ ! -f "$ROOTFS_PATH" ]; then
-    # Try 2020.4 version as fallback
+    # Try 2020.4 version as fallback (only tar.gz format works with qemu_dev_start)
     ROOTFS_PATH="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz"
     KERNEL_PATH="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage"
 fi
+
+# Note: Image validation is done in check_prerequisites function
 
 QEMU_IP="10.13.0.1"
 TELNET_PORT="45400"
@@ -42,50 +44,137 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Check if QEMU is running by testing connectivity
+# Check if QEMU is running by testing connectivity and process
 check_qemu_running() {
-    # Check if we can reach the QEMU instance
-    if ping -c 1 -W 1 "$QEMU_IP" >/dev/null 2>&1; then
-        return 0  # Running
-    else
-        return 1  # Not running
+    # First check if QEMU process is running
+    if ! pgrep -f "qemu-system-x86_64" >/dev/null 2>&1; then
+        return 1  # No process running
     fi
+    
+    # Then check if we can reach the QEMU instance
+    if ping -c 1 -W 1 "$QEMU_IP" >/dev/null 2>&1; then
+        return 0  # Running and accessible
+    else
+        return 1  # Process running but not accessible
+    fi
+}
+
+# Auto-configure LibreMesh network after boot
+setup_libremesh_network() {
+    print_status "Waiting for LibreMesh boot to complete..."
+    
+    # Wait for LibreMesh to fully boot (look for specific boot messages)
+    for i in {1..15}; do
+        # Check if we can see the root prompt or system is ready
+        sudo screen -S libremesh -X hardcopy /tmp/boot_check.txt 2>/dev/null
+        if grep -q "root@.*:/#" /tmp/boot_check.txt 2>/dev/null; then
+            print_status "✓ LibreMesh boot completed"
+            break
+        fi
+        
+        # Send Enter periodically to activate console
+        if [ $((i % 3)) -eq 0 ]; then
+            sudo screen -S libremesh -X stuff $'\n' 2>/dev/null || true
+        fi
+        
+        sleep 2
+        echo -n "."
+    done
+    echo
+    
+    print_status "Configuring network interfaces..."
+    
+    # Detect available network interface
+    print_status "Detecting network interfaces..."
+    sudo screen -S libremesh -X stuff 'ip link show | grep -E "^[0-9]+: (eth|br-|wlan)" | head -1'$'\n'
+    sleep 2
+    
+    # Try common interface names in order of preference
+    print_status "Configuring network with fallback interface detection..."
+    
+    # First try br-lan (mesh bridge)
+    sudo screen -S libremesh -X stuff 'if ip link show br-lan >/dev/null 2>&1; then echo "Using br-lan"; ip addr add 10.13.0.1/16 dev br-lan; ip link set br-lan up; fi'$'\n'
+    sleep 2
+    
+    # Fallback to eth0 if br-lan doesn't exist
+    sudo screen -S libremesh -X stuff 'if ! ip addr show br-lan | grep -q "10.13.0.1" 2>/dev/null; then echo "Fallback to eth0"; ip addr add 10.13.0.1/16 dev eth0 2>/dev/null; ip link set eth0 up 2>/dev/null; fi'$'\n'
+    sleep 2
+    
+    # Final fallback to first available ethernet interface
+    sudo screen -S libremesh -X stuff 'if ! ip addr show | grep -q "10.13.0.1" 2>/dev/null; then ETH_IF=$(ip link show | grep -o "^[0-9]*: eth[0-9]*" | head -1 | cut -d: -f2 | tr -d " "); if [ -n "$ETH_IF" ]; then echo "Using $ETH_IF"; ip addr add 10.13.0.1/16 dev $ETH_IF; ip link set $ETH_IF up; fi; fi'$'\n'
+    sleep 2
+    
+    # Start uHTTPd if not running
+    sudo screen -S libremesh -X stuff '/etc/init.d/uhttpd start'$'\n'
+    sleep 2
+    
+    # Verify network configuration
+    print_status "Verifying network configuration..."
+    sudo screen -S libremesh -X stuff 'echo "=== Network Status ==="; ip addr show | grep -A1 "10.13.0.1"; echo "=== uHTTPd Status ==="; ps | grep uhttpd || echo "uHTTPd not running"'$'\n'
+    sleep 2
+    
+    print_status "Network configuration completed"
+    sudo rm -f /tmp/boot_check.txt 2>/dev/null || true
 }
 
 # Find and kill QEMU processes
 kill_qemu_processes() {
     print_status "Stopping existing QEMU processes..."
     
-    # Find QEMU processes by command pattern
-    QEMU_PIDS=$(pgrep -f "qemu.*libremesh" || true)
+    # Kill screen session first if it exists
+    if sudo screen -list | grep -q "libremesh"; then
+        print_status "Stopping screen session 'libremesh'"
+        sudo screen -S libremesh -X quit 2>/dev/null || true
+        sleep 2
+    fi
+    
+    # Find and kill any remaining QEMU processes
+    QEMU_PIDS=$(pgrep -f "qemu-system-x86_64" || true)
     
     if [ -z "$QEMU_PIDS" ]; then
         print_status "No QEMU processes found"
-        return
+    else
+        for pid in $QEMU_PIDS; do
+            print_status "Stopping QEMU process $pid"
+            sudo kill -TERM "$pid" 2>/dev/null || true
+        done
+        
+        # Wait a moment for graceful shutdown
+        sleep 3
+        
+        # Force kill if still running
+        QEMU_PIDS=$(pgrep -f "qemu-system-x86_64" || true)
+        if [ -n "$QEMU_PIDS" ]; then
+            for pid in $QEMU_PIDS; do
+                print_warning "Force killing QEMU process $pid"
+                sudo kill -KILL "$pid" 2>/dev/null || true
+            done
+        fi
     fi
     
-    for pid in $QEMU_PIDS; do
-        print_status "Stopping QEMU process $pid"
-        sudo kill -TERM "$pid" 2>/dev/null || true
+    # Clean up LibreMesh-specific network interfaces
+    print_status "Cleaning up network interfaces..."
+    
+    # Clean up lime bridge and TAP interfaces for node 00 (default)
+    for ifc in lime_br0 lime_tap00_0 lime_tap00_1 lime_tap00_2; do
+        if ip link show "$ifc" >/dev/null 2>&1; then
+            print_status "Removing interface $ifc"
+            sudo ip link delete "$ifc" 2>/dev/null || true
+        fi
     done
     
-    # Wait a moment for graceful shutdown
-    sleep 2
+    # Clean up any remaining lime_tap* interfaces
+    for ifc in $(ip link show | grep -o 'lime_tap[^:]*' || true); do
+        if [ -n "$ifc" ]; then
+            print_status "Removing remaining interface $ifc"
+            sudo ip link delete "$ifc" 2>/dev/null || true
+        fi
+    done
     
-    # Force kill if still running
-    QEMU_PIDS=$(pgrep -f "qemu.*libremesh" || true)
-    if [ -n "$QEMU_PIDS" ]; then
-        for pid in $QEMU_PIDS; do
-            print_warning "Force killing QEMU process $pid"
-            sudo kill -KILL "$pid" 2>/dev/null || true
-        done
-    fi
+    # Clean up temporary files (with sudo if needed)
+    sudo rm -f /tmp/lime_rootfs_*.cpio /tmp/qemu-libremesh.log 2>/dev/null || true
     
-    # Clean up network interfaces that might be left behind
-    sudo ip link delete br-lan 2>/dev/null || true
-    sudo ip link delete tap0 2>/dev/null || true
-    
-    print_status "QEMU processes stopped"
+    print_status "QEMU processes and network cleanup completed"
 }
 
 # Check prerequisites
@@ -93,6 +182,24 @@ check_prerequisites() {
     if [ ! -d "$LIME_PACKAGES_DIR" ]; then
         print_error "lime-packages directory not found at $LIME_PACKAGES_DIR"
         exit 1
+    fi
+    
+    # Validate that we have a compatible rootfs (must be tar.gz, not squashfs img.gz)
+    if [[ "$ROOTFS_PATH" == *.img.gz ]]; then
+        print_error "Detected squashfs image format: $(basename "$ROOTFS_PATH")"
+        print_error "QEMU development requires tar.gz format rootfs, not squashfs img.gz"
+        print_error "Please use LibreMesh 2020.4 images or convert the image format"
+        # Try fallback to 2020.4 if it exists
+        FALLBACK_ROOTFS="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz"
+        FALLBACK_KERNEL="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage"
+        if [ -f "$FALLBACK_ROOTFS" ] && [ -f "$FALLBACK_KERNEL" ]; then
+            print_status "Falling back to LibreMesh 2020.4 compatible images"
+            ROOTFS_PATH="$FALLBACK_ROOTFS"
+            KERNEL_PATH="$FALLBACK_KERNEL"
+        else
+            print_error "No compatible tar.gz rootfs images found"
+            exit 1
+        fi
     fi
     
     if [ ! -f "$ROOTFS_PATH" ]; then
@@ -106,6 +213,13 @@ check_prerequisites() {
         print_error "LibreMesh kernel not found at $KERNEL_PATH"
         print_error "Available kernels:"
         ls -la "$LIME_PACKAGES_DIR/build/" | grep -E "\.(bin|bzImage)$" || echo "No kernels found"
+        exit 1
+    fi
+    
+    # Test if rootfs can be extracted with tar
+    if ! tar -tf "$ROOTFS_PATH" >/dev/null 2>&1; then
+        print_error "Rootfs file $ROOTFS_PATH is not a valid tar archive"
+        print_error "QEMU development requires extractable tar.gz format"
         exit 1
     fi
 }
@@ -123,25 +237,47 @@ start_qemu() {
     
     cd "$LIME_PACKAGES_DIR"
     
-    # Start QEMU in background
-    nohup sudo ./tools/qemu_dev_start \
+    # Start QEMU in a screen session for proper console interaction
+    print_status "Starting QEMU in screen session 'libremesh'..."
+    sudo screen -dmS libremesh ./tools/qemu_dev_start \
         --libremesh-workdir . \
         "$ROOTFS_PATH" \
-        "$KERNEL_PATH" > /tmp/qemu-libremesh.log 2>&1 &
+        "$KERNEL_PATH"
     
-    print_status "QEMU starting... (logs in /tmp/qemu-libremesh.log)"
+    print_status "QEMU starting in screen session..."
+    print_status "Use 'sudo screen -r libremesh' to access console"
     
-    # Wait for QEMU to be ready
-    print_status "Waiting for QEMU to be ready..."
-    for i in {1..30}; do
-        if check_qemu_running; then
-            print_status "✓ QEMU LibreMesh ready at http://$QEMU_IP"
-            print_status "✓ lime-app available at http://$QEMU_IP/app"
-            return 0
+    # Wait for QEMU to be ready and auto-configure network
+    print_status "Waiting for QEMU to boot..."
+    for i in {1..8}; do
+        if pgrep -f "qemu-system-x86_64" >/dev/null 2>&1; then
+            break
         fi
         sleep 2
         echo -n "."
     done
+    
+    if ! pgrep -f "qemu-system-x86_64" >/dev/null 2>&1; then
+        echo
+        print_error "QEMU process failed to start"
+        return 1
+    fi
+    
+    # Auto-configure LibreMesh network
+    print_status "Auto-configuring LibreMesh network..."
+    setup_libremesh_network
+    
+    # Verify it's working
+    if check_qemu_running; then
+        print_status "✓ QEMU LibreMesh ready at http://$QEMU_IP"
+        print_status "✓ lime-app available at http://$QEMU_IP/app"
+        print_status "✓ Console accessible via: sudo screen -r libremesh"
+        return 0
+    else
+        print_warning "LibreMesh started but network not fully ready"
+        print_status "✓ Console accessible via: sudo screen -r libremesh"
+        return 0
+    fi
     
     echo
     print_error "QEMU failed to start or become ready"
@@ -190,34 +326,42 @@ show_status() {
     fi
 }
 
-# Deploy lime-app to running QEMU
+# Deploy lime-app using official LibreMesh method
 deploy_to_qemu() {
-    print_status "Deploying lime-app to running QEMU..."
-    
-    if ! check_qemu_running; then
-        print_error "QEMU is not running. Start it first with: npm run qemu:start"
-        exit 1
-    fi
+    print_status "Deploying lime-app using official LibreMesh method..."
     
     # Build lime-app first
     print_status "Building lime-app..."
     npm run build:production
     
-    # Deploy to lime-packages
-    print_status "Deploying to lime-packages..."
+    # Deploy to lime-packages (official LibreMesh method)
+    print_status "Deploying to lime-packages structure..."
     mkdir -p "$LIME_APP_FILES_DIR"
     cp -r build/* "$LIME_APP_FILES_DIR/"
+    print_status "✓ Files copied to lime-packages/packages/lime-app/files/www/app/"
     
-    # Copy directly to running QEMU (if possible)
-    print_status "Copying to running QEMU instance..."
-    if scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=5 \
-        -r build/* root@"$QEMU_IP":/www/app/ 2>/dev/null; then
-        print_status "✓ lime-app deployed successfully"
-        print_status "✓ Available at http://$QEMU_IP/app/"
+    # Check if QEMU is running to determine deployment strategy
+    if check_qemu_running; then
+        print_status "QEMU is running - attempting live deployment..."
+        
+        # Try direct SCP as quick method (fallback approach)
+        if scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=5 \
+            -r build/* root@"$QEMU_IP":/www/app/ 2>/dev/null; then
+            print_status "✓ Live deployment successful"
+            print_status "✓ lime-app available at http://$QEMU_IP/app/"
+        else
+            print_warning "Live deployment failed, restarting QEMU to pick up changes..."
+            print_status "This will ensure lime-packages overlay is properly applied..."
+            restart_qemu
+        fi
     else
-        print_warning "Direct copy failed, restarting QEMU to pick up changes..."
-        restart_qemu
+        print_status "QEMU is not running"
+        print_status "Files deployed to lime-packages structure"
+        print_status "Start QEMU with: npm run qemu:start"
+        print_status "The lime-app will be available via workdir overlay"
     fi
+    
+    print_status "✓ Deployment completed using official LibreMesh method"
 }
 
 # Main script logic
@@ -245,12 +389,12 @@ case "${1:-help}" in
         echo "  stop     - Stop QEMU LibreMesh"
         echo "  restart  - Restart QEMU LibreMesh"
         echo "  status   - Show QEMU and lime-app status"
-        echo "  deploy   - Build and deploy lime-app to running QEMU"
+        echo "  deploy   - Build and deploy lime-app using official LibreMesh method"
         echo "  help     - Show this help message"
         echo ""
         echo "Examples:"
         echo "  $0 start     # Start QEMU"
-        echo "  $0 deploy    # Deploy lime-app to running QEMU"
+        echo "  $0 deploy    # Deploy lime-app using official LibreMesh method"
         echo "  $0 status    # Check status"
         echo "  $0 restart   # Restart QEMU"
         ;;
