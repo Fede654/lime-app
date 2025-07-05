@@ -70,7 +70,7 @@ describe("notes page", () => {
         });
 
         const newText = "Updated note content";
-        fireEvent.change(textarea, { target: { value: newText } });
+        fireEvent.input(textarea, { target: { value: newText } });
 
         expect(textarea.value).toBe(newText);
     });
@@ -90,7 +90,8 @@ describe("notes page", () => {
 
         const newText = "New note content";
 
-        // Change the textarea value
+        // Change the textarea value - use both input and change for Preact compatibility
+        fireEvent.input(textarea, { target: { value: newText } });
         fireEvent.change(textarea, { target: { value: newText } });
 
         // Wait for the component to update
@@ -98,21 +99,20 @@ describe("notes page", () => {
             expect(textarea.value).toBe(newText);
         });
 
-        // Add a small delay to ensure all state updates are processed
-        await act(async () => {
-            await new Promise((resolve) => setTimeout(resolve, 10));
-        });
-
-        // Verify the textarea still has the new value
-        expect(textarea.value).toBe(newText);
+        // Clear the mock to see exactly what gets called
+        setNotesPromise.mockClear();
 
         // Now click save
         fireEvent.click(saveButton);
 
         // Check that setNotesPromise was called with the new text
         await waitFor(() => {
-            expect(setNotesPromise).toHaveBeenCalledWith(newText);
+            expect(setNotesPromise).toHaveBeenCalledTimes(1);
         });
+
+        // Check the actual argument passed
+        const actualArgument = setNotesPromise.mock.calls[0][0];
+        expect(actualArgument).toBe(newText);
     });
 
     it("disables save button during loading", async () => {
@@ -148,7 +148,7 @@ describe("notes page", () => {
             expect(textarea.value).toBe(mockNotes);
         });
 
-        fireEvent.change(textarea, { target: { value: "New content" } });
+        fireEvent.input(textarea, { target: { value: "New content" } });
         fireEvent.click(saveButton);
 
         // Button should be disabled during save
@@ -199,7 +199,7 @@ describe("notes page", () => {
             expect(textarea.value).toBe(mockNotes);
         });
 
-        fireEvent.change(textarea, { target: { value: "New content" } });
+        fireEvent.input(textarea, { target: { value: "New content" } });
         fireEvent.click(saveButton);
 
         await waitFor(() => {

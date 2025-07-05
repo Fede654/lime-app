@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/no-empty-function: "off" */
 import { Trans } from "@lingui/macro";
-import { useEffect, useState } from "preact/hooks";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
 import { useBoardData } from "utils/queries";
 
@@ -12,28 +12,39 @@ export const Page = () => {
     const { data: notes = "", isLoading } = useNotes();
     const setNotesMutation = useSetNotes();
 
-    // Use notes directly as the initial value and only update when notes changes
-    const [value, setValue] = useState(notes);
-    const [isInitialized, setIsInitialized] = useState(false);
+    // Use a more straightforward approach - only sync when component mounts
+    const [value, setValue] = useState("");
+    const [hasInitialized, setHasInitialized] = useState(false);
+    const [isUserEditing, setIsUserEditing] = useState(false);
+    const valueRef = useRef("");
+
+    // Keep ref in sync with current value
+    useEffect(() => {
+        valueRef.current = value;
+    }, [value]);
 
     function handleChange(event) {
         setValue(event.target.value);
+        setIsUserEditing(true);
     }
 
-    function saveNotes() {
-        setNotesMutation.mutate(value);
-    }
+    const saveNotes = useCallback(() => {
+        // Use ref to get the absolute current value at time of save
+        const currentValue = valueRef.current;
+        setNotesMutation.mutate(currentValue);
+        setIsUserEditing(false); // Reset editing state after save
+    }, [setNotesMutation]);
 
-    // Initialize value when notes first loads and handle external updates
+    // Initialize when notes data is available and handle external updates
     useEffect(() => {
-        if (!isInitialized && notes !== "") {
+        if (notes && !hasInitialized) {
             setValue(notes);
-            setIsInitialized(true);
-        } else if (isInitialized) {
-            // Handle external updates after initialization
+            setHasInitialized(true);
+        } else if (hasInitialized && !isUserEditing && notes !== value && notes !== "") {
+            // Only handle external updates when user is not actively editing
             setValue(notes);
         }
-    }, [notes, isInitialized]);
+    }, [notes, hasInitialized, isUserEditing, value]);
 
     return (
         <div className="container container-padded">

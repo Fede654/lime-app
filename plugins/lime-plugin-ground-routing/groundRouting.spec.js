@@ -232,7 +232,12 @@ describe("ground routing page", () => {
     it("applies correct styling to pre element", async () => {
         render(<GroundRoutingPage />);
 
-        const preElement = screen.getByText(/\{\s*"enabled":\s*true/);
+        // Wait for data to load first
+        await screen.findByText(/"enabled": true/);
+
+        // Find the pre element using querySelector since it's a specific HTML element
+        const preElement = document.querySelector("pre");
+        expect(preElement).toBeInTheDocument();
 
         // Check that the pre element has the expected inline styles
         expect(preElement).toHaveStyle({
