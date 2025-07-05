@@ -57,8 +57,11 @@
         "dev:start": "npm run verify:setup && npm run qemu:dev",
         "dev:cross-platform": "cross-env NODE_ENV=development npm start",
         "qemu:deploy": "./scripts/deploy-to-qemu.sh",
-        "qemu:start": "./scripts/deploy-to-qemu.sh --start-qemu",
-        "qemu:start-root": "./scripts/qemu-root.sh",
+        "qemu:start": "./scripts/qemu-manager.sh start",
+        "qemu:stop": "./scripts/qemu-manager.sh stop",
+        "qemu:restart": "./scripts/qemu-manager.sh restart",
+        "qemu:status": "./scripts/qemu-manager.sh status",
+        "deploy:qemu": "./scripts/qemu-manager.sh deploy",
         "qemu:dev": "./scripts/dev-with-qemu.sh dev",
         "qemu:check": "./scripts/dev-with-qemu.sh check",
         "prepare": "husky install"

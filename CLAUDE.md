@@ -83,13 +83,31 @@ npm run storybook:deploy       # Deploy to GitHub Pages
 npm run create-plugin <pluginName>  # Bootstrap new plugin structure
 ```
 
-### QEMU LibreMesh Integration
+### QEMU LibreMesh Integration (Standardized Workflow)
+
+**Quick Start - One Command Deployment:**
 ```bash
-npm run qemu:deploy                  # Build and deploy lime-app to lime-packages
-npm run qemu:start                   # Build, deploy, and start QEMU LibreMesh
-npm run qemu:check                   # Check if QEMU LibreMesh is running
-npm run qemu:dev                     # Start development server connected to QEMU
+npm run deploy:qemu                  # ⭐ Build and deploy to running QEMU (recommended)
 ```
+
+**QEMU Management:**
+```bash
+npm run qemu:start                   # Start QEMU LibreMesh
+npm run qemu:stop                    # Stop QEMU LibreMesh cleanly
+npm run qemu:restart                 # Restart QEMU (stops + starts)
+npm run qemu:status                  # Check QEMU and lime-app status
+```
+
+**Development Workflow:**
+```bash
+npm run qemu:dev                     # Start development server with QEMU backend
+npm run qemu:check                   # Legacy status check (use qemu:status instead)
+npm run qemu:deploy                  # Legacy build+deploy (use deploy:qemu instead)
+```
+
+**Access Points:**
+- **QEMU LibreMesh**: http://10.13.0.1 (production lime-app)
+- **Development Server**: http://localhost:8080 (live-reload with QEMU backend)
 
 ## Architecture
 
@@ -233,13 +251,14 @@ ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/a
 
 ## Development Environment Notes
 
-### QEMU LibreMesh Integration (Official Workflow)
+### QEMU LibreMesh Integration (Standardized Workflow - 2025)
 
 **Prerequisites:**
 1. Clone `lime-packages` repository in parent directory: `../lime-packages/`
 2. Download LibreMesh development images to `../lime-packages/build/`:
-   - `libremesh-2020.4-ow19-x86-64-rootfs.tar.gz` (recommended)
+   - `libremesh-2020.4-ow19-x86-64-rootfs.tar.gz` (recommended - stable)
    - `libremesh-2020.4-ow19-x86-64-ramfs.bzImage`
+   - OR `libremesh-2024.1-*` images (auto-detected)
 3. Install `qemu-system-x86_64` and `screen` packages
 
 **Recommended LibreMesh Images (Tested & Working):**
@@ -252,33 +271,41 @@ wget -O libremesh-2020.4-ow19-x86-64-ramfs.bzImage \
   "https://downloads.libremesh.org/releases/2020.4-ow19/targets/x86/64/libremesh-2020.4-ow19-default-x86-64-ramfs.bzImage"
 ```
 
-**Official Development Commands:**
+**🚀 Standardized Development Commands (2025):**
 ```bash
-# Deploy lime-app to QEMU (official LibreMesh method)
-npm run qemu:deploy                    # Build and deploy lime-app
-npm run qemu:start                     # Build, deploy, and start QEMU
-npm run qemu:check                     # Check QEMU status
-npm run qemu:dev                       # Start development server with QEMU backend
+# ⭐ RECOMMENDED - One-command deployment
+npm run deploy:qemu                    # Build + deploy to running QEMU
 
-# Manual workflow with recommended images
-screen -S libremesh -d -m sudo ../lime-packages/tools/qemu_dev_start \
-  --libremesh-workdir ../lime-packages \
-  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz \
-  ../lime-packages/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage
+# QEMU Management (standardized)
+npm run qemu:start                     # Start QEMU LibreMesh cleanly
+npm run qemu:stop                      # Stop QEMU processes properly
+npm run qemu:restart                   # Clean restart (stop + start)
+npm run qemu:status                    # Check QEMU and lime-app status
 
-# Configure LibreMesh network (in screen session)
-screen -r libremesh
-ip addr add 10.13.0.1/16 dev br-lan
-/etc/init.d/uhttpd start
+# Development Workflow
+npm run qemu:dev                       # Development server with QEMU backend
+
+# Legacy Commands (still supported)
+npm run qemu:deploy                    # Build and deploy to lime-packages only
+npm run qemu:check                     # Basic status check (use qemu:status instead)
 ```
 
-**Development Workflow:**
-1. **Deploy to QEMU**: `npm run qemu:deploy` builds and copies lime-app to lime-packages
-2. **Start QEMU**: `npm run qemu:start` launches LibreMesh at `http://10.13.0.1`
-3. **Development Server**: `npm run qemu:dev` runs lime-app dev server connected to QEMU
-4. **Access Points**:
-   - **QEMU LibreMesh**: `http://10.13.0.1` (production lime-app)
-   - **Development Server**: `http://localhost:8080` (live-reload lime-app with QEMU backend)
+**🔧 Standardized Development Workflow:**
+1. **Quick Deployment**: `npm run deploy:qemu` - builds, deploys, and handles QEMU management
+2. **Status Check**: `npm run qemu:status` - validates QEMU running and lime-app accessible
+3. **Development**: `npm run qemu:dev` - live development server with QEMU backend
+4. **Management**: Use `npm run qemu:start/stop/restart` for QEMU lifecycle
+
+**✅ Key Improvements (2025):**
+- **No more manual SSH/SCP**: Automated deployment handles connectivity issues
+- **Proper process management**: Clean stop/start prevents port conflicts
+- **Auto-detection**: Works with multiple LibreMesh image versions
+- **Validation built-in**: Commands verify successful deployment
+- **Single-command workflow**: `deploy:qemu` handles entire deployment pipeline
+
+**Access Points:**
+- **QEMU LibreMesh**: `http://10.13.0.1` (production lime-app)
+- **Development Server**: `http://localhost:8080` (live-reload with QEMU backend)
 
 **Network Configuration:**
 - QEMU creates LibreMesh node at `10.13.0.1`
@@ -381,11 +408,13 @@ This framework ensures effective collaboration while maintaining code quality an
 - **Cross-platform compatibility**: Windows WSL2, Linux, macOS achievable with proper verification tooling
 - **AI tool specialization**: Claude Code (debugging/architecture), Cursor (IDE integration), GitHub Copilot (completion)
 
-**LibreMesh Development Environment**
+**LibreMesh Development Environment (Updated 2025)**
 - **QEMU integration**: Gold standard for authentic LibreMesh development environment
-- **Stable images**: Use LibreMesh 2020.4-ow19 (avoid 2024.1 due to missing ethernet drivers)
-- **Network configuration**: Essential command `ip addr add 10.13.0.1/16 dev br-lan`
-- **Workflow**: Console access via `screen -r libremesh`, development via `npm run qemu:dev`
+- **Standardized deployment**: `npm run deploy:qemu` - single command for build + deploy
+- **Automatic QEMU management**: Proper process lifecycle with `scripts/qemu-manager.sh`
+- **Image compatibility**: Auto-detects LibreMesh 2020.4-ow19 or 2024.1 images
+- **Network configuration**: Automated via QEMU manager (no manual setup required)
+- **Development workflow**: `npm run qemu:dev` for live development with QEMU backend
 
 **Documentation as Development Infrastructure**
 - **Multi-level architecture**: README (quick start) → DEVELOPMENT_SETUP (comprehensive) → DEVELOPMENT_ORGANIZATION (framework)

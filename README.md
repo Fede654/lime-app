@@ -29,8 +29,9 @@ For developing with a real LibreMesh backend:
 
 ```bash
 # Complete setup - see DEVELOPMENT_SETUP.md for details
-npm run qemu:start    # Sets up LibreMesh in QEMU
-npm run qemu:dev      # Development server with real backend
+npm run qemu:start      # Start LibreMesh in QEMU
+npm run deploy:qemu     # ⭐ Build + deploy lime-app (one command)
+npm run qemu:dev        # Development server with real backend
 ```
 
 **Provides:**
@@ -71,10 +72,36 @@ If you want, you can also setup a virtual LibreMesh node following [lime-package
 npm run build:production
 ```
 
-Now you can copy the bundles to the router:
+### Deploy to LibreMesh Router
 
+**Automated (Recommended):**
+```bash
+npm run deploy:qemu     # Deploy to QEMU LibreMesh
+```
+
+**Manual (if needed):**
 ```bash
 ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/app
+```
+
+## Quick Reference
+
+### QEMU LibreMesh Management
+```bash
+npm run qemu:start      # Start QEMU LibreMesh
+npm run qemu:stop       # Stop QEMU LibreMesh  
+npm run qemu:restart    # Restart QEMU LibreMesh
+npm run qemu:status     # Check QEMU and lime-app status
+npm run deploy:qemu     # Build + deploy lime-app to QEMU
+```
+
+### Development Commands
+```bash
+npm run dev             # Frontend-only development
+npm run qemu:dev        # Development with QEMU backend
+npm run test            # Run tests
+npm run lint            # Check code quality
+npm run build:production # Production build
 ```
 
 ### Run tests

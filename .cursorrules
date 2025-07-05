@@ -1,0 +1,174 @@
+# LibreMesh LiMeApp - Cursor IDE Rules
+
+## Project Context
+LiMeApp is a Preact-based web application for LibreMesh router management. It provides a geek-free interface for setup and maintenance of LibreMesh mesh networking nodes, built with a plugin architecture that communicates with router services via ubus JSON-RPC calls.
+
+## Development Framework
+- **Frontend**: Preact (React-like framework, 3kB bundle)
+- **TypeScript**: Full type safety with path aliases configured
+- **State Management**: TanStack Query (modern) + Redux (legacy)
+- **Testing**: Jest + Testing Library with QEMU integration
+- **Styling**: CSS Modules + Tailwind CSS + Bootstrap-inspired global classes
+- **i18n**: LinguiJS with 24+ language support
+- **Build**: Webpack with development proxy to LibreMesh routers
+
+## Standardized QEMU Workflow (2025)
+
+### One-Command Deployment ⭐
+```bash
+npm run deploy:qemu        # Build + deploy to running QEMU (recommended)
+```
+
+### QEMU Management
+```bash
+npm run qemu:start         # Start QEMU LibreMesh cleanly
+npm run qemu:stop          # Stop QEMU processes properly  
+npm run qemu:restart       # Clean restart (stop + start)
+npm run qemu:status        # Check QEMU and lime-app status
+```
+
+### Development Commands
+```bash
+npm run dev                # Development server (proxies to 10.13.0.1)
+npm run qemu:dev           # Development with QEMU backend
+npm test                   # Run test suite
+npm run lint               # TypeScript + ESLint + Prettier
+npm run build:production   # Production build with i18n compilation
+```
+
+### Integration Testing
+```bash
+./scripts/lime-app-integration-tests.sh    # Comprehensive API testing (50+ tests)
+npm run qa:full                            # Complete quality assurance
+```
+
+## Code Patterns & Conventions
+
+### Plugin Development Structure
+```
+plugins/lime-plugin-<name>/
+├── index.ts                    # Plugin registration { name, page, menu }
+├── <name>.spec.js             # Component tests
+├── <name>.stories.js          # Storybook stories
+└── src/
+    ├── <name>Page.js          # Main component
+    ├── <name>Api.js           # Backend endpoints
+    ├── <name>Queries.js       # TanStack Query hooks
+    └── style.less             # Component styles
+```
+
+### Component Development Pattern (TDD)
+1. Write component tests with mocked APIs using `render()` from `utils/test_utils`
+2. Implement component to pass tests
+3. Write API endpoint tests with proper mock cleanup
+4. Implement API endpoints following ubus JSON-RPC pattern
+5. Create Storybook stories for component states
+
+### Path Aliases (Configured)
+```javascript
+~/ → src/
+components/ → src/components/
+containers/ → src/containers/
+utils/ → src/utils/
+plugins/ → plugins/
+```
+
+### Backend Communication
+- **uHTTPd client**: Singleton service for ubus JSON-RPC calls
+- **Default router IP**: `10.13.0.1` (override with `NODE_HOST` env var)
+- **API endpoints**: Functions that define request URLs and payloads
+- **Queries**: Read operations using `useQuery`
+- **Mutations**: Write operations using `useMutation`
+
+## Best Practices for Cursor
+
+### When Writing Components
+- Use `Fragment` from `preact` instead of React fragments (`<>`)
+- Import path aliases: `import { Component } from '~/components'`
+- Follow existing styling patterns (CSS Modules + global classes)
+- Include comprehensive PropTypes or TypeScript interfaces
+
+### When Writing Tests
+- Mock API calls using `jest.mock('./src/<name>Api')`
+- Clean up query cache: `act(() => queryCache.clear())`
+- Use `render()` from `utils/test_utils` for consistent provider setup
+- Test user interactions with `@testing-library/preact`
+- Use `screen.findBy*` async queries for UI state changes
+
+### When Working with APIs
+- Follow ubus JSON-RPC protocol patterns
+- Use TanStack Query for data fetching (preferred over Redux)
+- Handle session authentication with username/password
+- Test endpoints with QEMU integration for real router testing
+
+### File Creation Guidelines
+- **ALWAYS prefer editing existing files** over creating new ones
+- **NEVER create documentation files** unless explicitly requested
+- Follow plugin structure conventions for new plugins
+- Use `npm run create-plugin <name>` for bootstrapping
+
+## AI Collaboration Context
+
+This project supports human-AI collaborative development:
+- **Architecture-first approach**: Human defines structure → AI generates implementation
+- **TDD with AI**: Human writes failing tests → AI creates passing implementation  
+- **Systematic debugging**: Human identifies issue → AI provides systematic resolution
+
+### Quality Gates
+```bash
+npm run verify:setup         # Development environment verification
+npm run qa:ai                # AI-assisted quality checks
+npm run qa:upstream          # Upstream contribution readiness
+```
+
+## LibreMesh Integration
+
+### QEMU LibreMesh Environment
+- **Recommended image**: `libremesh-2020.4-ow19-x86-64` (stable, tested)
+- **Network**: QEMU creates LibreMesh node at `10.13.0.1`
+- **Access**: Console via `screen -r libremesh`, web at `http://10.13.0.1`
+- **Prerequisites**: `../lime-packages/` directory with QEMU tools
+
+### Real Router Configuration
+- Production deployments serve from `/www/app/` via uHTTPd
+- Access via `thisnode.info` or router IP address
+- Real configuration manipulation through tested API endpoints
+- Session-based authentication with ACL permissions
+
+## Common Issues & Solutions
+
+### Frontend-Only Development
+Without LibreMesh backend, expect:
+- `/ubus` endpoint 500 errors (normal - no router backend)
+- WebSocket connection failures (hot-reload limitation)
+- JSON parsing errors from API calls (HTML error pages instead of JSON)
+
+### I18n Integration
+- Ensure `i18n.activate()` called before rendering I18nProvider
+- Use `lingui extract` → `lingui compile` workflow
+- 24 languages supported, Spanish at 100% translation
+
+### VS Code Integration
+- F5 debugging configured with 8 launch configurations
+- Integrated terminal has QEMU environment variables
+- Jest test explorer enabled with coverage on load
+- File nesting patterns for cleaner explorer view
+
+## Contribution Standards
+
+### Commit Message Format
+```bash
+git commit -m "feat(component): add mesh node status visualization
+
+- Implemented TypeScript React component with real-time updates
+- Added comprehensive test suite with 95% coverage  
+- Created Storybook stories for all component states
+
+🤖 AI-assisted with: Cursor for component structure"
+```
+
+### Upstream Preparation
+- Use `npm run qa:upstream` for contribution readiness
+- Follow LibreMesh project standards and conventions
+- Maintain multilingual documentation capabilities
+- Ensure cross-platform compatibility (Linux, WSL2, macOS)
