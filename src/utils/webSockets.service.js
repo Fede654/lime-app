@@ -49,7 +49,7 @@ class WebsocketAPI {
 
     call(sid, action, data, method) {
         let id;
-        let observable = Observable.create((obs) => {
+        let observable = new Observable((obs) => {
             if (typeof method === "undefined") {
                 method = "call";
             }

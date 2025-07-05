@@ -32,7 +32,7 @@ export class WebSocketService {
             }, autoReconnectInterval);
         };
 
-        let observable = Observable.create((obs) => {
+        let observable = new Observable((obs) => {
             ws.onopen = obs.next.bind(obs);
             ws.onmessage = obs.next.bind(obs);
             ws.onerror = (err) => {

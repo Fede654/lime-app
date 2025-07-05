@@ -8,9 +8,7 @@ import { useToast } from "components/toast/toastProvider";
 import { EditOrDelete } from "plugins/lime-plugin-mesh-wide-config/src/components/Components";
 import { AddNewConfigSection } from "plugins/lime-plugin-mesh-wide-config/src/components/FormEdit";
 import { OptionContainer } from "plugins/lime-plugin-mesh-wide-config/src/components/FormOption";
-import {
-    DeletePropModal,
-} from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
+import { DeletePropModal } from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
 import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 
 export const FormSection = ({

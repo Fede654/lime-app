@@ -4,12 +4,11 @@ const colors = require("tailwindcss/colors");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     // mode: "jit",
-    content: [],
-    purge: [
+    content: [
         "./src/**/*.{js,jsx,ts,tsx,vue}",
         "./plugins/**/*.{js,jsx,ts,tsx,vue}",
     ],
-    darkMode: false, // or 'media' or 'class'
+    darkMode: "media",
     theme: {
         extend: {
             colors: {
@@ -24,10 +23,6 @@ module.exports = {
                     secondary: "#6BC3AE",
                     info: "#00ADEE",
                     disabled: "#BABABA",
-                },
-                button: {
-                    primary: "#1BC47D",
-                    secondary: "#6BC3AE",
                 },
                 danger: "#EB7575",
                 info: "#EAAB7E",
