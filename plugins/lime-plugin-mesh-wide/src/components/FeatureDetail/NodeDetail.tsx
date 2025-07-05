@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { DomEvent } from "leaflet";
-import { useCallback } from "react";
 import { Fragment } from "preact";
+import { useCallback } from "react";
 
 import { useDisclosure } from "components/Modal/useDisclosure";
 import UpdateSharedStateBtn from "components/shared-state/UpdateSharedStateBtn";

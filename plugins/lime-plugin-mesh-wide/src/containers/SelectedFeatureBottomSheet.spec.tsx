@@ -8,6 +8,11 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
+    useMeshWideNodes,
+    useMeshWideNodesReference,
+    useSetNodeInfoReferenceState,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+import {
     INodeInfo,
     NodeMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
@@ -21,16 +26,12 @@ jest.mock("plugins/lime-plugin-mesh-wide/src/meshWideQueries.tsx", () => ({
     useSetNodeInfoReferenceState: jest.fn(),
 }));
 
-import {
-    useMeshWideNodesReference,
-    useMeshWideNodes,
-    useSetNodeInfoReferenceState,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
-
 const mockedSelectedMapFeature = jest.mocked(useSelectedMapFeature);
 const mockedUseMeshWideNodesReference = jest.mocked(useMeshWideNodesReference);
 const mockedUseMeshWideNodes = jest.mocked(useMeshWideNodes);
-const mockedUseSetNodeInfoReferenceState = jest.mocked(useSetNodeInfoReferenceState);
+const mockedUseSetNodeInfoReferenceState = jest.mocked(
+    useSetNodeInfoReferenceState
+);
 
 function pxToNumber(pxString: string): number {
     const numericString = pxString.replace("px", "");
@@ -46,7 +47,7 @@ describe("Feature bottom sheet", () => {
             isLoading: false,
             error: null,
             isSuccess: true,
-            status: 'success',
+            status: "success",
         } as any);
         mockedUseMeshWideNodes.mockReturnValue({
             data: nodes(),
@@ -54,7 +55,7 @@ describe("Feature bottom sheet", () => {
             isLoading: false,
             error: null,
             isSuccess: true,
-            status: 'success',
+            status: "success",
         } as any);
         mockedUseSetNodeInfoReferenceState.mockReturnValue({
             mutateAsync: jest.fn(),
@@ -64,10 +65,10 @@ describe("Feature bottom sheet", () => {
             isIdle: true,
             isLoading: false,
             isSuccess: false,
-            status: 'idle',
+            status: "idle",
         } as any);
     });
-    
+
     beforeAll(() => {
         Object.defineProperty(window, "matchMedia", {
             writable: true,

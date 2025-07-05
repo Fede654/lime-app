@@ -2,6 +2,11 @@ import "@testing-library/jest-dom/extend-expect";
 import { screen, waitFor, within } from "@testing-library/preact";
 
 import {
+    useLoss,
+    usePath,
+    usePathLoss,
+} from "plugins/lime-plugin-metrics/src/metricsQueries";
+import {
     getInternetStatus,
     getNodeStatus,
 } from "plugins/lime-plugin-rx/src/rxApi";
@@ -17,12 +22,6 @@ jest.mock("plugins/lime-plugin-metrics/src/metricsQueries", () => ({
     usePathLoss: jest.fn(),
     useLoss: jest.fn(),
 }));
-
-import {
-    useLoss,
-    usePath,
-    usePathLoss,
-} from "plugins/lime-plugin-metrics/src/metricsQueries";
 
 const mockedNodeStatus = jest.mocked(getNodeStatus);
 const mockedInternetStatus = jest.mocked(getInternetStatus);
