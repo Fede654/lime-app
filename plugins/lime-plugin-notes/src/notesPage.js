@@ -11,7 +11,10 @@ export const Page = () => {
     const { data: boardData } = useBoardData();
     const { data: notes = "", isLoading } = useNotes();
     const setNotesMutation = useSetNotes();
-    const [value, setValue] = useState(notes || "");
+
+    // Use notes directly as the initial value and only update when notes changes
+    const [value, setValue] = useState(notes);
+    const [isInitialized, setIsInitialized] = useState(false);
 
     function handleChange(event) {
         setValue(event.target.value);
@@ -21,11 +24,16 @@ export const Page = () => {
         setNotesMutation.mutate(value);
     }
 
-    // Update local state when notes data changes
+    // Initialize value when notes first loads and handle external updates
     useEffect(() => {
-        setValue(notes);
-        return () => {};
-    }, [notes]);
+        if (!isInitialized && notes !== "") {
+            setValue(notes);
+            setIsInitialized(true);
+        } else if (isInitialized) {
+            // Handle external updates after initialization
+            setValue(notes);
+        }
+    }, [notes, isInitialized]);
 
     return (
         <div className="container container-padded">

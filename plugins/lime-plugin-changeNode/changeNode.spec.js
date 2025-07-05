@@ -66,12 +66,15 @@ describe("changeNode page", () => {
 
         // Check that all nodes are present as options
         for (const node of mockCloudNodes) {
-            expect(await screen.findByDisplayValue(node)).toBeInTheDocument();
+            expect(await screen.findByText(node)).toBeInTheDocument();
         }
     });
 
     it("shows current node as default selected option", async () => {
         render(<ChangeNodePage />);
+
+        // Wait for the select to be populated and have the correct value
+        await screen.findByDisplayValue("current-node");
 
         const selectElement = await screen.findByRole("combobox");
         expect(selectElement.value).toBe("current-node");
@@ -79,8 +82,6 @@ describe("changeNode page", () => {
 
     it("sorts nodes with current node at the end", async () => {
         render(<ChangeNodePage />);
-
-        const selectElement = await screen.findByRole("combobox");
 
         // Should be sorted alphabetically with current node last
         const expectedOrder = [
@@ -92,9 +93,7 @@ describe("changeNode page", () => {
 
         // Check that all expected options are present
         for (const expectedValue of expectedOrder) {
-            expect(
-                await screen.findByDisplayValue(expectedValue)
-            ).toBeInTheDocument();
+            expect(await screen.findByText(expectedValue)).toBeInTheDocument();
         }
     });
 

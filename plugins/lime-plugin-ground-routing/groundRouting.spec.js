@@ -75,12 +75,12 @@ describe("ground routing page", () => {
     it("shows formatted JSON configuration", async () => {
         render(<GroundRoutingPage />);
 
-        const preElement = await screen.findByRole("generic");
-        expect(preElement).toBeInTheDocument();
+        const jsonContent = await screen.findByText(/"enabled": true/);
+        expect(jsonContent).toBeInTheDocument();
 
         // Check that JSON is properly formatted (indented)
-        const jsonText = preElement.textContent;
-        expect(jsonText).toContain('{\n  "enabled": true');
+        const preElement = screen.getByText(/\{\s*"enabled":\s*true/);
+        expect(preElement.textContent).toContain('{\n  "enabled": true');
     });
 
     it("shows loading message when fetching data", async () => {
@@ -94,6 +94,9 @@ describe("ground routing page", () => {
 
     it("has reload button", async () => {
         render(<GroundRoutingPage />);
+
+        // Wait for data to load first
+        await screen.findByText(/"enabled": true/);
 
         const reloadButton = await screen.findByRole("button", {
             name: /reload/i,
@@ -229,7 +232,7 @@ describe("ground routing page", () => {
     it("applies correct styling to pre element", async () => {
         render(<GroundRoutingPage />);
 
-        const preElement = await screen.findByRole("generic");
+        const preElement = screen.getByText(/\{\s*"enabled":\s*true/);
 
         // Check that the pre element has the expected inline styles
         expect(preElement).toHaveStyle({

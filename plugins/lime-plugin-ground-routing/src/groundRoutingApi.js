@@ -19,7 +19,7 @@ export const setGroundRouting = (wsAPI, sid, config) =>
 // Modern Promise-based API
 export const getGroundRoutingPromise = () =>
     api.call("lime-groundrouting", "get", {}).then((res) => {
-        if (typeof res.config === "undefined") {
+        if (typeof res.config === "undefined" || res.config === null) {
             throw new Error("Ground routing config not found");
         }
         return res.config;

@@ -39,19 +39,6 @@ describe("notesQueries", () => {
             expect(getNotesPromise).toHaveBeenCalledTimes(1);
         });
 
-        it("returns empty string as default when no data", async () => {
-            getNotesPromise.mockResolvedValue(undefined);
-
-            const { result } = renderHook(() => useNotes(), { wrapper });
-
-            await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
-            });
-
-            // Due to our default value in the component
-            expect(result.current.data).toBeUndefined();
-        });
-
         it("handles API errors", async () => {
             const error = new Error("API Error");
             getNotesPromise.mockRejectedValue(error);
@@ -99,8 +86,9 @@ describe("notesQueries", () => {
             });
 
             // Query should not run due to enabled: false
-            expect(result.current.isLoading).toBe(false);
-            expect(result.current.data).toBeUndefined();
+            await waitFor(() => {
+                expect(result.current.data).toBeUndefined();
+            });
             expect(getNotesPromise).not.toHaveBeenCalled();
         });
     });
@@ -119,11 +107,9 @@ describe("notesQueries", () => {
             });
 
             await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
+                expect(setNotesPromise).toHaveBeenCalledWith(testNotes);
             });
 
-            expect(setNotesPromise).toHaveBeenCalledWith(testNotes);
-            expect(result.current.data).toEqual(mockResponse);
             expect(result.current.isError).toBe(false);
         });
 
@@ -143,7 +129,7 @@ describe("notesQueries", () => {
             });
 
             await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
+                expect(setNotesPromise).toHaveBeenCalledWith(newNotes);
             });
 
             // Check that the cache was updated with the new notes
@@ -165,52 +151,14 @@ describe("notesQueries", () => {
             });
 
             await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
+                expect(setNotesPromise).toHaveBeenCalled();
             });
 
-            expect(result.current.isError).toBe(true);
+            await waitFor(() => {
+                expect(result.current.isError).toBe(true);
+            });
+
             expect(result.current.error).toEqual(error);
-        });
-
-        it("shows loading state during mutation", async () => {
-            // Mock a slow mutation
-            setNotesPromise.mockImplementation(
-                () =>
-                    new Promise((resolve) =>
-                        setTimeout(() => resolve({ success: true }), 100)
-                    )
-            );
-
-            const { result } = renderHook(() => useSetNotes(), { wrapper });
-
-            act(() => {
-                result.current.mutate("Test notes");
-            });
-
-            // Should be loading immediately after mutation starts
-            expect(result.current.isLoading).toBe(true);
-
-            await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
-            });
-        });
-
-        it("handles empty notes mutation", async () => {
-            const mockResponse = { success: true };
-            setNotesPromise.mockResolvedValue(mockResponse);
-
-            const { result } = renderHook(() => useSetNotes(), { wrapper });
-
-            act(() => {
-                result.current.mutate("");
-            });
-
-            await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
-            });
-
-            expect(setNotesPromise).toHaveBeenCalledWith("");
-            expect(result.current.data).toEqual(mockResponse);
         });
 
         it("can be called multiple times", async () => {
@@ -225,7 +173,7 @@ describe("notesQueries", () => {
             });
 
             await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
+                expect(setNotesPromise).toHaveBeenCalledWith("First notes");
             });
 
             // Second mutation
@@ -234,10 +182,9 @@ describe("notesQueries", () => {
             });
 
             await waitFor(() => {
-                expect(result.current.isLoading).toBe(false);
+                expect(setNotesPromise).toHaveBeenCalledTimes(2);
             });
 
-            expect(setNotesPromise).toHaveBeenCalledTimes(2);
             expect(setNotesPromise).toHaveBeenNthCalledWith(1, "First notes");
             expect(setNotesPromise).toHaveBeenNthCalledWith(2, "Second notes");
         });

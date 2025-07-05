@@ -83,14 +83,33 @@ describe("notes page", () => {
             name: /save notes/i,
         });
 
+        // Wait for notes to load
         await waitFor(() => {
             expect(textarea.value).toBe(mockNotes);
         });
 
         const newText = "New note content";
+
+        // Change the textarea value
         fireEvent.change(textarea, { target: { value: newText } });
+
+        // Wait for the component to update
+        await waitFor(() => {
+            expect(textarea.value).toBe(newText);
+        });
+
+        // Add a small delay to ensure all state updates are processed
+        await act(async () => {
+            await new Promise((resolve) => setTimeout(resolve, 10));
+        });
+
+        // Verify the textarea still has the new value
+        expect(textarea.value).toBe(newText);
+
+        // Now click save
         fireEvent.click(saveButton);
 
+        // Check that setNotesPromise was called with the new text
         await waitFor(() => {
             expect(setNotesPromise).toHaveBeenCalledWith(newText);
         });
@@ -110,11 +129,12 @@ describe("notes page", () => {
 
     it("disables save button during save operation", async () => {
         // Mock slow save operation
+        let resolvePromise;
         setNotesPromise.mockImplementation(
             () =>
-                new Promise((resolve) =>
-                    setTimeout(() => resolve({ success: true }), 1000)
-                )
+                new Promise((resolve) => {
+                    resolvePromise = resolve;
+                })
         );
 
         render(<NotesPage />);
@@ -132,7 +152,14 @@ describe("notes page", () => {
         fireEvent.click(saveButton);
 
         // Button should be disabled during save
-        expect(saveButton).toBeDisabled();
+        await waitFor(() => {
+            expect(saveButton).toBeDisabled();
+        });
+
+        // Resolve the promise to clean up
+        act(() => {
+            resolvePromise({ success: true });
+        });
     });
 
     it("handles empty notes", async () => {

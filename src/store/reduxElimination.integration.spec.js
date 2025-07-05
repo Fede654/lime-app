@@ -6,26 +6,15 @@ import { loadEpics, loadReducers } from "../utils/loader";
 describe("Redux Elimination Integration Tests", () => {
     describe("Plugin Store Configuration", () => {
         it("migrated plugins should not register Redux stores", () => {
-            const migratedPlugins = [
-                "lime-plugin-align",
-                "lime-plugin-changeNode",
-                "lime-plugin-notes",
-                "lime-plugin-ground-routing",
+            const migratedPluginNames = [
+                "Align",
+                "changeNode",
+                "Notes",
+                "groundRouting",
             ];
 
-            migratedPlugins.forEach((pluginName) => {
-                const plugin = plugins.find(
-                    (p) =>
-                        p.name === pluginName ||
-                        (p.name === "Align" &&
-                            pluginName === "lime-plugin-align") ||
-                        (p.name === "Notes" &&
-                            pluginName === "lime-plugin-notes") ||
-                        (p.name === "changeNode" &&
-                            pluginName === "lime-plugin-changeNode") ||
-                        (p.name === "groundRouting" &&
-                            pluginName === "lime-plugin-ground-routing")
-                );
+            migratedPluginNames.forEach((pluginName) => {
+                const plugin = plugins.find((p) => p.name === pluginName);
 
                 expect(plugin).toBeDefined();
                 expect(plugin.store).toBeUndefined();
@@ -58,13 +47,13 @@ describe("Redux Elimination Integration Tests", () => {
     describe("Migration Completeness", () => {
         it("all specified plugins should be fully migrated", () => {
             const expectedMigratedPlugins = [
-                { name: "Align", shouldNotHaveStore: true },
-                { name: "changeNode", shouldNotHaveStore: true },
-                { name: "Notes", shouldNotHaveStore: true },
-                { name: "groundRouting", shouldNotHaveStore: true },
+                "Align",
+                "changeNode",
+                "Notes",
+                "groundRouting",
             ];
 
-            expectedMigratedPlugins.forEach(({ name, shouldNotHaveStore }) => {
+            expectedMigratedPlugins.forEach((name) => {
                 const plugin = plugins.find((p) => p.name === name);
 
                 expect(plugin).toBeDefined();
