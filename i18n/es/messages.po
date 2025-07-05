@@ -213,11 +213,11 @@ msgstr "Espere mientra se reinicia."
 msgid "Awaiting confirmation"
 msgstr "Esperando confirmación."
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:86
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:104
 msgid "Babel Links"
 msgstr "Enlaces de Babel"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:88
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:106
 msgid "Babel Links Reference"
 msgstr "Enlaces de referencia en Babel"
 
@@ -229,11 +229,11 @@ msgstr "Volver"
 msgid "Background Color"
 msgstr "Color de fondo"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:82
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:100
 msgid "Batman Links"
 msgstr "Enlaces en Batman"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:84
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:102
 msgid "Batman Links Reference"
 msgstr "Enlaces de referencia en Batman"
 
@@ -249,7 +249,7 @@ msgstr "Equipo (Hardware)"
 msgid "Calculating network path"
 msgstr "Cargando el recorrido en la red"
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:83
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:84
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:150
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:14
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormOption.tsx:105
@@ -257,7 +257,7 @@ msgstr "Cargando el recorrido en la red"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.tsx:85
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.tsx:91
 msgid "Canceling"
 msgstr "Cancelando"
 
@@ -490,7 +490,7 @@ msgstr "Crear sesión"
 msgid "Create Voucher"
 msgstr "Crear cupón"
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:58
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:59
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:145
 msgid "Create network"
 msgstr "Crear red"
@@ -523,7 +523,7 @@ msgstr "Eliminar"
 msgid "Delete property"
 msgstr "Eliminar propiedad"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:201
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:202
 msgid "Delete this this node from reference state"
 msgstr "Eliminar este nodo del estado de referencia"
 
@@ -535,7 +535,7 @@ msgstr "Eliminar este {0}<0/> del estado de referencia"
 msgid "Deleted {keyString}"
 msgstr "Eliminado {keyString}"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/FormSection.tsx:59
+#: plugins/lime-plugin-mesh-wide-config/src/components/FormSection.tsx:56
 msgid "Deleted {name} - {0}"
 msgstr "Eliminado {name} - {0}"
 
@@ -548,7 +548,7 @@ msgstr "Descripción"
 msgid "Description: {name}"
 msgstr "Descripción: {name}"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:91
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:92
 #: plugins/lime-plugin-rx/src/sections/system.tsx:48
 msgid "Device"
 msgstr "Equipo"
@@ -712,11 +712,11 @@ msgid "Error setting network"
 msgstr "Error configurando red."
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:355
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:190
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:191
 msgid "Error setting new reference state!"
 msgstr "¡Error al establecer un nuevo estado de referencia!"
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.tsx:83
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.tsx:89
 msgid "Error stopping scan"
 msgstr "Error deteniendo la búsqueda."
 
@@ -786,7 +786,7 @@ msgstr "Archivo de sistema (firmware) descargado y verificado."
 msgid "Firmware downloaded"
 msgstr "Archivo de sistema (firmware) descargado."
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:82
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:83
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:47
 msgid "Firmware version"
 msgstr "Versión de sistema (firmware)."
@@ -839,19 +839,19 @@ msgstr "No sé la contraseña compartida."
 #~ msgid "IP Addresses"
 #~ msgstr "Direcciones IP"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:87
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:88
 msgid "IPv4"
 msgstr "IPv4"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:88
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:89
 msgid "IPv6"
 msgstr "IPv6"
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:73
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:74
 msgid "If network has been already created, look it up to join"
 msgstr "Si la red ya fue creada, búscala para unirte a ella."
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:60
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:61
 msgid "If this is your network first node, you can create a new network"
 msgstr "Si este es el primer nodo de tu red, puedes crear una red nueva."
 
@@ -868,7 +868,7 @@ msgstr "Si tu red comunitaria tiene servicios locales, puedes indicar un enlace 
 msgid "Iface"
 msgstr "Interface"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:217
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:218
 msgid "In the reference state this node is on"
 msgstr "En el estado de referencia este nodo está encendido."
 
@@ -993,11 +993,11 @@ msgstr "Iniciando sesión"
 msgid "Login"
 msgstr "Ingresar"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:96
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:97
 msgid "Macs ({0})"
 msgstr "MACs ({0})"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:108
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:109
 msgid "Macs not found ({0})"
 msgstr "Macs no encontradas ({0})"
 
@@ -1027,7 +1027,7 @@ msgstr "Mapa de la red mesh"
 
 #: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:9
 msgid "Mesh Wide Config"
-msgstr ""
+msgstr "Configuración de Red Amplia"
 
 #: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:9
 msgid "Mesh Wide Upgrade"
@@ -1095,7 +1095,7 @@ msgstr "Necesita soporte?"
 msgid "Network Name: {ssid}"
 msgstr "Nombre de Red: {ssid}"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:128
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:129
 msgid "New Macs ({0})"
 msgstr "Nuevas MACs({0})"
 
@@ -1120,7 +1120,7 @@ msgid "New link"
 msgstr "Nuevo enlace"
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:351
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:185
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:186
 msgid "New reference state set!"
 msgstr "¡Nuevo estado de referencia establecido!"
 
@@ -1170,11 +1170,11 @@ msgstr "No, cancelar"
 msgid "Node Configuration"
 msgstr "Configuración del nodo"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:74
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:92
 msgid "Node Info"
 msgstr "Información del nodo"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:76
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:94
 msgid "Node Info Reference"
 msgstr "Información de referencia sobre el nodo"
 
@@ -1231,7 +1231,7 @@ msgstr "Habilita que los dispositivos se conecten a este nodo a la señal \"{apS
 msgid "Or choose a firmware image from your device"
 msgstr "O elige un archivo de sistema (firmware) desde tu dispositivo."
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:85
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:86
 msgid "Or if this node is already configured, you can skip this step"
 msgstr "O, si tu nodo ya está bien configurado, puedes saltear este paso."
 
@@ -1342,7 +1342,7 @@ msgid "Reference State is not set"
 msgstr "Estado de referencia no establecido."
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:387
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:215
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:216
 msgid "Reference is not set or has errors"
 msgstr "El estado de referencia no ha sido establecido o contiene errores."
 
@@ -1399,7 +1399,7 @@ msgid "RxRate"
 msgstr "RxRate"
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:380
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:213
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:214
 msgid "Same status as in the reference state"
 msgstr "Tiene el mismo estado que el estado de referencia."
 
@@ -1463,7 +1463,7 @@ msgstr "Actualizando ..."
 msgid "Search by"
 msgstr "Buscar por"
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:71
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:72
 msgid "Search network"
 msgstr "Buscar red"
 
@@ -1510,7 +1510,7 @@ msgstr "Enviando confirmación"
 msgid "Set network"
 msgstr "Sumarse a la red"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:199
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:200
 msgid "Set reference state for this node"
 msgstr "Establecer el estado de referencia para este nodo."
 
@@ -1740,7 +1740,7 @@ msgstr "El punto de acceso no se encuentra disponible. Por favor, revisa las ins
 msgid "The name should have at least 3 characters"
 msgstr "El nombre tiene que tener al menos 3 caracteres."
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:79
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:80
 msgid "The node is down"
 msgstr "El nodo no está activo."
 
@@ -1840,11 +1840,11 @@ msgstr "Este enlace parece estar caído."
 msgid "This link seems down, remove them from the reference state?"
 msgstr "Este enlace parece caído, ¿desea eliminarlo del estado de referencia?"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:113
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:114
 msgid "This macs are not on the actual state"
 msgstr "Estos macs no están en el estado actual."
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:131
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:132
 msgid "This macs are not on the reference state"
 msgstr "Estas MACs no están en el estado de referencia"
 
@@ -1881,19 +1881,19 @@ msgstr "Este nodo esta esperando para aplicar la configuración"
 msgid "This node is downloading a new firmware"
 msgstr "Este nodo está descargando un nuevo archivo de sistema (firmware)."
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:220
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:221
 msgid "This node is not registered on the reference state"
 msgstr "Este nodo no está registrado en el estado de referencia."
 
 #: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:161
 msgid "This node is sending new configuration to others"
-msgstr ""
+msgstr "Este nodo está enviando nueva configuración a otros"
 
 #: plugins/lime-plugin-metrics/src/components/showPathButton.js:16
 msgid "This node is the gateway"
 msgstr "Este nodo es el gateway."
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:38
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:39
 msgid "This node seems down"
 msgstr "Este nodo parece inactivo."
 
@@ -2006,8 +2006,8 @@ msgstr "Actualizado!<0/>Esperando confirmación"
 msgid "Upload firmware image from your device"
 msgstr "Suba un archivo de sistema (imagen del firmware) desde tu dispositivo"
 
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:74
-#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:78
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:75
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:79
 #: plugins/lime-plugin-rx/src/sections/system.tsx:45
 msgid "Uptime"
 msgstr "Tiempo en actividad"
@@ -2057,7 +2057,7 @@ msgstr "Los cupones sirven para limitar el acceso a través del Portal Comunitar
 msgid "Wait until the download is finished!"
 msgstr "¡Espere hasta que finalice la descarga!"
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:54
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:55
 msgid "Welcome to LimeApp"
 msgstr "A disfrutar de LimeApp!"
 
@@ -2069,11 +2069,11 @@ msgstr "Pantalla de bienvenida"
 msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
 msgstr "Al recargar la aplicación, se te pedirá que confirmes la actualización, si no lo haces se revertirá."
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:78
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:96
 msgid "Wifi Links"
 msgstr "Enlaces Wifi"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:80
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:98
 msgid "Wifi Links Reference"
 msgstr "Enlaces Wifi de Referencia"
 
