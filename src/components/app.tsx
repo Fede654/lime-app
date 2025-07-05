@@ -23,55 +23,68 @@ import { store } from "../store";
 import { history } from "../store/history";
 import { Header } from "./header";
 
-const Routes = () => (
-    // @ts-ignore
-    <Router history={history}>
-        {/* Public pages, don't need to be authenticated */}
-        {plugins
-            .filter((plugin) => !plugin.isCommunityProtected)
-            .map((Component, i) => (
-                <Route key={i} path={Component.name.toLowerCase()}>
-                    <Component.page />
-                </Route>
-            ))}
-        {/* Protected pages, need to be authenticated */}
-        {plugins
-            .filter((plugin) => plugin.isCommunityProtected)
-            .map((Component, i) => (
-                <CommunityProtectedRoute
-                    key={i}
-                    path={Component.name.toLowerCase()}
-                >
-                    <Component.page />
-                </CommunityProtectedRoute>
-            ))}
-        {/* Additional plugins routes */}
-        {plugins
-            .filter((plugin) => plugin.additionalRoutes)
-            .map((plugin) => plugin.additionalRoutes)
-            .flat()
-            .map(([path, Component], index) => (
-                <Route path={path} key={index}>
-                    <Component />
-                </Route>
-            ))}
-        {/* Additional plugins protected routes */}
-        {plugins
-            .filter((plugin) => plugin.additionalProtectedRoutes)
-            .map((plugin) => plugin.additionalProtectedRoutes)
-            .flat()
-            .map(([path, Component], index) => (
-                <CommunityProtectedRoute path={path} key={index}>
-                    <Component />
-                </CommunityProtectedRoute>
-            ))}
-        <CommunityProtectedRoute path={"/reboot"}>
-            <RebootPage />
-        </CommunityProtectedRoute>
-        {/* @ts-ignore */}
-        <Redirect default path={"/"} to={"rx"} />
-    </Router>
-);
+const Routes = () => {
+    return (
+        // @ts-ignore
+        <Router history={history}>
+            {/* Public pages, don't need to be authenticated */}
+            {plugins
+                .filter(
+                    (plugin) =>
+                        !plugin.isCommunityProtected &&
+                        plugin.name &&
+                        plugin.page
+                )
+                .map((Component, i) => (
+                    <Route
+                        key={i}
+                        path={Component.name?.toLowerCase() || `route-${i}`}
+                    >
+                        <Component.page />
+                    </Route>
+                ))}
+            {/* Protected pages, need to be authenticated */}
+            {plugins
+                .filter((plugin) => plugin.isCommunityProtected && plugin.name)
+                .map((Component, i) => (
+                    <CommunityProtectedRoute
+                        key={i}
+                        path={
+                            Component.name?.toLowerCase() ||
+                            `protected-route-${i}`
+                        }
+                    >
+                        <Component.page />
+                    </CommunityProtectedRoute>
+                ))}
+            {/* Additional plugins routes */}
+            {plugins
+                .filter((plugin) => plugin.additionalRoutes)
+                .map((plugin) => plugin.additionalRoutes)
+                .flat()
+                .map(([path, Component], index) => (
+                    <Route path={path} key={index}>
+                        <Component />
+                    </Route>
+                ))}
+            {/* Additional plugins protected routes */}
+            {plugins
+                .filter((plugin) => plugin.additionalProtectedRoutes)
+                .map((plugin) => plugin.additionalProtectedRoutes)
+                .flat()
+                .map(([path, Component], index) => (
+                    <CommunityProtectedRoute path={path} key={index}>
+                        <Component />
+                    </CommunityProtectedRoute>
+                ))}
+            <CommunityProtectedRoute path={"/reboot"}>
+                <RebootPage />
+            </CommunityProtectedRoute>
+            {/* @ts-ignore */}
+            <Redirect default path={"/"} to={"rx"} />
+        </Router>
+    );
+};
 
 const App = () => {
     const { data: session } = useSession();
@@ -103,13 +116,24 @@ const App = () => {
 };
 
 const AppDefault = () => {
+    // Initialize i18n synchronously before rendering
+    if (!i18n.locale || i18n.locale === "") {
+        // Load empty messages for English as fallback
+        i18n.load("en", {});
+        i18n.activate("en");
+    }
+
     useEffect(() => {
-        // Set default locale immediately to avoid I18nProvider warning
-        if (!i18n.locale) {
+        // Load dynamic locale after initial render
+        try {
+            const locale = (fromNavigator()?.split("-")[0] as Locales) || "en";
+            dynamicActivate(locale);
+        } catch (error) {
+            console.warn("i18n dynamic activation error:", error);
+            // Fallback to English with empty messages
+            i18n.load("en", {});
             i18n.activate("en");
         }
-        // Then load dynamic locale
-        dynamicActivate(fromNavigator().split("-")[0] as Locales);
     }, []);
     return (
         <I18nProvider i18n={i18n}>

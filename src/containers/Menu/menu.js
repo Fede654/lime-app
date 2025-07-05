@@ -4,7 +4,13 @@ import style from "./style.less";
 export const Menu = ({ opened, toggle }) => {
     // Group plugins by menuGroup
     const groupedPlugins = plugins
-        .filter((plugin) => plugin.page && plugin.menu) // Only include plugins with both `page` and `menu`
+        .filter(
+            (plugin) =>
+                plugin.page &&
+                plugin.menu &&
+                plugin.menu !== null &&
+                plugin.name
+        ) // Only include plugins with page, non-null menu, and name
         .reduce((groups, plugin) => {
             const group = plugin.menuGroup || "default"; // Use "default" for plugins without a menuGroup
             if (!groups[group]) {
