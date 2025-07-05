@@ -51,4 +51,28 @@ export default function (config, env, helpers) {
     config.resolve.alias.containers = path.resolve(__dirname, "src/containers");
     config.resolve.alias.utils = path.resolve(__dirname, "src/utils");
     config.resolve.alias.plugins = path.resolve(__dirname, "plugins");
+
+    // Disable Critters plugin to fix CSS parsing error
+    if (isProd) {
+        const crittersPlugins = helpers.getPluginsByName(
+            config,
+            "CrittersPlugin"
+        );
+        if (crittersPlugins.length > 0) {
+            config.plugins = config.plugins.filter(
+                (plugin) => !crittersPlugins.some((cp) => cp.plugin === plugin)
+            );
+        }
+        // Also try filtering by constructor name and package name
+        config.plugins = config.plugins.filter((plugin) => {
+            const name = plugin.constructor.name;
+            const pkg =
+                (plugin.constructor && plugin.constructor.pluginName) || "";
+            return (
+                name !== "CrittersPlugin" &&
+                name !== "Critters" &&
+                !pkg.includes("critters")
+            );
+        });
+    }
 }
