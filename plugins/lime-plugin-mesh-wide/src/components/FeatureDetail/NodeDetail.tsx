@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { DomEvent } from "leaflet";
 import { useCallback } from "react";
+import { Fragment } from "preact";
 
 import { useDisclosure } from "components/Modal/useDisclosure";
 import UpdateSharedStateBtn from "components/shared-state/UpdateSharedStateBtn";
@@ -225,7 +226,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     const showSetReferenceButton = hasNodeErrors || isNewNode || referenceError;
 
     return (
-        <>
+        <Fragment>
             <StatusAndButton
                 isError={hasErrors}
                 btn={showSetReferenceButton && btnText}
@@ -242,7 +243,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
                 onClose={onClose}
                 isOpen={open}
             />
-        </>
+        </Fragment>
     );
 };
 

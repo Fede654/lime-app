@@ -14,8 +14,23 @@ import {
 
 import { render } from "utils/test_utils";
 
-jest.mock("plugins/lime-plugin-mesh-wide/src/meshWideQueries.tsx");
+jest.mock("plugins/lime-plugin-mesh-wide/src/meshWideQueries.tsx", () => ({
+    useSelectedMapFeature: jest.fn(),
+    useMeshWideNodesReference: jest.fn(),
+    useMeshWideNodes: jest.fn(),
+    useSetNodeInfoReferenceState: jest.fn(),
+}));
+
+import {
+    useMeshWideNodesReference,
+    useMeshWideNodes,
+    useSetNodeInfoReferenceState,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+
 const mockedSelectedMapFeature = jest.mocked(useSelectedMapFeature);
+const mockedUseMeshWideNodesReference = jest.mocked(useMeshWideNodesReference);
+const mockedUseMeshWideNodes = jest.mocked(useMeshWideNodes);
+const mockedUseSetNodeInfoReferenceState = jest.mocked(useSetNodeInfoReferenceState);
 
 function pxToNumber(pxString: string): number {
     const numericString = pxString.replace("px", "");
@@ -23,7 +38,21 @@ function pxToNumber(pxString: string): number {
 }
 
 describe("Feature bottom sheet", () => {
-    // beforeEach(() => {});
+    beforeEach(() => {
+        // Mock default return values for mesh-wide hooks
+        mockedUseMeshWideNodesReference.mockReturnValue({
+            data: nodesReferenceState,
+            isError: false,
+        });
+        mockedUseMeshWideNodes.mockReturnValue({
+            data: nodes(),
+            isError: false,
+        });
+        mockedUseSetNodeInfoReferenceState.mockReturnValue({
+            mutateAsync: jest.fn(),
+        });
+    });
+    
     beforeAll(() => {
         Object.defineProperty(window, "matchMedia", {
             writable: true,

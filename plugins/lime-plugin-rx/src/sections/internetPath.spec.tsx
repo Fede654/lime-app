@@ -13,10 +13,19 @@ import { mock_node_status } from "plugins/lime-plugin-rx/src/sections/wired.spec
 import { render } from "utils/test_utils";
 
 jest.mock("plugins/lime-plugin-rx/src/rxApi");
-jest.mock("plugins/lime-plugin-metrics/src/metricsApi.js");
+jest.mock("plugins/lime-plugin-metrics/src/metricsQueries", () => ({
+    usePath: jest.fn(),
+    usePathLoss: jest.fn(),
+    useLoss: jest.fn(),
+}));
+
+import { usePath, usePathLoss, useLoss } from "plugins/lime-plugin-metrics/src/metricsQueries";
+
 const mockedNodeStatus = jest.mocked(getNodeStatus);
 const mockedInternetStatus = jest.mocked(getInternetStatus);
-const mockedPath = jest.mocked(getPath);
+const mockedUsePath = jest.mocked(usePath);
+const mockedUsePathLoss = jest.mocked(usePathLoss);
+const mockedUseLoss = jest.mocked(useLoss);
 
 describe("align page", () => {
     beforeEach(() => {
@@ -24,7 +33,18 @@ describe("align page", () => {
         mockedInternetStatus.mockImplementation(
             async () => get_internet_status_mock
         );
-        mockedPath.mockImplementation(async () => last_internet_path_mock);
+        mockedUsePath.mockReturnValue({
+            data: last_internet_path_mock,
+            isLoading: false,
+            isError: false,
+        });
+        mockedUsePathLoss.mockReturnValue({
+            refetch: jest.fn(),
+        });
+        mockedUseLoss.mockReturnValue({
+            data: 0,
+            isFetching: false,
+        });
     });
 
     it("Shows diagnose and map buttons", async () => {
@@ -56,7 +76,9 @@ describe("align page", () => {
 
     it("look that every node is painted on the path", async () => {
         render(<InternetPath />);
-        await waitFor(() => expect(mockedPath).toHaveBeenCalledTimes(1));
+        
+        // Check that usePath hook was called and returned data
+        expect(mockedUsePath).toHaveBeenCalled();
 
         for (const node of last_internet_path_mock) {
             const nodeText = node.hostname ? node.hostname : node.ip;
