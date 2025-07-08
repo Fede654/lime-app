@@ -9,10 +9,10 @@
 
 ---
 
-> **🛠️ ¿Eres desarrollador del equipo?**  
-> **📚 [**Accede a la documentación completa en español**](docs/dev-internal/)** - Incluye workflows IA+Humano, configuración avanzada, QEMU, herramientas y mucho más.  
+> **🛠️ Team Developer?**  
+> **📚 [**Access Complete Development Documentation**](docs/dev-internal/)** - Includes AI+Human workflows, advanced setup, QEMU integration, tools and much more.  
 > 
-> <sub>💡 *Si estás viendo esto en upstream, es contenido específico del fork de desarrollo - puedes ignorarlo*</sub>
+> <sub>💡 *If you're seeing this in upstream, this is development fork specific content - you can ignore it*</sub>
 
 ---
 
@@ -291,7 +291,7 @@ LiMeApp thrives on community contributions! Whether you're:
 - 📘 **[Tutorial](docs/Tutorial.md)** - Comprehensive development guide
 - 🛠️ **[Development Setup](DEVELOPMENT_SETUP.md)** - Environment configuration  
 - 🤝 **[Contributing Guidelines](CONTRIBUTING.md)** - Detailed contribution process
-- 🏗️ **[Architecture Overview](docs/dev-internal/architecture/ARQUITECTURA.md)** - System design (if accessible)
+- 🏗️ **[Architecture Overview](docs/dev-internal/01-architecture/overview.md)** - System design (if accessible)
 
 ---
 

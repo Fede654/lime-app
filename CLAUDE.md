@@ -18,10 +18,11 @@ LiMeApp es una aplicación web moderna construida con **Preact** para la gestió
 ## 📚 Navegación de Documentación
 
 ### 🚀 Para desarrollo interno (equipo de desarrollo):
-- **[📖 Índice Maestro](../INDICE_MAESTRO.md)** - Navegación central de toda la documentación
-- **[🛠️ Configuración Desarrollo](../guias/CONFIGURACION_DESARROLLO.md)** - Setup completo con IA+QEMU
-- **[🤖 Guía Colaboración IA](GUIA_COLABORACION_IA.md)** - Workflows con Claude/Cursor/Copilot
-- **[🖥️ Guía QEMU](../herramientas/GUIA_QEMU.md)** - Entorno testing LibreMesh auténtico
+- **[📖 Documentación Desarrollo](docs/dev-internal/README.md)** - Entrada única a toda la documentación
+- **[⚡ Referencia Rápida](docs/dev-internal/00-quick-start/quick-reference.md)** - Comandos y workflows esenciales
+- **[🛠️ Configuración Desarrollo](docs/dev-internal/00-quick-start/development-setup.md)** - Setup completo con IA+QEMU
+- **[🤖 Guía Colaboración IA](docs/dev-internal/02-development/ai-collaboration.md)** - Workflows con Claude/Cursor/Copilot
+- **[🖥️ Guía QEMU](docs/dev-internal/02-development/qemu-integration.md)** - Entorno testing LibreMesh auténtico
 
 ### 🌍 Para contribución upstream:
 - **[📘 Tutorial](../../Tutorial.md)** - Guía completa de desarrollo
