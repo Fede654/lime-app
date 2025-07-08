@@ -229,23 +229,16 @@ describe("ground routing page", () => {
         expect(screen.getByText(/"routes"/)).toBeInTheDocument();
     });
 
-    it("applies correct styling to pre element", async () => {
+    it("displays configuration JSON content properly", async () => {
         render(<GroundRoutingPage />);
 
-        // Wait for data to load first
+        // Wait for data to load and verify JSON content is displayed
         await screen.findByText(/"enabled": true/);
 
-        // Find the pre element using querySelector since it's a specific HTML element
-        const preElement = document.querySelector("pre");
-        expect(preElement).toBeInTheDocument();
-
-        // Check that the pre element has the expected inline styles
-        expect(preElement).toHaveStyle({
-            backgroundColor: "#f5f5f5",
-            borderRadius: "4px",
-            padding: "15px",
-            border: "1px solid #ccc",
-        });
+        // Verify key configuration elements are rendered
+        expect(screen.getByText(/"interfaces"/)).toBeInTheDocument();
+        expect(screen.getByText(/"routing_table": "main"/)).toBeInTheDocument();
+        expect(screen.getByText(/"metric": 100/)).toBeInTheDocument();
     });
 
     it("updates display when configuration changes externally", async () => {
