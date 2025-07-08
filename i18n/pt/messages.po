@@ -843,7 +843,7 @@ msgstr "Ir!"
 msgid "Ground Routing"
 msgstr "Ground Routing"
 
-#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:24
+#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:19
 msgid "Ground Routing configuration"
 msgstr "Configurações de Ground Routing"
 
@@ -1233,7 +1233,7 @@ msgstr "Não Conectado"
 msgid "Notes"
 msgstr "Notas"
 
-#: plugins/lime-plugin-notes/src/notesPage.js:41
+#: plugins/lime-plugin-notes/src/notesPage.js:53
 msgid "Notes of"
 msgstr "Notas de"
 
@@ -1382,7 +1382,7 @@ msgstr "Estado de referência não definido"
 msgid "Reference is not set or has errors"
 msgstr "Referência não definida ou tem erros"
 
-#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:32
+#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:27
 msgid "Reload"
 msgstr "Recarregar"
 
@@ -1449,7 +1449,7 @@ msgstr "Mesmo status do estado de referência"
 msgid "Save"
 msgstr "Salvar"
 
-#: plugins/lime-plugin-notes/src/notesPage.js:51
+#: plugins/lime-plugin-notes/src/notesPage.js:66
 msgid "Save notes"
 msgstr "Salvar notas"
 
@@ -1515,7 +1515,7 @@ msgstr "Ver mais"
 msgid "Select"
 msgstr "Selecionar"
 
-#: plugins/lime-plugin-changeNode/src/changeNodePage.js:53
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:50
 msgid "Select another node and use the LimeApp as you were there"
 msgstr "Selecione o nó que quiser visitar e use o LimeApp como se estiver lá"
 
@@ -1524,7 +1524,7 @@ msgstr "Selecione o nó que quiser visitar e use o LimeApp como se estiver lá"
 msgid "Select file"
 msgstr "Selecione um arquivo"
 
-#: plugins/lime-plugin-changeNode/src/changeNodePage.js:60
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:57
 msgid "Select new node"
 msgstr "Selecione um nó"
 
@@ -2060,7 +2060,7 @@ msgstr "Use vouchers de acesso"
 msgid "Value"
 msgstr "Valor"
 
-#: plugins/lime-plugin-changeNode/src/changeNodePage.js:75
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:72
 msgid "Visit"
 msgstr "Visitar"
 
@@ -2069,7 +2069,7 @@ msgid "Visit <0>docs.altermundi.net</0>"
 msgstr "Visite <0>docs.altermundi.net</0>"
 
 #: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:9
-#: plugins/lime-plugin-changeNode/src/changeNodePage.js:50
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:47
 msgid "Visit a neighboring node"
 msgstr "Visitar um nó vizinho"
 
@@ -2123,7 +2123,7 @@ msgstr "Referência de Links WiFi"
 msgid "Wifi Password"
 msgstr "Senha do WiFi"
 
-#: plugins/lime-plugin-rx/src/sections/wired.tsx:62
+#: plugins/lime-plugin-rx/src/sections/wired.tsx:65
 msgid "Wired connections"
 msgstr "Conexões cabeadas"
 
