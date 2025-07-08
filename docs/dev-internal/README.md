@@ -1,122 +1,157 @@
-# Internal Development Documentation
+# LiMeApp Developer Documentation
 
-This directory contains development-specific documentation that is **not intended for upstream contribution**. It includes our team's decisions, workflows, and development practices.
+> **Language**: 🇬🇧 English (primary) | 🇪🇸 Spanish (summaries)  
+> **Updated**: 2025-07-08  
+> **Status**: ✅ Current
 
-## Directory Structure
+Welcome to the LiMeApp internal development documentation. This is your single entry point for all developer resources.
 
+## 🚀 Quick Start
+
+New to the project? Start here:
+
+1. **[Development Setup](00-quick-start/development-setup.md)** - Get your environment ready
+2. **[Quick Reference](00-quick-start/quick-reference.md)** - Essential commands and workflows
+3. **[Troubleshooting](00-quick-start/troubleshooting.md)** - Common issues and solutions
+
+## 📚 Documentation Structure
+
+### [00 - Quick Start](00-quick-start/)
+Essential documentation to get developers productive quickly.
+- Development environment setup
+- Command quick reference  
+- Troubleshooting guide
+
+### [Workflows](workflows/)
+Complete development workflows and team processes.
+- **[Development Workflow](workflows/DEVELOPMENT_WORKFLOW.md)** - Comprehensive daily workflow
+- **[Quick Reference](workflows/WORKFLOW_QUICK_REFERENCE.md)** - Essential commands
+- **[Development Organization](workflows/DEVELOPMENT_ORGANIZATION.md)** - Team structure and processes
+
+### [01 - Architecture](01-architecture/)
+System design and architectural decisions.
+- System overview
+- Data flow diagrams
+- Plugin architecture
+- State management (TanStack Query)
+
+### [02 - Development](02-development/)
+Day-to-day development workflows and practices.
+- Development workflow
+- Testing strategy
+- QEMU integration for testing
+- AI-assisted development
+
+### [03 - Guides](03-guides/)
+Step-by-step guides for specific tasks.
+- Creating plugins
+- Adding translations
+- Debugging techniques
+- Performance optimization
+
+### [04 - Reference](04-reference/)
+Technical reference materials.
+- API endpoints (ubus)
+- Component library
+- Technical glossary (ES↔EN)
+- Command reference
+
+### [05 - Decisions](05-decisions/)
+Architecture Decision Records (ADRs) documenting key technical decisions.
+- [ADR Template](05-decisions/template.md)
+- [001 - Upstream Separation](05-decisions/001-upstream-separation.md)
+- [002 - Technical Debt Analysis](05-decisions/002-technical-debt.md)
+- [003 - QEMU Testing](05-decisions/003-qemu-testing.md)
+- [004 - Documentation Refactor](05-decisions/004-documentation-refactor.md)
+
+### [06 - Tools](06-tools/)
+Developer tools, templates, and utilities.
+- Document templates
+- Useful scripts
+- PR and release checklists
+
+## 🎯 Common Tasks
+
+### I want to...
+
+- **Start developing** → [Development Setup](00-quick-start/development-setup.md)
+- **Run the app** → [Quick Reference](00-quick-start/quick-reference.md#development-server-options)
+- **Test with real LibreMesh** → [QEMU Integration](02-development/qemu-integration.md)
+- **Create a new plugin** → [Creating Plugins](03-guides/creating-plugins.md)
+- **Fix a bug** → [Debugging Tips](03-guides/debugging-tips.md)
+- **Add translations** → [Adding Translations](03-guides/adding-translations.md)
+- **Understand the architecture** → [Architecture Overview](01-architecture/overview.md)
+- **Find API endpoints** → [API Reference](04-reference/api-endpoints.md)
+
+## 🔧 Development Commands
+
+```bash
+# Quick start
+npm install                 # Install dependencies
+npm run verify:setup       # Verify environment
+npm run dev               # Start development server
+
+# QEMU testing
+npm run qemu:start        # Start QEMU LibreMesh
+npm run qemu:dev         # Dev server with QEMU backend
+npm run deploy:qemu      # Deploy to QEMU
+
+# Quality checks
+npm test                 # Run tests
+npm run lint            # Check code quality
+npm run qa:full         # Complete QA suite
 ```
-docs/dev-internal/
-├── decisions/           # Architectural Decision Records (ADRs)
-├── workflows/          # Development workflows and processes
-├── ai-development/     # AI-assisted development documentation
-└── architecture/       # Internal architecture documentation
-```
 
-## Documentation Categories
+## 📖 Key Concepts
 
-### 📋 Decisions (`decisions/`)
+- **LibreMesh**: Community mesh networking firmware
+- **QEMU**: Virtual environment for testing with real LibreMesh
+- **ubus**: OpenWrt system bus for API communication
+- **Preact**: Lightweight React alternative (3KB)
+- **TanStack Query**: Modern data fetching and caching
 
-Numbered decision records documenting important choices:
+## 🤝 Contributing
 
--   `001-upstream-separation-strategy.md` - How we separate dev tools from upstream
--   `002-technical-debt-analysis.md` - Technical debt assessment and solutions
--   `003-qemu-testing-implementation.md` - QEMU development environment setup
+1. Read our [Development Workflow](02-development/workflow.md)
+2. Check the [PR Checklist](06-tools/checklists/pr-checklist.md)
+3. Follow the [Testing Strategy](02-development/testing-strategy.md)
+4. Use [AI Collaboration](02-development/ai-collaboration.md) tools effectively
 
-**Naming Convention**: `NNN-decision-title.md` (three-digit prefix for sorting)
+## 🔍 Finding Information
 
-### 🔄 Workflows (`workflows/`)
+- **Search**: Use your IDE's search across `/docs/dev-internal/`
+- **Navigation**: Follow the numbered folder structure
+- **Cross-references**: Look for "See also" sections
+- **Glossary**: Check [Technical Glossary](04-reference/glossary.md) for terms
 
-Development processes and team practices:
+## 📊 Documentation Status
 
--   `DEVELOPMENT_ORGANIZATION.md` - Human-AI collaborative development framework
--   Future: PR workflows, release processes, testing strategies
+| Section | Files | Status | Completeness |
+|---------|-------|--------|--------------|
+| Quick Start | 3 | ✅ Current | 100% |
+| Architecture | 2 | ✅ Current | 100% |
+| Development | 3 | ✅ Current | 100% |
+| Guides | 1 | ✅ Current | 100% |
+| Reference | 2 | ✅ Current | 100% |
+| Decisions | 5 | ✅ Current | 100% |
+| Tools | 1 | ✅ Current | 100% |
 
-### 🤖 AI Development (`ai-development/`)
+**Total**: 19 documentation files organized in 7 logical sections
 
-AI-assisted development documentation:
+## 🌐 Resumen en Español
 
--   `CLAUDE.md` - Context for Claude AI assistant
--   Future: Cursor setup, GitHub Copilot patterns, AI prompt templates
+Esta documentación está organizada para desarrolladores de LiMeApp:
 
-### 🏗️ Architecture (`architecture/`)
+- **00 - Inicio Rápido**: Configuración y referencia esencial
+- **01 - Arquitectura**: Diseño del sistema y decisiones
+- **02 - Desarrollo**: Flujos de trabajo diarios
+- **03 - Guías**: Tutoriales paso a paso
+- **04 - Referencia**: Documentación técnica
+- **05 - Decisiones**: Registros de decisiones arquitectónicas
+- **06 - Herramientas**: Utilidades para desarrolladores
 
-Internal architecture documentation and diagrams:
-
--   `ARQUITECTURA.md` - Spanish architecture documentation
--   Future: Component diagrams, data flow, decision trees
-
-## Documentation Standards
-
-### For Decision Records
-
-Use this template for new decisions:
-
-```markdown
-# NNN: Decision Title
-
-**Date**: YYYY-MM-DD
-**Status**: Proposed | Accepted | Deprecated
-**Tags**: #category #topic
-
-## Context
-
-What is the issue that we're seeing that is motivating this decision?
-
-## Decision
-
-What is the change that we're proposing/doing?
-
-## Consequences
-
-What becomes easier or more difficult as a result?
-
-## Alternatives Considered
-
-What other options were evaluated?
-```
-
-### For Workflow Documentation
-
-1. Use clear headings and step-by-step instructions
-2. Include practical examples
-3. Link to related decisions
-4. Keep updated as workflows evolve
-
-### For AI Development
-
-1. Document prompts that work well
-2. Track AI tool configurations
-3. Share patterns for effective AI collaboration
-4. Note limitations and workarounds
-
-## Upstream vs Internal Docs
-
-| Type           | Location              | Purpose                | Upstream? |
-| -------------- | --------------------- | ---------------------- | --------- |
-| User guides    | `/docs/`              | Help users use the app | ✅ Yes    |
-| API docs       | `/docs/`              | Technical reference    | ✅ Yes    |
-| Tutorials      | `/docs/`              | Getting started guides | ✅ Yes    |
-| Dev decisions  | `/docs/dev-internal/` | Team choices           | ❌ No     |
-| AI workflows   | `/docs/dev-internal/` | Productivity tools     | ❌ No     |
-| Personal prefs | `/docs/dev-internal/` | Team practices         | ❌ No     |
-
-## Adding New Documentation
-
-1. Choose the appropriate category
-2. Use consistent naming (decisions get numbers)
-3. Update this README if adding new categories
-4. Consider if it could ever be upstream-ready
-5. Link related documents together
-
-## Future Organization
-
-As documentation grows, consider:
-
--   Sub-categories within each folder
--   Cross-referencing index
--   Search functionality
--   Auto-generated documentation site (for internal use)
+Comienza con [Configuración de Desarrollo](00-quick-start/development-setup.md) y [Referencia Rápida](00-quick-start/quick-reference.md).
 
 ---
 
-_Remember: This documentation helps our team work efficiently. Keep it organized, current, and focused on our actual practices._
+**Questions?** Check [Troubleshooting](00-quick-start/troubleshooting.md) or ask in the development chat.
