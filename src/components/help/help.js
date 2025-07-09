@@ -1,4 +1,4 @@
-import { useToggle } from "react-use";
+import { useToggle } from "utils/hooks";
 
 import style from "./style.less";
 

@@ -1,9 +1,10 @@
 import { Trans } from "@lingui/macro";
 import { useState } from "preact/hooks";
-import { useInterval } from "react-use";
 
 import Loading from "components/loading";
 import ProgressBar from "components/progressbar";
+
+import { useInterval } from "utils/hooks";
 
 import "../style.less";
 

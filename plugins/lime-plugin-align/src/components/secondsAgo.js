@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { useEffect, useState } from "preact/hooks";
-import { useInterval } from "react-use";
+
+import { useInterval } from "utils/hooks";
 
 export const SecondsAgo = ({ initialMs, isStatic = false }) => {
     const [count, setCount] = useState(0);

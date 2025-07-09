@@ -1,5 +1,5 @@
 import { ComponentChildren } from "preact";
-import { useToggle } from "react-use";
+import { useToggle } from "utils/hooks";
 
 import Divider from "components/divider";
 import { ChevronDown, ChevronRight } from "components/icons/teenny/chevrons";

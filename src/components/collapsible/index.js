@@ -1,6 +1,6 @@
-import { useToggle } from "react-use";
-
 import { ChevronDown, ChevronUp } from "components/icons/teenny/chevrons";
+
+import { useToggle } from "utils/hooks";
 
 export const Collapsible = ({
     title,
