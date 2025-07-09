@@ -3,8 +3,6 @@ import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import Router from "preact-router";
 import { useEffect } from "preact/hooks";
-import { Provider } from "react-redux";
-
 import { ToastProvider } from "components/toast/toastProvider";
 
 import { Menu } from "containers/Menu";
@@ -18,14 +16,12 @@ import { CommunityProtectedRoute, Redirect, Route } from "utils/routes";
 
 import { plugins } from "../config";
 import i18n, { dynamicActivate } from "../i18n";
-import { store } from "../store";
-import { history } from "../store/history";
 import { Header } from "./header";
 
 const Routes = () => {
     return (
         // @ts-ignore
-        <Router history={history}>
+        <Router>
             {/* Public pages, don't need to be authenticated */}
             {plugins
                 .filter(
@@ -137,11 +133,9 @@ const AppDefault = () => {
         <I18nProvider i18n={i18n}>
             <QueryClientProvider client={queryCache}>
                 <AppContextProvider>
-                    <Provider store={store}>
-                        <ToastProvider>
-                            <App />
-                        </ToastProvider>
-                    </Provider>
+                    <ToastProvider>
+                        <App />
+                    </ToastProvider>
                 </AppContextProvider>
             </QueryClientProvider>
         </I18nProvider>

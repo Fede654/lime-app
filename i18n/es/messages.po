@@ -1197,7 +1197,7 @@ msgstr "No Conectado"
 msgid "Notes"
 msgstr "Notas"
 
-#: plugins/lime-plugin-notes/src/notesPage.js:53
+#: plugins/lime-plugin-notes/src/notesPage.js:58
 msgid "Notes of"
 msgstr "Notas de"
 
@@ -1413,7 +1413,7 @@ msgstr "Tiene el mismo estado que el estado de referencia."
 msgid "Save"
 msgstr "Guardar"
 
-#: plugins/lime-plugin-notes/src/notesPage.js:66
+#: plugins/lime-plugin-notes/src/notesPage.js:71
 msgid "Save notes"
 msgstr "Guardar notas"
 
