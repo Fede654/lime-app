@@ -104,16 +104,25 @@ setup_libremesh_network() {
     sudo screen -S libremesh -X stuff 'if ! ip addr show | grep -q "10.13.0.1" 2>/dev/null; then ETH_IF=$(ip link show | grep -o "^[0-9]*: eth[0-9]*" | head -1 | cut -d: -f2 | tr -d " "); if [ -n "$ETH_IF" ]; then echo "Using $ETH_IF"; ip addr add 10.13.0.1/16 dev $ETH_IF; ip link set $ETH_IF up; fi; fi'$'\n'
     sleep 2
     
+    # Set default root password for development
+    print_status "Setting default root password to 'admin'..."
+    sudo screen -S libremesh -X stuff 'echo -e "admin\\nadmin" | passwd root'$'\n'
+    sleep 2
+    
     # Start uHTTPd if not running
     sudo screen -S libremesh -X stuff '/etc/init.d/uhttpd start'$'\n'
     sleep 2
     
-    # Verify network configuration
-    print_status "Verifying network configuration..."
-    sudo screen -S libremesh -X stuff 'echo "=== Network Status ==="; ip addr show | grep -A1 "10.13.0.1"; echo "=== uHTTPd Status ==="; ps | grep uhttpd || echo "uHTTPd not running"'$'\n'
+    # Ensure ubus is running for API access
+    sudo screen -S libremesh -X stuff '/etc/init.d/ubus start'$'\n'
     sleep 2
     
-    print_status "Network configuration completed"
+    # Verify network configuration
+    print_status "Verifying network configuration..."
+    sudo screen -S libremesh -X stuff 'echo "=== Network Status ==="; ip addr show | grep -A1 "10.13.0.1"; echo "=== uHTTPd Status ==="; ps | grep uhttpd || echo "uHTTPd not running"; echo "=== Default Credentials ==="; echo "Username: root, Password: admin"'$'\n'
+    sleep 2
+    
+    print_status "Network and authentication configuration completed"
     sudo rm -f /tmp/boot_check.txt 2>/dev/null || true
 }
 
@@ -271,10 +280,12 @@ start_qemu() {
     if check_qemu_running; then
         print_status "✓ QEMU LibreMesh ready at http://$QEMU_IP"
         print_status "✓ lime-app available at http://$QEMU_IP/app"
+        print_status "✓ Default credentials: root/admin"
         print_status "✓ Console accessible via: sudo screen -r libremesh"
         return 0
     else
         print_warning "LibreMesh started but network not fully ready"
+        print_status "✓ Default credentials: root/admin"
         print_status "✓ Console accessible via: sudo screen -r libremesh"
         return 0
     fi
@@ -305,6 +316,7 @@ show_status() {
     
     if check_qemu_running; then
         print_status "✓ QEMU is running at $QEMU_IP"
+        print_status "✓ Default credentials: root/admin"
         
         # Test ubus connectivity
         if curl -s --max-time 3 "http://$QEMU_IP/ubus" >/dev/null 2>&1; then
@@ -319,6 +331,18 @@ show_status() {
         else
             print_warning "✗ lime-app not found at http://$QEMU_IP/app/"
             print_warning "  Run: npm run deploy:qemu to deploy lime-app"
+        fi
+        
+        # Test authentication with default credentials
+        auth_test=$(curl -s --max-time 3 "http://$QEMU_IP/ubus" \
+            -H "Content-Type: application/json" \
+            -d '{"jsonrpc":"2.0","id":1,"method":"call","params":["00000000000000000000000000000000","session","login",{"username":"root","password":"admin"}]}' \
+            2>/dev/null || echo '{"error":"failed"}')
+        
+        if echo "$auth_test" | grep -q '"result":\s*\[0'; then
+            print_status "✓ Authentication working with default credentials"
+        else
+            print_warning "✗ Authentication may need configuration"
         fi
     else
         print_warning "✗ QEMU is not running"

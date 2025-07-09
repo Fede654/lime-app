@@ -20,6 +20,9 @@ export default function (config, env, helpers) {
     const host = process.env.NODE_HOST || "10.13.0.1";
     config.devServer = {
         ...config.devServer,
+        historyApiFallback: {
+            index: isProd ? "/app/" : "/",
+        },
         proxy: [
             {
                 path: "/ubus",

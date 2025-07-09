@@ -327,6 +327,7 @@ npm run qemu:dev                       # Servidor desarrollo con backend QEMU
 **Puntos de Acceso:**
 - **QEMU LibreMesh**: `http://10.13.0.1` (lime-app de producción)
 - **Servidor Desarrollo**: `http://localhost:8080` (recarga en vivo con backend QEMU)
+- **Credenciales por defecto**: `root/admin` (configurado automáticamente)
 
 ### 🎯 Desarrollo Solo Frontend
 
