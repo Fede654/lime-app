@@ -2,11 +2,11 @@ import "@testing-library/jest-dom";
 import { act, fireEvent, screen } from "@testing-library/preact";
 import each from "jest-each";
 import { route } from "preact-router";
-import * as timeago from "timeago.js";
 import waitForExpect from "wait-for-expect";
 
 import queryCache from "utils/queryCache";
 import { render } from "utils/test_utils";
+import * as timeago from "utils/timeago";
 
 import { listVouchers } from "../piraniaApi";
 import Voucher from "./voucher";

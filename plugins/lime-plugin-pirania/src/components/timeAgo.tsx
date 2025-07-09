@@ -1,12 +1,10 @@
 import { useLingui } from "@lingui/react";
-import { format, register } from "timeago.js";
-import es from "timeago.js/lib/lang/es.js";
-import it from "timeago.js/lib/lang/it.js";
-import pt from "timeago.js/lib/lang/pt_BR.js";
+import { format, register } from "utils/timeago";
 
-register("es", es);
-register("pt", pt);
-register("it", it);
+// No need to register locales - built into our implementation
+register("es", null);
+register("pt", null);
+register("it", null);
 
 type TimeAgoProps = {
     timestamp: number;

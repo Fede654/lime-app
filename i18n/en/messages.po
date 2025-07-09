@@ -326,7 +326,7 @@ msgstr "Check if network is working properly and confirm the upgrade<0/>If not c
 msgid "Check<0/>Alignment"
 msgstr "Check<0/>Alignment"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:100
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:101
 msgid "Checking connection"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgstr "Confirming all upgraded nodes"
 msgid "Confirming new configuration to available nodes"
 msgstr "Confirming new configuration to available nodes"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:127
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:128
 msgid "Congratulations"
 msgstr ""
 
@@ -1325,7 +1325,7 @@ msgstr ""
 msgid "Please wait while the device reboots, and reload the app"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:90
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:91
 msgid "Please wait {time} seconds"
 msgstr ""
 
@@ -1386,7 +1386,7 @@ msgstr "Reference is not set or has errors"
 msgid "Reload"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:139
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:140
 msgid "Reload page"
 msgstr ""
 
@@ -1566,7 +1566,7 @@ msgstr "Set reference state for {nodeName}"
 msgid "Set the reference state for this node."
 msgstr "Set the reference state for this node."
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:80
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:81
 msgid "Setting network"
 msgstr ""
 
@@ -2144,11 +2144,11 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:105
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:106
 msgid "You are connected to another node in the network, try connecting to"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:135
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:136
 msgid "You are now part of"
 msgstr ""
 
@@ -2168,7 +2168,7 @@ msgstr ""
 msgid "You don't go through any paths to get here."
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:131
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:132
 msgid "You have successfuly connected to"
 msgstr ""
 
@@ -2176,7 +2176,7 @@ msgstr ""
 msgid "You need to know the shared password to enter this page"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:113
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:114
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr ""
 
@@ -2220,7 +2220,7 @@ msgstr "key"
 msgid "locate my node"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/components/secondsAgo.js:21
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:22
 msgid "more than a minute ago"
 msgstr ""
 
@@ -2267,7 +2267,7 @@ msgstr ""
 msgid "{nodesToBeUpgraded} of {totalNodes} will be upgraded"
 msgstr "{nodesToBeUpgraded} of {totalNodes} will be upgraded"
 
-#: plugins/lime-plugin-align/src/components/secondsAgo.js:23
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:24
 msgid "{secondsAmount} seconds ago"
 msgstr ""
 

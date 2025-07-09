@@ -314,7 +314,7 @@ msgstr "Verifique si la red funciona correctamente y confirme la actualización.
 msgid "Check<0/>Alignment"
 msgstr "Chequear<0/>Alineación"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:100
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:101
 msgid "Checking connection"
 msgstr "Comprobando conexión"
 
@@ -437,7 +437,7 @@ msgstr "Confirmando todos los nodos actualizados."
 msgid "Confirming new configuration to available nodes"
 msgstr "Confirmando la configuración a todos los nodos."
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:127
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:128
 msgid "Congratulations"
 msgstr "Felicitaciones!"
 
@@ -1289,7 +1289,7 @@ msgstr "Por favor, espere {remainingTime} segundos pacientemente y no desconecte
 msgid "Please wait while the device reboots, and reload the app"
 msgstr "Por favor, espere hasta que el dispositivo se reinicie y recargue la app."
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:90
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:91
 msgid "Please wait {time} seconds"
 msgstr "Por favor, espere {time} segundos..."
 
@@ -1350,7 +1350,7 @@ msgstr "El estado de referencia no ha sido establecido o contiene errores."
 msgid "Reload"
 msgstr "Recargar"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:139
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:140
 msgid "Reload page"
 msgstr "Recargar página"
 
@@ -1530,7 +1530,7 @@ msgstr "Establecer el estado de referencia para el nodo {nodeName}"
 msgid "Set the reference state for this node."
 msgstr "Establecer el estado de referencia para este nodo."
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:80
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:81
 msgid "Setting network"
 msgstr "Configurando red"
 
@@ -2104,11 +2104,11 @@ msgstr "Contraseña incorrecta, intente nuevamente"
 msgid "Yes"
 msgstr "Si"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:105
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:106
 msgid "You are connected to another node in the network, try connecting to"
 msgstr "Está conectado a otro nodo de la red, intente conectarse a"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:135
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:136
 msgid "You are now part of"
 msgstr "Usted es ahora parte de"
 
@@ -2128,7 +2128,7 @@ msgstr "Puede actualizar a:"
 msgid "You don't go through any paths to get here."
 msgstr "No necesita pasar por ningún nodo para llega hasta aquí."
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:131
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:132
 msgid "You have successfuly connected to"
 msgstr "La conexión fué exitosa, está conectado a"
 
@@ -2136,7 +2136,7 @@ msgstr "La conexión fué exitosa, está conectado a"
 msgid "You need to know the shared password to enter this page"
 msgstr "Debe ingresar la contraseña compartida para seguir"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:113
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:114
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr "Intente conectarse a la red wifi {wifiSsid} para completar la instalación."
 
@@ -2180,7 +2180,7 @@ msgstr "Clave"
 msgid "locate my node"
 msgstr "Ubicar mi nodo"
 
-#: plugins/lime-plugin-align/src/components/secondsAgo.js:21
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:22
 msgid "more than a minute ago"
 msgstr "hace más de un minuto."
 
@@ -2227,7 +2227,7 @@ msgstr "{mins, plural, one {# minuto} other {# minutos}}"
 msgid "{nodesToBeUpgraded} of {totalNodes} will be upgraded"
 msgstr "{nodesToBeUpgraded} de {totalNodes} serán actualizados, espere."
 
-#: plugins/lime-plugin-align/src/components/secondsAgo.js:23
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:24
 msgid "{secondsAmount} seconds ago"
 msgstr "hace {secondsAmount} segundos"
 

@@ -131,8 +131,7 @@
         "react-leaflet": "^4.2.1",
         "react-spring": "^9.7.1",
         "simple-color-scale": "^1.0.1",
-        "tailwindcss": "^3.2.6",
-        "timeago.js": "^4.0.2"
+        "tailwindcss": "^3.2.6"
     },
     "husky": {
         "hooks": {
