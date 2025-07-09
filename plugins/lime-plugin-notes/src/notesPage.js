@@ -40,7 +40,12 @@ export const Page = () => {
         if (notes && !hasInitialized) {
             setValue(notes);
             setHasInitialized(true);
-        } else if (hasInitialized && !isUserEditing && notes !== value && notes !== "") {
+        } else if (
+            hasInitialized &&
+            !isUserEditing &&
+            notes !== value &&
+            notes !== ""
+        ) {
             // Only handle external updates when user is not actively editing
             setValue(notes);
         }
