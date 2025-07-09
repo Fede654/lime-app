@@ -58,7 +58,7 @@ msgstr "Cancelar atualização da rede mesh?"
 msgid "Aborting"
 msgstr "Cancelando"
 
-#: plugins/lime-plugin-pirania/src/piraniaMenu.js:9
+#: plugins/lime-plugin-pirania/src/piraniaMenu.js:10
 msgid "Access Vouchers"
 msgstr "Vouchers de Acesso"
 
@@ -114,7 +114,7 @@ msgstr "A nova configuração será instalada em breve e o nó irá reiniciar"
 msgid "After a time the upgrade will be performed"
 msgstr "A atualização será realizada em breve"
 
-#: plugins/lime-plugin-align/src/alignMenu.js:9
+#: plugins/lime-plugin-align/src/alignMenu.js:10
 msgid "Align"
 msgstr "Alinhar"
 
@@ -797,7 +797,7 @@ msgstr "Nome do arquivo"
 msgid "Filter by"
 msgstr "Filtrar por"
 
-#: plugins/lime-plugin-firmware/src/firmwareMenu.js:9
+#: plugins/lime-plugin-firmware/src/firmwareMenu.js:10
 #: plugins/lime-plugin-rx/src/sections/system.tsx:49
 msgid "Firmware"
 msgstr "Firmware"
@@ -827,6 +827,14 @@ msgstr "Métricas de caminho completo"
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Obtenha um celular adicional que você está usando atualmente que tenha uma conexão de dados moveis"
 
+#: src/components/NotFound.tsx:23
+msgid "Go Back"
+msgstr ""
+
+#: src/components/NotFound.tsx:20
+msgid "Go Home"
+msgstr ""
+
 #: src/containers/Menu/menu.js:48
 #~ msgid "Go to Community View"
 #~ msgstr ""
@@ -839,7 +847,7 @@ msgstr "Obtenha um celular adicional que você está usando atualmente que tenha
 msgid "Go!"
 msgstr "Ir!"
 
-#: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:5
+#: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:6
 msgid "Ground Routing"
 msgstr "Ground Routing"
 
@@ -1013,7 +1021,7 @@ msgstr "Carregando <0/>o último caminho para internet..."
 msgid "Local services link"
 msgstr "Link dos serviços locais"
 
-#: plugins/lime-plugin-locate/src/locateMenu.js:9
+#: plugins/lime-plugin-locate/src/locateMenu.js:10
 msgid "Locate"
 msgstr "Localizar"
 
@@ -1053,15 +1061,15 @@ msgstr "Max. {length} caracteres"
 msgid "Measuring links"
 msgstr "Links de medição"
 
-#: plugins/lime-plugin-mesh-wide/src/meshWideMenu.tsx:9
+#: plugins/lime-plugin-mesh-wide/src/meshWideMenu.tsx:10
 msgid "Mesh Map"
 msgstr "Mapa da Rede Mesh"
 
-#: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:9
+#: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:10
 msgid "Mesh Wide Config"
 msgstr "Configuração da Rede Mesh"
 
-#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:9
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:10
 msgid "Mesh Wide Upgrade"
 msgstr "Atualização da Rede Mesh"
 
@@ -1085,7 +1093,7 @@ msgstr "Configuração da rede mesh"
 msgid "Mesh wide upgrade started!"
 msgstr "Atualização da rede mesh iniciada!"
 
-#: plugins/lime-plugin-metrics/src/metricsMenu.js:9
+#: plugins/lime-plugin-metrics/src/metricsMenu.js:10
 msgid "Metrics"
 msgstr "Métrica"
 
@@ -1229,7 +1237,7 @@ msgstr "O nó está sendo atualizado"
 msgid "Not Connected"
 msgstr "Não Conectado"
 
-#: plugins/lime-plugin-notes/src/notesMenu.js:9
+#: plugins/lime-plugin-notes/src/notesMenu.js:10
 msgid "Notes"
 msgstr "Notas"
 
@@ -1282,6 +1290,10 @@ msgstr "Outros nós baixarão o firmware dele"
 #: plugins/lime-plugin-metrics/src/components/box/index.js:110
 msgid "Packet loss"
 msgstr "Perda de pacotes"
+
+#: src/components/NotFound.tsx:11
+msgid "Page Not Found"
+msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:104
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:49
@@ -1390,7 +1402,7 @@ msgstr "Recarregar"
 msgid "Reload page"
 msgstr "Recarregar a página"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:9
+#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:10
 msgid "Remote Support"
 msgstr "Suporte Remoto"
 
@@ -1594,7 +1606,7 @@ msgstr "Compartilhe o seguinte comando com quem queira dar acesso ao seu nó"
 msgid "Share your mobile connection by connecting the node to a mobile hotspost"
 msgstr "Compartilhe sua conexão móvel conectando o nó a um ponto de acesso móvel"
 
-#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:9
+#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:10
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:48
 msgid "Shared Password"
 msgstr "Senha Compartilhada"
@@ -1704,7 +1716,7 @@ msgstr "Iniciar atualização da rede mesh"
 msgid "Starting mesh wide configuration change"
 msgstr "Iniciando mudança de configuração da rede mesh"
 
-#: plugins/lime-plugin-rx/src/rxMenu.js:9
+#: plugins/lime-plugin-rx/src/rxMenu.js:10
 msgid "Status"
 msgstr "Status"
 
@@ -1779,6 +1791,10 @@ msgstr "O nome deve ter pelo menos 3 caracteres"
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:80
 msgid "The node is down"
 msgstr "O nó está inativo"
+
+#: src/components/NotFound.tsx:14
+msgid "The page you're looking for doesn't exist or has been moved."
+msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/screens/password.js:60
 msgid "The password should have at least 8 characters"
@@ -2068,7 +2084,7 @@ msgstr "Visitar"
 msgid "Visit <0>docs.altermundi.net</0>"
 msgstr "Visite <0>docs.altermundi.net</0>"
 
-#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:9
+#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:10
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:47
 msgid "Visit a neighboring node"
 msgstr "Visitar um nó vizinho"

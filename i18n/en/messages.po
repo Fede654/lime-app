@@ -58,7 +58,7 @@ msgstr "Abort current mesh wide upgrade?"
 msgid "Aborting"
 msgstr "Aborting"
 
-#: plugins/lime-plugin-pirania/src/piraniaMenu.js:9
+#: plugins/lime-plugin-pirania/src/piraniaMenu.js:10
 msgid "Access Vouchers"
 msgstr "Access Vouchers"
 
@@ -114,7 +114,7 @@ msgstr "After a time the new configuration will be installed and the node will r
 msgid "After a time the upgrade will be performed"
 msgstr "After a time the upgrade will be performed"
 
-#: plugins/lime-plugin-align/src/alignMenu.js:9
+#: plugins/lime-plugin-align/src/alignMenu.js:10
 msgid "Align"
 msgstr ""
 
@@ -797,7 +797,7 @@ msgstr ""
 msgid "Filter by"
 msgstr "Filter by"
 
-#: plugins/lime-plugin-firmware/src/firmwareMenu.js:9
+#: plugins/lime-plugin-firmware/src/firmwareMenu.js:10
 #: plugins/lime-plugin-rx/src/sections/system.tsx:49
 msgid "Firmware"
 msgstr ""
@@ -827,6 +827,14 @@ msgstr ""
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 
+#: src/components/NotFound.tsx:23
+msgid "Go Back"
+msgstr "Go Back"
+
+#: src/components/NotFound.tsx:20
+msgid "Go Home"
+msgstr "Go Home"
+
 #: src/containers/Menu/menu.js:48
 #~ msgid "Go to Community View"
 #~ msgstr "Go to Community View"
@@ -839,7 +847,7 @@ msgstr "Get an additional cell phone to the one you are currently using that has
 msgid "Go!"
 msgstr ""
 
-#: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:5
+#: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:6
 msgid "Ground Routing"
 msgstr ""
 
@@ -1013,7 +1021,7 @@ msgstr "Loading <0/>last internet path..."
 msgid "Local services link"
 msgstr "Local services link"
 
-#: plugins/lime-plugin-locate/src/locateMenu.js:9
+#: plugins/lime-plugin-locate/src/locateMenu.js:10
 msgid "Locate"
 msgstr "Locate"
 
@@ -1053,15 +1061,15 @@ msgstr "Max. {length} characters"
 msgid "Measuring links"
 msgstr ""
 
-#: plugins/lime-plugin-mesh-wide/src/meshWideMenu.tsx:9
+#: plugins/lime-plugin-mesh-wide/src/meshWideMenu.tsx:10
 msgid "Mesh Map"
 msgstr "Mesh Map"
 
-#: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:9
+#: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:10
 msgid "Mesh Wide Config"
 msgstr "Mesh Wide Config"
 
-#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:9
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:10
 msgid "Mesh Wide Upgrade"
 msgstr "Mesh Wide Upgrade"
 
@@ -1085,7 +1093,7 @@ msgstr "Mesh wide config"
 msgid "Mesh wide upgrade started!"
 msgstr "Mesh wide upgrade started!"
 
-#: plugins/lime-plugin-metrics/src/metricsMenu.js:9
+#: plugins/lime-plugin-metrics/src/metricsMenu.js:10
 msgid "Metrics"
 msgstr ""
 
@@ -1229,7 +1237,7 @@ msgstr "Node is upgrading"
 msgid "Not Connected"
 msgstr "Not Connected"
 
-#: plugins/lime-plugin-notes/src/notesMenu.js:9
+#: plugins/lime-plugin-notes/src/notesMenu.js:10
 msgid "Notes"
 msgstr ""
 
@@ -1282,6 +1290,10 @@ msgstr "Other nodes will download the firmware from it"
 #: plugins/lime-plugin-metrics/src/components/box/index.js:110
 msgid "Packet loss"
 msgstr ""
+
+#: src/components/NotFound.tsx:11
+msgid "Page Not Found"
+msgstr "Page Not Found"
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:104
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:49
@@ -1390,7 +1402,7 @@ msgstr ""
 msgid "Reload page"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:9
+#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:10
 msgid "Remote Support"
 msgstr ""
 
@@ -1594,7 +1606,7 @@ msgstr ""
 msgid "Share your mobile connection by connecting the node to a mobile hotspost"
 msgstr "Share your mobile connection by connecting the node to a mobile hotspost"
 
-#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:9
+#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:10
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:48
 msgid "Shared Password"
 msgstr ""
@@ -1704,7 +1716,7 @@ msgstr "Start mesh wide upgrade"
 msgid "Starting mesh wide configuration change"
 msgstr "Starting mesh wide configuration change"
 
-#: plugins/lime-plugin-rx/src/rxMenu.js:9
+#: plugins/lime-plugin-rx/src/rxMenu.js:10
 msgid "Status"
 msgstr ""
 
@@ -1779,6 +1791,10 @@ msgstr ""
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:80
 msgid "The node is down"
 msgstr "The node is down"
+
+#: src/components/NotFound.tsx:14
+msgid "The page you're looking for doesn't exist or has been moved."
+msgstr "The page you're looking for doesn't exist or has been moved."
 
 #: plugins/lime-plugin-node-admin/src/screens/password.js:60
 msgid "The password should have at least 8 characters"
@@ -2068,7 +2084,7 @@ msgstr ""
 msgid "Visit <0>docs.altermundi.net</0>"
 msgstr "Visit <0>docs.altermundi.net</0>"
 
-#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:9
+#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:10
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:47
 msgid "Visit a neighboring node"
 msgstr ""

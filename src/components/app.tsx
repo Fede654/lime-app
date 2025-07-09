@@ -8,6 +8,7 @@ import { ToastProvider } from "components/toast/toastProvider";
 import { Menu } from "containers/Menu";
 import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
+import { NotFound } from "./NotFound";
 
 import { AppContextProvider } from "utils/app.context";
 import { useBoardData, useLogin, useSession } from "utils/queries";
@@ -77,6 +78,10 @@ const Routes = () => {
             </CommunityProtectedRoute>
             {/* @ts-ignore */}
             <Redirect default path={"/"} to={"rx"} />
+            {/* 404 fallback route */}
+            <Route path="*" default>
+                <NotFound />
+            </Route>
         </Router>
     );
 };
