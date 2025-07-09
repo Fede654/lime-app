@@ -3,6 +3,7 @@ import { useState } from "preact/hooks";
 
 import { ChevronDownIcon } from "components/icons/teenny/chevron-down";
 import { ChevronUpIcon } from "components/icons/teenny/chevron-up";
+import { MenuIcon } from "./MenuIcon";
 
 export interface MenuGroupProps {
     groupKey: string;
@@ -53,18 +54,15 @@ export const MenuGroup = ({
                         from-primary-100 to-primary-200
                         ${groupConfig.color}
                     `}>
-                        <div className="w-5 h-5 flex items-center justify-center">
-                            {/* TODO: Add dynamic icon based on groupConfig.icon */}
-                            <div className="w-4 h-4 bg-current rounded-sm opacity-75"></div>
-                        </div>
+                        <MenuIcon iconName={groupConfig.icon} className="w-5 h-5" />
                     </div>
                     
                     {/* Group Info */}
-                    <div className="text-left">
-                        <h3 className="font-semibold text-gray-900 text-sm">
+                    <div className="text-left flex-1 min-w-0">
+                        <h3 className="font-semibold text-gray-900 text-sm truncate">
                             <Trans>{groupConfig.label}</Trans>
                         </h3>
-                        <p className="text-xs text-gray-500 mt-0.5">
+                        <p className="text-xs text-gray-500 mt-0.5 truncate">
                             <Trans>{groupConfig.description}</Trans>
                         </p>
                     </div>
@@ -92,16 +90,31 @@ export const MenuGroup = ({
                 `}
                 aria-hidden={isCollapsed}
             >
-                <div className="mt-2 ml-4 space-y-1">
+                <div className="mt-2 ml-4 space-y-0.5">
                     {components.map((Component, index) => (
                         <div 
                             key={index}
                             className="
-                                flex items-center p-2 rounded-md 
-                                hover:bg-gray-50 transition-colors duration-150
+                                flex items-center py-2 px-3 rounded-md 
+                                hover:bg-gray-50 hover:shadow-sm 
+                                transition-all duration-150
+                                min-h-[44px] group cursor-pointer
+                                border border-transparent hover:border-gray-200
                             "
                         >
-                            <Component />
+                            <div className="
+                                flex items-center space-x-3 w-full
+                                whitespace-nowrap overflow-hidden text-ellipsis
+                            ">
+                                <Component />
+                            </div>
+                            
+                            {/* Status indicator placeholder */}
+                            <div className="
+                                flex-shrink-0 w-2 h-2 rounded-full 
+                                bg-gray-300 opacity-0 group-hover:opacity-50
+                                transition-opacity duration-200
+                            "></div>
                         </div>
                     ))}
                 </div>

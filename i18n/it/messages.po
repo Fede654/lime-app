@@ -989,6 +989,10 @@ msgstr "Visto l'ultima volta"
 #~ msgid "Last update: 30 second ago"
 #~ msgstr ""
 
+#: src/containers/Menu/ModernMenu.tsx:206
+msgid "LibreMesh Network"
+msgstr ""
+
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:120
 msgid "Link Title"
 msgstr "Titolo Link"
@@ -1048,6 +1052,10 @@ msgstr "Testo Principale"
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:75
 msgid "Manage Vouchers"
 msgstr "Gestisci Voucher"
+
+#: src/containers/Menu/ModernMenu.tsx:116
+msgid "Manage your LibreMesh network"
+msgstr ""
 
 #: plugins/lime-plugin-rx/src/sections/internetPath.tsx:128
 msgid "Map"
@@ -1131,6 +1139,10 @@ msgstr "Devi selezionare un hostname valido"
 #~ msgid "Name"
 #~ msgstr ""
 
+#: src/containers/Menu/ModernMenu.tsx:113
+msgid "Navigation"
+msgstr ""
+
 #: src/components/NotFound.tsx:52
 msgid "Need help? Check the network status or contact your network administrator."
 msgstr ""
@@ -1179,6 +1191,10 @@ msgstr "Nuova versione disponibile!"
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormFooter.tsx:36
 msgid "No changes made"
 msgstr "Nessuna modifica apportata"
+
+#: src/containers/Menu/ModernMenu.tsx:196
+msgid "No menu items found for \"{searchTerm}\""
+msgstr ""
 
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:34
 msgid "No new version available is found"
@@ -2260,6 +2276,10 @@ msgstr "per mantenere la configurazione corrente. O ..."
 msgid "to the previous configuration"
 msgstr "alla configurazione precedente"
 
+#: src/containers/Menu/ModernMenu.tsx:209
+msgid "v4.0"
+msgstr ""
+
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:136
 msgid "{0, plural, =0 {No one has joined yet.} one {One person has joined.} other {# people have joined.}}"
 msgstr "{0, plural, =0 {Nessuno si è ancora unito.} one {Una persona si è unita.} other {# persone si sono unite.}}"
@@ -2268,6 +2288,8 @@ msgstr "{0, plural, =0 {Nessuno si è ancora unito.} one {Una persona si è unit
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:44
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:48
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:52
+#: src/containers/Menu/MenuGroup.tsx:63
+#: src/containers/Menu/MenuGroup.tsx:66
 msgid "{0}"
 msgstr "{0}"
 

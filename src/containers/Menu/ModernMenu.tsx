@@ -96,9 +96,10 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                     menu-container fixed top-0 left-0 h-full z-50
                     bg-gradient-to-b from-gray-50 to-white
                     shadow-2xl border-r border-gray-200
-                    transform transition-transform duration-300 ease-in-out
+                    transform transition-all duration-300 ease-in-out
                     ${opened ? 'translate-x-0' : '-translate-x-full'}
                     w-80 sm:w-96 md:w-80 lg:w-96
+                    will-change-transform
                 `}
                 role="navigation"
                 aria-label="Main menu"
@@ -158,7 +159,7 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
 
                 {/* Menu Content */}
                 <div className="flex-1 overflow-y-auto p-4">
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                         {sortedGroups.map(([groupKey, components]) => {
                             const groupConfig = menuGroups[groupKey];
                             if (!groupConfig) return null;
@@ -186,6 +187,16 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             );
                         })}
                     </div>
+                    
+                    {/* Empty state for search */}
+                    {searchTerm && sortedGroups.length === 0 && (
+                        <div className="text-center py-8 text-gray-500">
+                            <div className="text-4xl mb-2">🔍</div>
+                            <p className="text-sm">
+                                <Trans>No menu items found for "{searchTerm}"</Trans>
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Menu Footer */}
