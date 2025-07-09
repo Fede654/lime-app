@@ -1,4 +1,4 @@
-import { readableBytes, readableWifiRate } from "./utils";
+import { isValidCoordinate, readableBytes, readableWifiRate } from "./utils";
 
 describe("readableBytes", () => {
     it("handles zero bytes", () => {
@@ -45,5 +45,56 @@ describe("readableWifiRate", () => {
     it("handles decimal precision correctly", () => {
         // 156250 bytes/s = 1.25 Mbit/s
         expect(readableWifiRate(156250)).toBe("1.3 Mbit/s");
+    });
+});
+
+describe("isValidCoordinate", () => {
+    it("accepts valid coordinates", () => {
+        expect(isValidCoordinate(0, 0)).toBe(true);
+        expect(isValidCoordinate(40.7128, -74.006)).toBe(true); // New York
+        expect(isValidCoordinate(-33.8688, 151.2093)).toBe(true); // Sydney
+        expect(isValidCoordinate(90, 180)).toBe(true); // Max values
+        expect(isValidCoordinate(-90, -180)).toBe(true); // Min values
+    });
+
+    it("accepts valid coordinates as strings", () => {
+        expect(isValidCoordinate("0", "0")).toBe(true);
+        expect(isValidCoordinate("40.7128", "-74.0060")).toBe(true);
+        expect(isValidCoordinate("-33.8688", "151.2093")).toBe(true);
+    });
+
+    it("rejects coordinates with NaN values", () => {
+        expect(isValidCoordinate(NaN, 0)).toBe(false);
+        expect(isValidCoordinate(0, NaN)).toBe(false);
+        expect(isValidCoordinate(NaN, NaN)).toBe(false);
+        expect(isValidCoordinate("invalid", "0")).toBe(false);
+        expect(isValidCoordinate("0", "invalid")).toBe(false);
+    });
+
+    it("rejects coordinates outside valid ranges", () => {
+        // Latitude out of range
+        expect(isValidCoordinate(91, 0)).toBe(false);
+        expect(isValidCoordinate(-91, 0)).toBe(false);
+
+        // Longitude out of range
+        expect(isValidCoordinate(0, 181)).toBe(false);
+        expect(isValidCoordinate(0, -181)).toBe(false);
+
+        // Both out of range
+        expect(isValidCoordinate(100, 200)).toBe(false);
+        expect(isValidCoordinate(-100, -200)).toBe(false);
+    });
+
+    it("rejects undefined or null values", () => {
+        expect(isValidCoordinate(undefined, 0)).toBe(false);
+        expect(isValidCoordinate(0, undefined)).toBe(false);
+        expect(isValidCoordinate(null, 0)).toBe(false);
+        expect(isValidCoordinate(0, null)).toBe(false);
+    });
+
+    it("rejects empty string values", () => {
+        expect(isValidCoordinate("", 0)).toBe(false);
+        expect(isValidCoordinate(0, "")).toBe(false);
+        expect(isValidCoordinate("", "")).toBe(false);
     });
 });

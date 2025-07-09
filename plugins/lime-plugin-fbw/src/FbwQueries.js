@@ -36,6 +36,11 @@ const _getBssid = ({ file = "" }) => {
 
 async function _scanStatus() {
     let payload = await getStatus();
+    // Ensure payload is always an object with required properties
+    if (!payload || typeof payload !== "object") {
+        payload = { lock: false, scanned: [], networks: [], status: null };
+    }
+
     return {
         scanned: payload.scanned || [],
         networks:
@@ -45,7 +50,7 @@ async function _scanStatus() {
                 bssid: _getBssid(net),
             })) || [],
         status: payload.status || null,
-        lock: payload.lock,
+        lock: payload.lock || false,
     };
 }
 

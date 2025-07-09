@@ -1,4 +1,5 @@
 import { useLingui } from "@lingui/react";
+
 import { format, register } from "utils/timeago";
 
 // No need to register locales - built into our implementation

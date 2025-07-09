@@ -1,8 +1,9 @@
 import { ComponentChildren } from "preact";
-import { useToggle } from "utils/hooks";
 
 import Divider from "components/divider";
 import { ChevronDown, ChevronRight } from "components/icons/teenny/chevrons";
+
+import { useToggle } from "utils/hooks";
 
 interface IListItemProps {
     leftComponent?: ComponentChildren;

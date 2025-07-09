@@ -17,6 +17,11 @@ export const createNetwork = ({ network, hostname, adminPassword }) =>
     });
 
 export const getStatus = () =>
-    api.call("lime-fbw", "status", {}).catch(() => ({ lock: false }));
+    api.call("lime-fbw", "status", {}).catch(() => ({
+        lock: false,
+        scanned: [],
+        networks: [],
+        status: null,
+    }));
 
 export const dismissFbw = () => api.call("lime-fbw", "dismiss", {});

@@ -11,9 +11,9 @@ export const NotFound = () => (
                 <div className="text-8xl md:text-9xl font-black text-primary opacity-20 mb-4">
                     404
                 </div>
-                <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6"></div>
+                <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6" />
             </div>
-            
+
             {/* Content section */}
             <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
                 <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
@@ -21,24 +21,25 @@ export const NotFound = () => (
                 </h1>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
                     <Trans>
-                        The page you're looking for doesn't exist or has been moved. 
-                        Let's get you back to exploring your LibreMesh network.
+                        The page you're looking for doesn't exist or has been
+                        moved. Let's get you back to exploring your LibreMesh
+                        network.
                     </Trans>
                 </p>
-                
+
                 {/* Action buttons with improved spacing */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button 
-                        onClick={() => route("/")} 
-                        color="primary" 
+                    <Button
+                        onClick={() => route("/")}
+                        color="primary"
                         size="lg"
                         className="min-w-[120px] font-semibold"
                     >
                         <Trans>Go Home</Trans>
                     </Button>
-                    <Button 
-                        onClick={() => window.history.back()} 
-                        color="secondary" 
+                    <Button
+                        onClick={() => window.history.back()}
+                        color="secondary"
                         size="lg"
                         className="min-w-[120px] font-semibold"
                     >
@@ -46,11 +47,12 @@ export const NotFound = () => (
                     </Button>
                 </div>
             </div>
-            
+
             {/* Helper text */}
             <p className="text-sm text-gray-500">
                 <Trans>
-                    Need help? Check the network status or contact your network administrator.
+                    Need help? Check the network status or contact your network
+                    administrator.
                 </Trans>
             </p>
         </div>

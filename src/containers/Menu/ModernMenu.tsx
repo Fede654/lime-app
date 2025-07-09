@@ -1,8 +1,9 @@
 import { Trans } from "@lingui/macro";
 import { useEffect, useState } from "preact/hooks";
 
+import { menuGroups, plugins } from "../../config";
+import { useSession } from "../../utils/queries";
 import { MenuGroup } from "./MenuGroup";
-import { plugins, menuGroups } from "../../config";
 
 export interface ModernMenuProps {
     opened: boolean;
@@ -10,13 +11,35 @@ export interface ModernMenuProps {
 }
 
 export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
-    const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
+    const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
+        new Set()
+    );
     const [searchTerm, setSearchTerm] = useState("");
     const [focusedItem, setFocusedItem] = useState<string | null>(null);
+    const { data: session } = useSession();
 
     // Group plugins by menuGroup with smart organization
     const groupedPlugins = plugins
-        .filter(plugin => plugin.page && plugin.menu && plugin.menu !== null && plugin.name)
+        .filter((plugin) => {
+            // Basic filters
+            if (
+                !(
+                    plugin.page &&
+                    plugin.menu &&
+                    plugin.menu !== null &&
+                    plugin.name
+                )
+            ) {
+                return false;
+            }
+
+            // Authentication filter - hide community protected items for non-root users
+            if (plugin.isCommunityProtected && session?.username !== "root") {
+                return false;
+            }
+
+            return true;
+        })
         .reduce((groups, plugin) => {
             const group = plugin.menuGroup || "default";
             if (!groups[group]) {
@@ -27,16 +50,15 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
         }, {} as Record<string, any[]>);
 
     // Sort groups by priority
-    const sortedGroups = Object.entries(groupedPlugins)
-        .sort(([a], [b]) => {
-            const priorityA = menuGroups[a]?.priority || 999;
-            const priorityB = menuGroups[b]?.priority || 999;
-            return priorityA - priorityB;
-        });
+    const sortedGroups = Object.entries(groupedPlugins).sort(([a], [b]) => {
+        const priorityA = menuGroups[a]?.priority || 999;
+        const priorityB = menuGroups[b]?.priority || 999;
+        return priorityA - priorityB;
+    });
 
     // Handle group toggle
     const handleGroupToggle = (groupKey: string) => {
-        setCollapsedGroups(prev => {
+        setCollapsedGroups((prev) => {
             const newSet = new Set(prev);
             if (newSet.has(groupKey)) {
                 newSet.delete(groupKey);
@@ -51,12 +73,12 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (!opened) return;
-            
+
             switch (e.key) {
-                case 'Escape':
+                case "Escape":
                     toggle();
                     break;
-                case 'Tab':
+                case "Tab":
                     // Allow normal tab navigation
                     break;
                 default:
@@ -64,15 +86,17 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
             }
         };
 
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
     }, [opened, toggle]);
 
     // Focus management
     useEffect(() => {
         if (opened) {
             // Focus the first interactive element when menu opens
-            const firstButton = document.querySelector('.menu-container button');
+            const firstButton = document.querySelector(
+                ".menu-container button"
+            );
             if (firstButton) {
                 (firstButton as HTMLElement).focus();
             }
@@ -83,13 +107,13 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
         <>
             {/* Overlay */}
             {opened && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
                     onClick={toggle}
                     aria-hidden="true"
                 />
             )}
-            
+
             {/* Menu Container */}
             <div
                 className={`
@@ -97,7 +121,7 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                     bg-gradient-to-b from-gray-50 to-white
                     shadow-2xl border-r border-gray-200
                     transform transition-all duration-300 ease-in-out
-                    ${opened ? 'translate-x-0' : '-translate-x-full'}
+                    ${opened ? "translate-x-0" : "-translate-x-full"}
                     w-80 sm:w-96 md:w-80 lg:w-96
                     will-change-transform
                     flex flex-col
@@ -126,24 +150,48 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             "
                             aria-label="Close menu"
                         >
-                            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            <svg
+                                className="w-5 h-5 text-gray-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
                             </svg>
                         </button>
                     </div>
-                    
+
                     {/* Search Bar */}
                     <div className="mt-4">
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                <svg
+                                    className="w-4 h-4 text-gray-400"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    />
                                 </svg>
                             </div>
                             <input
                                 type="text"
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm((e.target as HTMLInputElement).value)}
+                                onChange={(e) =>
+                                    setSearchTerm(
+                                        (e.target as HTMLInputElement).value
+                                    )
+                                }
                                 className="
                                     w-full pl-10 pr-4 py-2 text-sm
                                     border border-gray-300 rounded-lg
@@ -159,25 +207,34 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                 </div>
 
                 {/* Menu Content */}
-                <div 
+                <div
                     className="flex-1 overflow-y-auto overflow-x-hidden p-4 min-h-0 menu-scrollbar"
                     style={{
-                        scrollbarWidth: 'thin',
-                        scrollbarColor: '#d1d5db transparent'
+                        scrollbarWidth: "thin",
+                        scrollbarColor: "#d1d5db transparent",
                     }}
                 >
                     <div className="space-y-3">
                         {sortedGroups.map(([groupKey, components]) => {
                             const groupConfig = menuGroups[groupKey];
                             if (!groupConfig) return null;
-                            
+
                             // Filter components based on search
-                            const filteredComponents = searchTerm 
-                                ? components.filter(comp => 
-                                    // This is a simplified search - in a real app you'd search the actual component text
-                                    groupConfig.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                    groupConfig.description.toLowerCase().includes(searchTerm.toLowerCase())
-                                )
+                            const filteredComponents = searchTerm
+                                ? components.filter(
+                                      (comp) =>
+                                          // This is a simplified search - in a real app you'd search the actual component text
+                                          groupConfig.label
+                                              .toLowerCase()
+                                              .includes(
+                                                  searchTerm.toLowerCase()
+                                              ) ||
+                                          groupConfig.description
+                                              .toLowerCase()
+                                              .includes(
+                                                  searchTerm.toLowerCase()
+                                              )
+                                  )
                                 : components;
 
                             if (filteredComponents.length === 0) return null;
@@ -194,13 +251,15 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             );
                         })}
                     </div>
-                    
+
                     {/* Empty state for search */}
                     {searchTerm && sortedGroups.length === 0 && (
                         <div className="text-center py-8 text-gray-500">
                             <div className="text-4xl mb-2">🔍</div>
                             <p className="text-sm">
-                                <Trans>No menu items found for "{searchTerm}"</Trans>
+                                <Trans>
+                                    No menu items found for "{searchTerm}"
+                                </Trans>
                             </p>
                         </div>
                     )}

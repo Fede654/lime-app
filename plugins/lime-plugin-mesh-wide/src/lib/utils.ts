@@ -48,12 +48,25 @@ export const isValidCoordinate = (
     lat: number | string,
     lng: number | string
 ) => {
+    // Reject null, undefined, or empty string values
+    if (lat == null || lng == null || lat === "" || lng === "") {
+        return false;
+    }
+
+    // Convert to numbers for validation
+    const numLat = Number(lat);
+    const numLng = Number(lng);
+
     return (
-        (!isNaN(Number(lat)) || !isNaN(Number(lng))) &&
-        lat >= -90 &&
-        lat <= 90 &&
-        lng >= -180 &&
-        lng <= 180
+        // Both coordinates must be valid numbers
+        !isNaN(numLat) &&
+        !isNaN(numLng) &&
+        // Latitude must be between -90 and 90
+        numLat >= -90 &&
+        numLat <= 90 &&
+        // Longitude must be between -180 and 180
+        numLng >= -180 &&
+        numLng <= 180
     );
 };
 

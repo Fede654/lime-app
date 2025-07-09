@@ -53,16 +53,26 @@ describe("ap password config", () => {
         cleanup();
         jest.clearAllMocks();
         act(() => queryCache.clear());
+        // Clear any form state that might persist
+        document.body.innerHTML = "";
     });
 
     // eslint-disable-next-line jest/no-disabled-tests
+    // TODO: This test is skipped due to react-hook-form compatibility issues with Jest
+    // The form state doesn't update correctly when checkbox is clicked in test environment
+    // Individual tests pass but fail when run together. See issue #346 documentation above.
     it.skip("calls api endpoint for enabling password when switched on", async () => {
         render(<APPasswordPage />);
         expect(screen.queryByTestId("changes-need-reboot")).toBe(null);
         getChangesNeedReboot.mockImplementation(async () => true);
 
+        // Click the checkbox to enable password
         await userEvent.click(await findPasswordUsageCheckbox());
-        await userEvent.type(await findPasswordInput(), "12345678");
+
+        // Wait for password input to appear (it's conditionally rendered)
+        const passwordInput = await screen.findByTestId("password-input");
+        await userEvent.type(passwordInput, "12345678");
+
         await userEvent.click(await findSubmitButton());
 
         await waitFor(() => {

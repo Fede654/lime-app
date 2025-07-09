@@ -3,12 +3,12 @@ import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import Router from "preact-router";
 import { useEffect } from "preact/hooks";
+
 import { ToastProvider } from "components/toast/toastProvider";
 
 import { Menu } from "containers/Menu";
 import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
-import { NotFound } from "./NotFound";
 
 import { AppContextProvider } from "utils/app.context";
 import { useBoardData, useLogin, useSession } from "utils/queries";
@@ -17,6 +17,7 @@ import { CommunityProtectedRoute, Redirect, Route } from "utils/routes";
 
 import { plugins } from "../config";
 import i18n, { dynamicActivate } from "../i18n";
+import { NotFound } from "./NotFound";
 import { Header } from "./header";
 
 const Routes = () => {
@@ -99,7 +100,10 @@ const App = () => {
         }
     }, [session, login]);
 
-    if (!session?.username || !boardData) {
+    // Allow firstbootwizard to render even without session/boardData
+    const isOnFbwRoute = window.location.hash.includes("firstbootwizard");
+
+    if ((!session?.username || !boardData) && !isOnFbwRoute) {
         return <div>Loading...</div>;
     }
 

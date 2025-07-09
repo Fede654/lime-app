@@ -21,10 +21,17 @@ function stripIface(hostIface) {
 
 export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
     const hasMostActive = !!status.most_active?.iface;
+    // Validate MAC address format (XX:XX:XX:XX:XX:XX)
+    const hasValidMac =
+        status.most_active?.station_mac &&
+        /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.test(
+            status.most_active.station_mac
+        );
+
     const { data: bathost } = useBatHost(
         status.most_active && status.most_active.station_mac,
         status.most_active && status.most_active.iface,
-        { enabled: hasMostActive }
+        { enabled: hasMostActive && hasValidMac }
     );
 
     const traffic = Math.round(

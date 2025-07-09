@@ -88,6 +88,7 @@ Developer tools, templates, and utilities.
 - **Understand the architecture** → [Architecture Overview](01-architecture/overview.md)
 - **Find API endpoints** → [ubus API Reference](03-api/ubus-api-reference.md)
 - **Learn API patterns** → [API Patterns & Best Practices](03-api/api-patterns-best-practices.md)
+- **Check fork vs upstream status** → [Upstream Advancement Tracking](06-fork-management/upstream-advancement-tracking.md)
 
 ## 🔧 Development Commands
 
@@ -155,8 +156,9 @@ Esta documentación está organizada para desarrolladores de LiMeApp:
 - **03 - API**: Referencias API y patrones de integración
 - **04 - Guías**: Tutoriales paso a paso
 - **05 - Referencia**: Documentación técnica
-- **06 - Decisiones**: Registros de decisiones arquitectónicas
-- **07 - Herramientas**: Utilidades para desarrolladores
+- **06 - Fork Management**: Tracking de avances respecto upstream
+- **07 - Decisiones**: Registros de decisiones arquitectónicas
+- **08 - Herramientas**: Utilidades para desarrolladores
 
 Comienza con [Configuración de Desarrollo](00-quick-start/development-setup.md) y [Referencia Rápida](00-quick-start/quick-reference.md).
 

@@ -31,7 +31,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 continue;
             }
             const srcLoc = links[actualNodeName].src_loc;
-            // If the source location is not valid (FIXME coords), continue
+            // Skip nodes with invalid source coordinates (not in valid lat/lng ranges)
             if (!isValidCoordinate(srcLoc.lat, srcLoc.long)) {
                 continue;
             }
@@ -87,11 +87,11 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 }
 
                 // What happen if the destination link or location is undefined?
-                // Maybe drawing somehow to the map and show the user that the link is not complete
-                // For the moment lets ignore the link
+                // Skip links where destination location is missing or has invalid coordinates
+                // TODO: Consider showing incomplete links to user in a different way
                 if (
                     !destLoc ||
-                    (destLoc && !isValidCoordinate(destLoc.lat, destLoc.long)) // FIXME coords
+                    (destLoc && !isValidCoordinate(destLoc.lat, destLoc.long))
                 ) {
                     continue;
                 }

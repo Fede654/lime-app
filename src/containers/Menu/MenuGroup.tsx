@@ -3,6 +3,7 @@ import { useState } from "preact/hooks";
 
 import { ChevronDownIcon } from "components/icons/teenny/chevron-down";
 import { ChevronUpIcon } from "components/icons/teenny/chevron-up";
+
 import { MenuIcon } from "./MenuIcon";
 
 export interface MenuGroupProps {
@@ -19,15 +20,15 @@ export interface MenuGroupProps {
     onToggle: (groupKey: string) => void;
 }
 
-export const MenuGroup = ({ 
-    groupKey, 
-    groupConfig, 
-    components, 
-    isCollapsed, 
-    onToggle 
+export const MenuGroup = ({
+    groupKey,
+    groupConfig,
+    components,
+    isCollapsed,
+    onToggle,
 }: MenuGroupProps) => {
     const [isHovered, setIsHovered] = useState(false);
-    
+
     return (
         <div className="mb-4">
             {/* Group Header */}
@@ -41,7 +42,7 @@ export const MenuGroup = ({
                     hover:shadow-md hover:border-primary-300 
                     transition-all duration-200 ease-in-out
                     focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
-                    ${isHovered ? 'bg-gray-50' : ''}
+                    ${isHovered ? "bg-gray-50" : ""}
                 `}
                 aria-expanded={!isCollapsed}
                 aria-controls={`menu-group-${groupKey}`}
@@ -49,14 +50,19 @@ export const MenuGroup = ({
             >
                 <div className="flex items-center space-x-3">
                     {/* Group Icon */}
-                    <div className={`
+                    <div
+                        className={`
                         p-2 rounded-lg bg-gradient-to-br 
                         from-primary-100 to-primary-200
                         ${groupConfig.color}
-                    `}>
-                        <MenuIcon iconName={groupConfig.icon} className="w-5 h-5" />
+                    `}
+                    >
+                        <MenuIcon
+                            iconName={groupConfig.icon}
+                            className="w-5 h-5"
+                        />
                     </div>
-                    
+
                     {/* Group Info */}
                     <div className="text-left flex-1 min-w-0">
                         <h3 className="font-semibold text-gray-900 text-sm truncate">
@@ -67,12 +73,14 @@ export const MenuGroup = ({
                         </p>
                     </div>
                 </div>
-                
+
                 {/* Collapse Toggle */}
-                <div className={`
+                <div
+                    className={`
                     transform transition-transform duration-200 
-                    ${isCollapsed ? '' : 'rotate-180'}
-                `}>
+                    ${isCollapsed ? "" : "rotate-180"}
+                `}
+                >
                     {isCollapsed ? (
                         <ChevronDownIcon className="w-5 h-5 text-gray-400" />
                     ) : (
@@ -80,13 +88,13 @@ export const MenuGroup = ({
                     )}
                 </div>
             </button>
-            
+
             {/* Group Items */}
-            <div 
+            <div
                 id={`menu-group-${groupKey}`}
                 className={`
                     overflow-hidden transition-all duration-300 ease-in-out
-                    ${isCollapsed ? 'max-h-0' : 'max-h-[1000px]'}
+                    ${isCollapsed ? "max-h-0" : "max-h-[1000px]"}
                 `}
                 aria-hidden={isCollapsed}
             >
@@ -97,14 +105,16 @@ export const MenuGroup = ({
                             const handleClick = (e: Event) => {
                                 e.preventDefault();
                                 // Find the clickable link inside the component and trigger its click
-                                const clickableElement = (e.currentTarget as HTMLElement)?.querySelector('a[onClick], .clickable');
+                                const clickableElement = (
+                                    e.currentTarget as HTMLElement
+                                )?.querySelector("a[onClick], .clickable");
                                 if (clickableElement) {
                                     (clickableElement as HTMLElement).click();
                                 }
                             };
 
                             return (
-                                <div 
+                                <div
                                     className="
                                         flex items-center py-2 px-3 rounded-md 
                                         hover:bg-gray-50 hover:shadow-sm 
@@ -115,19 +125,23 @@ export const MenuGroup = ({
                                     "
                                     onClick={handleClick}
                                 >
-                                    <div className="
+                                    <div
+                                        className="
                                         flex items-center flex-1 min-w-0 overflow-hidden
                                         pointer-events-none
-                                    ">
+                                    "
+                                    >
                                         <Component />
                                     </div>
-                                    
+
                                     {/* Status indicator placeholder */}
-                                    <div className="
+                                    <div
+                                        className="
                                         flex-shrink-0 w-2 h-2 rounded-full ml-2
                                         bg-gray-300 opacity-0 group-hover:opacity-50
                                         transition-opacity duration-200
-                                    "></div>
+                                    "
+                                    />
                                 </div>
                             );
                         };

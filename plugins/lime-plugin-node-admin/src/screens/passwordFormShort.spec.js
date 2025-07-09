@@ -53,13 +53,24 @@ describe("ap password config", () => {
         cleanup();
         jest.clearAllMocks();
         act(() => queryCache.clear());
+        // Clear any form state that might persist
+        document.body.innerHTML = "";
     });
 
     // eslint-disable-next-line jest/no-disabled-tests
+    // TODO: This test is skipped due to react-hook-form compatibility issues with Jest
+    // The form state doesn't update correctly when checkbox is clicked in test environment
+    // Individual tests pass but fail when run together. See issue #346 documentation above.
     it.skip("shows an error if password usage is switched on but password is to short", async () => {
         render(<APPasswordPage />);
+
+        // Click the checkbox to enable password
         await userEvent.click(await findPasswordUsageCheckbox());
-        await userEvent.type(await findPasswordInput(), "1234567");
+
+        // Wait for password input to appear (it's conditionally rendered)
+        const passwordInput = await screen.findByTestId("password-input");
+        await userEvent.type(passwordInput, "1234567");
+
         await userEvent.click(await findSubmitButton());
         expect(
             await screen.findByText(
