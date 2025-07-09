@@ -490,13 +490,21 @@ El proyecto implementó optimizaciones agresivas de bundle size para mejorar el 
 - **Imports inapropiados**: Corregidos en modals.tsx
 - **Resultado**: Builds más limpios y eficientes
 
+#### 5. **Reemplazo de timeago.js con Implementación Personalizada**
+- **timeago.js eliminado**: 1.4MB en node_modules, 1 paquete removido
+- **Implementación personalizada**: 3KB utils/timeago.ts con i18n integrado
+- **Idiomas soportados**: Inglés, Español, Italiano, Portugués
+- **API idéntica**: Compatibilidad total con timeago.js
+- **Impacto**: Reducción de dependencias externas y eliminación de warnings
+
 ### 📊 Resultados Finales
 
 **Bundle Size Actual (Julio 2025):**
-- **Bundle principal**: 815KB (JS) + 36KB (CSS) = 851KB total
+- **Bundle principal**: 815KB (JS) + 35KB (CSS) = 850KB total
 - **Reducción total**: ~40KB respecto al bundle original
 - **Estado de pruebas**: 336 pasadas, 14 omitidas
 - **Calidad**: Linting completo, builds exitosos
+- **Dependencias eliminadas**: Redux, react-use, timeago.js (total ~3.7MB en node_modules)
 
 ### 🔧 Arquitectura Mejorada
 
@@ -536,7 +544,7 @@ ls -la build/bundle.* | awk '{print $9 " - " $5/1024 " KB"}'
 du -sh node_modules/* | sort -hr | head -20
 
 # Verificar eliminación de dependencias
-npm ls | grep -E "(redux|react-use)"
+npm ls | grep -E "(redux|react-use|timeago)"
 ```
 
 **Métricas de Calidad:**
