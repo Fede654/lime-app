@@ -15,22 +15,72 @@ import Pirania from "plugins/lime-plugin-pirania";
 import RemoteSupport from "plugins/lime-plugin-remotesupport";
 import Rx from "plugins/lime-plugin-rx";
 
-// REGISTER PLUGINS
+// REGISTER PLUGINS WITH SMART GROUPING
 export const plugins: LimePlugin[] = [
-    Rx,
-    Align,
-    Locate,
-    MeshWide,
-    Metrics,
-    Notes,
-    NodeAdmin,
-    NetworkAdmin,
-    Firmware,
-    MeshUpgrade,
-    ChangeNode,
-    GroundRouting,
-    RemoteSupport,
-    Pirania,
-    MeshConfigPage,
-    Fbw, // does not have menu item
+    // Network Status Group
+    { ...Rx, menuGroup: "status" },
+    { ...Metrics, menuGroup: "status" },
+    { ...Locate, menuGroup: "status" },
+
+    // Administration Group
+    { ...NodeAdmin, menuGroup: "administration" },
+    { ...NetworkAdmin, menuGroup: "administration" },
+    { ...Firmware, menuGroup: "administration" },
+
+    // Mesh Network Group
+    { ...MeshWide, menuGroup: "meshwide" },
+    { ...MeshConfigPage, menuGroup: "meshwide" },
+    { ...MeshUpgrade, menuGroup: "meshwide" },
+
+    // Tools & Utilities Group
+    { ...Align, menuGroup: "tools" },
+    { ...ChangeNode, menuGroup: "tools" },
+    { ...GroundRouting, menuGroup: "tools" },
+    { ...RemoteSupport, menuGroup: "tools" },
+
+    // Community Group
+    { ...Notes, menuGroup: "community" },
+    { ...Pirania, menuGroup: "community" },
+
+    // No menu item
+    Fbw,
 ];
+
+// Menu group configurations
+export const menuGroups = {
+    status: {
+        label: "Network Status",
+        description: "Monitor your network performance and connectivity",
+        icon: "status",
+        color: "text-blue-600",
+        priority: 1,
+    },
+    administration: {
+        label: "Administration",
+        description: "Manage node settings and system configuration",
+        icon: "settings",
+        color: "text-red-600",
+        priority: 2,
+    },
+    meshwide: {
+        label: "Mesh Network",
+        description: "Manage the entire mesh network",
+        icon: "map",
+        color: "text-green-600",
+        priority: 3,
+    },
+    tools: {
+        label: "Tools & Utilities",
+        description: "Network tools and diagnostic utilities",
+        icon: "adjust",
+        color: "text-purple-600",
+        priority: 4,
+    },
+    community: {
+        label: "Community",
+        description: "Community features and user management",
+        icon: "globe",
+        color: "text-orange-600",
+        priority: 5,
+    },
+};

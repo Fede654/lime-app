@@ -827,11 +827,11 @@ msgstr "Métricas de caminho completo"
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Obtenha um celular adicional que você está usando atualmente que tenha uma conexão de dados moveis"
 
-#: src/components/NotFound.tsx:23
+#: src/components/NotFound.tsx:45
 msgid "Go Back"
 msgstr ""
 
-#: src/components/NotFound.tsx:20
+#: src/components/NotFound.tsx:37
 msgid "Go Home"
 msgstr ""
 
@@ -1131,6 +1131,10 @@ msgstr "Deve selecionar um hostname válido"
 #~ msgid "Name"
 #~ msgstr ""
 
+#: src/components/NotFound.tsx:52
+msgid "Need help? Check the network status or contact your network administrator."
+msgstr ""
+
 #: plugins/lime-plugin-rx/src/components/footer.tsx:19
 msgid "Need support?"
 msgstr "Precisa de suporte?"
@@ -1291,7 +1295,7 @@ msgstr "Outros nós baixarão o firmware dele"
 msgid "Packet loss"
 msgstr "Perda de pacotes"
 
-#: src/components/NotFound.tsx:11
+#: src/components/NotFound.tsx:20
 msgid "Page Not Found"
 msgstr ""
 
@@ -1793,7 +1797,11 @@ msgid "The node is down"
 msgstr "O nó está inativo"
 
 #: src/components/NotFound.tsx:14
-msgid "The page you're looking for doesn't exist or has been moved."
+#~ msgid "The page you're looking for doesn't exist or has been moved."
+#~ msgstr ""
+
+#: src/components/NotFound.tsx:23
+msgid "The page you're looking for doesn't exist or has been moved. Let's get you back to exploring your LibreMesh network."
 msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/screens/password.js:60

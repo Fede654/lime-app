@@ -1,8 +1,16 @@
 import { plugins } from "../../config";
+import { ModernMenu } from "./ModernMenu";
 import style from "./style.less";
 
 export const Menu = ({ opened, toggle }) => {
-    // Group plugins by menuGroup
+    // Use modern menu by default, with fallback to legacy menu
+    const useModernMenu = true;
+
+    if (useModernMenu) {
+        return <ModernMenu opened={opened} toggle={toggle} />;
+    }
+
+    // Legacy menu (fallback)
     const groupedPlugins = plugins
         .filter(
             (plugin) =>
@@ -10,9 +18,9 @@ export const Menu = ({ opened, toggle }) => {
                 plugin.menu &&
                 plugin.menu !== null &&
                 plugin.name
-        ) // Only include plugins with page, non-null menu, and name
+        )
         .reduce((groups, plugin) => {
-            const group = plugin.menuGroup || "default"; // Use "default" for plugins without a menuGroup
+            const group = plugin.menuGroup || "default";
             if (!groups[group]) {
                 groups[group] = [];
             }

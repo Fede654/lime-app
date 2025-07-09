@@ -827,11 +827,11 @@ msgstr ""
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 
-#: src/components/NotFound.tsx:23
+#: src/components/NotFound.tsx:45
 msgid "Go Back"
 msgstr "Go Back"
 
-#: src/components/NotFound.tsx:20
+#: src/components/NotFound.tsx:37
 msgid "Go Home"
 msgstr "Go Home"
 
@@ -1131,6 +1131,10 @@ msgstr "Must select a valid hostname"
 #~ msgid "Name"
 #~ msgstr "Name"
 
+#: src/components/NotFound.tsx:52
+msgid "Need help? Check the network status or contact your network administrator."
+msgstr "Need help? Check the network status or contact your network administrator."
+
 #: plugins/lime-plugin-rx/src/components/footer.tsx:19
 msgid "Need support?"
 msgstr "Need support?"
@@ -1291,7 +1295,7 @@ msgstr "Other nodes will download the firmware from it"
 msgid "Packet loss"
 msgstr ""
 
-#: src/components/NotFound.tsx:11
+#: src/components/NotFound.tsx:20
 msgid "Page Not Found"
 msgstr "Page Not Found"
 
@@ -1793,8 +1797,12 @@ msgid "The node is down"
 msgstr "The node is down"
 
 #: src/components/NotFound.tsx:14
-msgid "The page you're looking for doesn't exist or has been moved."
-msgstr "The page you're looking for doesn't exist or has been moved."
+#~ msgid "The page you're looking for doesn't exist or has been moved."
+#~ msgstr "The page you're looking for doesn't exist or has been moved."
+
+#: src/components/NotFound.tsx:23
+msgid "The page you're looking for doesn't exist or has been moved. Let's get you back to exploring your LibreMesh network."
+msgstr "The page you're looking for doesn't exist or has been moved. Let's get you back to exploring your LibreMesh network."
 
 #: plugins/lime-plugin-node-admin/src/screens/password.js:60
 msgid "The password should have at least 8 characters"

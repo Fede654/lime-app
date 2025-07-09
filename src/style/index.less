@@ -123,6 +123,15 @@ body {
 
 .clickable {
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        background-color: rgba(56, 146, 127, 0.1);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
 }
 
 .d-none {
