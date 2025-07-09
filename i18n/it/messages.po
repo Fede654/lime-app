@@ -38,14 +38,14 @@ msgstr "È stata rilasciata una nuova versione del firmware"
 msgid "A reboot is needed to apply changes"
 msgstr "È necessario un riavvio per applicare le modifiche"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:159
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:158
 #: plugins/lime-plugin-mesh-wide-config/src/containers/NextStepFooter.tsx:127
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:122
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nextStepFooter.tsx:163
 msgid "Abort"
 msgstr "Annulla"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:152
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:151
 msgid "Abort current mesh wide configuration update?"
 msgstr "Annullare l'aggiornamento della configurazione della rete mesh?"
 
@@ -86,15 +86,15 @@ msgstr "Scadenza attivazione: {0}"
 msgid "Active"
 msgstr "Attivo"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:98
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:97
 msgid "Add"
 msgstr "Aggiungi"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:86
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:85
 msgid "Add new section"
 msgstr "Aggiungi nuova sezione"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:88
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:87
 msgid "Add new section for {sectionName}"
 msgstr "Aggiungi nuova sezione per {sectionName}"
 
@@ -122,11 +122,11 @@ msgstr "Allineare"
 msgid "All Vouchers"
 msgstr "Tutti i Voucher"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:216
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:215
 msgid "All nodes applied the configuration"
 msgstr "Tutti i nodi hanno applicato la configurazione"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:181
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:180
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:52
 msgid "All nodes are ready"
 msgstr "Tutti i nodi sono pronti"
@@ -144,7 +144,7 @@ msgstr "Tutti i nodi hanno la configurazione pronta da applicare"
 msgid "All nodes scheduled successful"
 msgstr "Tutti i nodi pianificati con successo"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:183
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:182
 msgid "Apply configuration on all of them with a scheduled safe reboot?"
 msgstr "Applicare la configurazione su tutti con un riavvio sicuro pianificato?"
 
@@ -156,20 +156,20 @@ msgstr "Applica nuova configurazione alla rete mesh!"
 msgid "Apply new configuration"
 msgstr "Applica nuova configurazione"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:190
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:189
 msgid "Are you sure you want to apply the configuration to the nodes that are ready? <0/>This will make some of them to reboot<1/>Check node list to see the network status"
 msgstr "Sei sicuro di voler applicare la configurazione ai nodi pronti? <0/>Questo farà riavviare alcuni di essi<1/>Controlla l'elenco dei nodi per vedere lo stato della rete"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:226
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:225
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:90
 msgid "Are you sure you want to confirm the upgrade? <0/>Check node list to see the network status"
 msgstr "Sei sicuro di voler confermare l'aggiornamento? <0/>Controlla l'elenco dei nodi per vedere lo stato della rete"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:26
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:25
 msgid "Are you sure you want to delete the <0>{prop}</0> property?"
 msgstr "Sei sicuro di voler eliminare la proprietà <0>{prop}</0>?"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:45
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:44
 msgid "Are you sure you want to edit the <0>{prop}</0> property?"
 msgstr "Sei sicuro di voler modificare la proprietà <0>{prop}</0>?"
 
@@ -409,7 +409,7 @@ msgstr "Conferma"
 msgid "Confirm configuration on all nodes"
 msgstr "Conferma configurazione su tutti i nodi"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:218
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:217
 msgid "Confirm configuration works properlly for al updated nodes"
 msgstr "Conferma che la configurazione funzioni correttamente per tutti i nodi aggiornati"
 
@@ -531,7 +531,7 @@ msgstr "Attualmente il tuo nodo ha la versione:"
 msgid "Delete"
 msgstr "Elimina"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:24
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:23
 msgid "Delete property"
 msgstr "Elimina proprietà"
 
@@ -616,7 +616,7 @@ msgstr "Durata: è permanente"
 msgid "Duration: {days, plural, one {# day} other {# days}}"
 msgstr "Durata: {days, plural, one {# giorno} other {# giorni}}"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:40
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:39
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:90
 msgid "Edit"
 msgstr "Modifica"
@@ -625,7 +625,7 @@ msgstr "Modifica"
 msgid "Edit Voucher"
 msgstr "Modifica Voucher"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:39
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:38
 msgid "Edit property"
 msgstr "Modifica proprietà"
 
@@ -935,7 +935,7 @@ msgstr "Invalidato"
 msgid "Ip"
 msgstr "IP"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:132
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:131
 msgid "Is a list"
 msgstr "È una lista"
 
@@ -1091,7 +1091,7 @@ msgstr "Metriche"
 
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormEdit.tsx:76
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormEdit.tsx:113
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:109
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:108
 msgid "Minimum length is 1"
 msgstr "Lunghezza minima è 1"
 
@@ -1637,7 +1637,7 @@ msgstr "Dimensione"
 msgid "Some nodes are not marked as ready to apply"
 msgstr "Alcuni nodi non sono contrassegnati come pronti per applicare"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:188
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:187
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:57
 msgid "Some nodes are not ready"
 msgstr "Alcuni nodi non sono pronti"
@@ -1650,7 +1650,7 @@ msgstr "Alcuni nodi non sono pronti per l'aggiornamento <0/>Controlla i dettagli
 msgid "Some nodes are still downloading the firmware<0/>check network page for more information"
 msgstr "Alcuni nodi stanno ancora scaricando il firmware<0/>controlla la pagina di rete per più informazioni"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:224
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:223
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:88
 msgid "Some nodes don't upgraded properly"
 msgstr "Alcuni nodi non si sono aggiornati correttamente"
@@ -1851,7 +1851,7 @@ msgstr "Questo dispositivo supporta il rollback sicuro alla versione precedente 
 
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormEdit.tsx:78
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormEdit.tsx:115
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:111
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:110
 msgid "This field cannot be empty"
 msgstr "Questo campo non può essere vuoto"
 
@@ -1949,7 +1949,7 @@ msgstr "Questa radio non è associata con altri nodi"
 msgid "This will set the reference state of this link:"
 msgstr "Questo imposterà lo stato di riferimento di questo link:"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:154
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:153
 msgid "This will the abort current configuration update process on all nodes. Are you sure you want to proceed?"
 msgstr "Questo interromperà il processo di aggiornamento configurazione corrente su tutti i nodi. Sei sicuro di voler procedere?"
 
@@ -2212,7 +2212,7 @@ msgstr "per i seguenti nodi: {nodes}"
 msgid "hide community"
 msgstr "nascondi comunità"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:116
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:115
 msgid "key"
 msgstr "chiave"
 
