@@ -1,5 +1,4 @@
 import { Trans, t } from "@lingui/macro";
-import { Label } from "@tanstack/react-query-devtools/build/lib/Explorer";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
 import { Modal, ModalProps } from "components/Modal/Modal";
@@ -132,7 +131,7 @@ export const AddNewSectionModal = ({
                                     <Trans>Is a list</Trans>
                                 </label>
                             </div>
-                            <Label>Value</Label>
+                            <label>Value</label>
                             <EditableField
                                 name={isList ? "values" : "value"}
                                 isList={isList}
