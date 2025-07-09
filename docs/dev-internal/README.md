@@ -49,6 +49,11 @@ Step-by-step guides for specific tasks.
 - Debugging techniques
 - Performance optimization
 
+### [03 - API](03-api/)
+API reference and integration patterns.
+- **[ubus API Reference](03-api/ubus-api-reference.md)** - Complete endpoint documentation
+- **[API Patterns & Best Practices](03-api/api-patterns-best-practices.md)** - Development patterns and conventions
+
 ### [04 - Reference](04-reference/)
 Technical reference materials.
 - API endpoints (ubus)
@@ -81,7 +86,8 @@ Developer tools, templates, and utilities.
 - **Fix a bug** → [Debugging Tips](03-guides/debugging-tips.md)
 - **Add translations** → [Adding Translations](03-guides/adding-translations.md)
 - **Understand the architecture** → [Architecture Overview](01-architecture/overview.md)
-- **Find API endpoints** → [API Reference](04-reference/api-endpoints.md)
+- **Find API endpoints** → [ubus API Reference](03-api/ubus-api-reference.md)
+- **Learn API patterns** → [API Patterns & Best Practices](03-api/api-patterns-best-practices.md)
 
 ## 🔧 Development Commands
 
@@ -131,12 +137,13 @@ npm run qa:full         # Complete QA suite
 | Quick Start | 3 | ✅ Current | 100% |
 | Architecture | 2 | ✅ Current | 100% |
 | Development | 3 | ✅ Current | 100% |
+| API | 2 | ✅ Current | 100% |
 | Guides | 1 | ✅ Current | 100% |
 | Reference | 2 | ✅ Current | 100% |
 | Decisions | 5 | ✅ Current | 100% |
 | Tools | 1 | ✅ Current | 100% |
 
-**Total**: 19 documentation files organized in 7 logical sections
+**Total**: 21 documentation files organized in 8 logical sections
 
 ## 🌐 Resumen en Español
 
@@ -145,10 +152,11 @@ Esta documentación está organizada para desarrolladores de LiMeApp:
 - **00 - Inicio Rápido**: Configuración y referencia esencial
 - **01 - Arquitectura**: Diseño del sistema y decisiones
 - **02 - Desarrollo**: Flujos de trabajo diarios
-- **03 - Guías**: Tutoriales paso a paso
-- **04 - Referencia**: Documentación técnica
-- **05 - Decisiones**: Registros de decisiones arquitectónicas
-- **06 - Herramientas**: Utilidades para desarrolladores
+- **03 - API**: Referencias API y patrones de integración
+- **04 - Guías**: Tutoriales paso a paso
+- **05 - Referencia**: Documentación técnica
+- **06 - Decisiones**: Registros de decisiones arquitectónicas
+- **07 - Herramientas**: Utilidades para desarrolladores
 
 Comienza con [Configuración de Desarrollo](00-quick-start/development-setup.md) y [Referencia Rápida](00-quick-start/quick-reference.md).
 
