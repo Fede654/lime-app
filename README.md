@@ -32,7 +32,7 @@
 - 📱 **Responsive design** - Perfect on mobile and desktop  
 - 🌍 **24 languages** - Truly international community software
 - 🔌 **Plugin architecture** - Extensible and modular
-- ⚡ **3kB bundle** - Lightning fast even on limited bandwidth
+- ⚡ **Optimized bundle** - <1MB total size, fast loading on limited bandwidth
 - 🔒 **Secure by design** - Built-in authentication and validation
 
 ---
@@ -138,7 +138,7 @@ plugins/lime-plugin-myfeature/
 
 ### 🔄 State Management
 
-Modern, declarative data flow with **TanStack Query**:
+**100% TanStack Query** - Redux completely eliminated for modern, declarative data flow:
 
 ```javascript
 // Reactive data fetching
