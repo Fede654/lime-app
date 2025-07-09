@@ -86,11 +86,11 @@ export const MenuGroup = ({
                 id={`menu-group-${groupKey}`}
                 className={`
                     overflow-hidden transition-all duration-300 ease-in-out
-                    ${isCollapsed ? 'max-h-0' : 'max-h-96'}
+                    ${isCollapsed ? 'max-h-0' : 'max-h-[1000px]'}
                 `}
                 aria-hidden={isCollapsed}
             >
-                <div className="mt-2 ml-4 space-y-0.5">
+                <div className="mt-2 ml-2 mr-2 space-y-0.5 overflow-hidden">
                     {components.map((Component, index) => (
                         <div 
                             key={index}
@@ -100,18 +100,18 @@ export const MenuGroup = ({
                                 transition-all duration-150
                                 min-h-[44px] group cursor-pointer
                                 border border-transparent hover:border-gray-200
+                                overflow-hidden
                             "
                         >
                             <div className="
-                                flex items-center space-x-3 w-full
-                                whitespace-nowrap overflow-hidden text-ellipsis
+                                flex items-center flex-1 min-w-0 overflow-hidden
                             ">
                                 <Component />
                             </div>
                             
                             {/* Status indicator placeholder */}
                             <div className="
-                                flex-shrink-0 w-2 h-2 rounded-full 
+                                flex-shrink-0 w-2 h-2 rounded-full ml-2
                                 bg-gray-300 opacity-0 group-hover:opacity-50
                                 transition-opacity duration-200
                             "></div>

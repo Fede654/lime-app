@@ -100,6 +100,7 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                     ${opened ? 'translate-x-0' : '-translate-x-full'}
                     w-80 sm:w-96 md:w-80 lg:w-96
                     will-change-transform
+                    flex flex-col
                 `}
                 role="navigation"
                 aria-label="Main menu"
@@ -158,7 +159,13 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                 </div>
 
                 {/* Menu Content */}
-                <div className="flex-1 overflow-y-auto p-4">
+                <div 
+                    className="flex-1 overflow-y-auto overflow-x-hidden p-4 min-h-0 menu-scrollbar"
+                    style={{
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: '#d1d5db transparent'
+                    }}
+                >
                     <div className="space-y-3">
                         {sortedGroups.map(([groupKey, components]) => {
                             const groupConfig = menuGroups[groupKey];
