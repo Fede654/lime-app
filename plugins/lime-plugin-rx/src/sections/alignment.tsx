@@ -88,7 +88,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                 </div>
             )}
             <div className={"flex justify-center"}>
-                <Button size={"lg"} color={"secondary"} href={"#/align"}>
+                <Button size={"lg"} color={"secondary"} href={"/align"}>
                     <Trans>
                         Check
                         <br />
