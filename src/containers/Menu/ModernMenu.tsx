@@ -14,8 +14,6 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
     const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
         new Set()
     );
-    const [searchTerm, setSearchTerm] = useState("");
-    const [focusedItem, setFocusedItem] = useState<string | null>(null);
     const { data: session } = useSession();
 
     // Group plugins by menuGroup with smart organization
@@ -165,45 +163,6 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             </svg>
                         </button>
                     </div>
-
-                    {/* Search Bar */}
-                    <div className="mt-4">
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg
-                                    className="w-4 h-4 text-gray-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    />
-                                </svg>
-                            </div>
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={(e) =>
-                                    setSearchTerm(
-                                        (e.target as HTMLInputElement).value
-                                    )
-                                }
-                                className="
-                                    w-full pl-10 pr-4 py-2 text-sm
-                                    border border-gray-300 rounded-lg
-                                    focus:outline-none focus:ring-2 focus:ring-primary
-                                    focus:border-transparent
-                                    placeholder-gray-400
-                                "
-                                placeholder="Search features..."
-                                aria-label="Search menu items"
-                            />
-                        </div>
-                    </div>
                 </div>
 
                 {/* Menu Content */}
@@ -219,50 +178,18 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             const groupConfig = menuGroups[groupKey];
                             if (!groupConfig) return null;
 
-                            // Filter components based on search
-                            const filteredComponents = searchTerm
-                                ? components.filter(
-                                      (comp) =>
-                                          // This is a simplified search - in a real app you'd search the actual component text
-                                          groupConfig.label
-                                              .toLowerCase()
-                                              .includes(
-                                                  searchTerm.toLowerCase()
-                                              ) ||
-                                          groupConfig.description
-                                              .toLowerCase()
-                                              .includes(
-                                                  searchTerm.toLowerCase()
-                                              )
-                                  )
-                                : components;
-
-                            if (filteredComponents.length === 0) return null;
-
                             return (
                                 <MenuGroup
                                     key={groupKey}
                                     groupKey={groupKey}
                                     groupConfig={groupConfig}
-                                    components={filteredComponents}
+                                    components={components}
                                     isCollapsed={collapsedGroups.has(groupKey)}
                                     onToggle={handleGroupToggle}
                                 />
                             );
                         })}
                     </div>
-
-                    {/* Empty state for search */}
-                    {searchTerm && sortedGroups.length === 0 && (
-                        <div className="text-center py-8 text-gray-500">
-                            <div className="text-4xl mb-2">🔍</div>
-                            <p className="text-sm">
-                                <Trans>
-                                    No menu items found for "{searchTerm}"
-                                </Trans>
-                            </p>
-                        </div>
-                    )}
                 </div>
 
                 {/* Menu Footer */}

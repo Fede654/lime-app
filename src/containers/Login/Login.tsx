@@ -65,7 +65,11 @@ const Login = () => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.currentTarget.value)}
-                            placeholder={username === "lime-app" ? "No password required" : "••••••••"}
+                            placeholder={
+                                username === "lime-app"
+                                    ? "No password required"
+                                    : "••••••••"
+                            }
                             required={username !== "lime-app"}
                             disabled={isLoading}
                         />
@@ -76,7 +80,9 @@ const Login = () => {
                             <input
                                 type="checkbox"
                                 checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.currentTarget.checked)}
+                                onChange={(e) =>
+                                    setRememberMe(e.currentTarget.checked)
+                                }
                                 disabled={isLoading}
                             />
                             <span>
@@ -87,14 +93,20 @@ const Login = () => {
 
                     {isError && (
                         <div className={styles.errorMessage}>
-                            <Trans>Invalid username or password. Please try again.</Trans>
+                            <Trans>
+                                Invalid username or password. Please try again.
+                            </Trans>
                         </div>
                     )}
 
                     <button
                         type="submit"
                         className={styles.loginButton}
-                        disabled={isLoading || !username || (username === "lime-app" ? false : !password)}
+                        disabled={
+                            isLoading ||
+                            !username ||
+                            (username === "lime-app" ? false : !password)
+                        }
                     >
                         {isLoading ? (
                             <>
@@ -113,10 +125,15 @@ const Login = () => {
                     </p>
                     <ul>
                         <li>
-                            <Trans>Basic access: username "lime-app" (no password)</Trans>
+                            <Trans>
+                                Basic access: username "lime-app" (no password)
+                            </Trans>
                         </li>
                         <li>
-                            <Trans>Full access: username "root" with community password</Trans>
+                            <Trans>
+                                Full access: username "root" with community
+                                password
+                            </Trans>
                         </li>
                     </ul>
                 </div>

@@ -22,13 +22,9 @@ msgstr "(List)"
 msgid "(Main Node) {descriptionMsg}"
 msgstr "(Main Node) {descriptionMsg}"
 
-#: plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker.tsx:40
+#: plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker.tsx:45
 msgid "(new)"
 msgstr "(new)"
-
-#: plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus.tsx:26
-#~ msgid "10 of 12 node are ready to update"
-#~ msgstr "10 of 12 node are ready to update"
 
 #: plugins/lime-plugin-firmware/src/upgradeAvailable.js:67
 msgid "A new firmware version has been released"
@@ -105,10 +101,6 @@ msgstr "Add new section for {sectionName}"
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormEdit.tsx:157
 msgid "Added section {0}"
 msgstr "Added section {0}"
-
-#: plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection.tsx:92
-#~ msgid "Added section {0} - {1}"
-#~ msgstr "Added section {0} - {1}"
 
 #: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:114
 msgid "After a time the new configuration will be installed and the node will reboot"
@@ -188,10 +180,6 @@ msgstr ""
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:59
 msgid "Are you sure you want to start mesh wide upgrade? <0/>Check node list to see the network status"
 msgstr "Are you sure you want to start mesh wide upgrade? <0/>Check node list to see the network status"
-
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:24
-#~ msgid "Are you sure you want to {title} the <0>{prop}</0> property?"
-#~ msgstr "Are you sure you want to {title} the <0>{prop}</0> property?"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:24
 msgid "Are you sure?"
@@ -285,7 +273,7 @@ msgstr "Canceling"
 msgid "Cannot connect to the remote support server"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:153
+#: plugins/lime-plugin-locate/src/locatePage.tsx:160
 msgid "Cannot load map, check your internet connection"
 msgstr ""
 
@@ -645,14 +633,6 @@ msgstr "Edit property"
 msgid "Edit wellcome screen"
 msgstr "Edit wellcome screen"
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/OptionForm.tsx:123
-#~ msgid "Edited {keyString}"
-#~ msgstr "Edited {keyString}"
-
-#: plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection.tsx:47
-#~ msgid "Edited {name} - {0}"
-#~ msgstr "Edited {name} - {0}"
-
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:25
 msgid "Enable Community Roaming AP"
 msgstr ""
@@ -768,10 +748,6 @@ msgstr ""
 msgid "Errors found getting info!"
 msgstr "Errors found getting info!"
 
-#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage.tsx:35
-#~ msgid "Errors found getting mesh info!"
-#~ msgstr "Errors found getting mesh info!"
-
 #: plugins/lime-plugin-mesh-wide-config/src/containers/NodesListPage.tsx:100
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:33
 msgid "Everything is up to date!"
@@ -851,14 +827,6 @@ msgstr "Go Back"
 msgid "Go Home"
 msgstr "Go Home"
 
-#: src/containers/Menu/menu.js:48
-#~ msgid "Go to Community View"
-#~ msgstr "Go to Community View"
-
-#: src/containers/Menu/menu.js:51
-#~ msgid "Go to Node View"
-#~ msgstr "Go to Node View"
-
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:27
 msgid "Go!"
 msgstr ""
@@ -882,10 +850,6 @@ msgstr ""
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:67
 msgid "I don't know the shared password"
 msgstr ""
-
-#: plugins/lime-plugin-rx/src/rxPage.js:181
-#~ msgid "IP Addresses"
-#~ msgstr ""
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:88
 msgid "IPv4"
@@ -919,10 +883,6 @@ msgstr "Iface"
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:218
 msgid "In the reference state this node is on"
 msgstr "In the reference state this node is on"
-
-#: plugins/lime-plugin-rx/src/rxPage.js:98
-#~ msgid "Interface"
-#~ msgstr ""
 
 #: plugins/lime-plugin-rx/src/sections/alignment.tsx:85
 msgid "Interface:"
@@ -993,10 +953,6 @@ msgstr "Join <0>foro.librerouter.org</0>"
 msgid "Join the mesh"
 msgstr ""
 
-#: plugins/lime-plugin-mesh-wide-config/src/components/OptionForm.tsx:44
-#~ msgid "Key"
-#~ msgstr "Key"
-
 #: plugins/lime-plugin-align/src/alignPage.js:55
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:134
 msgid "Last packet"
@@ -1005,10 +961,6 @@ msgstr ""
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:61
 msgid "Last seen"
 msgstr "Last seen"
-
-#: plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus.tsx:29
-#~ msgid "Last update: 30 second ago"
-#~ msgstr "Last update: 30 second ago"
 
 #: src/containers/Login/Login.tsx:35
 msgid "LiMeApp Login"
@@ -1041,10 +993,6 @@ msgstr ""
 #: plugins/lime-plugin-rx/src/sections/internetPath.tsx:85
 msgid "Loading <0/>last internet path..."
 msgstr "Loading <0/>last internet path..."
-
-#: plugins/lime-plugin-rx/src/rxPage.js:128
-#~ msgid "Loading node status..."
-#~ msgstr ""
 
 #: plugins/lime-plugin-rx/src/components/internetStatus.tsx:31
 msgid "Loading..."
@@ -1161,10 +1109,6 @@ msgstr ""
 msgid "More than 10 characters"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:80
-#~ msgid "Most Active"
-#~ msgstr ""
-
 #: plugins/lime-plugin-rx/src/sections/alignment.tsx:73
 msgid "Most active link"
 msgstr "Most active link"
@@ -1172,10 +1116,6 @@ msgstr "Most active link"
 #: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:129
 msgid "Must select a valid hostname"
 msgstr "Must select a valid hostname"
-
-#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:73
-#~ msgid "Name"
-#~ msgstr "Name"
 
 #: src/containers/Menu/ModernMenu.tsx:138
 msgid "Navigation"
@@ -1213,7 +1153,7 @@ msgstr "New configuration is on the node"
 msgid "New configuration was confirmed with some errors"
 msgstr "New configuration was confirmed with some errors"
 
-#: plugins/lime-plugin-mesh-wide/src/components/Map/LinkLine.tsx:85
+#: plugins/lime-plugin-mesh-wide/src/components/Map/LinkLine.tsx:90
 msgid "New link"
 msgstr "New link"
 
@@ -1855,10 +1795,6 @@ msgstr ""
 msgid "The node is down"
 msgstr "The node is down"
 
-#: src/components/NotFound.tsx:14
-#~ msgid "The page you're looking for doesn't exist or has been moved."
-#~ msgstr "The page you're looking for doesn't exist or has been moved."
-
 #: src/components/NotFound.tsx:23
 msgid "The page you're looking for doesn't exist or has been moved. Let's get you back to exploring your LibreMesh network."
 msgstr "The page you're looking for doesn't exist or has been moved. Let's get you back to exploring your LibreMesh network."
@@ -2056,10 +1992,6 @@ msgstr ""
 msgid "To enable remote access an internet connection is needed"
 msgstr "To enable remote access an internet connection is needed"
 
-#: plugins/lime-plugin-rx/src/rxPage.js:103
-#~ msgid "Traffic"
-#~ msgstr ""
-
 #: plugins/lime-plugin-rx/src/sections/alignment.tsx:91
 msgid "Traffic:"
 msgstr "Traffic:"
@@ -2083,10 +2015,6 @@ msgstr "Unknown error"
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:227
 msgid "Unknown link type"
 msgstr "Unknown link type"
-
-#: plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus.tsx:16
-#~ msgid "Updating shared state {0}"
-#~ msgstr "Updating shared state {0}"
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:229
 msgid "Upgrade"
@@ -2283,15 +2211,15 @@ msgstr "Your Lime Community file seems empty! Please add some configurations."
 msgid "Your node has no internet connection"
 msgstr "Your node has no internet connection"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:225
+#: plugins/lime-plugin-locate/src/locatePage.tsx:232
 msgid "cancel"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:211
+#: plugins/lime-plugin-locate/src/locatePage.tsx:218
 msgid "confirm location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:227
+#: plugins/lime-plugin-locate/src/locatePage.tsx:234
 msgid "edit location"
 msgstr ""
 
@@ -2299,7 +2227,7 @@ msgstr ""
 msgid "for the following nodes: {nodes}"
 msgstr "for the following nodes: {nodes}"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:217
+#: plugins/lime-plugin-locate/src/locatePage.tsx:224
 msgid "hide community"
 msgstr ""
 
@@ -2307,7 +2235,7 @@ msgstr ""
 msgid "key"
 msgstr "key"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:230
+#: plugins/lime-plugin-locate/src/locatePage.tsx:237
 msgid "locate my node"
 msgstr ""
 
@@ -2315,7 +2243,7 @@ msgstr ""
 msgid "more than a minute ago"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:219
+#: plugins/lime-plugin-locate/src/locatePage.tsx:226
 msgid "show community"
 msgstr ""
 

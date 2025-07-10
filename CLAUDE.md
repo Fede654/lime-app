@@ -48,7 +48,7 @@ npm run verify:ai               # Verificar herramientas IA
 ```bash
 # ⭐ DESARROLLO UI/UX (RECOMENDADO para contribuidores nuevos)
 npm run dev                     # Servidor desarrollo en puerto 8080 con backend localhost
-                                # ✅ Funciona inmediatamente sin dependencias adicionales
+                                # ✅ UI/Navigation/Locate completos, otros plugins requieren backend real
 
 # Desarrollo con QEMU backend real (para testing funcional completo)
 npm run qemu:dev                # Servidor desarrollo en puerto 8080 con backend QEMU real
@@ -300,6 +300,29 @@ plugins/ → plugins/
 - Gestión de sesión con autenticación usuario/contraseña
 - Protocolo JSON-RPC para toda comunicación API
 
+#### 🎯 Development Mocks (Ejemplo: Plugin Locate)
+
+Para funcionalidad completa en localhost, implementar detección de entorno:
+
+```javascript
+// En API functions (plugins/lime-plugin-locate/src/locateApi.js)
+export const getLocation = () => {
+    const isDev = process.env.NODE_ENV === 'development' || 
+                  (typeof window !== 'undefined' && window.location.hostname === 'localhost');
+    
+    if (isDev) {
+        return Promise.resolve({
+            location: { lat: "-31.4201", lon: "-64.1888" },
+            default: false
+        });
+    }
+    
+    return api.call("lime-location", "get", {});
+};
+```
+
+**Patrón recomendado**: Mantener APIs de producción intactas, agregar branch de desarrollo con datos mock realistas.
+
 ### 🧪 Testing Best Practices
 
 - Mock API calls usando `jest.mock('./src/<name>Api')`
@@ -352,10 +375,15 @@ npm run qemu:dev                       # Servidor desarrollo con backend QEMU
 
 ### 🎯 Desarrollo Solo Frontend
 
-Sin backend LibreMesh, esperar estos errores de consola (comportamiento normal):
-- Errores 500 del endpoint `/ubus` - no hay backend router disponible
-- Fallas de conexión WebSocket - limitación recarga en caliente
-- Errores análisis JSON de llamadas API - páginas error HTML en lugar de respuestas JSON
+**✅ Funciona completamente:**
+- **UI/Navigation** - Menú y navegación entre secciones
+- **Locate plugin** - Mapa, marcadores, confirmación ubicación (mock en Córdoba)
+- **Login interface** - Formularios y validación frontend
+- **Component development** - Estilos, layouts, interacciones
+
+**⚠️ Limitaciones esperadas:**
+- Otros plugins mostrarán errores 500 en `/ubus` (comportamiento normal sin backend)
+- Datos reales requieren `npm run qemu:dev` con LibreMesh corriendo
 
 ## 🤝 Desarrollo Colaborativo Humano-IA
 

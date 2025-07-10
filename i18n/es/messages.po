@@ -827,14 +827,6 @@ msgstr ""
 msgid "Go Home"
 msgstr ""
 
-#: src/containers/Menu/menu.js:48
-#~ msgid "Go to Community View"
-#~ msgstr "Ir a la página de la comunidad"
-
-#: src/containers/Menu/menu.js:51
-#~ msgid "Go to Node View"
-#~ msgstr "Ir a la página del nodo"
-
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:27
 msgid "Go!"
 msgstr "Ir!"
@@ -858,10 +850,6 @@ msgstr "Nombre del nodo"
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:67
 msgid "I don't know the shared password"
 msgstr "No sé la contraseña compartida."
-
-#: plugins/lime-plugin-rx/src/rxPage.js:181
-#~ msgid "IP Addresses"
-#~ msgstr "Direcciones IP"
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:88
 msgid "IPv4"
@@ -895,10 +883,6 @@ msgstr "Interface"
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:218
 msgid "In the reference state this node is on"
 msgstr "En el estado de referencia este nodo está encendido."
-
-#: plugins/lime-plugin-rx/src/rxPage.js:98
-#~ msgid "Interface"
-#~ msgstr "Interfaz"
 
 #: plugins/lime-plugin-rx/src/sections/alignment.tsx:85
 msgid "Interface:"
@@ -1009,10 +993,6 @@ msgstr "Cargando la última ruta a Internet conocida..."
 #: plugins/lime-plugin-rx/src/sections/internetPath.tsx:85
 msgid "Loading <0/>last internet path..."
 msgstr "Cargando <0/> la última ruta a internet conocida..."
-
-#: plugins/lime-plugin-rx/src/rxPage.js:128
-#~ msgid "Loading node status..."
-#~ msgstr "Cargando el estado del nodo..."
 
 #: plugins/lime-plugin-rx/src/components/internetStatus.tsx:31
 msgid "Loading..."
@@ -1128,10 +1108,6 @@ msgstr "Más info en:"
 #: src/containers/SharedPasswordForm/sharedPasswordForm.js:41
 msgid "More than 10 characters"
 msgstr "Más de 10 caracteres"
-
-#: plugins/lime-plugin-rx/src/rxPage.js:80
-#~ msgid "Most Active"
-#~ msgstr "Enlace más activo"
 
 #: plugins/lime-plugin-rx/src/sections/alignment.tsx:73
 msgid "Most active link"
@@ -1819,10 +1795,6 @@ msgstr "El nombre tiene que tener al menos 3 caracteres."
 msgid "The node is down"
 msgstr "El nodo no está activo."
 
-#: src/components/NotFound.tsx:14
-#~ msgid "The page you're looking for doesn't exist or has been moved."
-#~ msgstr ""
-
 #: src/components/NotFound.tsx:23
 msgid "The page you're looking for doesn't exist or has been moved. Let's get you back to exploring your LibreMesh network."
 msgstr ""
@@ -2019,10 +1991,6 @@ msgstr "Hasta Internet"
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:78
 msgid "To enable remote access an internet connection is needed"
 msgstr "Para posibilitar el acceso remoto es necesaria una conexión a internet."
-
-#: plugins/lime-plugin-rx/src/rxPage.js:103
-#~ msgid "Traffic"
-#~ msgstr "Tráfico"
 
 #: plugins/lime-plugin-rx/src/sections/alignment.tsx:91
 msgid "Traffic:"

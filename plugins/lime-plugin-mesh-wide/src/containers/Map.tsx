@@ -1,13 +1,14 @@
 import L from "leaflet";
 import { ComponentChildren } from "preact";
 import { useEffect, useRef } from "preact/hooks";
-import {
-    LayerGroup,
-    LayersControl,
-    MapContainer,
-    TileLayer,
-} from "react-leaflet";
 
+// Use lazy loading for map components
+import {
+    LazyLayerGroup as LayerGroup,
+    LazyLayersControl as LayersControl,
+    LazyMapContainer as MapContainer,
+    LazyTileLayer as TileLayer,
+} from "components/LazyMap";
 import { MeshWideMapTypes } from "components/shared-state/SharedStateTypes";
 
 import {

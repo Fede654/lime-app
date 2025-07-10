@@ -1,8 +1,15 @@
 import { Trans } from "@lingui/macro";
 import L, { LatLngExpression, icon } from "leaflet";
 import { useEffect, useRef, useState } from "preact/hooks";
-import { LayersControl, MapContainer, Marker, TileLayer } from "react-leaflet";
+import { useMap } from "react-leaflet";
 
+// Use lazy loading for map components
+import {
+    LazyLayersControl as LayersControl,
+    LazyMapContainer as MapContainer,
+    LazyMarker as Marker,
+    LazyTileLayer as TileLayer,
+} from "components/LazyMap";
 import { Loading } from "components/loading";
 
 import {
@@ -17,6 +24,44 @@ import { useBoardData } from "utils/queries";
 import { getCommunityGeoJSON } from "./communityGeoJSON";
 import { homeIcon } from "./leafletUtils";
 import style from "./style.less";
+
+// Component to handle map operations that need direct map access
+const MapOperations = ({ 
+    nodeMarker, 
+    onMapReady, 
+    stationLat, 
+    stationLon, 
+    loading,
+    editting,
+    communityLayer,
+    setCommunityLayer,
+    boardData,
+    nodesData 
+}) => {
+    const map = useMap();
+    
+    useEffect(() => {
+        if (onMapReady && map) {
+            onMapReady(map);
+        }
+    }, [map, onMapReady]);
+
+    // Set map position when map is available or location gets updated
+    useEffect(() => {
+        if (!loading && map && stationLat) {
+            map.setView([+stationLat, +stationLon], 13);
+        }
+    }, [map, stationLat, stationLon, loading]);
+
+    // Center the map on the node also when editing is turned on
+    useEffect(() => {
+        if (map && stationLat && editting) {
+            map.setView([+stationLat, +stationLon], 13);
+        }
+    }, [map, editting, stationLat, stationLon]);
+
+    return null; // This component doesn't render anything
+};
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
@@ -93,39 +138,43 @@ export const LocatePage = () => {
 
     const mapRef = useRef<L.Map | null>();
 
-    // Set map position when map is available or location gets updated
+    // Update node marker when location changes
     useEffect(() => {
-        function updateNodeMarker(lat, lon) {
-            setNodeMarker([lat, lon]);
+        if (stationLat && stationLon) {
+            setNodeMarker([+stationLat, +stationLon]);
         }
-        const mapInstance = mapRef.current;
+    }, [stationLat, stationLon]);
 
-        if (!loading && mapInstance && stationLat) {
-            mapInstance.setView([+stationLat, +stationLon], 13);
-            updateNodeMarker(stationLat, stationLon);
-        }
-    }, [stationLat, stationLon, loading]);
-
-    // Center the map on the node also when editting is turned on
-    useEffect(() => {
-        const map = mapRef.current;
-        if (map && stationLat) {
-            editting && map.setView([+stationLat, +stationLon], 13);
-        }
-    }, [mapRef, editting, stationLat, stationLon]);
+    // Callback to receive map instance from MapOperations component
+    const handleMapReady = (map: L.Map) => {
+        mapRef.current = map;
+    };
 
     function onConfirmLocation() {
-        const position = mapRef.current.getCenter();
-        changeLocation({ lat: position.lat, lon: position.lng });
-        if (communityLayer) {
-            // Hide the community view, to avoid outdated links
-            toogleCommunityLayer();
+        if (!mapRef.current) {
+            console.error("Map reference not available");
+            return;
+        }
+        
+        try {
+            const position = mapRef.current.getCenter();
+            changeLocation({ lat: position.lat, lon: position.lng });
+            
+            if (communityLayer) {
+                // Hide the community view, to avoid outdated links
+                toogleCommunityLayer();
+            }
+        } catch (error) {
+            console.error("Error confirming location:", error);
         }
     }
 
     function toogleCommunityLayer() {
+        const map = mapRef.current;
+        if (!map) return;
+
         if (communityLayer) {
-            mapRef.current.removeLayer(communityLayer);
+            map.removeLayer(communityLayer);
             setCommunityLayer(null);
         } else {
             const layer = getCommunityLayer(
@@ -134,7 +183,7 @@ export const LocatePage = () => {
                 stationLon,
                 nodesData
             );
-            layer.addTo(mapRef.current);
+            layer.addTo(map);
             setCommunityLayer(layer);
         }
     }
@@ -168,8 +217,19 @@ export const LocatePage = () => {
                     zoom={3}
                     scrollWheelZoom={true}
                     className={style.mapContainer}
-                    ref={mapRef}
                 >
+                    <MapOperations
+                        nodeMarker={nodeMarker}
+                        onMapReady={handleMapReady}
+                        stationLat={stationLat}
+                        stationLon={stationLon}
+                        loading={loading}
+                        editting={editting}
+                        communityLayer={communityLayer}
+                        setCommunityLayer={setCommunityLayer}
+                        boardData={boardData}
+                        nodesData={nodesData}
+                    />
                     <LayersControl position="bottomright">
                         <LayersControl.BaseLayer checked name="Open Street Map">
                             <TileLayer

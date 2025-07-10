@@ -1,0 +1,100 @@
+       7.chunk.*****.esm.js ⏤  159 B (+159 B)
+       8.chunk.*****.esm.js ⏤  160 B (+160 B)
+       9.chunk.*****.esm.js ⏤  7.94 kB (+7.94 kB)
+      10.chunk.*****.esm.js ⏤  161 B (+161 B)
+      11.chunk.*****.esm.js ⏤  161 B (+161 B)
+      12.chunk.*****.esm.js ⏤  160 B (+160 B)
+      13.chunk.*****.esm.js ⏤  161 B (+161 B)
+      14.chunk.*****.esm.js ⏤  160 B (+160 B)
+      15.chunk.*****.esm.js ⏤  162 B (+162 B)
+      16.chunk.*****.esm.js ⏤  160 B (+160 B)
+      17.chunk.*****.esm.js ⏤  160 B (+160 B)
+      18.chunk.*****.esm.js ⏤  160 B (+160 B)
+      19.chunk.*****.esm.js ⏤  163 B (+163 B)
+      20.chunk.*****.esm.js ⏤  161 B (+161 B)
+      21.chunk.*****.esm.js ⏤  161 B (+161 B)
+      22.chunk.*****.esm.js ⏤  161 B (+161 B)
+      23.chunk.*****.esm.js ⏤  160 B (+160 B)
+      24.chunk.*****.esm.js ⏤  161 B (+161 B)
+      25.chunk.*****.esm.js ⏤  161 B (+161 B)
+      26.chunk.*****.esm.js ⏤  160 B (+160 B)
+                  sw-esm.js ⏤  11.7 kB (+11.7 kB)
+                      sw.js ⏤  11.7 kB (+11.7 kB)
+     vendors.chunk.121fb.js ⏤  117 kB (+117 kB)
+            bundle.4c36c.js ⏤  94.3 kB (+94.3 kB)
+         polyfills.955eb.js ⏤  774 B (+774 B)
+           3.chunk.72827.js ⏤  159 B (+159 B)
+           4.chunk.24d36.js ⏤  159 B (+159 B)
+           5.chunk.de5de.js ⏤  155 B (+155 B)
+           6.chunk.baa75.js ⏤  155 B (+155 B)
+           7.chunk.54df5.js ⏤  156 B (+156 B)
+           8.chunk.5502b.js ⏤  158 B (+158 B)
+           9.chunk.40875.js ⏤  7.93 kB (+7.93 kB)
+          10.chunk.f6205.js ⏤  159 B (+159 B)
+          11.chunk.60f45.js ⏤  158 B (+158 B)
+          12.chunk.1cd1e.js ⏤  158 B (+158 B)
+          13.chunk.da078.js ⏤  159 B (+159 B)
+          14.chunk.ffff0.js ⏤  158 B (+158 B)
+          15.chunk.75f44.js ⏤  159 B (+159 B)
+          16.chunk.de7b7.js ⏤  158 B (+158 B)
+          17.chunk.8b3ea.js ⏤  158 B (+158 B)
+          18.chunk.e4718.js ⏤  158 B (+158 B)
+          19.chunk.302f7.js ⏤  161 B (+161 B)
+          20.chunk.5cd6d.js ⏤  159 B (+159 B)
+          21.chunk.0d158.js ⏤  159 B (+159 B)
+          22.chunk.c4ffd.js ⏤  158 B (+158 B)
+          23.chunk.ec73e.js ⏤  158 B (+158 B)
+          24.chunk.b06a2.js ⏤  159 B (+159 B)
+          25.chunk.d55ab.js ⏤  158 B (+158 B)
+          26.chunk.03fbe.js ⏤  158 B (+158 B)
+                 index.html ⏤  373 B (+373 B)
+                   200.html ⏤  373 B (+373 B)
+
+⚠ WARN asset size limit: The following asset(s) exceed the recommended size limit (195 KiB).
+This can impact web performance.
+Assets: 
+  vendors.chunk.1dc81.esm.js (360 KiB)
+  bundle.70c4f.esm.js (315 KiB)
+  vendors.chunk.121fb.js (424 KiB)
+  bundle.4c36c.js (439 KiB)
+⚠ WARN entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (195 KiB). This can impact web performance.
+Entrypoints:
+  bundle (1.55 MiB)
+      vendors.chunk.121fb.js
+      vendors.chunk.1dc81.esm.js
+      bundle.69540.css
+      bundle.4c36c.js
+      bundle.70c4f.esm.js
+  polyfills (787 KiB)
+      vendors.chunk.121fb.js
+      vendors.chunk.1dc81.esm.js
+      polyfills.955eb.js
+      polyfills.b39bc.esm.js
+
+⚠ WARN asset size limit: The following asset(s) exceed the recommended size limit (195 KiB).
+This can impact web performance.
+Assets: 
+  vendors.chunk.1dc81.esm.js (360 KiB)
+  bundle.70c4f.esm.js (315 KiB)
+  vendors.chunk.121fb.js (424 KiB)
+  bundle.4c36c.js (439 KiB)
+⚠ WARN entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (195 KiB). This can impact web performance.
+Entrypoints:
+  bundle (1.55 MiB)
+      vendors.chunk.121fb.js
+      vendors.chunk.1dc81.esm.js
+      bundle.69540.css
+      bundle.4c36c.js
+      bundle.70c4f.esm.js
+  polyfills (787 KiB)
+      vendors.chunk.121fb.js
+      vendors.chunk.1dc81.esm.js
+      polyfills.955eb.js
+      polyfills.b39bc.esm.js
+
+
+Webpack output stats generated.
+
+You can upload your stats.json to:
+- https://chrisbateman.github.io/webpack-visualizer/
+- https://webpack.github.io/analyse/
