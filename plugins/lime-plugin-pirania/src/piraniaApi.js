@@ -1,5 +1,3 @@
-import Compressor from "compressorjs";
-
 import api from "utils/uhttpd.service";
 
 export const getPortalConfig = () =>
@@ -14,8 +12,11 @@ export const getPortalContent = () =>
 export const setPortalContent = (content) =>
     api.call("pirania", "set_portal_page_content", content);
 
-export const createCompression = (file) =>
-    new Promise((res) => {
+export const createCompression = async (file) => {
+    // Dynamic import for bundle size optimization - only loads when pirania plugin is used
+    const { default: Compressor } = await import("compressorjs");
+
+    return new Promise((res) => {
         new Compressor(file, {
             quality: 0.6,
             maxHeight: 150,
@@ -29,6 +30,7 @@ export const createCompression = (file) =>
             },
         });
     });
+};
 export function listVouchers() {
     return api
         .call("pirania", "list_vouchers", {})

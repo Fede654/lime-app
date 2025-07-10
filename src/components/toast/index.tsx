@@ -1,6 +1,5 @@
 import { ComponentChildren } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { animated, useSpring } from "react-spring";
 
 import style from "./style.less";
 
@@ -44,11 +43,7 @@ const Toast = ({
         if (onHide) onHide();
     };
 
-    const animationProps = useSpring({
-        from: { transform: "translateY(180%)" },
-        to: { transform: "translateY(0)" },
-        config: { duration: 30 },
-    });
+    // CSS animation replaces react-spring for bundle size optimization
 
     useEffect(() => {
         if (duration) {
@@ -63,9 +58,8 @@ const Toast = ({
 
     return (
         <div className={style.toastWrapper}>
-            <animated.div
-                style={animationProps}
-                className={`${style.toast} ${getStyle(type)}`}
+            <div
+                className={`${style.toast} ${style.toastAnimation} ${getStyle(type)}`}
                 onClick={(e) => {
                     e.stopPropagation();
                     _onHide();
@@ -83,7 +77,7 @@ const Toast = ({
                         {actionText}
                     </div>
                 )}
-            </animated.div>
+            </div>
         </div>
     );
 };

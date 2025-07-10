@@ -136,7 +136,6 @@
         "preact-router": "^4.1.0",
         "react-hook-form": "^7.36.1",
         "react-leaflet": "^4.2.1",
-        "react-spring": "^9.7.1",
         "simple-color-scale": "^1.0.1"
     },
     "husky": {
