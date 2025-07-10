@@ -1,62 +1,25 @@
 import { ComponentChildren } from "preact";
-import { Suspense, lazy } from "preact/compat";
 
-import { Loading } from "components/loading";
+// Import Leaflet core to ensure it's available globally
+import L from "leaflet";
 
-// Lazy load react-leaflet components
-// @ts-ignore - Lazy loading compatibility
-const MapContainer = lazy(() =>
-    import("react-leaflet").then((module) => ({
-        default: module.MapContainer,
-    }))
-);
+// Direct imports instead of lazy loading for development stability
+import {
+    MapContainer,
+    TileLayer,
+    Marker,
+    LayersControl,
+    LayerGroup,
+    Polyline,
+    Tooltip,
+} from "react-leaflet";
 
-// @ts-ignore - Lazy loading compatibility
-const TileLayer = lazy(() =>
-    import("react-leaflet").then((module) => ({
-        default: module.TileLayer,
-    }))
-);
+// Ensure Leaflet is available globally for react-leaflet
+if (typeof window !== 'undefined') {
+    window.L = L;
+}
 
-// @ts-ignore - Lazy loading compatibility
-const Marker = lazy(() =>
-    import("react-leaflet").then((module) => ({
-        default: module.Marker,
-    }))
-);
-
-// @ts-ignore - Lazy loading compatibility
-const LayersControl = lazy(() =>
-    import("react-leaflet").then((module) => ({
-        default: module.LayersControl,
-    }))
-);
-
-// @ts-ignore - Lazy loading compatibility
-const LayerGroup = lazy(() =>
-    import("react-leaflet").then((module) => ({
-        default: module.LayerGroup,
-    }))
-);
-
-// @ts-ignore - Lazy loading compatibility
-const Polyline = lazy(() =>
-    import("react-leaflet").then((module) => ({
-        default: module.Polyline,
-    }))
-);
-
-// @ts-ignore - Lazy loading compatibility
-const Tooltip = lazy(() =>
-    import("react-leaflet").then((module) => ({
-        default: module.Tooltip,
-    }))
-);
-
-// Lazy load leaflet core
-const leafletLoader = lazy(() => import("leaflet"));
-
-// Wrapper components that handle the lazy loading
+// Simple wrapper components without lazy loading
 interface LazyMapContainerProps {
     center?: [number, number];
     zoom?: number;
@@ -67,69 +30,25 @@ interface LazyMapContainerProps {
 }
 
 export const LazyMapContainer = (props: LazyMapContainerProps) => (
-    <Suspense fallback={<Loading />}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <MapContainer {...props} />
-    </Suspense>
+    <MapContainer {...props} />
 );
 
-export const LazyTileLayer = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <TileLayer {...props} />
-    </Suspense>
-);
+export const LazyTileLayer = (props: any) => <TileLayer {...props} />;
 
-export const LazyMarker = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <Marker {...props} />
-    </Suspense>
-);
+export const LazyMarker = (props: any) => <Marker {...props} />;
 
-export const LazyLayersControl = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <LayersControl {...props} />
-    </Suspense>
-);
+export const LazyLayersControl = (props: any) => <LayersControl {...props} />;
 
 LazyLayersControl.BaseLayer = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <LayersControl.BaseLayer {...props} />
-    </Suspense>
+    <LayersControl.BaseLayer {...props} />
 );
 
 LazyLayersControl.Overlay = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <LayersControl.Overlay {...props} />
-    </Suspense>
+    <LayersControl.Overlay {...props} />
 );
 
-export const LazyLayerGroup = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <LayerGroup {...props} />
-    </Suspense>
-);
+export const LazyLayerGroup = (props: any) => <LayerGroup {...props} />;
 
-export const LazyPolyline = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <Polyline {...props} />
-    </Suspense>
-);
+export const LazyPolyline = (props: any) => <Polyline {...props} />;
 
-export const LazyTooltip = (props: any) => (
-    <Suspense fallback={null}>
-        {/* @ts-ignore - Lazy loading compatibility */}
-        <Tooltip {...props} />
-    </Suspense>
-);
-
-// Hook for lazy loading leaflet
-export const useLeafletLazy = () => {
-    return leafletLoader;
-};
+export const LazyTooltip = (props: any) => <Tooltip {...props} />;

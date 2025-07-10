@@ -4,6 +4,15 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import Router, { route } from "preact-router";
 import { useEffect } from "preact/hooks";
 
+// Import Leaflet for map components in development
+if (process.env.NODE_ENV === 'development') {
+    import("leaflet").then((L) => {
+        if (typeof window !== 'undefined') {
+            window.L = L.default;
+        }
+    });
+}
+
 import { ToastProvider } from "components/toast/toastProvider";
 
 import { Login } from "containers/Login";

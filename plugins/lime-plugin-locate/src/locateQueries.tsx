@@ -46,7 +46,7 @@ interface IChangeUserParams {
 }
 
 export function useChangeLocation(params) {
-    return useMutation<void, unknown, IChangeUserParams, unknown>({
+    return useMutation<{ lat: string; lon: string }, unknown, IChangeUserParams, unknown>({
         mutationFn: changeLocation,
         onSuccess: (data: { lat: string; lon: string }) => {
             queryCache.setQueryData(
@@ -68,6 +68,19 @@ export function useChangeLocation(params) {
 }
 
 export function useLoadLeaflet(params) {
+    // In development, Leaflet is bundled - always return success
+    const isDev = process.env.NODE_ENV === 'development' || (typeof window !== 'undefined' && window.location.hostname === 'localhost');
+    
+    if (isDev) {
+        return {
+            isError: false,
+            isFetchedAfterMount: true,
+            isLoading: false,
+            data: true
+        };
+    }
+    
+    // Production fallback - use actual query
     return useQuery(["lime-location", "load_leaflet"], loadLeafLet, {
         ...params,
     });

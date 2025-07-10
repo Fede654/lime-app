@@ -6,27 +6,27 @@ export async function dynamicActivate(locale: Locales) {
     let plurals;
 
     try {
-        // Load messages and plurals with explicit imports to prevent empty chunks
+        // Load messages and plurals with explicit imports to compiled files
         switch (locale) {
             case "en":
-                catalog = await import("@lingui/loader!../i18n/en/messages.po");
+                catalog = await import("../i18n/en/messages");
                 plurals = (await import("make-plural/plurals")).en;
                 break;
             case "es":
-                catalog = await import("@lingui/loader!../i18n/es/messages.po");
+                catalog = await import("../i18n/es/messages");
                 plurals = (await import("make-plural/plurals")).es;
                 break;
             case "pt":
-                catalog = await import("@lingui/loader!../i18n/pt/messages.po");
+                catalog = await import("../i18n/pt/messages");
                 plurals = (await import("make-plural/plurals")).pt;
                 break;
             case "it":
-                catalog = await import("@lingui/loader!../i18n/it/messages.po");
+                catalog = await import("../i18n/it/messages");
                 plurals = (await import("make-plural/plurals")).it;
                 break;
             default:
                 // Fallback to English for unsupported locales
-                catalog = await import("@lingui/loader!../i18n/en/messages.po");
+                catalog = await import("../i18n/en/messages");
                 plurals = (await import("make-plural/plurals")).en;
         }
 

@@ -4,14 +4,20 @@ const leafletVersion = "1.9.3";
 
 function loadLeafletScript() {
     return new Promise((res, rej) => {
-        if (document.getElementById("leaflet-script")) {
+        if (document.getElementById("leaflet-script") || window.L) {
             // @ts-ignore
             res();
         } else {
             const script = document.createElement("script");
             script.onload = res;
             script.onerror = rej;
-            script.src = `https://unpkg.com/leaflet@${leafletVersion}/dist/leaflet.js`;
+            // Use local assets in development, CDN in production
+            const isDev =
+                process.env.NODE_ENV === "development" ||
+                window.location.hostname === "localhost";
+            script.src = isDev
+                ? `/node_modules/leaflet/dist/leaflet.js`
+                : `https://unpkg.com/leaflet@${leafletVersion}/dist/leaflet.js`;
             script.id = "leaflet-script";
             document.body.appendChild(script);
         }
@@ -28,7 +34,13 @@ function loadLeafletStylesheet() {
             style.onload = res;
             style.onerror = rej;
             style.rel = "stylesheet";
-            style.href = `https://unpkg.com/leaflet@${leafletVersion}/dist/leaflet.css`;
+            // Use local assets in development, CDN in production
+            const isDev =
+                process.env.NODE_ENV === "development" ||
+                window.location.hostname === "localhost";
+            style.href = isDev
+                ? `/node_modules/leaflet/dist/leaflet.css`
+                : `https://unpkg.com/leaflet@${leafletVersion}/dist/leaflet.css`;
             style.id = "leaflet-style";
             document.head.appendChild(style);
         }
@@ -36,7 +48,18 @@ function loadLeafletStylesheet() {
 }
 
 export function loadLeafLet() {
-    // Leaflet script must be loaded after leaflet stylesheet
+    // For development: Leaflet is bundled with webpack, so it's available via imports
+    // For production: Load from CDN if not already available
+    const isDev =
+        process.env.NODE_ENV === "development" ||
+        window.location.hostname === "localhost";
+
+    if (isDev) {
+        // In development, assume Leaflet is bundled and available
+        return Promise.resolve();
+    }
+
+    // Production fallback - load from CDN
     return loadLeafletStylesheet().then(loadLeafletScript);
 }
 

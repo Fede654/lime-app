@@ -25,6 +25,8 @@ export default function (config, env, helpers) {
         historyApiFallback: {
             index: isProd && !useLocalPaths ? "/app/" : "/",
         },
+        // Remove static serving to avoid file watcher limits
+        // Leaflet is now bundled directly in development
         proxy: [
             {
                 path: "/ubus",
