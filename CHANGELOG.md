@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.27](https://github.com/Fede654/lime-app/compare/v0.2.26...v0.2.27) (2025-07-10)
+
+
+### Features
+
+* achieve bug-free codebase with comprehensive issue resolution ([19f93f2](https://github.com/Fede654/lime-app/commit/19f93f2c6964952a4da4f80f1f298e6a1cd47433)), closes [#478](https://github.com/Fede654/lime-app/issues/478)
+* add comprehensive authentication system with stylish login page ([d3d665a](https://github.com/Fede654/lime-app/commit/d3d665a7a56c7c5efe4dd74ccb25c18a30b08add))
+* add comprehensive LibreMesh API integration testing framework ([0f33467](https://github.com/Fede654/lime-app/commit/0f33467f798eb4988af245006f70424c06d11afa))
+* add comprehensive QEMU testing infrastructure ([ecb8872](https://github.com/Fede654/lime-app/commit/ecb887246eebbc78cff1b1ee6575895751df8e22))
+* add official LibreMesh QEMU development integration ([b008968](https://github.com/Fede654/lime-app/commit/b0089688d33c9fdf27a842cf37fb24d9f54560b3))
+* complete Italian and Portuguese translations to 100% ([b7f4e99](https://github.com/Fede654/lime-app/commit/b7f4e99f40e3775158d23cff0495f06c2b045b1f))
+* complete Italian and Portuguese translations to 100% ([b8018c5](https://github.com/Fede654/lime-app/commit/b8018c5625aefbe4c50ddaa1deb0bea24576ffdc))
+* comprehensive UI/UX design improvements ([0fe7e4c](https://github.com/Fede654/lime-app/commit/0fe7e4c5a0091112e06eed1d9e9d48b3a91707d9))
+* enhance QEMU development workflow with comprehensive script suite ([4e41bbe](https://github.com/Fede654/lime-app/commit/4e41bbe886e802ff8f961bb3f5c91cffaed897f0))
+* implement comprehensive human-AI collaborative development framework ([86ea2da](https://github.com/Fede654/lime-app/commit/86ea2dae39a3dab1f5e30da06e17a49d7d782167))
+* optimize translation loading with dynamic plural imports ([6161b7e](https://github.com/Fede654/lime-app/commit/6161b7eaa5647a6096844257dd408c43e1798c4f))
+* replace react-use with lightweight custom hooks ([b79d8f3](https://github.com/Fede654/lime-app/commit/b79d8f3230d0b2b29e8ab7edce630fa036ee160d))
+* revolutionary menu redesign with smart grouping and modern UX ([174a577](https://github.com/Fede654/lime-app/commit/174a577817e1703758ef75ad6c7ad8dd72fbd601))
+* standardize QEMU deployment with automated process management ([e4d597a](https://github.com/Fede654/lime-app/commit/e4d597a5b9bb74009b369cc697780a0c4abfd0b4))
+
+
+### Bug Fixes
+
+* add client-side routing fallback files for production deployment ([384a4a2](https://github.com/Fede654/lime-app/commit/384a4a2458e0c86a037c610cf7babfb5b2dab890))
+* add defensive programming to prevent undefined device access ([9628386](https://github.com/Fede654/lime-app/commit/9628386caffa7454565ba3c8870f7c20baad99e1))
+* address critical technical debt issues ([55e85f0](https://github.com/Fede654/lime-app/commit/55e85f0ab22f14a8b1023fc773a4d435d3cf7173)), closes [#481](https://github.com/Fede654/lime-app/issues/481) [#481](https://github.com/Fede654/lime-app/issues/481)
+* complete deployment infrastructure overhaul for all npm scripts ([fa7b1b8](https://github.com/Fede654/lime-app/commit/fa7b1b8daad092880f8fa4a10a43b48851ad4e0d))
+* complete routing migration from hash-based to path-based navigation ([6baed45](https://github.com/Fede654/lime-app/commit/6baed45e4df3d90ad4833a1543fcf961838902aa))
+* disable Critters webpack plugin to resolve CSS parsing error ([0a2c488](https://github.com/Fede654/lime-app/commit/0a2c4885be3d3dd3d18886a46efa2516c2c286e9)), closes [#480](https://github.com/Fede654/lime-app/issues/480)
+* enhance plugin configuration with proper TypeScript typing ([4255f4e](https://github.com/Fede654/lime-app/commit/4255f4eae40c470d6d3bb6301eee5a1e5fcd297b))
+* expand clickable area for menu items throughout entire button ([2dd8191](https://github.com/Fede654/lime-app/commit/2dd819162e853bb4d445f69475cbbe6a8308fd98))
+* improve development experience with cleaner console ([6005412](https://github.com/Fede654/lime-app/commit/60054124616818cc7993e96375460aebfb7360ba))
+* **locate:** resolve map overlaying menu in locate page ([5accd45](https://github.com/Fede654/lime-app/commit/5accd450ac5dbc89c508fa66131cc93256169aef))
+* resolve all failing tests and improve test stability ([cbea260](https://github.com/Fede654/lime-app/commit/cbea260a93a65ae452a8d64a00d09cd5d9b8f98e))
+* resolve critical current app errors and warnings (Issue [#480](https://github.com/Fede654/lime-app/issues/480)) ([9b1f9f7](https://github.com/Fede654/lime-app/commit/9b1f9f754add3f7ca4d961d35c76ee54ee74b652))
+* resolve critical linting errors and test failures ([856c60f](https://github.com/Fede654/lime-app/commit/856c60fd5e9c01eed55ff014968b0c7a93700aff))
+* resolve final Redux migration issues and ESLint errors ([20e9ec4](https://github.com/Fede654/lime-app/commit/20e9ec4ce5e09584dbb428dd40d2a3b71d2df0f1))
+* resolve first boot wizard TypeScript type errors (Issue [#462](https://github.com/Fede654/lime-app/issues/462)) ([7276c1f](https://github.com/Fede654/lime-app/commit/7276c1ffc2149c9e7a9f4fcd6a8c476ee0a67336))
+* resolve JavaScript runtime errors preventing app responsiveness ([4565558](https://github.com/Fede654/lime-app/commit/4565558df7cdedadcef09ff1a2cf2ce78f284312))
+* resolve menu scrolling issues with elegant scrollbar styling ([f2f603e](https://github.com/Fede654/lime-app/commit/f2f603e3df38324761bba882ae2c2670da090310))
+* resolve TypeScript errors in test mocks from previous fixes ([b32340c](https://github.com/Fede654/lime-app/commit/b32340c21b515a935738585a035ae450fa3c3748))
+* **routing:** resolve menu navigation and authentication issues ([c8d6552](https://github.com/Fede654/lime-app/commit/c8d6552ede15cb608885808b050651cae3ec0267))
+
 ## [0.2.26](https://github.com/libremesh/lime-app/compare/v0.2.25...v0.3.0) (2024-04-03)
 
 
