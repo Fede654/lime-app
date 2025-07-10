@@ -1,5 +1,6 @@
-import { lazy, Suspense } from "preact/compat";
 import { ComponentChildren } from "preact";
+import { Suspense, lazy } from "preact/compat";
+
 import { Loading } from "components/loading";
 
 // Lazy load react-leaflet components

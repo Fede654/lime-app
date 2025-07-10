@@ -119,7 +119,9 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
             const event = e?.touches != null ? e?.touches[0] : e;
             if (draggingPosition != null) {
                 const newBottom =
-                    (typeof window !== "undefined" ? window.innerHeight : 800) - event.clientY - draggingPosition;
+                    (typeof window !== "undefined" ? window.innerHeight : 800) -
+                    event.clientY -
+                    draggingPosition;
                 if (newBottom !== bottom) {
                     setBottom(newBottom);
                 }

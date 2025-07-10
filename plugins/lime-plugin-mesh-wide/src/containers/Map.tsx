@@ -9,7 +9,6 @@ import {
     LazyMapContainer as MapContainer,
     LazyTileLayer as TileLayer,
 } from "components/LazyMap";
-
 import { MeshWideMapTypes } from "components/shared-state/SharedStateTypes";
 
 import {

@@ -9,7 +9,6 @@ import {
     LazyMarker as Marker,
     LazyTileLayer as TileLayer,
 } from "components/LazyMap";
-
 import { Loading } from "components/loading";
 
 import {
