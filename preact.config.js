@@ -110,4 +110,19 @@ export default function (config, env, helpers) {
             );
         });
     }
+
+    // Disable Service Workers completely for smaller builds
+    if (config.plugins) {
+        config.plugins = config.plugins.filter((plugin) => {
+            const name = plugin.constructor.name;
+            return (
+                name !== "SWPrecacheWebpackPlugin" &&
+                name !== "WorkboxPlugin" &&
+                name !== "ServiceWorkerPlugin"
+            );
+        });
+    }
+
+    // CSS optimizations are already handled by preact-cli's default config
+    // No additional CSS optimization needed as it conflicts with PostCSS setup
 }

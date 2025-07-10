@@ -22,7 +22,7 @@ msgstr "(List)"
 msgid "(Main Node) {descriptionMsg}"
 msgstr "(Main Node) {descriptionMsg}"
 
-#: plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker.tsx:40
+#: plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker.tsx:45
 msgid "(new)"
 msgstr "(new)"
 
@@ -273,7 +273,7 @@ msgstr "Canceling"
 msgid "Cannot connect to the remote support server"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:153
+#: plugins/lime-plugin-locate/src/locatePage.tsx:160
 msgid "Cannot load map, check your internet connection"
 msgstr ""
 
@@ -1153,7 +1153,7 @@ msgstr "New configuration is on the node"
 msgid "New configuration was confirmed with some errors"
 msgstr "New configuration was confirmed with some errors"
 
-#: plugins/lime-plugin-mesh-wide/src/components/Map/LinkLine.tsx:85
+#: plugins/lime-plugin-mesh-wide/src/components/Map/LinkLine.tsx:90
 msgid "New link"
 msgstr "New link"
 
@@ -2211,15 +2211,15 @@ msgstr "Your Lime Community file seems empty! Please add some configurations."
 msgid "Your node has no internet connection"
 msgstr "Your node has no internet connection"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:225
+#: plugins/lime-plugin-locate/src/locatePage.tsx:232
 msgid "cancel"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:211
+#: plugins/lime-plugin-locate/src/locatePage.tsx:218
 msgid "confirm location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:227
+#: plugins/lime-plugin-locate/src/locatePage.tsx:234
 msgid "edit location"
 msgstr ""
 
@@ -2227,7 +2227,7 @@ msgstr ""
 msgid "for the following nodes: {nodes}"
 msgstr "for the following nodes: {nodes}"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:217
+#: plugins/lime-plugin-locate/src/locatePage.tsx:224
 msgid "hide community"
 msgstr ""
 
@@ -2235,7 +2235,7 @@ msgstr ""
 msgid "key"
 msgstr "key"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:230
+#: plugins/lime-plugin-locate/src/locatePage.tsx:237
 msgid "locate my node"
 msgstr ""
 
@@ -2243,7 +2243,7 @@ msgstr ""
 msgid "more than a minute ago"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:219
+#: plugins/lime-plugin-locate/src/locatePage.tsx:226
 msgid "show community"
 msgstr ""
 
