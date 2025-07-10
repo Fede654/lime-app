@@ -1,7 +1,14 @@
 import { Trans } from "@lingui/macro";
 import L, { LatLngExpression, icon } from "leaflet";
 import { useEffect, useRef, useState } from "preact/hooks";
-import { LayersControl, MapContainer, Marker, TileLayer } from "react-leaflet";
+
+// Use lazy loading for map components
+import {
+    LazyLayersControl as LayersControl,
+    LazyMapContainer as MapContainer,
+    LazyMarker as Marker,
+    LazyTileLayer as TileLayer,
+} from "components/LazyMap";
 
 import { Loading } from "components/loading";
 

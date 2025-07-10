@@ -1,6 +1,11 @@
 import { Trans } from "@lingui/macro";
 import L from "leaflet";
-import { Marker, Tooltip } from "react-leaflet";
+
+// Use lazy loading for map components
+import {
+    LazyMarker as Marker,
+    LazyTooltip as Tooltip,
+} from "components/LazyMap";
 
 import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";

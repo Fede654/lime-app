@@ -1,6 +1,11 @@
 import { Trans } from "@lingui/macro";
 import L from "leaflet";
-import { Polyline, Tooltip } from "react-leaflet";
+
+// Use lazy loading for map components
+import {
+    LazyPolyline as Polyline,
+    LazyTooltip as Tooltip,
+} from "components/LazyMap";
 
 import { useLocatedLinks } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
