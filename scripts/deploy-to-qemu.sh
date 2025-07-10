@@ -88,7 +88,7 @@ deploy_to_lime_packages() {
     
     # Clean old build files to prevent accumulation
     print_warning "Cleaning old build files..."
-    rm -rf "$LIME_APP_FILES_DIR"/*.js "$LIME_APP_FILES_DIR"/*.css "$LIME_APP_FILES_DIR"/*.map
+    rm -rf "$LIME_APP_FILES_DIR"/*
     
     # Copy build files (official LibreMesh workflow)
     cp -r build/* "$LIME_APP_FILES_DIR/"
