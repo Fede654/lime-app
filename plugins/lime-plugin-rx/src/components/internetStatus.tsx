@@ -11,6 +11,30 @@ export const InternetStatus = ({ data }: { data: IGetInternetStatus }) => {
     const xmarkIconClass = "h-10 w-10 fill-danger ";
     const loadiIconClass = "h-10 w-10 stroke-disabled";
 
+    // Handle null/undefined data
+    if (!data) {
+        return (
+            <div className="w-full flex items-center flex-row p-4 gap-6">
+                <h2 className="text-end flex-1">
+                    <Trans>
+                        Internet
+                        <br />
+                        connection
+                    </Trans>
+                </h2>
+                <div className="flex justify-center items-center mr-4 mb-4 flex-1 gap-3 mt-4">
+                    <Circle
+                        className={loadiIconClass}
+                        dataTestId="internet-status-loading"
+                    />
+                    <div className="text-center text-disabled text-lg">
+                        <Trans>Loading...</Trans>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="w-full flex items-center flex-row p-4 gap-6">
             <h2 className="text-end flex-1">

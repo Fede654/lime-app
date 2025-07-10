@@ -20,6 +20,11 @@ function stripIface(hostIface) {
 }
 
 export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
+    // Handle null/undefined status
+    if (!status) {
+        return null;
+    }
+
     const hasMostActive = !!status.most_active?.iface;
     // Validate MAC address format (XX:XX:XX:XX:XX:XX)
     const hasValidMac =

@@ -82,6 +82,13 @@ export class UhttpdService {
                 })
         );
     }
+
+    logout() {
+        return this.call("session", "destroy", {}).then(() => {
+            sessionStorage.removeItem(this.sidKey);
+            return { success: true };
+        });
+    }
 }
 
 const uhttpdService = new UhttpdService();

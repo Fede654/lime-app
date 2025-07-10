@@ -5,6 +5,8 @@ header {
     padding: 0;
     background: theme("colors.primary.DEFAULT");
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    align-items: center;
+    justify-content: space-between;
 
     h1 {
         flex: auto;
@@ -19,6 +21,49 @@ header {
         @media (max-width: 550px) {
             font-size: 16px;
             padding: 0 10px;
+        }
+    }
+
+    .userInfo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-right: 15px;
+        color: #fff;
+
+        .username {
+            font-size: 14px;
+            font-weight: 500;
+
+            @media (max-width: 550px) {
+                font-size: 12px;
+            }
+        }
+
+        .logoutButton {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.3);
+                border-color: rgba(255, 255, 255, 0.5);
+            }
+
+            &:active {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            @media (max-width: 550px) {
+                font-size: 11px;
+                padding: 3px 6px;
+            }
         }
     }
 

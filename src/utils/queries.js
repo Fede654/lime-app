@@ -15,7 +15,15 @@ import queryCache from "./queryCache";
 import api from "./uhttpd.service";
 
 export function useSession() {
-    return useQuery(["session", "get"], getSession, { staleTime: Infinity });
+    return useQuery(["session", "get"], getSession, {
+        staleTime: 0, // Don't use stale data
+        cacheTime: 0, // Don't cache results
+        retry: 1, // Only retry once
+        retryDelay: 1000, // Wait 1 second before retry
+        refetchOnWindowFocus: false,
+        refetchOnMount: true, // Always refetch on mount
+        refetchOnReconnect: false,
+    });
 }
 
 /**
@@ -36,6 +44,32 @@ export function useLogin() {
         onSuccess: (res) => {
             // @ts-ignore
             queryCache.setQueryData(["session", "get"], () => res.data);
+        },
+    });
+}
+
+/**
+ * Logout function - performs client-side logout
+ */
+export function logout() {
+    // Perform client-side logout directly
+    // Clear ALL session storage (not just sid- keys)
+    sessionStorage.clear();
+
+    // Try server logout but don't fail if it doesn't work
+    api.logout().catch((error) => {
+        console.log("Server logout failed (this is often normal):", error);
+    });
+
+    return Promise.resolve({ success: true });
+}
+
+export function useLogout() {
+    return useMutation(logout, {
+        onSuccess: () => {
+            // Fix: go to root path with login hash
+            const baseUrl = `${window.location.origin}/`;
+            window.location.href = `${baseUrl}#/login`;
         },
     });
 }

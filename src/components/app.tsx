@@ -1,11 +1,12 @@
 import { fromNavigator } from "@lingui/detect-locale";
 import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import Router from "preact-router";
+import Router, { route } from "preact-router";
 import { useEffect } from "preact/hooks";
 
 import { ToastProvider } from "components/toast/toastProvider";
 
+import { Login } from "containers/Login";
 import { Menu } from "containers/Menu";
 import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
@@ -24,6 +25,10 @@ const Routes = () => {
     return (
         // @ts-ignore
         <Router>
+            {/* Login route */}
+            <Route path="/login">
+                <Login />
+            </Route>
             {/* Public pages, don't need to be authenticated */}
             {plugins
                 .filter(
@@ -88,17 +93,10 @@ const Routes = () => {
 };
 
 const App = () => {
-    const { data: session } = useSession();
-    const { mutate: login } = useLogin();
+    const { data: session, isLoading: sessionLoading, isError: sessionError } = useSession();
     const { data: boardData } = useBoardData({
         enabled: session?.username != null,
     });
-
-    useEffect(() => {
-        if (session?.username === null) {
-            login({ username: "lime-app", password: "generic" });
-        }
-    }, [session, login]);
 
     // Allow firstbootwizard to render even without session/boardData
     const isOnFbwRoute = typeof window !== "undefined" && window.location.hash.includes("firstbootwizard");
@@ -107,8 +105,39 @@ const App = () => {
     const isLocalDev = typeof window !== "undefined" && 
         (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
 
-    if ((!session?.username || !boardData) && !isOnFbwRoute && !isLocalDev) {
+    // Check if user is on login page (multiple ways to detect)
+    const isOnLoginRoute = typeof window !== "undefined" && 
+        (window.location.hash.includes("login") || window.location.hash === "#/login");
+
+    // If not authenticated and not on login/fbw routes, redirect to login
+    useEffect(() => {
+        // Only redirect after session check is complete (not loading)
+        if (!sessionLoading && (sessionError || !session?.username) && !isOnFbwRoute && !isOnLoginRoute) {
+            route("/login", true);
+        }
+    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute]);
+
+    // Show loading while checking session
+    if (sessionLoading) {
         return <div>Loading...</div>;
+    }
+
+    // Always show login page if on login route - regardless of session state
+    if (isOnLoginRoute) {
+        return (
+            <div id="app">
+                <Routes />
+            </div>
+        );
+    }
+
+    // If no valid session and not on special routes, show login page directly
+    if ((!session?.username || !boardData) && !isOnFbwRoute && !isLocalDev) {
+        return (
+            <div id="app">
+                <Routes />
+            </div>
+        );
     }
 
     return (
