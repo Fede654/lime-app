@@ -62,6 +62,10 @@ msgstr "Cupones de Acceso"
 msgid "Access vouchers"
 msgstr "Cupones de Acceso"
 
+#: src/containers/Login/Login.tsx:38
+msgid "Access your LibreMesh network interface"
+msgstr ""
+
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:74
 msgid "Activation date: {0}"
 msgstr "Fecha de activación: {0}"
@@ -229,6 +233,10 @@ msgstr "Volver"
 msgid "Background Color"
 msgstr "Color de fondo"
 
+#: src/containers/Login/Login.tsx:116
+msgid "Basic access: username \"lime-app\" (no password)"
+msgstr ""
+
 #: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:113
 msgid "Batman Links"
 msgstr "Enlaces en Batman"
@@ -310,7 +318,7 @@ msgstr "Verifique que la red este funcionando correctamente y luego confirme la 
 msgid "Check if network is working properly and confirm the upgrade<0/>If not confirmed, the upgrade will be rolled back after a while"
 msgstr "Verifique si la red funciona correctamente y confirme la actualización. <0/>Si no se confirma, la actualización se revertirá luego de un tiempo."
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:99
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:104
 msgid "Check<0/>Alignment"
 msgstr "Chequear<0/>Alineación"
 
@@ -515,6 +523,10 @@ msgstr "Fecha de creación: {0}"
 msgid "Currently your node has version:"
 msgstr "Actualmente tu nodo tiene la versión:"
 
+#: src/containers/Login/Login.tsx:112
+msgid "Default credentials:"
+msgstr ""
+
 #: src/components/Modal/Modal.tsx:107
 msgid "Delete"
 msgstr "Eliminar"
@@ -553,7 +565,7 @@ msgstr "Descripción: {name}"
 msgid "Device"
 msgstr "Equipo"
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:125
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:126
 msgid "Diagnose"
 msgstr "Diagnóstico"
 
@@ -699,7 +711,7 @@ msgstr "Error al obtener informacion del nodo"
 msgid "Error retrieving the status, is this node outdated?"
 msgstr "Error al recuperar el estado. ¿Este nodo está desactualizado?"
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:101
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:102
 msgid "Error retrieving<0/>last internet path"
 msgstr "Error al recuperar<0/>última ruta de Internet."
 
@@ -761,7 +773,7 @@ msgstr "Expira en {0}"
 
 #: plugins/lime-plugin-align/src/alignPage.js:37
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:75
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:80
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
 
@@ -794,6 +806,10 @@ msgstr "Versión de sistema (firmware)."
 #: plugins/lime-plugin-metrics/src/metricsPage.tsx:151
 msgid "From"
 msgstr "Desde"
+
+#: src/containers/Login/Login.tsx:119
+msgid "Full access: username \"root\" with community password"
+msgstr ""
 
 #: plugins/lime-plugin-metrics/src/components/showPathButton.js:37
 msgid "Full path metrics"
@@ -884,7 +900,7 @@ msgstr "En el estado de referencia este nodo está encendido."
 #~ msgid "Interface"
 #~ msgstr "Interfaz"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:80
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:85
 msgid "Interface:"
 msgstr "Interface:"
 
@@ -896,13 +912,18 @@ msgstr "Internet"
 msgid "Internet connection"
 msgstr "Conexión a Internet"
 
-#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:17
+#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:19
+#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:41
 msgid "Internet<0/>connection"
 msgstr "Conexión a<0/>internet"
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:16
 msgid "Invalid Nodes"
 msgstr "Nodos no válidos"
+
+#: src/containers/Login/Login.tsx:90
+msgid "Invalid username or password. Please try again."
+msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:97
 msgid "Invalidate"
@@ -957,6 +978,10 @@ msgstr "Último paquete"
 msgid "Last seen"
 msgstr "Visto por última vez"
 
+#: src/containers/Login/Login.tsx:35
+msgid "LiMeApp Login"
+msgstr ""
+
 #: src/containers/Menu/ModernMenu.tsx:272
 msgid "LibreMesh Network"
 msgstr ""
@@ -981,13 +1006,17 @@ msgstr "Enlace {0} {1}"
 msgid "Load last known Internet path"
 msgstr "Cargando la última ruta a Internet conocida..."
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:84
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:85
 msgid "Loading <0/>last internet path..."
 msgstr "Cargando <0/> la última ruta a internet conocida..."
 
 #: plugins/lime-plugin-rx/src/rxPage.js:128
 #~ msgid "Loading node status..."
 #~ msgstr "Cargando el estado del nodo..."
+
+#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:31
+msgid "Loading..."
+msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:111
 msgid "Local services link"
@@ -1001,9 +1030,18 @@ msgstr "Localizar"
 msgid "Logging in"
 msgstr "Iniciando sesión"
 
+#: src/containers/Login/Login.tsx:102
+msgid "Logging in..."
+msgstr ""
+
+#: src/containers/Login/Login.tsx:105
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:63
 msgid "Login"
 msgstr "Ingresar"
+
+#: src/components/header/index.js:38
+msgid "Logout"
+msgstr ""
 
 #: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:97
 msgid "Macs ({0})"
@@ -1025,7 +1063,7 @@ msgstr "Administrar cupones"
 msgid "Manage your LibreMesh network"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:128
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:129
 msgid "Map"
 msgstr "Mapa"
 
@@ -1095,7 +1133,7 @@ msgstr "Más de 10 caracteres"
 #~ msgid "Most Active"
 #~ msgstr "Enlace más activo"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:68
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:73
 msgid "Most active link"
 msgstr "Link más activo"
 
@@ -1193,7 +1231,7 @@ msgstr "No hay una actualización en curso."
 msgid "No, cancel"
 msgstr "No, cancelar"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:9
+#: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:10
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:84
 msgid "Node Configuration"
 msgstr "Configuración del nodo"
@@ -1281,6 +1319,7 @@ msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:104
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:49
+#: src/containers/Login/Login.tsx:61
 msgid "Password"
 msgstr "Contraseña"
 
@@ -1288,7 +1327,7 @@ msgstr "Contraseña"
 msgid "Password: {password}"
 msgstr "Contraseña: {password}"
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:119
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:120
 msgid "Path to Internet"
 msgstr "Recorrido a internet"
 
@@ -1385,6 +1424,10 @@ msgstr "Recargar"
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:140
 msgid "Reload page"
 msgstr "Recargar página"
+
+#: src/containers/Login/Login.tsx:83
+msgid "Remember me"
+msgstr ""
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:10
 msgid "Remote Support"
@@ -1981,7 +2024,7 @@ msgstr "Para posibilitar el acceso remoto es necesaria una conexión a internet.
 #~ msgid "Traffic"
 #~ msgstr "Tráfico"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:86
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:91
 msgid "Traffic:"
 msgstr "Tráfico:"
 
@@ -2055,6 +2098,14 @@ msgstr "Tiempo en actividad"
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:69
 msgid "Use vouchers for access"
 msgstr "Usar cupones de acceso"
+
+#: src/components/header/index.js:32
+msgid "User:"
+msgstr ""
+
+#: src/containers/Login/Login.tsx:45
+msgid "Username"
+msgstr ""
 
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormEdit.tsx:120
 msgid "Value"
@@ -2180,7 +2231,7 @@ msgstr "Debe ingresar la contraseña compartida para seguir"
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr "Intente conectarse a la red wifi {wifiSsid} para completar la instalación."
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:121
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:126
 msgid "Your Alignment"
 msgstr "Su alineación"
 

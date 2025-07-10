@@ -66,6 +66,27 @@ export default function (config, env, helpers) {
         ],
     };
 
+    // Bundle splitting optimization - conservative approach to avoid template issues
+    if (isProd) {
+        // Preserve existing optimization config and extend it
+        const existingOptimization = config.optimization || {};
+        config.optimization = {
+            ...existingOptimization,
+            splitChunks: {
+                chunks: "all",
+                cacheGroups: {
+                    // Simple vendor chunk - all node_modules
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: "vendors",
+                        chunks: "all",
+                        priority: 10,
+                    },
+                },
+            },
+        };
+    }
+
     // Disable Critters plugin to fix CSS parsing error
     if (isProd) {
         const crittersPlugins = helpers.getPluginsByName(

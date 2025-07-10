@@ -1,0 +1,123 @@
+
+> preact-limeapp@0.2.26 build
+> preact build --no-prerender --json
+
+⚠ WARN Could not find sw.js in /home/pablo/REPOS/libremesh-dev/lime-app/src. Using the default service worker.
+
+             index.html ⏤  355 B (+36 B)
+       bundle.69540.css ⏤  11.3 kB (+3 B)
+       0.chunk.*****.js ⏤  0 B (-3.4 kB)
+        bundle.*****.js ⏤  0 B (-207 kB)
+     polyfills.*****.js ⏤  0 B (-2.27 kB)
+       3.chunk.*****.js ⏤  0 B (-159 B)
+       4.chunk.*****.js ⏤  0 B (-159 B)
+       5.chunk.*****.js ⏤  0 B (-155 B)
+       6.chunk.*****.js ⏤  0 B (-155 B)
+       7.chunk.*****.js ⏤  0 B (-156 B)
+       8.chunk.*****.js ⏤  0 B (-158 B)
+       9.chunk.*****.js ⏤  0 B (-8.11 kB)
+      10.chunk.*****.js ⏤  0 B (-12.2 kB)
+      11.chunk.*****.js ⏤  0 B (-158 B)
+      12.chunk.*****.js ⏤  0 B (-158 B)
+      13.chunk.*****.js ⏤  0 B (-11.6 kB)
+      14.chunk.*****.js ⏤  0 B (-158 B)
+      15.chunk.*****.js ⏤  0 B (-159 B)
+      16.chunk.*****.js ⏤  0 B (-158 B)
+      17.chunk.*****.js ⏤  0 B (-158 B)
+      18.chunk.*****.js ⏤  0 B (-11.8 kB)
+      19.chunk.*****.js ⏤  0 B (-161 B)
+      20.chunk.*****.js ⏤  0 B (-159 B)
+      21.chunk.*****.js ⏤  0 B (-159 B)
+      22.chunk.*****.js ⏤  0 B (-158 B)
+      23.chunk.*****.js ⏤  0 B (-158 B)
+      24.chunk.*****.js ⏤  0 B (-159 B)
+      25.chunk.*****.js ⏤  0 B (-158 B)
+      26.chunk.*****.js ⏤  0 B (-158 B)
+   0.chunk.*****.esm.js ⏤  3.4 kB (+3.4 kB)
+    bundle.*****.esm.js ⏤  188 kB (+188 kB)
+ polyfills.*****.esm.js ⏤  2.17 kB (+2.17 kB)
+   3.chunk.*****.esm.js ⏤  161 B (+161 B)
+   4.chunk.*****.esm.js ⏤  161 B (+161 B)
+   5.chunk.*****.esm.js ⏤  158 B (+158 B)
+   6.chunk.*****.esm.js ⏤  158 B (+158 B)
+   7.chunk.*****.esm.js ⏤  159 B (+159 B)
+   8.chunk.*****.esm.js ⏤  160 B (+160 B)
+   9.chunk.*****.esm.js ⏤  8.11 kB (+8.11 kB)
+  10.chunk.*****.esm.js ⏤  12.2 kB (+12.2 kB)
+  11.chunk.*****.esm.js ⏤  161 B (+161 B)
+  12.chunk.*****.esm.js ⏤  160 B (+160 B)
+  13.chunk.*****.esm.js ⏤  11.6 kB (+11.6 kB)
+  14.chunk.*****.esm.js ⏤  160 B (+160 B)
+  15.chunk.*****.esm.js ⏤  162 B (+162 B)
+  16.chunk.*****.esm.js ⏤  160 B (+160 B)
+  17.chunk.*****.esm.js ⏤  160 B (+160 B)
+  18.chunk.*****.esm.js ⏤  11.8 kB (+11.8 kB)
+  19.chunk.*****.esm.js ⏤  163 B (+163 B)
+  20.chunk.*****.esm.js ⏤  161 B (+161 B)
+  21.chunk.*****.esm.js ⏤  161 B (+161 B)
+  22.chunk.*****.esm.js ⏤  161 B (+161 B)
+  23.chunk.*****.esm.js ⏤  160 B (+160 B)
+  24.chunk.*****.esm.js ⏤  161 B (+161 B)
+  25.chunk.*****.esm.js ⏤  161 B (+161 B)
+  26.chunk.*****.esm.js ⏤  160 B (+160 B)
+              sw-esm.js ⏤  11.7 kB (+11.7 kB)
+                  sw.js ⏤  11.7 kB (+11.7 kB)
+       0.chunk.29ff1.js ⏤  3.4 kB (+3.4 kB)
+        bundle.61ba7.js ⏤  207 kB (+207 kB)
+     polyfills.00b74.js ⏤  2.27 kB (+2.27 kB)
+       3.chunk.72827.js ⏤  159 B (+159 B)
+       4.chunk.24d36.js ⏤  159 B (+159 B)
+       5.chunk.de5de.js ⏤  155 B (+155 B)
+       6.chunk.baa75.js ⏤  155 B (+155 B)
+       7.chunk.54df5.js ⏤  156 B (+156 B)
+       8.chunk.5502b.js ⏤  158 B (+158 B)
+       9.chunk.32268.js ⏤  8.11 kB (+8.11 kB)
+      10.chunk.eada6.js ⏤  12.2 kB (+12.2 kB)
+      11.chunk.60f45.js ⏤  158 B (+158 B)
+      12.chunk.1cd1e.js ⏤  158 B (+158 B)
+      13.chunk.0951b.js ⏤  11.6 kB (+11.6 kB)
+      14.chunk.ffff0.js ⏤  158 B (+158 B)
+      15.chunk.75f44.js ⏤  159 B (+159 B)
+      16.chunk.de7b7.js ⏤  158 B (+158 B)
+      17.chunk.8b3ea.js ⏤  158 B (+158 B)
+      18.chunk.57776.js ⏤  11.8 kB (+11.8 kB)
+      19.chunk.302f7.js ⏤  161 B (+161 B)
+      20.chunk.5cd6d.js ⏤  159 B (+159 B)
+      21.chunk.0d158.js ⏤  159 B (+159 B)
+      22.chunk.c4ffd.js ⏤  158 B (+158 B)
+      23.chunk.ec73e.js ⏤  158 B (+158 B)
+      24.chunk.b06a2.js ⏤  159 B (+159 B)
+      25.chunk.d55ab.js ⏤  158 B (+158 B)
+      26.chunk.03fbe.js ⏤  158 B (+158 B)
+               200.html ⏤  355 B (+355 B)
+
+⚠ WARN asset size limit: The following asset(s) exceed the recommended size limit (195 KiB).
+This can impact web performance.
+Assets: 
+  bundle.388fe.esm.js (650 KiB)
+  bundle.61ba7.js (837 KiB)
+⚠ WARN entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (195 KiB). This can impact web performance.
+Entrypoints:
+  bundle (1.5 MiB)
+      bundle.69540.css
+      bundle.61ba7.js
+      bundle.388fe.esm.js
+
+⚠ WARN asset size limit: The following asset(s) exceed the recommended size limit (195 KiB).
+This can impact web performance.
+Assets: 
+  bundle.388fe.esm.js (650 KiB)
+  bundle.61ba7.js (837 KiB)
+⚠ WARN entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (195 KiB). This can impact web performance.
+Entrypoints:
+  bundle (1.5 MiB)
+      bundle.69540.css
+      bundle.61ba7.js
+      bundle.388fe.esm.js
+
+
+Webpack output stats generated.
+
+You can upload your stats.json to:
+- https://chrisbateman.github.io/webpack-visualizer/
+- https://webpack.github.io/analyse/
