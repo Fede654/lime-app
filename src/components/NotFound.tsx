@@ -38,7 +38,7 @@ export const NotFound = () => (
                         <Trans>Go Home</Trans>
                     </Button>
                     <Button
-                        onClick={() => window.history.back()}
+                        onClick={() => typeof window !== "undefined" && window.history.back()}
                         color="secondary"
                         size="lg"
                         className="min-w-[120px] font-semibold"

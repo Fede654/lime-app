@@ -1,4 +1,5 @@
-const synth = window.speechSynthesis;
+const synth =
+    typeof window !== "undefined" ? window.speechSynthesis : undefined;
 
 export const speech = (text, lang) => {
     if (synth !== undefined) {

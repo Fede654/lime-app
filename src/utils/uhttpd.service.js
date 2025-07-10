@@ -20,8 +20,12 @@ export class UhttpdService {
     constructor(customIp) {
         this.url = customIp
             ? `http://${customIp}/ubus`
-            : `${window.origin}/ubus`;
-        this.customIp = customIp ?? window.origin;
+            : typeof window !== "undefined"
+            ? `${window.origin}/ubus`
+            : "/ubus";
+        this.customIp =
+            customIp ??
+            (typeof window !== "undefined" ? window.origin : "localhost");
         this.jsonrpc = "2.0";
         this.sec = 0;
         this.requestList = [];

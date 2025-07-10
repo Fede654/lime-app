@@ -31,6 +31,9 @@ LiMeApp es una aplicación web moderna construida con **Preact** para la gestió
 
 ## 🛠️ Comandos de Desarrollo
 
+> **✅ Estado Actualizado (Julio 2025)**: Todos los comandos de deployment completamente funcionales  
+> **Mejoras principales**: Servidor por defecto con backend localhost, comandos serve reparados, window guards añadidos
+
 ### Configuración y Dependencias
 
 ```bash
@@ -43,16 +46,21 @@ npm run verify:ai               # Verificar herramientas IA
 ### Servidor de Desarrollo
 
 ```bash
-# Desarrollo básico (frontend + mocks)
-npm run dev                     # Servidor con recarga en caliente (proxies a 10.13.0.1)
+# ⭐ DESARROLLO UI/UX (RECOMENDADO para contribuidores nuevos)
+npm run dev                     # Servidor desarrollo en puerto 8080 con backend localhost
+                                # ✅ Funciona inmediatamente sin dependencias adicionales
 
-# Desarrollo avanzado (con backend real)
-npm run qemu:start              # Iniciar LibreMesh en QEMU
-npm run qemu:dev                # Servidor desarrollo con backend QEMU real
+# Desarrollo con QEMU backend real (para testing funcional completo)
+npm run qemu:dev                # Servidor desarrollo en puerto 8080 con backend QEMU real
 npm run deploy:qemu             # ⭐ Build + deploy a QEMU (comando único)
 
-# Desarrollo con router personalizado
-env NODE_HOST=192.168.1.1 npm run dev
+# Desarrollo con backend personalizado
+NODE_HOST=10.13.0.1 npm run dev # Conectar a QEMU u otro backend específico
+
+# Flujo completo con QEMU
+npm run qemu:start              # Iniciar LibreMesh en QEMU
+npm run qemu:status             # Verificar estado QEMU
+npm run qemu:dev                # Desarrollo con backend QEMU (puerto fijo 8080)
 ```
 
 ### Comandos de Construcción
@@ -60,7 +68,20 @@ env NODE_HOST=192.168.1.1 npm run dev
 ```bash
 npm run build                   # Construcción de desarrollo
 npm run build:production        # Construcción de producción (incluye compilación i18n)
-npm run serve                   # Construir y servir versión de producción
+```
+
+### Comandos de Servido de Producción
+
+```bash
+# ✅ COMPLETAMENTE FUNCIONALES (Julio 2025)
+npm run serve                   # ⭐ Servir localmente para testing (puerto 3000)
+                                # ✅ Build desarrollo con rutas locales + serve
+npm run serve:production        # Servir build de producción real (puerto 3000)
+                                # ✅ Build producción con rutas /app/ + serve
+npm run start:production        # Alias para serve:production
+
+# Comando directo (alternativa)
+npx serve build --single        # Servir build existente directamente
 ```
 
 ### Testing Integral

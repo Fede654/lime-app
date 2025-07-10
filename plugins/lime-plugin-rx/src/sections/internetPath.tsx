@@ -71,7 +71,8 @@ export const InternetPath = () => {
 
     const workingInternet =
         !internetStatusLoading &&
-        (internet.IPv4.working || internet.IPv6.working);
+        internet &&
+        (internet.IPv4?.working || internet.IPv6?.working);
 
     // Conditional rendering for las known path
     let pathComponent = (

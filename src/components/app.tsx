@@ -101,9 +101,13 @@ const App = () => {
     }, [session, login]);
 
     // Allow firstbootwizard to render even without session/boardData
-    const isOnFbwRoute = window.location.hash.includes("firstbootwizard");
+    const isOnFbwRoute = typeof window !== "undefined" && window.location.hash.includes("firstbootwizard");
+    
+    // Allow development mode when running locally without backend
+    const isLocalDev = typeof window !== "undefined" && 
+        (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
 
-    if ((!session?.username || !boardData) && !isOnFbwRoute) {
+    if ((!session?.username || !boardData) && !isOnFbwRoute && !isLocalDev) {
         return <div>Loading...</div>;
     }
 

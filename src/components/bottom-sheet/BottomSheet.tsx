@@ -9,7 +9,7 @@ import {
     useReduceMotion,
 } from "./utils";
 
-const DRAWER_HEIGHT = window.innerHeight;
+const DRAWER_HEIGHT = typeof window !== "undefined" ? window.innerHeight : 800;
 const INITIAL_DRAWER_DISTANCE_FROM_TOP = 400;
 const MAX_WIDTH = 560;
 const DRAWER_SNAP_MARGIN = 100;
@@ -17,8 +17,10 @@ const COLLAPSED_HEIGHT = 75;
 const THUMB_HEIGHT = 35;
 
 // resize listener
-window.addEventListener("resize", syncHeight);
-syncHeight();
+if (typeof window !== "undefined") {
+    window.addEventListener("resize", syncHeight);
+    syncHeight();
+}
 
 type TBottomSheetProps = {
     /**
@@ -117,7 +119,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
             const event = e?.touches != null ? e?.touches[0] : e;
             if (draggingPosition != null) {
                 const newBottom =
-                    window.innerHeight - event.clientY - draggingPosition;
+                    (typeof window !== "undefined" ? window.innerHeight : 800) - event.clientY - draggingPosition;
                 if (newBottom !== bottom) {
                     setBottom(newBottom);
                 }

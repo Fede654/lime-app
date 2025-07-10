@@ -15,13 +15,15 @@ export default function (config, env, helpers) {
     // Basepath of lime-app in the router: http://thisnode.info/app/
     // This hack let us use less-modules at plugins/containers directories too
     const { source, isProd } = env;
-    config.output.publicPath = isProd ? "/app/" : "";
+    // Allow overriding production path for local development serve
+    const useLocalPaths = process.env.LOCAL_SERVE === "true";
+    config.output.publicPath = isProd && !useLocalPaths ? "/app/" : "";
 
-    const host = process.env.NODE_HOST || "10.13.0.1";
+    const host = process.env.NODE_HOST || "localhost";
     config.devServer = {
         ...config.devServer,
         historyApiFallback: {
-            index: isProd ? "/app/" : "/",
+            index: isProd && !useLocalPaths ? "/app/" : "/",
         },
         proxy: [
             {

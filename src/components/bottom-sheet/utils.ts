@@ -1,10 +1,12 @@
 import { useEffect, useState } from "preact/hooks";
 
 export const syncHeight = () => {
-    document.documentElement.style.setProperty(
-        "--window-inner-height",
-        `${window.innerHeight}px`
-    );
+    if (typeof window !== "undefined") {
+        document.documentElement.style.setProperty(
+            "--window-inner-height",
+            `${window.innerHeight}px`
+        );
+    }
 };
 
 export type TBottomSheetEvents = {
@@ -27,18 +29,22 @@ export const bottomSheetEvents: TBottomSheetEvents = {
 // Note: library had type issues, didn't have time to fix those
 export const useReduceMotion = () => {
     const [matches, setMatch] = useState(
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        typeof window !== "undefined"
+            ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            : false
     );
     useEffect(() => {
-        const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-        const handleChange = () => {
-            setMatch(mq.matches);
-        };
-        handleChange();
-        mq.addEventListener("change", handleChange);
-        return () => {
-            mq.removeEventListener("change", handleChange);
-        };
+        if (typeof window !== "undefined") {
+            const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+            const handleChange = () => {
+                setMatch(mq.matches);
+            };
+            handleChange();
+            mq.addEventListener("change", handleChange);
+            return () => {
+                mq.removeEventListener("change", handleChange);
+            };
+        }
     }, []);
     return matches;
 };
