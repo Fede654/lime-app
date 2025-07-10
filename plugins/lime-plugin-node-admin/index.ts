@@ -8,7 +8,7 @@ import APPasswordPage from "./src/screens/password";
 import RoamingAPPage from "./src/screens/roamingAP";
 
 export default {
-    name: "NodeAdmin",
+    name: "nodeadmin",
     page: Page,
     menu: Menu,
     additionalProtectedRoutes: [

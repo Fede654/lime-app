@@ -183,6 +183,55 @@ The QEMU LibreMesh instance provides these ubus services:
 
 ## Authentication Details
 
+### Account Types & Usage Scenarios
+
+LiMeApp supports two distinct authentication models:
+
+#### 1. Development/QEMU Authentication
+**Account:** `root` / **Password:** `admin`
+- **Purpose**: QEMU development environment only
+- **Access Level**: Full administrative access to all features
+- **Protected Routes**: Can access firmware, node configuration, etc.
+- **Usage**: Development, testing, debugging
+
+#### 2. Production LibreMesh Authentication
+**Account:** `lime-app` / **Password:** (empty)
+- **Purpose**: Production LibreMesh deployments
+- **Access Level**: Basic user access to public features
+- **Protected Routes**: Limited access, no administrative functions
+- **Usage**: End-user access in deployed networks
+
+#### 3. Production Administrative Authentication
+**Account:** `root` / **Password:** `[community-password]`
+- **Purpose**: Production administrative access
+- **Access Level**: Full access similar to development mode
+- **Protected Routes**: Full access to all administrative features
+- **Usage**: Network administration in deployed networks
+
+### Login Form Behavior
+
+The login form implements smart validation logic:
+
+```javascript
+// Password requirement logic
+required={username !== "lime-app"}
+
+// Button enable/disable logic  
+disabled={isLoading || !username || (username === "lime-app" ? false : !password)}
+```
+
+**For `lime-app` account:**
+- Password field shows "No password required" placeholder
+- Password validation is disabled (`required={false}`)
+- Login button enabled even with empty password
+- Supports LibreMesh's guest access model
+
+**For other accounts (`root`, etc.):**
+- Password field shows normal "••••••••" placeholder
+- Password validation enforced (`required={true}`)
+- Login button disabled until password provided
+- Standard authentication flow
+
 ### Session Management
 
 ```javascript
@@ -222,7 +271,15 @@ The authenticated session provides access to:
 
 2. **Authentication Failed**
    ```bash
-   # Reconfigure QEMU
+   # For QEMU development - use root/admin
+   curl -s "http://localhost:8080/ubus" -d '{"jsonrpc":"2.0","id":1,"method":"call","params":["00000000000000000000000000000000","session","login",{"username":"root","password":"admin"}]}' -H "Content-Type: application/json"
+   
+   # Should return: {"jsonrpc":"2.0","id":1,"result":[0,{"ubus_rpc_session":"..."}]}
+   
+   # For production LibreMesh - lime-app account may not exist in QEMU
+   # This is expected behavior - lime-app account is for production deployments
+   
+   # Reconfigure QEMU if needed
    ./scripts/qemu-persistent-setup.sh setup
    
    # Verify credentials in QEMU console

@@ -3,11 +3,14 @@ import FirmwarePage from "./src/firmwarePage";
 import { UpgradeAvailabeInfo } from "./src/upgradeAvailable";
 
 export default {
-    name: "Firmware",
+    name: "firmware",
     page: FirmwarePage,
     menu: Menu,
     isCommunityProtected: true,
-    additionalRoutes: [["releaseInfo", UpgradeAvailabeInfo]],
+    additionalRoutes: [
+        ["releaseInfo", UpgradeAvailabeInfo],
+        ["firmware-alt", FirmwarePage],
+    ],
 } as LimePlugin;
 
 export { SafeUpgradeCountdown } from "./src/upgradeCountdown";

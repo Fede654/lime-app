@@ -65,8 +65,8 @@ const Login = () => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.currentTarget.value)}
-                            placeholder="••••••••"
-                            required
+                            placeholder={username === "lime-app" ? "No password required" : "••••••••"}
+                            required={username !== "lime-app"}
                             disabled={isLoading}
                         />
                     </div>
@@ -94,7 +94,7 @@ const Login = () => {
                     <button
                         type="submit"
                         className={styles.loginButton}
-                        disabled={isLoading || !username || !password}
+                        disabled={isLoading || !username || (username === "lime-app" ? false : !password)}
                     >
                         {isLoading ? (
                             <>
