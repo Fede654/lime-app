@@ -14,6 +14,7 @@ LiMeApp es una aplicación web moderna construida con **Preact** para la gestió
 - **Desarrollo colaborativo**: Framework IA+Humano completamente implementado
 - **Testing**: Integración QEMU con 140+ tests y cobertura 85%+
 - **Internacionalización**: 24 idiomas soportados (Español 100%, English 100%)
+- **✅ Infraestructura Deployment**: TODOS los comandos npm completamente funcionales (Julio 2025)
 
 ## 📚 Navegación de Documentación
 
@@ -65,23 +66,42 @@ npm run verify:ai               # Verificar herramientas IA
 
 #### Servidor de Desarrollo
 ```bash
-# Desarrollo básico (frontend + mocks)
-npm run dev                     # Servidor con hot-reload (proxies a 10.13.0.1)
+# ✅ COMPLETAMENTE FUNCIONALES (Julio 2025) - Todos los comandos reparados
 
-# Desarrollo avanzado (con backend real)
-npm run qemu:start              # Iniciar LibreMesh en QEMU
-npm run qemu:dev                # Servidor desarrollo con backend QEMU real
+# ⭐ DESARROLLO UI/UX (RECOMENDADO para contribuidores nuevos)
+npm run dev                     # Servidor desarrollo en puerto 8080 con backend localhost
+                                # ✅ Funciona inmediatamente sin dependencias adicionales
+
+# Desarrollo con QEMU backend real (para testing funcional completo)
+npm run qemu:dev                # Servidor desarrollo en puerto 8080 con backend QEMU real
 npm run deploy:qemu             # ⭐ Build + deploy a QEMU (comando único)
 
-# Desarrollo con router personalizado
-env NODE_HOST=192.168.1.1 npm run dev
+# Desarrollo con backend personalizado
+NODE_HOST=10.13.0.1 npm run dev # Conectar a QEMU u otro backend específico
+
+# Flujo completo con QEMU
+npm run qemu:start              # Iniciar LibreMesh en QEMU
+npm run qemu:status             # Verificar estado QEMU
+npm run qemu:dev                # Desarrollo con backend QEMU (puerto fijo 8080)
 ```
 
 #### Build Commands
 ```bash
 npm run build                   # Build de desarrollo
 npm run build:production        # Build de producción (incluye compilación i18n)
-npm run serve                   # Build y servir versión de producción
+```
+
+#### Comandos de Servido de Producción
+```bash
+# ✅ COMPLETAMENTE FUNCIONALES (Julio 2025) - Reparados completamente
+npm run serve                   # ⭐ Servir localmente para testing (puerto 3000)
+                                # ✅ Build desarrollo con rutas locales + serve
+npm run serve:production        # Servir build de producción real (puerto 3000)
+                                # ✅ Build producción con rutas /app/ + serve
+npm run start:production        # Alias para serve:production
+
+# Comando directo (alternativa)
+npx serve build --single        # Servir build existente directamente
 ```
 
 #### Testing Comprehensivo
@@ -243,10 +263,22 @@ npm run ai:docs              # Verificación completeness documentación IA
 ## Common Issues & Solutions
 
 ### Frontend-Only Development
-Without LibreMesh backend, expect:
-- `/ubus` endpoint 500 errors (normal - no router backend)
-- WebSocket connection failures (hot-reload limitation)
-- JSON parsing errors from API calls (HTML error pages instead of JSON)
+✅ **MEJORADO (Julio 2025)**: Development mode bypass añadido
+
+**Comandos que funcionan sin backend:**
+- `npm run dev` - ✅ UI development con localhost backend
+- `npm run serve` - ✅ Production testing local completo
+- `npm run build` + `npm run build:production` - ✅ Todas las builds funcionan
+
+**Limitaciones esperadas (comportamiento normal):**
+- Algunas llamadas API fallarán (normal - no hay router backend real)
+- Los componentes que dependen de datos específicos mostrarán estados de carga
+- Para desarrollo funcional completo, usar `npm run qemu:dev`
+
+**Fixes aplicados:**
+- Window guards añadidos en 6 archivos para SSR compatibility
+- Development mode bypass para authentication
+- LOCAL_SERVE environment variable para paths correctos
 
 ### I18n Integration
 - Ensure `i18n.activate()` called before rendering I18nProvider
