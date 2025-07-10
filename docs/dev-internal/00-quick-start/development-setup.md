@@ -108,8 +108,8 @@ npm run qemu:dev
 ```bash
 npm run dev
 # - Hot reload enabled
-# - Proxies to 10.13.0.1 (will fail without router)
-# - Good for UI work
+# - Defaults to localhost backend (works immediately)
+# - Good for UI work and component development
 ```
 
 **With QEMU LibreMesh:**
@@ -186,6 +186,7 @@ You should see:
 
 ```bash
 npm run dev          # Frontend development server
+npm run serve        # Local production testing
 npm run test         # Run test suite
 npm run lint         # Code quality checks
 npm run storybook    # Component development

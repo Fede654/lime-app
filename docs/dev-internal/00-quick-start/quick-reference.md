@@ -41,12 +41,13 @@ npm run verify:setup
 ```bash
 npm run dev
 ```
-**Purpose**: Quick frontend development without backend  
+**Purpose**: Quick frontend development with immediate functionality  
 **Technical Details**:
 - Starts on http://localhost:8080
-- Proxies `/ubus` calls to 10.13.0.1 (will fail without router)
+- Defaults to localhost backend (works immediately)
 - Hot module replacement enabled
 - Good for UI/component development
+- All deployment infrastructure functional
 
 **Expected Warnings**: Source map warnings from `timeago.js` (harmless)
 

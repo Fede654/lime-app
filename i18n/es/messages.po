@@ -213,11 +213,11 @@ msgstr "Espere mientra se reinicia."
 msgid "Awaiting confirmation"
 msgstr "Esperando confirmación."
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:114
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:117
 msgid "Babel Links"
 msgstr "Enlaces de Babel"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:116
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:119
 msgid "Babel Links Reference"
 msgstr "Enlaces de referencia en Babel"
 
@@ -229,11 +229,11 @@ msgstr "Volver"
 msgid "Background Color"
 msgstr "Color de fondo"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:110
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:113
 msgid "Batman Links"
 msgstr "Enlaces en Batman"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:112
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:115
 msgid "Batman Links Reference"
 msgstr "Enlaces de referencia en Batman"
 
@@ -310,7 +310,7 @@ msgstr "Verifique que la red este funcionando correctamente y luego confirme la 
 msgid "Check if network is working properly and confirm the upgrade<0/>If not confirmed, the upgrade will be rolled back after a while"
 msgstr "Verifique si la red funciona correctamente y confirme la actualización. <0/>Si no se confirma, la actualización se revertirá luego de un tiempo."
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:96
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:99
 msgid "Check<0/>Alignment"
 msgstr "Chequear<0/>Alineación"
 
@@ -761,7 +761,7 @@ msgstr "Expira en {0}"
 
 #: plugins/lime-plugin-align/src/alignPage.js:37
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:72
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:75
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
 
@@ -803,11 +803,11 @@ msgstr "Medir todo el recorrido"
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Consiga otro teléfono que tenga conexión a internet por datos móviles."
 
-#: src/components/NotFound.tsx:45
+#: src/components/NotFound.tsx:46
 msgid "Go Back"
 msgstr ""
 
-#: src/components/NotFound.tsx:37
+#: src/components/NotFound.tsx:38
 msgid "Go Home"
 msgstr ""
 
@@ -884,7 +884,7 @@ msgstr "En el estado de referencia este nodo está encendido."
 #~ msgid "Interface"
 #~ msgstr "Interfaz"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:77
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:80
 msgid "Interface:"
 msgstr "Interface:"
 
@@ -957,7 +957,7 @@ msgstr "Último paquete"
 msgid "Last seen"
 msgstr "Visto por última vez"
 
-#: src/containers/Menu/ModernMenu.tsx:227
+#: src/containers/Menu/ModernMenu.tsx:272
 msgid "LibreMesh Network"
 msgstr ""
 
@@ -1021,7 +1021,7 @@ msgstr "Texto principal"
 msgid "Manage Vouchers"
 msgstr "Administrar cupones"
 
-#: src/containers/Menu/ModernMenu.tsx:131
+#: src/containers/Menu/ModernMenu.tsx:141
 msgid "Manage your LibreMesh network"
 msgstr ""
 
@@ -1095,7 +1095,7 @@ msgstr "Más de 10 caracteres"
 #~ msgid "Most Active"
 #~ msgstr "Enlace más activo"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:65
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:68
 msgid "Most active link"
 msgstr "Link más activo"
 
@@ -1103,11 +1103,11 @@ msgstr "Link más activo"
 msgid "Must select a valid hostname"
 msgstr "Debes elegir un nombre de host válido."
 
-#: src/containers/Menu/ModernMenu.tsx:128
+#: src/containers/Menu/ModernMenu.tsx:138
 msgid "Navigation"
 msgstr ""
 
-#: src/components/NotFound.tsx:52
+#: src/components/NotFound.tsx:53
 msgid "Need help? Check the network status or contact your network administrator."
 msgstr ""
 
@@ -1156,7 +1156,7 @@ msgstr "Nueva versión disponible!"
 msgid "No changes made"
 msgstr "No se realizaron cambios"
 
-#: src/containers/Menu/ModernMenu.tsx:217
+#: src/containers/Menu/ModernMenu.tsx:260
 msgid "No menu items found for \"{searchTerm}\""
 msgstr ""
 
@@ -1198,11 +1198,11 @@ msgstr "No, cancelar"
 msgid "Node Configuration"
 msgstr "Configuración del nodo"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:102
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:105
 msgid "Node Info"
 msgstr "Información del nodo"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:104
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:107
 msgid "Node Info Reference"
 msgstr "Información de referencia sobre el nodo"
 
@@ -1981,7 +1981,7 @@ msgstr "Para posibilitar el acceso remoto es necesaria una conexión a internet.
 #~ msgid "Traffic"
 #~ msgstr "Tráfico"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:83
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:86
 msgid "Traffic:"
 msgstr "Tráfico:"
 
@@ -2109,11 +2109,11 @@ msgstr "Pantalla de bienvenida"
 msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
 msgstr "Al recargar la aplicación, se te pedirá que confirmes la actualización, si no lo haces se revertirá."
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:106
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:109
 msgid "Wifi Links"
 msgstr "Enlaces Wifi"
 
-#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:108
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:111
 msgid "Wifi Links Reference"
 msgstr "Enlaces Wifi de Referencia"
 
@@ -2180,7 +2180,7 @@ msgstr "Debe ingresar la contraseña compartida para seguir"
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr "Intente conectarse a la red wifi {wifiSsid} para completar la instalación."
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:118
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:121
 msgid "Your Alignment"
 msgstr "Su alineación"
 
@@ -2236,7 +2236,7 @@ msgstr "para mantener la configuración actual, o..."
 msgid "to the previous configuration"
 msgstr "a la versión anterior"
 
-#: src/containers/Menu/ModernMenu.tsx:230
+#: src/containers/Menu/ModernMenu.tsx:275
 msgid "v4.0"
 msgstr ""
 
@@ -2248,8 +2248,8 @@ msgstr "{0, plural, =0 {Nadie se ha unido aún.} one {Una persona se ha unido.} 
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:44
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:48
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:52
-#: src/containers/Menu/MenuGroup.tsx:63
-#: src/containers/Menu/MenuGroup.tsx:66
+#: src/containers/Menu/MenuGroup.tsx:69
+#: src/containers/Menu/MenuGroup.tsx:72
 msgid "{0}"
 msgstr "{0}"
 
