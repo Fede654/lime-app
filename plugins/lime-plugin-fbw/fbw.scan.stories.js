@@ -1,6 +1,6 @@
 import { action } from "@storybook/addon-actions";
 
-import { Scan } from "./src/containers/Scan";
+import { ScanPage as Scan } from "./src/containers/scanPage/ScanPage";
 
 const networksScanning = [
     {
