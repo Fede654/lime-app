@@ -67,79 +67,26 @@ export default function (config, env, helpers) {
         ],
     };
 
-    // Advanced bundle splitting optimization
+    // Simplified bundle splitting optimization compatible with Preact CLI
     if (isProd) {
         const existingOptimization = config.optimization || {};
         config.optimization = {
             ...existingOptimization,
             splitChunks: {
                 chunks: "all",
-                maxInitialRequests: 25,
-                maxAsyncRequests: 25,
-                minSize: 20000,
-                maxSize: 244000,
                 cacheGroups: {
-                    // Framework code (Preact, React compatibility, TanStack Query)
-                    framework: {
-                        test: /[\\/]node_modules[\\/](preact|@tanstack|@lingui)[\\/]/,
-                        name: "framework",
-                        chunks: "all",
-                        priority: 40,
-                        enforce: true,
-                    },
-                    // Map libraries (heavy dependencies)
-                    maps: {
-                        test: /[\\/]node_modules[\\/](leaflet|react-leaflet)[\\/]/,
-                        name: "maps",
-                        chunks: "all",
-                        priority: 30,
-                        enforce: true,
-                    },
-                    // Animation libraries
-                    animations: {
-                        test: /[\\/]node_modules[\\/](react-spring)[\\/]/,
-                        name: "animations",
-                        chunks: "all",
-                        priority: 25,
-                        enforce: true,
-                    },
-                    // Forms
-                    forms: {
-                        test: /[\\/]node_modules[\\/](react-hook-form)[\\/]/,
-                        name: "forms",
-                        chunks: "all",
-                        priority: 20,
-                        enforce: true,
-                    },
-                    // All other vendors
-                    vendor: {
+                    // All vendor dependencies (node_modules)
+                    vendors: {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
                         priority: 10,
-                        minChunks: 1,
                     },
-                    // Plugin chunks by group
-                    pluginsStatus: {
-                        test: /[\\/]plugins[\\/]lime-plugin-(rx|metrics|locate)[\\/]/,
-                        name: "plugins-status",
-                        chunks: "all",
-                        priority: 15,
-                        minChunks: 1,
-                    },
-                    pluginsMaps: {
-                        test: /[\\/]plugins[\\/]lime-plugin-(mesh-wide|locate)[\\/]/,
-                        name: "plugins-maps",
-                        chunks: "all",
-                        priority: 15,
-                        minChunks: 1,
-                    },
-                    pluginsAdmin: {
-                        test: /[\\/]plugins[\\/]lime-plugin-(node-admin|network-admin|firmware)[\\/]/,
-                        name: "plugins-admin",
-                        chunks: "all",
-                        priority: 15,
-                        minChunks: 1,
+                    // Common code shared between multiple chunks
+                    default: {
+                        minChunks: 2,
+                        priority: 5,
+                        reuseExistingChunk: true,
                     },
                 },
             },

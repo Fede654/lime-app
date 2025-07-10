@@ -10,7 +10,7 @@ export const Footer = () => {
         >
             <div>
                 <img
-                    src={"assets/icons/AlterMundiLogo.svg"}
+                    src={"/app/assets/icons/AlterMundiLogo.svg"}
                     className={imgClass}
                 />
             </div>
@@ -43,7 +43,7 @@ export const Footer = () => {
             </div>
             <div>
                 <img
-                    src={"assets/icons/LibreRouterLogo.svg"}
+                    src={"/app/assets/icons/LibreRouterLogo.svg"}
                     className={imgClass}
                 />
             </div>
