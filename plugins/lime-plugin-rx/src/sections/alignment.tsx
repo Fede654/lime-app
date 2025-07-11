@@ -40,7 +40,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
     );
 
     const traffic = Math.round(
-        (status.most_active.rx_bytes + status.most_active.tx_bytes) /
+        ((status.most_active?.rx_bytes || 0) + (status.most_active?.tx_bytes || 0)) /
             1024 /
             1024
     );
@@ -55,6 +55,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                         />
                         <div className={"text-3xl"}>
                             {status.most_active?.chains &&
+                                Array.isArray(status.most_active.chains) &&
                                 status.most_active.chains.map((chain, i) => (
                                     <span key={i}>
                                         <SignalColor
@@ -62,7 +63,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                                             signal={chain}
                                         />
                                         {i !==
-                                            status.most_active.chains.length -
+                                            (status.most_active.chains?.length || 0) -
                                                 1 && " / "}
                                     </span>
                                 ))}
@@ -118,7 +119,7 @@ export const Alignment = () => {
     return (
         <div
             className={
-                "w-full min-h-min bg-primary-card border-b-2 border-primary-dark pb-10 pr-2"
+                "w-full min-h-min bg-primary-card border-b-2 border-primary-600 pb-10 pr-2"
             }
         >
             <Section>
