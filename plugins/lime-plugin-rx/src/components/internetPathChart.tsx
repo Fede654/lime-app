@@ -186,25 +186,30 @@ const InternetLastHop = ({
 };
 
 function LineChart({ nodes, internet }: Props) {
-    if (nodes === undefined) return;
+    if (nodes === undefined || !Array.isArray(nodes) || nodes.length === 0) {
+        return null;
+    }
 
     const totalHeight = (nodes.length + 1) * circleSpacing - circleRadius * 2;
+    const lastNode = nodes[nodes.length - 1];
 
     return (
         <svg height={totalHeight}>
             {nodes.map((node: Node, index: number) => (
                 <NodeHop
                     key={index}
-                    ip={node.ip}
+                    ip={node?.ip || 'unknown'}
                     index={index}
-                    text={node.hostname || node.ip}
+                    text={node?.hostname || node?.ip || 'unknown'}
                 />
             ))}
-            <InternetLastHop
-                index={nodes.length}
-                ip={nodes[nodes.length - 1].ip}
-                internet={internet}
-            />
+            {lastNode && (
+                <InternetLastHop
+                    index={nodes.length}
+                    ip={lastNode.ip || 'unknown'}
+                    internet={internet}
+                />
+            )}
         </svg>
     );
 }
