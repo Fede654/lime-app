@@ -3,20 +3,40 @@ const colors = require("tailwindcss/colors");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    mode: "jit",
-    purge: {
-        enabled: true,
-        content: [
-            "./src/**/*.{js,jsx,ts,tsx,vue}",
-            "./plugins/**/*.{js,jsx,ts,tsx,vue}",
-        ],
-        options: {
-            safelist: [],
-        },
-    },
     content: [
         "./src/**/*.{js,jsx,ts,tsx,vue}",
         "./plugins/**/*.{js,jsx,ts,tsx,vue}",
+    ],
+    safelist: [
+        "border-primary-600",
+        "border-2",
+        "text-primary-600",
+        "fill-primary-600",
+        "mr-8",
+        "stroke-gray-400",
+        "fill-gray-400",
+        "bg-button-secondary",
+        "bg-button-primary",
+        "bg-button-info",
+        "bg-button-disabled",
+        "border-button-secondary",
+        "border-button-primary",
+        "border-button-info",
+        "border-button-disabled",
+        "text-button-secondary",
+        "text-button-primary",
+        "text-button-info",
+        "text-button-disabled",
+        "hover:bg-button-primary",
+        "hover:bg-button-secondary",
+        "hover:text-white",
+        "hover:text-button-disabled",
+        "hover:text-button-info",
+        "hover:text-danger",
+        "hover:bg-white",
+        "hover:bg-danger",
+        "hover:bg-button-info",
+        "hover:bg-button-disabled",
     ],
     darkMode: "media",
     theme: {
