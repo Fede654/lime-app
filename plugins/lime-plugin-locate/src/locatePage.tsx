@@ -26,20 +26,20 @@ import { homeIcon } from "./leafletUtils";
 import style from "./style.less";
 
 // Component to handle map operations that need direct map access
-const MapOperations = ({ 
-    nodeMarker, 
-    onMapReady, 
-    stationLat, 
-    stationLon, 
+const MapOperations = ({
+    nodeMarker,
+    onMapReady,
+    stationLat,
+    stationLon,
     loading,
     editting,
     communityLayer,
     setCommunityLayer,
     boardData,
-    nodesData 
+    nodesData,
 }) => {
     const map = useMap();
-    
+
     useEffect(() => {
         if (onMapReady && map) {
             onMapReady(map);
@@ -155,11 +155,11 @@ export const LocatePage = () => {
             console.error("Map reference not available");
             return;
         }
-        
+
         try {
             const position = mapRef.current.getCenter();
             changeLocation({ lat: position.lat, lon: position.lng });
-            
+
             if (communityLayer) {
                 // Hide the community view, to avoid outdated links
                 toogleCommunityLayer();
