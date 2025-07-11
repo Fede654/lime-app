@@ -12,16 +12,52 @@ const parseResult = (result) =>
                     "ubus object not found - service may not be available"
                 );
             }
-            return rej(result.error);
+            // Ensure we always reject with a proper Error object
+            const error = result.error || "Unknown ubus RPC error";
+            if (error instanceof Error) {
+                return rej(error);
+            }
+            const errorMessage =
+                typeof error === "string" ? error : JSON.stringify(error);
+            return rej(new Error(errorMessage));
         }
         if (result.result[0] !== 0) {
-            return rej(result);
+            // Convert result to proper Error object
+            const rawErrorMsg =
+                result.result[1] ||
+                result.message ||
+                `ubus call failed with code: ${result.result[0]}`;
+            const errorMsg =
+                typeof rawErrorMsg === "string"
+                    ? rawErrorMsg
+                    : JSON.stringify(rawErrorMsg);
+            return rej(new Error(errorMsg));
         }
-        result = result.result[1];
-        if (result && result.status === "error") {
-            return rej(result.message);
+
+        // Extract the actual data from the response
+        const data = result.result[1];
+
+        // CRITICAL FIX: Handle undefined/missing data properly
+        if (data === undefined || data === null) {
+            return rej(
+                new Error(
+                    "ubus response missing data - service may be unavailable"
+                )
+            );
         }
-        return res(result);
+
+        if (data && data.status === "error") {
+            // Ensure we always reject with a proper Error object, not undefined
+            const rawMessage =
+                data.message || data.error || "Unknown ubus error occurred";
+            const errorMessage =
+                typeof rawMessage === "string"
+                    ? rawMessage
+                    : JSON.stringify(rawMessage);
+            return rej(new Error(errorMessage));
+        }
+
+        return res(data);
     });
 
 export class UhttpdService {
@@ -66,8 +102,52 @@ export class UhttpdService {
                 body: JSON.stringify(body),
                 signal: controller.signal,
             })
-                .then((response) => response.json())
+                .then((response) => {
+                    // Check if response is ok and contains valid JSON
+                    if (!response.ok) {
+                        throw new Error(
+                            `HTTP ${response.status} ${response.statusText} - Backend unavailable at ${this.url}`
+                        );
+                    }
+
+                    const contentType = response.headers.get("content-type");
+                    if (
+                        !contentType ||
+                        !contentType.includes("application/json")
+                    ) {
+                        throw new Error(
+                            `Expected JSON response but got ${
+                                contentType || "unknown"
+                            } - Backend may be unreachable`
+                        );
+                    }
+
+                    return response.json();
+                })
                 .then(parseResult)
+                .catch((error) => {
+                    if (error.name === "AbortError") {
+                        throw new Error(
+                            `Request timeout after ${
+                                timeout || 15000
+                            }ms - Backend may be unreachable`
+                        );
+                    }
+                    if (
+                        error.name === "TypeError" &&
+                        error.message.includes("fetch")
+                    ) {
+                        throw new Error(
+                            `Network error: Cannot reach backend at ${this.url} - Check if LibreMesh device is accessible`
+                        );
+                    }
+                    if (error.message.includes("JSON")) {
+                        throw new Error(
+                            `Invalid JSON response from ${this.url} - Backend may be returning error page instead of JSON`
+                        );
+                    }
+                    throw error;
+                })
                 // @ts-ignore
                 .finally(clearTimeout(id))
         );
