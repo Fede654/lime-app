@@ -70,6 +70,7 @@ export const MeshWideMap = ({
         if (
             !loading &&
             mapInstance &&
+            typeof mapInstance.setView === 'function' &&
             nodeLocation &&
             nodeLocation.location &&
             (nodeLocation.location.lat !== "FIXME" ||
