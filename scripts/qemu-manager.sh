@@ -361,6 +361,11 @@ deploy_to_qemu() {
     # Deploy to lime-packages (official LibreMesh method)
     print_status "Deploying to lime-packages structure..."
     mkdir -p "$LIME_APP_FILES_DIR"
+    
+    # Clean old build files to prevent accumulation
+    print_status "Cleaning old build files..."
+    rm -rf "$LIME_APP_FILES_DIR"/*
+    
     cp -r build/* "$LIME_APP_FILES_DIR/"
     print_status "✓ Files copied to lime-packages/packages/lime-app/files/www/app/"
     

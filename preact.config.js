@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import * as path from "path";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 dotenv.config();
 
@@ -25,8 +26,6 @@ export default function (config, env, helpers) {
         historyApiFallback: {
             index: isProd && !useLocalPaths ? "/app/" : "/",
         },
-        // Remove static serving to avoid file watcher limits
-        // Leaflet is now bundled directly in development
         proxy: [
             {
                 path: "/ubus",
@@ -68,21 +67,26 @@ export default function (config, env, helpers) {
         ],
     };
 
-    // Bundle splitting optimization - conservative approach to avoid template issues
+    // Simplified bundle splitting optimization compatible with Preact CLI
     if (isProd) {
-        // Preserve existing optimization config and extend it
         const existingOptimization = config.optimization || {};
         config.optimization = {
             ...existingOptimization,
             splitChunks: {
                 chunks: "all",
                 cacheGroups: {
-                    // Simple vendor chunk - all node_modules
-                    vendor: {
+                    // All vendor dependencies (node_modules)
+                    vendors: {
                         test: /[\\/]node_modules[\\/]/,
                         name: "vendors",
                         chunks: "all",
                         priority: 10,
+                    },
+                    // Common code shared between multiple chunks
+                    default: {
+                        minChunks: 2,
+                        priority: 5,
+                        reuseExistingChunk: true,
                     },
                 },
             },
@@ -113,18 +117,37 @@ export default function (config, env, helpers) {
         });
     }
 
-    // Disable Service Workers completely for smaller builds
-    if (config.plugins) {
-        config.plugins = config.plugins.filter((plugin) => {
-            const name = plugin.constructor.name;
-            return (
-                name !== "SWPrecacheWebpackPlugin" &&
-                name !== "WorkboxPlugin" &&
-                name !== "ServiceWorkerPlugin"
-            );
-        });
+    // Production optimizations
+    if (isProd) {
+        // Tree shaking improvements
+        config.resolve.mainFields = ["module", "main"];
+
+        // Minimize console output in production
+        if (config.optimization.minimizer && config.optimization.minimizer[0]) {
+            const terserOptions = config.optimization.minimizer[0].options;
+            if (terserOptions && terserOptions.terserOptions) {
+                terserOptions.terserOptions.compress = {
+                    ...terserOptions.terserOptions.compress,
+                    drop_console: true,
+                    drop_debugger: true,
+                    pure_funcs: [
+                        "console.log",
+                        "console.info",
+                        "console.debug",
+                    ],
+                };
+            }
+        }
     }
 
-    // CSS optimizations are already handled by preact-cli's default config
-    // No additional CSS optimization needed as it conflicts with PostCSS setup
+    // Add bundle analyzer in analyze mode
+    if (process.env.ANALYZE === "true") {
+        config.plugins.push(
+            new BundleAnalyzerPlugin({
+                analyzerMode: "server",
+                analyzerPort: 8888,
+                openAnalyzer: true,
+            })
+        );
+    }
 }

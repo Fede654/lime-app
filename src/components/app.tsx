@@ -176,33 +176,34 @@ const App = () => {
 };
 
 const AppDefault = () => {
-    // Initialize i18n synchronously before rendering
+    // Initialize i18n with minimal setup before rendering
     if (!i18n.locale || i18n.locale === "") {
-        // Load empty messages for English as fallback with plurals
-        try {
-            import("make-plural/plurals").then(({ en }) => {
-                i18n.loadLocaleData({ en: { plurals: en } });
-                i18n.load("en", {});
-                i18n.activate("en");
-            });
-        } catch (error) {
-            console.warn("Failed to load English plurals:", error);
-            i18n.load("en", {});
-            i18n.activate("en");
-        }
+        // Load empty messages for English as fallback
+        i18n.load("en", {});
+        // Don't activate here - let dynamicActivate handle it properly
     }
 
     useEffect(() => {
         // Load dynamic locale after initial render
-        try {
-            const locale = (fromNavigator()?.split("-")[0] as Locales) || "en";
-            dynamicActivate(locale);
-        } catch (error) {
-            console.warn("i18n dynamic activation error:", error);
-            // Fallback to English with empty messages
-            i18n.load("en", {});
-            i18n.activate("en");
-        }
+        const initializeLocale = async () => {
+            try {
+                const locale = (fromNavigator()?.split("-")[0] as Locales) || "en";
+                await dynamicActivate(locale);
+            } catch (error) {
+                console.warn("i18n dynamic activation error:", error);
+                // Fallback to English with basic setup
+                try {
+                    await dynamicActivate("en");
+                } catch (fallbackError) {
+                    console.error("Failed to initialize fallback locale:", fallbackError);
+                    // Last resort: activate without plurals (will show the warning)
+                    i18n.load("en", {});
+                    i18n.activate("en");
+                }
+            }
+        };
+        
+        initializeLocale();
     }, []);
     return (
         <I18nProvider i18n={i18n}>

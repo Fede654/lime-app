@@ -29,3 +29,16 @@
 .error {
     background-color: #923838;
 }
+
+.toastAnimation {
+    animation: slideUpToast 300ms ease-out;
+}
+
+@keyframes slideUpToast {
+    from {
+        transform: translateY(180%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

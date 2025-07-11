@@ -86,6 +86,10 @@ deploy_to_lime_packages() {
     # Create the app directory in lime-packages
     mkdir -p "$LIME_APP_FILES_DIR"
     
+    # Clean old build files to prevent accumulation
+    print_warning "Cleaning old build files..."
+    rm -rf "$LIME_APP_FILES_DIR"/*
+    
     # Copy build files (official LibreMesh workflow)
     cp -r build/* "$LIME_APP_FILES_DIR/"
     

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
-import { animated, useSpring } from "react-spring";
 
 import style from "./style.less";
 import {
@@ -26,7 +25,7 @@ type TBottomSheetProps = {
     /**
      * nested children
      */
-    children: JSX.Element;
+    children: preact.ComponentChildren;
     /**
      * optional specific aria label for close button
      */
@@ -46,7 +45,7 @@ type TBottomSheetProps = {
     /**
      * Optional custom maxWidth for the BottomSheet in px
      */
-    maxWidth?: string;
+    maxWidth?: number;
     /**
      * Fires when close button is fired
      */
@@ -66,10 +65,10 @@ type TBottomSheetProps = {
     /**
      * Element to be shown either if the sheet is expanded at all or not
      */
-    footer?: JSX.Element;
+    footer?: preact.ComponentChildren;
 };
 
-export const BottomSheet: React.FC<TBottomSheetProps> = ({
+export const BottomSheet = ({
     children,
     closeButtonAriaLabel = "Close",
     closeButton = true,
@@ -77,11 +76,11 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
     isOpen,
     maxWidth = MAX_WIDTH,
     onClose,
-    onStatusChange,
-    subtitle,
-    title,
-    footer,
-}) => {
+    onStatusChange = undefined,
+    subtitle = undefined,
+    title = undefined,
+    footer = undefined,
+}: TBottomSheetProps) => {
     // STATE
     const scrollRef = useRef<HTMLDivElement>(null);
     const [bottom, setBottom] = useState(-DRAWER_HEIGHT);
@@ -90,13 +89,8 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
     );
     const [debugLog, setDebugLog] = useState<string>("");
 
-    // ANIMATION
+    // ANIMATION - using CSS transition instead of react-spring
     const prefersReducedMotion = useReduceMotion();
-    const styles = useSpring({
-        bottom,
-        immediate: prefersReducedMotion,
-        config: { friction: 20 },
-    });
 
     // HANDLERS
     const handlePointerDown = (
@@ -215,7 +209,8 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
 
     return (
         <div>
-            <animated.div
+            <div
+                className={prefersReducedMotion ? "" : style.bottomSheetAnimation}
                 style={{
                     maxWidth: `${maxWidth}px`,
                     left: "50%",
@@ -223,8 +218,8 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
                     position: "fixed",
                     width: "100%",
                     height: DRAWER_HEIGHT,
-                    transition: "height 200ms",
-                    ...styles,
+                    bottom: `${bottom}px`,
+                    transition: prefersReducedMotion ? "none" : "bottom 300ms ease-out",
                 }}
             >
                 <div
@@ -289,7 +284,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
                         {children}
                     </div>
                 </div>
-            </animated.div>
+            </div>
             {bodyHeight > 0 && (
                 <div
                     className={style.FooterWrapper}
