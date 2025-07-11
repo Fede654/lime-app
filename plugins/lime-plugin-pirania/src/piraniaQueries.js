@@ -48,7 +48,7 @@ export const useCreateCompression = () =>
     });
 
 export function useListVouchers() {
-    return useQuery(["pirania", "list_vouchers"], listVouchers, {});
+    return useQuery(["pirania", "list_vouchers"], listVouchers);
 }
 
 export function useAddVoucher() {
