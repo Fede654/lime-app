@@ -945,7 +945,7 @@ msgstr ""
 msgid "It must start with https:// or http://"
 msgstr "It must start with https:// or http://"
 
-#: plugins/lime-plugin-rx/src/components/footer.tsx:22
+#: plugins/lime-plugin-rx/src/components/footer.tsx:27
 msgid "Join <0>foro.librerouter.org</0>"
 msgstr "Join <0>foro.librerouter.org</0>"
 
@@ -1125,7 +1125,7 @@ msgstr "Navigation"
 msgid "Need help? Check the network status or contact your network administrator."
 msgstr "Need help? Check the network status or contact your network administrator."
 
-#: plugins/lime-plugin-rx/src/components/footer.tsx:19
+#: plugins/lime-plugin-rx/src/components/footer.tsx:24
 msgid "Need support?"
 msgstr "Need support?"
 
@@ -2083,7 +2083,7 @@ msgstr "Value"
 msgid "Visit"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/components/footer.tsx:33
+#: plugins/lime-plugin-rx/src/components/footer.tsx:38
 msgid "Visit <0>docs.altermundi.net</0>"
 msgstr "Visit <0>docs.altermundi.net</0>"
 
