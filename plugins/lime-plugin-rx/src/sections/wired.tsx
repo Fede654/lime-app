@@ -10,14 +10,16 @@ import { useNodeStatus } from "plugins/lime-plugin-rx/src/rxQueries";
 import { SwitchStatus } from "plugins/lime-plugin-rx/src/rxTypes";
 
 const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
-    const ports = switches.reduce((acc, obj) => {
-        const { role } = obj;
-        if (!acc[role]) {
-            acc[role] = [];
-        }
-        acc[role].push(obj);
-        return acc;
-    }, {});
+    const ports = switches
+        .filter((obj) => obj && obj.role) // Filter out invalid objects
+        .reduce((acc, obj) => {
+            const { role } = obj;
+            if (!acc[role]) {
+                acc[role] = [];
+            }
+            acc[role].push(obj);
+            return acc;
+        }, {});
     return (
         <div
             className={"flex flex-wrap px-10 gap-8 justify-center"}
@@ -42,13 +44,13 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
                                 "Unknown Device"}
                         </h2>
                         <div className={"flex flex-row gap-3 justify-center"}>
-                            {ports[role].map((port) => {
+                            {ports[role].map((port, index) => {
                                 const link =
-                                    port.link?.toLowerCase() === "up"
-                                        ? "fill-primary-dark"
+                                    port?.link?.toLowerCase() === "up"
+                                        ? "fill-primary-600"
                                         : "fill-disabled";
                                 return (
-                                    <div key={`${role}-${port.num}`}>
+                                    <div key={`${role}-${port?.num || index}`}>
                                         <PortsIcon
                                             className={`h-10 w-10 ${link}`}
                                         />
@@ -66,7 +68,7 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
 export const Wired = () => {
     const { data: status, isLoading } = useNodeStatus();
 
-    const switches = status?.switch_status;
+    const switches = status?.switch_status || [];
 
     return (
         <Section>
@@ -77,7 +79,7 @@ export const Wired = () => {
                 {isLoading ? (
                     <span className="text-xl px-6">Loading...</span>
                 ) : switches.length ? (
-                    <Ports switches={status.switch_status} />
+                    <Ports switches={switches} />
                 ) : (
                     <div className={"flex-1 flex justify-center"}>
                         No wired connections found
