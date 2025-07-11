@@ -22,10 +22,9 @@ const mockGroundRoutingConfig = {
     interfaces: ["eth0", "eth1"],
     routing_table: "main",
     metric: 100,
-    advanced_options: {
-        use_dhcp: true,
-        dns_servers: ["8.8.8.8", "1.1.1.1"],
-    },
+    use_dhcp: true,
+    gateway: "192.168.1.1",
+    dns_servers: ["8.8.8.8", "1.1.1.1"],
 };
 
 describe("ground routing page", () => {
@@ -51,72 +50,43 @@ describe("ground routing page", () => {
         jest.clearAllMocks();
     });
 
-    it("shows title", async () => {
+    it("shows main title and subtitle", async () => {
         render(<GroundRoutingPage />);
 
+        expect(await screen.findByText("Ground Routing")).toBeInTheDocument();
         expect(
-            await screen.findByText(/Ground Routing configuration/i)
+            screen.getByText("Internet connectivity and routing configuration")
         ).toBeInTheDocument();
     });
 
-    it("loads and displays ground routing configuration", async () => {
+    it("displays overview section with configuration data", async () => {
         render(<GroundRoutingPage />);
 
-        // Wait for configuration to load and be displayed
+        // Wait for Overview section to appear
         await waitFor(() => {
-            expect(screen.getByText(/"enabled": true/)).toBeInTheDocument();
+            expect(screen.getByText("Overview")).toBeInTheDocument();
         });
 
-        expect(screen.getByText(/"interfaces"/)).toBeInTheDocument();
-        expect(screen.getByText(/"eth0"/)).toBeInTheDocument();
-        expect(screen.getByText(/"routing_table": "main"/)).toBeInTheDocument();
+        // Check that status shows as enabled (look for Status label first)
+        expect(screen.getByText("Status")).toBeInTheDocument();
+        const enabledElements = screen.getAllByText("Enabled");
+        expect(enabledElements.length).toBeGreaterThan(0);
+
+        // Check that routing table is displayed
+        expect(screen.getByText("main")).toBeInTheDocument();
     });
 
-    it("shows formatted JSON configuration", async () => {
-        render(<GroundRoutingPage />);
-
-        const jsonContent = await screen.findByText(/"enabled": true/);
-        expect(jsonContent).toBeInTheDocument();
-
-        // Check that JSON is properly formatted (indented)
-        const preElement = screen.getByText(/\{\s*"enabled":\s*true/);
-        expect(preElement.textContent).toContain('{\n  "enabled": true');
-    });
-
-    it("shows loading message when fetching data", async () => {
-        // Mock loading state
-        getGroundRoutingPromise.mockImplementation(() => new Promise(() => {})); // Never resolves
-
-        render(<GroundRoutingPage />);
-
-        expect(await screen.findByText(/Loading.../)).toBeInTheDocument();
-    });
-
-    it("has reload button", async () => {
+    it("has functional refresh button", async () => {
         render(<GroundRoutingPage />);
 
         // Wait for data to load first
-        await screen.findByText(/"enabled": true/);
+        await screen.findByText("Overview");
 
-        const reloadButton = await screen.findByRole("button", {
-            name: /reload/i,
-        });
-        expect(reloadButton).toBeInTheDocument();
-        expect(reloadButton).not.toBeDisabled();
-    });
+        const refreshButton = screen.getByText("Refresh");
+        expect(refreshButton).toBeInTheDocument();
 
-    it("reloads data when reload button is clicked", async () => {
-        render(<GroundRoutingPage />);
-
-        // Wait for initial load
-        await waitFor(() => {
-            expect(getGroundRoutingPromise).toHaveBeenCalledTimes(1);
-        });
-
-        const reloadButton = await screen.findByRole("button", {
-            name: /reload/i,
-        });
-        fireEvent.click(reloadButton);
+        // Click the refresh button
+        fireEvent.click(refreshButton);
 
         // Should trigger another API call
         await waitFor(() => {
@@ -124,141 +94,91 @@ describe("ground routing page", () => {
         });
     });
 
-    it("disables reload button during loading", async () => {
-        // Mock slow loading
-        let resolvePromise;
-        getGroundRoutingPromise.mockImplementation(
-            () =>
-                new Promise((resolve) => {
-                    resolvePromise = resolve;
-                })
-        );
+    it("shows loading state initially", async () => {
+        // Mock loading state
+        getGroundRoutingPromise.mockImplementation(() => new Promise(() => {})); // Never resolves
 
         render(<GroundRoutingPage />);
 
-        const reloadButton = await screen.findByRole("button", {
-            name: /reload/i,
-        });
-        expect(reloadButton).toBeDisabled();
-
-        // Resolve the promise
-        act(() => {
-            resolvePromise(mockGroundRoutingConfig);
-        });
-
-        await waitFor(() => {
-            expect(reloadButton).not.toBeDisabled();
-        });
+        expect(
+            await screen.findByText("Loading ground routing configuration...")
+        ).toBeInTheDocument();
     });
 
-    it("handles empty configuration", async () => {
-        getGroundRoutingPromise.mockImplementation(async () => ({}));
+    it("shows error state when API fails", async () => {
+        getGroundRoutingPromise.mockRejectedValue(new Error("API Error"));
 
         render(<GroundRoutingPage />);
 
-        await waitFor(() => {
-            expect(screen.getByText("{}")).toBeInTheDocument();
-        });
+        // Should show error message
+        expect(
+            await screen.findByText("Configuration Not Available")
+        ).toBeInTheDocument();
+
+        const tryAgainButton = screen.getByText("Try Again");
+        expect(tryAgainButton).toBeInTheDocument();
     });
 
-    it("handles null configuration", async () => {
+    it("shows error state when configuration is null", async () => {
         getGroundRoutingPromise.mockImplementation(async () => null);
 
         render(<GroundRoutingPage />);
 
         await waitFor(() => {
-            expect(screen.getByText("null")).toBeInTheDocument();
+            expect(
+                screen.getByText("Configuration Not Available")
+            ).toBeInTheDocument();
         });
     });
 
-    it("handles API errors gracefully", async () => {
-        getGroundRoutingPromise.mockRejectedValue(new Error("API Error"));
-
+    it("can expand and view advanced configuration", async () => {
         render(<GroundRoutingPage />);
 
-        // Should still render the basic UI structure
-        expect(
-            await screen.findByText(/Ground Routing configuration/i)
-        ).toBeInTheDocument();
+        // Wait for data to load
+        await screen.findByText("Overview");
 
-        const reloadButton = await screen.findByRole("button", {
-            name: /reload/i,
-        });
-        expect(reloadButton).toBeInTheDocument();
+        // Click on Advanced Configuration to expand it
+        const advancedButton = screen.getByText("Advanced Configuration");
+        fireEvent.click(advancedButton);
+
+        // Now check for JSON content
+        const jsonContent = await screen.findByText(/"enabled": true/);
+        expect(jsonContent).toBeInTheDocument();
     });
 
-    it("handles complex nested configuration", async () => {
-        const complexConfig = {
-            global: {
-                enabled: true,
-                debug: false,
-            },
-            interfaces: {
-                ethernet: {
-                    eth0: { metric: 100, gateway: "192.168.1.1" },
-                    eth1: { metric: 200, gateway: "192.168.2.1" },
-                },
-                wireless: {
-                    wlan0: { metric: 300 },
-                },
-            },
-            routes: [
-                {
-                    destination: "0.0.0.0/0",
-                    gateway: "192.168.1.1",
-                    metric: 100,
-                },
-                {
-                    destination: "10.0.0.0/8",
-                    gateway: "192.168.2.1",
-                    metric: 200,
-                },
-            ],
+    it("handles configuration with missing optional fields", async () => {
+        const minimalConfig = {
+            enabled: false,
         };
 
-        getGroundRoutingPromise.mockImplementation(async () => complexConfig);
+        getGroundRoutingPromise.mockImplementation(async () => minimalConfig);
 
         render(<GroundRoutingPage />);
 
         await waitFor(() => {
-            expect(screen.getByText(/"enabled": true/)).toBeInTheDocument();
+            expect(screen.getByText("Overview")).toBeInTheDocument();
         });
 
-        expect(screen.getByText(/"ethernet"/)).toBeInTheDocument();
-        expect(screen.getByText(/"192.168.1.1"/)).toBeInTheDocument();
-        expect(screen.getByText(/"routes"/)).toBeInTheDocument();
+        // Should show disabled status (there may be multiple instances)
+        const disabledElements = screen.getAllByText("Disabled");
+        expect(disabledElements.length).toBeGreaterThan(0);
+
+        // Should handle missing values gracefully by showing defaults
+        expect(screen.getByText("main")).toBeInTheDocument(); // default routing table
+        expect(screen.getByText("100")).toBeInTheDocument(); // default metric
+        expect(screen.getByText("None")).toBeInTheDocument(); // default interfaces
     });
 
-    it("displays configuration JSON content properly", async () => {
-        render(<GroundRoutingPage />);
-
-        // Wait for data to load and verify JSON content is displayed
-        await screen.findByText(/"enabled": true/);
-
-        // Verify key configuration elements are rendered
-        expect(screen.getByText(/"interfaces"/)).toBeInTheDocument();
-        expect(screen.getByText(/"routing_table": "main"/)).toBeInTheDocument();
-        expect(screen.getByText(/"metric": 100/)).toBeInTheDocument();
-    });
-
-    it("updates display when configuration changes externally", async () => {
+    it("displays different sections", async () => {
         render(<GroundRoutingPage />);
 
         await waitFor(() => {
-            expect(screen.getByText(/"enabled": true/)).toBeInTheDocument();
+            expect(screen.getByText("Overview")).toBeInTheDocument();
         });
 
-        // Simulate external configuration update
-        const newConfig = { enabled: false, interfaces: [] };
-        getGroundRoutingPromise.mockImplementation(async () => newConfig);
-
-        // Trigger a refetch by invalidating the cache
-        act(() => {
-            queryCache.invalidateQueries(["lime-groundrouting", "get"]);
-        });
-
-        await waitFor(() => {
-            expect(screen.getByText(/"enabled": false/)).toBeInTheDocument();
-        });
+        // Check all section headers are present
+        expect(screen.getByText("Network Configuration")).toBeInTheDocument();
+        expect(screen.getByText("Custom Routes")).toBeInTheDocument();
+        expect(screen.getByText("Advanced Configuration")).toBeInTheDocument();
     });
 });

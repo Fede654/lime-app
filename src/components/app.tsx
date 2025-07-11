@@ -4,15 +4,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import Router, { route } from "preact-router";
 import { useEffect } from "preact/hooks";
 
-// Import Leaflet for map components in development
-if (process.env.NODE_ENV === 'development') {
-    import("leaflet").then((L) => {
-        if (typeof window !== 'undefined') {
-            window.L = L.default;
-        }
-    });
-}
-
 import { ToastProvider } from "components/toast/toastProvider";
 
 import { Login } from "containers/Login";
@@ -29,6 +20,15 @@ import { plugins } from "../config";
 import i18n, { dynamicActivate } from "../i18n";
 import { NotFound } from "./NotFound";
 import { Header } from "./header";
+
+// Import Leaflet for map components in development
+if (process.env.NODE_ENV === "development") {
+    import("leaflet").then((L) => {
+        if (typeof window !== "undefined") {
+            window.L = L.default;
+        }
+    });
+}
 
 const Routes = () => {
     return (
@@ -178,9 +178,18 @@ const App = () => {
 const AppDefault = () => {
     // Initialize i18n synchronously before rendering
     if (!i18n.locale || i18n.locale === "") {
-        // Load empty messages for English as fallback
-        i18n.load("en", {});
-        i18n.activate("en");
+        // Load empty messages for English as fallback with plurals
+        try {
+            import("make-plural/plurals").then(({ en }) => {
+                i18n.loadLocaleData({ en: { plurals: en } });
+                i18n.load("en", {});
+                i18n.activate("en");
+            });
+        } catch (error) {
+            console.warn("Failed to load English plurals:", error);
+            i18n.load("en", {});
+            i18n.activate("en");
+        }
     }
 
     useEffect(() => {

@@ -39,8 +39,8 @@ const SystemInfo = () => {
     const { data: bd } = useBoardData();
 
     const boardData = bd as IGetBoardDataResponse;
-    const secNum = parseInt(node?.uptime, 10);
-    const attributes = [
+
+    const systemAttributes = [
         {
             label: t`Uptime`,
             value: toHHMMSS(node?.uptime, 0),
@@ -48,18 +48,22 @@ const SystemInfo = () => {
         { label: t`Device`, value: boardData.board_name },
         { label: t`Firmware`, value: boardData.release.description },
     ];
+
     return (
-        <div className="flex justify-start px-10">
-            <div className="grid grid-cols-4 gap-4">
-                {attributes.map((attribute, i) => (
-                    <Fragment key={i}>
-                        <div className="col-span-1 text-left pr-4 font-bold">
-                            {attribute.label}:
+        <div className="flex justify-start px-10 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+                {systemAttributes.map((attribute, i) => (
+                    <div
+                        key={i}
+                        className="flex flex-col space-y-3 bg-gray-50 p-6 rounded-lg border border-gray-200"
+                    >
+                        <div className="text-xl font-semibold text-gray-700">
+                            {attribute.label}
                         </div>
-                        <div className="col-span-3 text-left">
-                            {attribute.value}
+                        <div className="text-2xl text-gray-900 break-words font-medium">
+                            {attribute.value || "N/A"}
                         </div>
-                    </Fragment>
+                    </div>
                 ))}
             </div>
         </div>
@@ -77,8 +81,12 @@ export const System = () => {
             <SectionTitle icon={<GearIcon className={IconsClassName} />}>
                 <Trans>System</Trans>
             </SectionTitle>
-            <div className={"mt-4"}>
-                {isLoading ? <span>Loading...</span> : <SystemInfo />}
+            <div className={"mt-2"}>
+                {isLoading ? (
+                    <span className="px-6 text-xl">Loading...</span>
+                ) : (
+                    <SystemInfo />
+                )}
             </div>
         </Section>
     );

@@ -1,21 +1,19 @@
-import { ComponentChildren } from "preact";
-
 // Import Leaflet core to ensure it's available globally
 import L from "leaflet";
-
+import { ComponentChildren } from "preact";
 // Direct imports instead of lazy loading for development stability
 import {
-    MapContainer,
-    TileLayer,
-    Marker,
-    LayersControl,
     LayerGroup,
+    LayersControl,
+    MapContainer,
+    Marker,
     Polyline,
+    TileLayer,
     Tooltip,
 } from "react-leaflet";
 
 // Ensure Leaflet is available globally for react-leaflet
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
     window.L = L;
 }
 

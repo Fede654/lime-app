@@ -5,7 +5,7 @@ export const Footer = () => {
     return (
         <div
             className={
-                "z-50 fixed bottom-0 w-full flex justify-around content-center items-center"
+                "w-full flex justify-around content-center items-center py-8 bg-gray-50 border-t border-gray-200 mt-8"
             }
         >
             <div>

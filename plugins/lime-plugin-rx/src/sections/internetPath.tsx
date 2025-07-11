@@ -17,7 +17,10 @@ import {
 import LineChart from "plugins/lime-plugin-rx/src/components/internetPathChart";
 import { InternetStatus } from "plugins/lime-plugin-rx/src/components/internetStatus";
 import { PathIcon } from "plugins/lime-plugin-rx/src/icons/pathIcon";
-import { useInternetStatus } from "plugins/lime-plugin-rx/src/rxQueries";
+import {
+    useInternetStatus,
+    useNodeStatus,
+} from "plugins/lime-plugin-rx/src/rxQueries";
 import { IGetInternetStatus } from "plugins/lime-plugin-rx/src/rxTypes";
 
 export const InternetPath = () => {
@@ -65,6 +68,8 @@ export const InternetPath = () => {
             },
         });
 
+    const { data: nodeStatus } = useNodeStatus();
+
     const checkLosses = useCallback(async () => {
         refetchLosses();
     }, [refetchLosses]);
@@ -78,7 +83,7 @@ export const InternetPath = () => {
     let pathComponent = (
         <div
             className={
-                "flex-1 flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
+                "flex-1 flex flex-column text-center text-xl text-disabled justify-content-center align-items-center mt-5 gap-4"
             }
         >
             <Loading />
@@ -92,11 +97,11 @@ export const InternetPath = () => {
         pathComponent = (
             <div
                 className={
-                    "flex-1 flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
+                    "flex-1 flex flex-column text-center text-xl text-disabled justify-content-center align-items-center mt-5 gap-4"
                 }
             >
                 <GlobeIcon
-                    size={"30px"}
+                    size={"36px"}
                     className={"stroke-gray-400 fill-gray-400"}
                 />
                 <Trans>
@@ -115,22 +120,30 @@ export const InternetPath = () => {
     }
 
     return (
-        <Section className={"border border-primary-dark rounded-md mx-4"}>
+        <Section className={"border-2 border-primary-dark"}>
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
-            <div className="flex flex-row items-start justify-center space-x-6 pt-8 px-8">
-                {pathComponent}
-                <div className="flex flex-col justify-center gap-8">
-                    <Button href={"/metrics"}>
+            <div className="flex flex-row items-start justify-center space-x-8 pt-6 px-10 pb-6">
+                <div className="flex-1">{pathComponent}</div>
+                <div className="flex flex-col justify-center gap-6 min-w-[120px]">
+                    <Button
+                        href={"/metrics"}
+                        color={"secondary"}
+                        className="py-3 px-6 text-lg"
+                    >
                         <Trans>Diagnose</Trans>
                     </Button>
-                    <Button href={"/locate"}>
+                    <Button
+                        href={"/locate"}
+                        color={"secondary"}
+                        className="py-3 px-6 text-lg"
+                    >
                         <Trans>Map</Trans>
                     </Button>
                 </div>
             </div>
-            <InternetStatus data={internet} />
+            <InternetStatus data={internet} nodeIps={nodeStatus?.ips} />
         </Section>
     );
 };

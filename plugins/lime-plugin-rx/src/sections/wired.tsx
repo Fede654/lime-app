@@ -20,19 +20,28 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
     }, {});
     return (
         <div
-            className={"flex flex-wrap px-10 gap-4 justify-between"}
+            className={"flex flex-wrap px-10 gap-8 justify-center"}
             data-testid="ports-container"
         >
             {Object.keys(ports).map((role) => {
                 if (role.toLowerCase() === "cpu") return null;
                 return (
-                    <div key={role} className={"flex flex-col h-fit"}>
-                        <h2 className={"font-bold"}>{role.toUpperCase()}</h2>
-                        <h2>
+                    <div
+                        key={role}
+                        className={
+                            "flex flex-col h-fit bg-gray-50 p-6 rounded-lg border border-gray-200 min-w-[150px]"
+                        }
+                    >
+                        <h2 className={"font-bold text-xl text-center mb-2"}>
+                            {role.toUpperCase()}
+                        </h2>
+                        <h2
+                            className={"text-lg text-center mb-4 text-gray-600"}
+                        >
                             {ports[role][0]?.device?.toLowerCase() ||
                                 "Unknown Device"}
                         </h2>
-                        <div className={"flex flex-row gap-5 "}>
+                        <div className={"flex flex-row gap-3 justify-center"}>
                             {ports[role].map((port) => {
                                 const link =
                                     port.link?.toLowerCase() === "up"
@@ -41,7 +50,7 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
                                 return (
                                     <div key={`${role}-${port.num}`}>
                                         <PortsIcon
-                                            className={`h-7 w-7 ${link}`}
+                                            className={`h-10 w-10 ${link}`}
                                         />
                                     </div>
                                 );
@@ -66,7 +75,7 @@ export const Wired = () => {
             </SectionTitle>
             <div className={"mt-4"}>
                 {isLoading ? (
-                    <span>Loading...</span>
+                    <span className="text-xl px-6">Loading...</span>
                 ) : switches.length ? (
                     <Ports switches={status.switch_status} />
                 ) : (
