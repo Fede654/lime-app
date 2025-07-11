@@ -29,7 +29,7 @@ const Notification = ({
     }
     return (
         <div
-            className={`flex w-full min-h-min bg-primary-card border-b-2 border-l-2 border-r-2 border-primary-dark pr-4 ${
+            className={`flex w-full min-h-min bg-primary-card border-b-2 border-l-2 border-r-2 border-primary-600 pr-4 ${
                 onClick && "cursor-pointer"
             }`}
             onClick={onClick}
