@@ -11,11 +11,11 @@ import {
     setChangesNeedReboot,
 } from "./api";
 import { DEFAULT_COMMUNITY_SETTINGS } from "./constants";
-import queryCache from "./queryCache";
+import queryCache, { createSafeQuery } from "./queryCache";
 import api from "./uhttpd.service";
 
 export function useSession() {
-    return useQuery(["session", "get"], getSession, {
+    return useQuery(["session", "get"], createSafeQuery(getSession), {
         staleTime: 0, // Don't use stale data
         cacheTime: 0, // Don't cache results
         retry: 1, // Only retry once
@@ -23,6 +23,22 @@ export function useSession() {
         refetchOnWindowFocus: false,
         refetchOnMount: true, // Always refetch on mount
         refetchOnReconnect: false,
+        onError: (error) => {
+            // Handle different types of errors properly
+            if (error === undefined || error === null) {
+                console.debug(
+                    "Session check: Undefined error (likely service issue)"
+                );
+            } else if (error && error.code === -32002) {
+                console.debug(
+                    "Session check: Access denied (not authenticated)"
+                );
+            } else if (error && error.message) {
+                console.debug("Session check failed:", error.message);
+            } else if (error) {
+                console.debug("Session check failed:", error);
+            }
+        },
     });
 }
 
@@ -42,8 +58,31 @@ export function login({ username, password, customApi = null }) {
 export function useLogin() {
     return useMutation(login, {
         onSuccess: (res) => {
-            // @ts-ignore
-            queryCache.setQueryData(["session", "get"], () => res.data);
+            // Login response structure: { data: { username: "root" }, ... }
+            // Extract username safely with fallback
+            const username =
+                res?.data?.username ||
+                (res?.access_group?.root ? "root" : null);
+            if (username) {
+                queryCache.setQueryData(["session", "get"], () => ({
+                    username,
+                }));
+            } else {
+                console.debug(
+                    "Login success but no username found in response:",
+                    res
+                );
+            }
+        },
+        onError: (error) => {
+            // Handle login errors gracefully
+            if (error && error.code === -32002) {
+                console.debug(
+                    "Login failed: Access denied (invalid credentials)"
+                );
+            } else if (error) {
+                console.debug("Login failed:", error.message || error);
+            }
         },
     });
 }
@@ -75,14 +114,30 @@ export function useLogout() {
 }
 
 export function useBoardData(config) {
-    return useQuery(["system", "board"], getBoardData, config);
+    return useQuery(["system", "board"], createSafeQuery(getBoardData), {
+        onError: (error) => {
+            // Handle different types of errors properly
+            if (error === undefined || error === null) {
+                console.debug(
+                    "Board data: Undefined error (likely service issue)"
+                );
+            } else if (error && error.code === -32002) {
+                console.debug("Board data: Access denied (not authenticated)");
+            } else if (error && error.message) {
+                console.debug("Board data failed:", error.message);
+            } else if (error) {
+                console.debug("Board data failed:", error);
+            }
+        },
+        ...config,
+    });
 }
 
 export function useCommunitySettings() {
     // @ts-ignore
     return useQuery(
         ["lime-utils", "get_community_settings"],
-        getCommunitySettings,
+        createSafeQuery(getCommunitySettings),
         {
             initialData: DEFAULT_COMMUNITY_SETTINGS,
             initialStale: true,
@@ -93,7 +148,7 @@ export function useCommunitySettings() {
 export function useBatHost(mac, outgoingIface, queryConfig) {
     return useQuery(
         ["bat-hosts", "get_bathost", mac, outgoingIface],
-        async () => getBatHost(mac, outgoingIface),
+        createSafeQuery(async () => getBatHost(mac, outgoingIface)),
         {
             retry: 3,
             ...queryConfig,
@@ -102,7 +157,10 @@ export function useBatHost(mac, outgoingIface, queryConfig) {
 }
 
 export function useNeedReboot() {
-    return useQuery(["changes-need-reboot"], getChangesNeedReboot);
+    return useQuery(
+        ["changes-need-reboot"],
+        createSafeQuery(getChangesNeedReboot)
+    );
 }
 
 export function useSetNeedReboot() {
@@ -123,5 +181,8 @@ export function useReboot() {
 }
 
 export function useCheckInternet() {
-    return useQuery(["check-internet", "is_connected"], checkInternet);
+    return useQuery(
+        ["check-internet", "is_connected"],
+        createSafeQuery(checkInternet)
+    );
 }

@@ -18,7 +18,7 @@ export const InternetStatus = ({
     data: IGetInternetStatus;
     nodeIps?: DeviceStatus[];
 }) => {
-    const checkIconClass = "h-10 w-10 fill-primary-dark ";
+    const checkIconClass = "h-10 w-10 fill-primary-600 ";
     const xmarkIconClass = "h-10 w-10 fill-danger ";
     const loadiIconClass = "h-10 w-10 stroke-disabled";
 
@@ -58,7 +58,7 @@ export const InternetStatus = ({
     }
 
     return (
-        <div className="w-full bg-gray-50 rounded-lg mx-6">
+        <div className="w-full bg-gray-50 rounded-lg mx-6 mr-8">
             {/* Título independiente */}
             <div className="px-6 pt-4 pb-2">
                 <h2 className="text-2xl font-semibold text-gray-800">

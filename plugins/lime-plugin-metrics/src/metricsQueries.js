@@ -1,14 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 
-import queryCache from "utils/queryCache";
+import queryCache, { createSafeQuery } from "utils/queryCache";
 
 import { getGateway, getLoss, getMetrics, getPath } from "./metricsApi";
 
 export function useMetrics(ip, params) {
-    return useQuery(["lime-metrics", "get_metrics", ip], () => getMetrics(ip), {
-        retry: false,
-        ...params,
-    });
+    return useQuery(
+        ["lime-metrics", "get_metrics", ip],
+        createSafeQuery(() => getMetrics(ip)),
+        {
+            retry: false,
+            ...params,
+        }
+    );
 }
 
 export const getAllMetrics = async (ips) => {
@@ -36,18 +40,30 @@ export function useAllMetrics(ips, params) {
 }
 
 export function useGateway(params) {
-    return useQuery(["lime-metrics", "get_gateway"], getGateway, params);
+    return useQuery(
+        ["lime-metrics", "get_gateway"],
+        createSafeQuery(getGateway),
+        params
+    );
 }
 
 export function usePath(params) {
-    return useQuery(["lime-metrics", "get_path"], getPath, params);
+    return useQuery(
+        ["lime-metrics", "get_path"],
+        createSafeQuery(getPath),
+        params
+    );
 }
 
 export function useLoss(ip, params) {
-    return useQuery(["lime-metrics", "get_loss", ip], () => getLoss(ip), {
-        retry: false,
-        ...params,
-    });
+    return useQuery(
+        ["lime-metrics", "get_loss", ip],
+        createSafeQuery(() => getLoss(ip)),
+        {
+            retry: false,
+            ...params,
+        }
+    );
 }
 
 export const getAllLoss = async (nodes) => {

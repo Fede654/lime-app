@@ -20,10 +20,39 @@ export function getBatHost(mac, outgoingIface) {
 }
 
 export function getBoardData() {
+    // In development mode with localhost, provide fallback data
+    const isDev =
+        process.env.NODE_ENV === "development" &&
+        typeof window !== "undefined" &&
+        window.location.hostname === "localhost";
+
+    if (isDev) {
+        return Promise.resolve({
+            hostname: "localhost-dev",
+            kernel: "dev-mode",
+            model: "Development Environment",
+            system: "localhost",
+            release: {
+                description: "Development Mode",
+                version: "dev",
+            },
+        });
+    }
+
     return api.call("system", "board", {});
 }
 
 export function getSession() {
+    // In development mode with localhost, provide fallback session
+    const isDev =
+        process.env.NODE_ENV === "development" &&
+        typeof window !== "undefined" &&
+        window.location.hostname === "localhost";
+
+    if (isDev) {
+        return Promise.resolve({ username: null }); // Not authenticated in dev mode
+    }
+
     return api
         .call("session", "access", {})
         .then(async (result) => {

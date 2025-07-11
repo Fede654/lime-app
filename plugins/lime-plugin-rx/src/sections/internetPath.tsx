@@ -35,6 +35,7 @@ export const InternetPath = () => {
 
     const pathLoss =
         path
+            ?.filter((station) => station && station.ip) // Filter out invalid stations
             ?.map((station) => {
                 return { ip: station.ip };
             })
@@ -120,7 +121,7 @@ export const InternetPath = () => {
     }
 
     return (
-        <Section className={"border-2 border-primary-dark"}>
+        <Section>
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
