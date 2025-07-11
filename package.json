@@ -12,7 +12,7 @@
         "start:development": "npm run -s dev",
         "build": "preact build --no-prerender",
         "prebuild:production": "lingui extract; lingui compile",
-        "build:production": "preact build --no-prerender --no-sw --no-esm && rm build/*.map && cp build/index.html build/200.html",
+        "build:production": "preact build --no-prerender --no-sw --no-esm && rm build/*.map && cp build/index.html build/200.html && ./scripts/post-build-cleanup.sh",
         "analyze": "ANALYZE=true npm run build:production",
         "serve": "LOCAL_SERVE=true npx preact build --no-prerender && serve build --single",
         "serve:production": "npm run build:production && serve build --single",
@@ -65,6 +65,8 @@
         "qemu:restart": "./scripts/qemu-manager.sh restart",
         "qemu:status": "./scripts/qemu-manager.sh status",
         "deploy:qemu": "./scripts/qemu-manager.sh deploy",
+        "deploy:optimized": "./scripts/deploy-optimized.sh",
+        "deploy:optimized:aggressive": "./scripts/deploy-optimized.sh aggressive",
         "qemu:dev": "./scripts/dev-with-qemu.sh dev",
         "qemu:check": "./scripts/dev-with-qemu.sh check",
         "prepare": "husky install"

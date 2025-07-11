@@ -233,7 +233,7 @@ msgstr "Back"
 msgid "Background Color"
 msgstr "Background Color"
 
-#: src/containers/Login/Login.tsx:116
+#: src/containers/Login/Login.tsx:128
 msgid "Basic access: username \"lime-app\" (no password)"
 msgstr "Basic access: username \"lime-app\" (no password)"
 
@@ -273,7 +273,7 @@ msgstr "Canceling"
 msgid "Cannot connect to the remote support server"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:160
+#: plugins/lime-plugin-locate/src/locatePage.tsx:202
 msgid "Cannot load map, check your internet connection"
 msgstr ""
 
@@ -523,7 +523,7 @@ msgstr "Creation date: {0}"
 msgid "Currently your node has version:"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:112
+#: src/containers/Login/Login.tsx:124
 msgid "Default credentials:"
 msgstr "Default credentials:"
 
@@ -565,7 +565,7 @@ msgstr "Description: {name}"
 msgid "Device"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:126
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:135
 msgid "Diagnose"
 msgstr "Diagnose"
 
@@ -698,7 +698,7 @@ msgstr "Error performing reboot: {error}"
 msgid "Error reaching hostname!"
 msgstr "Error reaching hostname!"
 
-#: plugins/lime-plugin-align/src/alignPage.js:102
+#: plugins/lime-plugin-align/src/alignPage.js:104
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:97
 msgid "Error retrieving associated list"
 msgstr "Error retrieving associated list"
@@ -711,7 +711,7 @@ msgstr "Error retrieving the status"
 msgid "Error retrieving the status, is this node outdated?"
 msgstr "Error retrieving the status, is this node outdated?"
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:102
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:107
 msgid "Error retrieving<0/>last internet path"
 msgstr "Error retrieving<0/>last internet path"
 
@@ -771,7 +771,7 @@ msgstr "Expired {0}"
 msgid "Expires {0}"
 msgstr "Expires {0}"
 
-#: plugins/lime-plugin-align/src/alignPage.js:37
+#: plugins/lime-plugin-align/src/alignPage.js:39
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
 #: plugins/lime-plugin-rx/src/sections/alignment.tsx:80
 msgid "Fetching name"
@@ -807,7 +807,7 @@ msgstr "Firmware version"
 msgid "From"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:119
+#: src/containers/Login/Login.tsx:133
 msgid "Full access: username \"root\" with community password"
 msgstr "Full access: username \"root\" with community password"
 
@@ -819,7 +819,7 @@ msgstr ""
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 
-#: src/components/NotFound.tsx:46
+#: src/components/NotFound.tsx:49
 msgid "Go Back"
 msgstr "Go Back"
 
@@ -832,12 +832,12 @@ msgid "Go!"
 msgstr ""
 
 #: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:6
-msgid "Ground Routing"
-msgstr ""
+#~ msgid "Ground Routing"
+#~ msgstr ""
 
 #: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:19
-msgid "Ground Routing configuration"
-msgstr ""
+#~ msgid "Ground Routing configuration"
+#~ msgstr ""
 
 #: plugins/lime-plugin-remotesupport/src/consoleView.js:17
 msgid "Hide Console"
@@ -893,10 +893,10 @@ msgid "Internet"
 msgstr "Internet"
 
 #: plugins/lime-plugin-metrics/src/components/internetStatus.js:10
+#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:65
 msgid "Internet connection"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:19
 #: plugins/lime-plugin-rx/src/components/internetStatus.tsx:41
 msgid "Internet<0/>connection"
 msgstr "Internet<0/>connection"
@@ -905,7 +905,7 @@ msgstr "Internet<0/>connection"
 msgid "Invalid Nodes"
 msgstr "Invalid Nodes"
 
-#: src/containers/Login/Login.tsx:90
+#: src/containers/Login/Login.tsx:96
 msgid "Invalid username or password. Please try again."
 msgstr "Invalid username or password. Please try again."
 
@@ -953,7 +953,7 @@ msgstr "Join <0>foro.librerouter.org</0>"
 msgid "Join the mesh"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:55
+#: plugins/lime-plugin-align/src/alignPage.js:57
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:134
 msgid "Last packet"
 msgstr ""
@@ -966,7 +966,7 @@ msgstr "Last seen"
 msgid "LiMeApp Login"
 msgstr "LiMeApp Login"
 
-#: src/containers/Menu/ModernMenu.tsx:272
+#: src/containers/Menu/ModernMenu.tsx:199
 msgid "LibreMesh Network"
 msgstr "LibreMesh Network"
 
@@ -990,11 +990,11 @@ msgstr "Link {0} {1}"
 msgid "Load last known Internet path"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:85
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:90
 msgid "Loading <0/>last internet path..."
 msgstr "Loading <0/>last internet path..."
 
-#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:31
+#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:53
 msgid "Loading..."
 msgstr "Loading..."
 
@@ -1010,11 +1010,11 @@ msgstr "Locate"
 msgid "Logging in"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:102
+#: src/containers/Login/Login.tsx:114
 msgid "Logging in..."
 msgstr "Logging in..."
 
-#: src/containers/Login/Login.tsx:105
+#: src/containers/Login/Login.tsx:117
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:63
 msgid "Login"
 msgstr ""
@@ -1039,11 +1039,11 @@ msgstr "Main Text"
 msgid "Manage Vouchers"
 msgstr "Manage Vouchers"
 
-#: src/containers/Menu/ModernMenu.tsx:141
+#: src/containers/Menu/ModernMenu.tsx:139
 msgid "Manage your LibreMesh network"
 msgstr "Manage your LibreMesh network"
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:129
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:142
 msgid "Map"
 msgstr ""
 
@@ -1117,11 +1117,11 @@ msgstr "Most active link"
 msgid "Must select a valid hostname"
 msgstr "Must select a valid hostname"
 
-#: src/containers/Menu/ModernMenu.tsx:138
+#: src/containers/Menu/ModernMenu.tsx:136
 msgid "Navigation"
 msgstr "Navigation"
 
-#: src/components/NotFound.tsx:53
+#: src/components/NotFound.tsx:56
 msgid "Need help? Check the network status or contact your network administrator."
 msgstr "Need help? Check the network status or contact your network administrator."
 
@@ -1171,8 +1171,8 @@ msgid "No changes made"
 msgstr "No changes made"
 
 #: src/containers/Menu/ModernMenu.tsx:260
-msgid "No menu items found for \"{searchTerm}\""
-msgstr "No menu items found for \"{searchTerm}\""
+#~ msgid "No menu items found for \"{searchTerm}\""
+#~ msgstr "No menu items found for \"{searchTerm}\""
 
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:34
 msgid "No new version available is found"
@@ -1252,7 +1252,7 @@ msgstr "Number of vouchers"
 msgid "Ok"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:46
+#: plugins/lime-plugin-align/src/alignPage.js:48
 msgid "On its radio {radioNumber}"
 msgstr ""
 
@@ -1303,7 +1303,7 @@ msgstr ""
 msgid "Password: {password}"
 msgstr "Password: {password}"
 
-#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:120
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:125
 msgid "Path to Internet"
 msgstr "Path to Internet"
 
@@ -1340,7 +1340,7 @@ msgstr ""
 msgid "Please wait {time} seconds"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:137
+#: plugins/lime-plugin-align/src/alignPage.js:139
 msgid "Radio {radioNumber}"
 msgstr ""
 
@@ -1394,14 +1394,14 @@ msgid "Reference is not set or has errors"
 msgstr "Reference is not set or has errors"
 
 #: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:27
-msgid "Reload"
-msgstr ""
+#~ msgid "Reload"
+#~ msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:140
 msgid "Reload page"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:83
+#: src/containers/Login/Login.tsx:89
 msgid "Remember me"
 msgstr "Remember me"
 
@@ -1639,7 +1639,7 @@ msgstr "Show state"
 msgid "Signal"
 msgstr "Signal"
 
-#: plugins/lime-plugin-align/src/alignPage.js:52
+#: plugins/lime-plugin-align/src/alignPage.js:54
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:64
 msgid "Signal lost"
 msgstr ""
@@ -1731,7 +1731,7 @@ msgstr "Status: {0}"
 msgid "Success"
 msgstr "Success"
 
-#: plugins/lime-plugin-rx/src/sections/system.tsx:78
+#: plugins/lime-plugin-rx/src/sections/system.tsx:82
 msgid "System"
 msgstr ""
 
@@ -1743,7 +1743,7 @@ msgstr ""
 msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 
-#: plugins/lime-plugin-align/src/alignPage.js:157
+#: plugins/lime-plugin-align/src/alignPage.js:159
 msgid "The are not mesh interfaces available"
 msgstr ""
 
@@ -1852,7 +1852,7 @@ msgstr ""
 msgid "There's no open session for remote support. Click at Create Session to begin one"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:111
+#: plugins/lime-plugin-align/src/alignPage.js:113
 msgid "These are the nodes associated on this radio"
 msgstr ""
 
@@ -1960,7 +1960,7 @@ msgstr "This node seems down, remove them from the reference state?"
 msgid "This node version<0/>{0}"
 msgstr "This node version<0/>{0}"
 
-#: plugins/lime-plugin-align/src/alignPage.js:119
+#: plugins/lime-plugin-align/src/alignPage.js:121
 msgid "This radio is not associated with other nodes"
 msgstr ""
 
@@ -2142,7 +2142,7 @@ msgstr "Wifi Links Reference"
 msgid "Wifi Password"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/wired.tsx:65
+#: plugins/lime-plugin-rx/src/sections/wired.tsx:74
 msgid "Wired connections"
 msgstr "Wired connections"
 
@@ -2211,15 +2211,15 @@ msgstr "Your Lime Community file seems empty! Please add some configurations."
 msgid "Your node has no internet connection"
 msgstr "Your node has no internet connection"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:232
+#: plugins/lime-plugin-locate/src/locatePage.tsx:285
 msgid "cancel"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:218
+#: plugins/lime-plugin-locate/src/locatePage.tsx:271
 msgid "confirm location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:234
+#: plugins/lime-plugin-locate/src/locatePage.tsx:287
 msgid "edit location"
 msgstr ""
 
@@ -2227,7 +2227,7 @@ msgstr ""
 msgid "for the following nodes: {nodes}"
 msgstr "for the following nodes: {nodes}"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:224
+#: plugins/lime-plugin-locate/src/locatePage.tsx:277
 msgid "hide community"
 msgstr ""
 
@@ -2235,7 +2235,7 @@ msgstr ""
 msgid "key"
 msgstr "key"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:237
+#: plugins/lime-plugin-locate/src/locatePage.tsx:290
 msgid "locate my node"
 msgstr ""
 
@@ -2243,7 +2243,7 @@ msgstr ""
 msgid "more than a minute ago"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:226
+#: plugins/lime-plugin-locate/src/locatePage.tsx:279
 msgid "show community"
 msgstr ""
 
@@ -2255,7 +2255,7 @@ msgstr ""
 msgid "to the previous configuration"
 msgstr ""
 
-#: src/containers/Menu/ModernMenu.tsx:275
+#: src/containers/Menu/ModernMenu.tsx:202
 msgid "v4.0"
 msgstr "v4.0"
 
@@ -2268,7 +2268,6 @@ msgstr ""
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:48
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:52
 #: src/containers/Menu/MenuGroup.tsx:69
-#: src/containers/Menu/MenuGroup.tsx:72
 msgid "{0}"
 msgstr "{0}"
 
