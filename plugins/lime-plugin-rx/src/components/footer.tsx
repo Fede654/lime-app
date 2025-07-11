@@ -1,8 +1,8 @@
 import { Trans } from "@lingui/macro";
 
 // Import logos directly so webpack can handle the paths correctly
-import AlterMundiLogo from "assets/icons/AlterMundiLogo.svg";
-import LibreRouterLogo from "assets/icons/LibreRouterLogo.svg";
+import AlterMundiLogo from "~/assets/icons/AlterMundiLogo.svg";
+import LibreRouterLogo from "~/assets/icons/LibreRouterLogo.svg";
 
 export const Footer = () => {
     const imgClass = "h-16";
