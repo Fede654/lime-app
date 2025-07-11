@@ -185,6 +185,15 @@ const AppDefault = () => {
                 // Ensure i18n is activated before rendering
                 if (!i18n.locale || i18n.locale === "") {
                     // Synchronous activation to prevent I18nProvider warning
+                    // Add basic plural rules for English to avoid warnings
+                    i18n.loadLocaleData({
+                        en: {
+                            plurals: (n: number, ordinal: boolean) => {
+                                if (ordinal) return n === 1 ? 'one' : n === 2 ? 'two' : n === 3 ? 'few' : 'other';
+                                return n === 1 ? 'one' : 'other';
+                            }
+                        }
+                    });
                     i18n.load("en", {});
                     i18n.activate("en");
                 }
