@@ -35,7 +35,9 @@ export async function dynamicActivate(locale: Locales) {
         i18n.activate(locale);
     } catch (e) {
         // This will fail only during test, due to webpack config, which is expected
-        console.warn("Failed to load locale data for", locale, ":", e);
+        if (process.env.NODE_ENV !== "production") {
+            console.warn("Failed to load locale data for", locale, ":", e);
+        }
         // Fallback to English with empty messages
         try {
             plurals = (await import("make-plural/plurals")).en;
@@ -43,7 +45,9 @@ export async function dynamicActivate(locale: Locales) {
             i18n.load("en", {});
             i18n.activate("en");
         } catch (fallbackError) {
-            console.error("Failed to load fallback locale:", fallbackError);
+            if (process.env.NODE_ENV !== "production") {
+                console.error("Failed to load fallback locale:", fallbackError);
+            }
         }
     }
 }

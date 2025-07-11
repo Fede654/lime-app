@@ -27,7 +27,7 @@ export class PontToPointLink {
         this.coordinates.push(coord1, coord2);
     }
 
-    addLink(link: typeof this._links[number]) {
+    addLink(link: (typeof this._links)[number]) {
         this.links.push(link);
     }
 

@@ -2,7 +2,7 @@ import { fromNavigator } from "@lingui/detect-locale";
 import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import Router, { route } from "preact-router";
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 
 import { ToastProvider } from "components/toast/toastProvider";
 
@@ -176,41 +176,48 @@ const App = () => {
 };
 
 const AppDefault = () => {
-    // Initialize i18n with minimal setup before rendering
-    if (!i18n.locale || i18n.locale === "") {
-        // Load empty messages for English as fallback
-        i18n.load("en", {});
-        // Don't activate here - let dynamicActivate handle it properly
-    }
+    const [i18nReady, setI18nReady] = useState(false);
 
     useEffect(() => {
-        // Load dynamic locale after initial render
+        // Initialize i18n before rendering
         const initializeLocale = async () => {
             try {
+                // Ensure i18n is activated before rendering
+                if (!i18n.locale || i18n.locale === "") {
+                    // Synchronous activation to prevent I18nProvider warning
+                    i18n.load("en", {});
+                    i18n.activate("en");
+                }
+                
+                setI18nReady(true);
+                
+                // Then load proper locale asynchronously
                 const locale =
                     (fromNavigator()?.split("-")[0] as Locales) || "en";
                 await dynamicActivate(locale);
             } catch (error) {
-                console.warn("i18n dynamic activation error:", error);
-                // Fallback to English with basic setup
-                try {
-                    await dynamicActivate("en");
-                } catch (fallbackError) {
-                    console.error(
-                        "Failed to initialize fallback locale:",
-                        fallbackError
-                    );
-                    // Last resort: activate without plurals (will show the warning)
+                if (process.env.NODE_ENV !== "production") {
+                    console.warn("i18n dynamic activation error:", error);
+                }
+                // Fallback: ensure we have a working setup
+                if (!i18n.locale) {
                     i18n.load("en", {});
                     i18n.activate("en");
                 }
+                setI18nReady(true);
             }
         };
 
         initializeLocale();
     }, []);
+
+    // Don't render until i18n is properly initialized
+    if (!i18nReady) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <I18nProvider i18n={i18n}>
+        <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
             <QueryClientProvider client={queryCache}>
                 <AppContextProvider>
                     <ToastProvider>

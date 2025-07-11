@@ -8,12 +8,8 @@ const queryCache = new QueryClient({
             retry: 0,
         },
     },
-    logger: {
-        log: console.log,
-        warn: console.warn,
-        // ✅ no more errors on the console for tests
-        error: process.env.NODE_ENV === "test" ? () => {} : console.error,
-    },
+    // Removed deprecated logger configuration for TanStack Query v4+
+    // Use setLogger() method instead if custom logging is needed
 });
 
 export default queryCache;
