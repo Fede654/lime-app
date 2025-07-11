@@ -52,25 +52,22 @@ export const MenuGroup = ({
                     {/* Group Icon */}
                     <div
                         className={`
-                        p-2 rounded-lg bg-gradient-to-br 
+                        p-3 rounded-lg bg-gradient-to-br 
                         from-primary-100 to-primary-200
                         ${groupConfig.color}
                     `}
                     >
                         <MenuIcon
                             iconName={groupConfig.icon}
-                            className="w-5 h-5"
+                            className="w-8 h-8"
                         />
                     </div>
 
                     {/* Group Info */}
                     <div className="text-left flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 text-sm truncate">
+                        <h3 className="text-4xl font-bold text-gray-900 text-left truncate">
                             <Trans>{groupConfig.label}</Trans>
                         </h3>
-                        <p className="text-xs text-gray-500 mt-0.5 truncate">
-                            <Trans>{groupConfig.description}</Trans>
-                        </p>
                     </div>
                 </div>
 
