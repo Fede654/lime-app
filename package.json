@@ -10,7 +10,7 @@
         "start": "per-env",
         "start:production": "npm run serve:production",
         "start:development": "npm run -s dev",
-        "build": "preact build --no-prerender",
+        "build": "preact build --no-prerender --no-sw",
         "prebuild:production": "lingui extract; lingui compile",
         "build:production": "preact build --no-prerender --no-sw --no-esm && rm build/*.map && cp build/index.html build/200.html && ./scripts/post-build-cleanup.sh",
         "analyze": "ANALYZE=true npm run build:production",
