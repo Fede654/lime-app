@@ -187,7 +187,8 @@ const AppDefault = () => {
         // Load dynamic locale after initial render
         const initializeLocale = async () => {
             try {
-                const locale = (fromNavigator()?.split("-")[0] as Locales) || "en";
+                const locale =
+                    (fromNavigator()?.split("-")[0] as Locales) || "en";
                 await dynamicActivate(locale);
             } catch (error) {
                 console.warn("i18n dynamic activation error:", error);
@@ -195,14 +196,17 @@ const AppDefault = () => {
                 try {
                     await dynamicActivate("en");
                 } catch (fallbackError) {
-                    console.error("Failed to initialize fallback locale:", fallbackError);
+                    console.error(
+                        "Failed to initialize fallback locale:",
+                        fallbackError
+                    );
                     // Last resort: activate without plurals (will show the warning)
                     i18n.load("en", {});
                     i18n.activate("en");
                 }
             }
         };
-        
+
         initializeLocale();
     }, []);
     return (

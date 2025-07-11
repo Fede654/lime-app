@@ -59,7 +59,9 @@ const Toast = ({
     return (
         <div className={style.toastWrapper}>
             <div
-                className={`${style.toast} ${style.toastAnimation} ${getStyle(type)}`}
+                className={`${style.toast} ${style.toastAnimation} ${getStyle(
+                    type
+                )}`}
                 onClick={(e) => {
                     e.stopPropagation();
                     _onHide();

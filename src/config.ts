@@ -2,7 +2,6 @@ import Align from "plugins/lime-plugin-align";
 import ChangeNode from "plugins/lime-plugin-changeNode";
 import Fbw from "plugins/lime-plugin-fbw";
 import Firmware from "plugins/lime-plugin-firmware";
-import GroundRouting from "plugins/lime-plugin-ground-routing";
 import Locate from "plugins/lime-plugin-locate";
 import MeshWide from "plugins/lime-plugin-mesh-wide";
 import MeshConfigPage from "plugins/lime-plugin-mesh-wide-config";
@@ -35,7 +34,6 @@ export const plugins: LimePlugin[] = [
     // Tools & Utilities Group
     { ...Align, menuGroup: "tools" },
     { ...ChangeNode, menuGroup: "tools" },
-    { ...GroundRouting, menuGroup: "tools" },
     { ...RemoteSupport, menuGroup: "tools" },
 
     // Community Group

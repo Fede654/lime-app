@@ -210,7 +210,9 @@ export const BottomSheet = ({
     return (
         <div>
             <div
-                className={prefersReducedMotion ? "" : style.bottomSheetAnimation}
+                className={
+                    prefersReducedMotion ? "" : style.bottomSheetAnimation
+                }
                 style={{
                     maxWidth: `${maxWidth}px`,
                     left: "50%",
@@ -219,7 +221,9 @@ export const BottomSheet = ({
                     width: "100%",
                     height: DRAWER_HEIGHT,
                     bottom: `${bottom}px`,
-                    transition: prefersReducedMotion ? "none" : "bottom 300ms ease-out",
+                    transition: prefersReducedMotion
+                        ? "none"
+                        : "bottom 300ms ease-out",
                 }}
             >
                 <div
