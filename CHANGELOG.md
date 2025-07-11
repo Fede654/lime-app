@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.28](https://github.com/Fede654/lime-app/compare/v0.2.27...v0.2.28) (2025-07-11)
+
+
+### Features
+
+* **locate:** add development mock data and tests ([245c982](https://github.com/Fede654/lime-app/commit/245c982b2650a38220fe58b7c56b76b5c428cd30))
+* **optimization:** complete bundle optimization Phase 2 - Service Workers & CSS ([c96d3ff](https://github.com/Fede654/lime-app/commit/c96d3ffe41fd42764b666830f11bd3d6b1b53703))
+* **optimization:** implement bundle size optimizations - Phase 1 ([25233af](https://github.com/Fede654/lime-app/commit/25233af0e169dfaa915b0d94f44fcdb74b8b8bec))
+* remove search functionality and fix locate plugin for development ([fcb8384](https://github.com/Fede654/lime-app/commit/fcb8384cc91bf078664111ea44889618ff1b681b))
+* remove search functionality from main menu ([ca208cb](https://github.com/Fede654/lime-app/commit/ca208cbeef0150b6b0d3ec9e0ad38cb7aeb404f9))
+
+
+### Bug Fixes
+
+* compile translations to resolve TypeScript import errors ([38b6989](https://github.com/Fede654/lime-app/commit/38b69891db43e47461a214da075d591f0f78cb47))
+* **storybook:** resolve configuration and import issues ([a2bd461](https://github.com/Fede654/lime-app/commit/a2bd461cccbb5e15cfcd78978886bc17b2fc0afe))
+
 ### [0.2.27](https://github.com/Fede654/lime-app/compare/v0.2.26...v0.2.27) (2025-07-10)
 
 
