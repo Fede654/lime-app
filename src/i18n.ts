@@ -31,7 +31,7 @@ export async function dynamicActivate(locale: Locales) {
         }
 
         i18n.loadLocaleData({ [locale]: { plurals } });
-        i18n.load(locale, catalog.messages);
+        i18n.load(locale, catalog.messages || {});
         i18n.activate(locale);
     } catch (e) {
         // This will fail only during test, due to webpack config, which is expected

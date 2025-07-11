@@ -55,7 +55,7 @@ export const MeshWideMap = ({
     const loading = assetsLoading || isLoadingLocation;
 
     useEffect(() => {
-        if (mapRef) {
+        if (mapRef?.current && typeof mapRef.current.on === "function") {
             mapRef.current.on("click", () => {
                 if (selectedMapFeature !== null) {
                     setSelectedMapFeature(null);

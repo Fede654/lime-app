@@ -4,6 +4,14 @@ const DEFAULT_SESSION_TIMEOUT = 5000;
 const parseResult = (result) =>
     new Promise((res, rej) => {
         if (result.error) {
+            // Handle common access errors more gracefully
+            if (result.error.code === -32002) {
+                console.warn("ubus access denied - session may be expired");
+            } else if (result.error.code === -32000) {
+                console.warn(
+                    "ubus object not found - service may not be available"
+                );
+            }
             return rej(result.error);
         }
         if (result.result[0] !== 0) {

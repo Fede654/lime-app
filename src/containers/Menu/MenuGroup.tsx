@@ -37,7 +37,7 @@ export const MenuGroup = ({
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 className={`
-                    w-full flex items-center justify-between p-3 rounded-lg 
+                    w-full flex items-center justify-between p-2 rounded-lg 
                     bg-white shadow-sm border border-gray-200 
                     hover:shadow-md hover:border-primary-300 
                     transition-all duration-200 ease-in-out
@@ -52,25 +52,22 @@ export const MenuGroup = ({
                     {/* Group Icon */}
                     <div
                         className={`
-                        p-2 rounded-lg bg-gradient-to-br 
+                        p-1.5 rounded-md bg-gradient-to-br 
                         from-primary-100 to-primary-200
                         ${groupConfig.color}
                     `}
                     >
                         <MenuIcon
                             iconName={groupConfig.icon}
-                            className="w-5 h-5"
+                            className="w-4 h-4"
                         />
                     </div>
 
                     {/* Group Info */}
                     <div className="text-left flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 text-sm truncate">
+                        <h3 className="font-semibold text-gray-900 text-2xl truncate">
                             <Trans>{groupConfig.label}</Trans>
                         </h3>
-                        <p className="text-xs text-gray-500 mt-0.5 truncate">
-                            <Trans>{groupConfig.description}</Trans>
-                        </p>
                     </div>
                 </div>
 
@@ -116,10 +113,10 @@ export const MenuGroup = ({
                             return (
                                 <div
                                     className="
-                                        flex items-center py-2 px-3 rounded-md 
+                                        flex items-center py-1 px-3 rounded-md 
                                         hover:bg-gray-50 hover:shadow-sm 
                                         transition-all duration-150
-                                        min-h-[44px] group cursor-pointer
+                                        min-h-[32px] group cursor-pointer
                                         border border-transparent hover:border-gray-200
                                         overflow-hidden
                                     "

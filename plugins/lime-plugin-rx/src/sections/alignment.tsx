@@ -45,7 +45,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
             1024
     );
     return (
-        <div className={"flex flex-row mt-6 justify-between md:px-8"}>
+        <div className={"flex flex-row mt-6 justify-between gap-8 px-10"}>
             {hasMostActive && (
                 <Fragment>
                     <div className={"flex-1 text-7xl text-center text-primary"}>
@@ -68,7 +68,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                                 ))}
                         </div>
                     </div>
-                    <div className={"flex-1 flex flex-col text-xl "}>
+                    <div className={"flex-1 flex flex-col text-2xl "}>
                         <div className={"font-bold"}>
                             <Trans>Most active link</Trans>
                         </div>
@@ -126,7 +126,7 @@ export const Alignment = () => {
                     <Trans>Your Alignment</Trans>
                 </SectionTitle>
                 {isLoading ? (
-                    <div className={"flex-1 flex justify-center"}>
+                    <div className={"flex-1 flex justify-center text-xl px-6"}>
                         Loading...
                     </div>
                 ) : (

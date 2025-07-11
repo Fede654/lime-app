@@ -11,7 +11,7 @@ const Page = ({}) => {
         <Fragment>
             <div
                 className={
-                    "flex flex-col items-center -translate-y-6 w-full max-w-screen-md mx-auto"
+                    "flex flex-col items-center w-full max-w-screen-md mx-auto py-6"
                 }
             >
                 <InternetPath />
