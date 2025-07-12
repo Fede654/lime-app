@@ -11,14 +11,14 @@ set -e
 # Configuration
 LIME_PACKAGES_DIR="../lime-packages"
 LIME_APP_FILES_DIR="$LIME_PACKAGES_DIR/packages/lime-app/files/www/app"
-ROOTFS_PATH="$LIME_PACKAGES_DIR/build/libremesh-2024.1-ow23.05.5-default-x86-64-generic-squashfs-rootfs.img.gz"
-KERNEL_PATH="$LIME_PACKAGES_DIR/build/libremesh-2024.1-ow23.05.5-default-x86-64-generic-initramfs-kernel.bin"
+ROOTFS_PATH="$LIME_PACKAGES_DIR/build/librerouteros-24.10.1-r28597-0425664679-x86-64-rootfs.tar.gz"
+KERNEL_PATH="$LIME_PACKAGES_DIR/build/librerouteros-24.10.1-r28597-0425664679-x86-64-generic-kernel.bin"
 
 # Try to detect available rootfs/kernel images if default paths don't exist
 if [ ! -f "$ROOTFS_PATH" ]; then
     # Try 2020.4 version as fallback (only tar.gz format works with qemu_dev_start)
-    ROOTFS_PATH="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz"
-    KERNEL_PATH="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage"
+    ROOTFS_PATH="$LIME_PACKAGES_DIR/build/libremesh-2024.1-ow23.05.5-default-x86-64-generic-squashfs-rootfs.img.gz"
+    KERNEL_PATH="$LIME_PACKAGES_DIR/build/libremesh-2024.1-ow23.05.5-default-x86-64-generic-initramfs-kernel.bin"
 fi
 
 # Note: Image validation is done in check_prerequisites function
