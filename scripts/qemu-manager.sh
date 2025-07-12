@@ -1,30 +1,23 @@
 #!/usr/bin/env bash
 #
-# Standardized QEMU LibreMesh Management Script
-# Handles QEMU lifecycle with proper cleanup and restart
+# Advanced QEMU LibreMesh/LibreRouterOS Management Script
+# Supports multiple image configurations with specific network setups
 #
-# Usage: ./scripts/qemu-manager.sh {start|stop|restart|status|deploy}
+# Usage: ./scripts/qemu-manager.sh {start|stop|restart|status|deploy|configs}
+# Environment: QEMU_IMAGE_CONFIG={libremesh-2305|librerouteros-2410}
 #
 
 set -e
 
-# Configuration
+# Base configuration
 LIME_PACKAGES_DIR="../lime-packages"
 LIME_APP_FILES_DIR="$LIME_PACKAGES_DIR/packages/lime-app/files/www/app"
-ROOTFS_PATH="$LIME_PACKAGES_DIR/build/librerouteros-24.10.1-r28597-0425664679-x86-64-rootfs.tar.gz"
-KERNEL_PATH="$LIME_PACKAGES_DIR/build/librerouteros-24.10.1-r28597-0425664679-x86-64-generic-kernel.bin"
 
-# Try to detect available rootfs/kernel images if default paths don't exist
-if [ ! -f "$ROOTFS_PATH" ]; then
-    # Try 2020.4 version as fallback (only tar.gz format works with qemu_dev_start)
-    ROOTFS_PATH="$LIME_PACKAGES_DIR/build/libremesh-2024.1-ow23.05.5-default-x86-64-generic-squashfs-rootfs.img.gz"
-    KERNEL_PATH="$LIME_PACKAGES_DIR/build/libremesh-2024.1-ow23.05.5-default-x86-64-generic-initramfs-kernel.bin"
-fi
-
-# Note: Image validation is done in check_prerequisites function
-
-QEMU_IP="10.13.0.1"
-TELNET_PORT="45400"
+# Load image configuration system
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SOURCE_DIR/qemu-image-configs.sh"
+source "$SOURCE_DIR/qemu-network-libremesh.sh"
+source "$SOURCE_DIR/qemu-network-librerouteros.sh"
 
 # Colors for output
 RED='\033[0;31m'
@@ -59,70 +52,47 @@ check_qemu_running() {
     fi
 }
 
-# Auto-configure LibreMesh network after boot
-setup_libremesh_network() {
-    print_status "Waiting for LibreMesh boot to complete..."
+# Image-specific network setup dispatcher
+setup_network_for_image() {
+    case "$IMAGE_TYPE" in
+        "libremesh-2305")
+            setup_libremesh_network
+            ;;
+        "librerouteros-2410")
+            setup_librerouteros_network
+            ;;
+        *)
+            print_error "Unknown image type: $IMAGE_TYPE"
+            print_error "Falling back to generic network setup..."
+            setup_generic_network
+            ;;
+    esac
+}
+
+# Generic network setup fallback
+setup_generic_network() {
+    print_status "Applying generic network configuration..."
     
-    # Wait for LibreMesh to fully boot (look for specific boot messages)
     for i in {1..15}; do
-        # Check if we can see the root prompt or system is ready
         sudo screen -S libremesh -X hardcopy /tmp/boot_check.txt 2>/dev/null
         if grep -q "root@.*:/#" /tmp/boot_check.txt 2>/dev/null; then
-            print_status "✓ LibreMesh boot completed"
             break
         fi
-        
-        # Send Enter periodically to activate console
         if [ $((i % 3)) -eq 0 ]; then
             sudo screen -S libremesh -X stuff $'\n' 2>/dev/null || true
         fi
-        
         sleep 2
         echo -n "."
     done
     echo
     
-    print_status "Configuring network interfaces..."
-    
-    # Detect available network interface
-    print_status "Detecting network interfaces..."
-    sudo screen -S libremesh -X stuff 'ip link show | grep -E "^[0-9]+: (eth|br-|wlan)" | head -1'$'\n'
+    sudo screen -S libremesh -X stuff 'ip addr add 10.13.0.1/16 dev eth0 2>/dev/null; ip link set eth0 up'$'\n'
     sleep 2
-    
-    # Try common interface names in order of preference
-    print_status "Configuring network with fallback interface detection..."
-    
-    # First try br-lan (mesh bridge)
-    sudo screen -S libremesh -X stuff 'if ip link show br-lan >/dev/null 2>&1; then echo "Using br-lan"; ip addr add 10.13.0.1/16 dev br-lan; ip link set br-lan up; fi'$'\n'
-    sleep 2
-    
-    # Fallback to eth0 if br-lan doesn't exist
-    sudo screen -S libremesh -X stuff 'if ! ip addr show br-lan | grep -q "10.13.0.1" 2>/dev/null; then echo "Fallback to eth0"; ip addr add 10.13.0.1/16 dev eth0 2>/dev/null; ip link set eth0 up 2>/dev/null; fi'$'\n'
-    sleep 2
-    
-    # Final fallback to first available ethernet interface
-    sudo screen -S libremesh -X stuff 'if ! ip addr show | grep -q "10.13.0.1" 2>/dev/null; then ETH_IF=$(ip link show | grep -o "^[0-9]*: eth[0-9]*" | head -1 | cut -d: -f2 | tr -d " "); if [ -n "$ETH_IF" ]; then echo "Using $ETH_IF"; ip addr add 10.13.0.1/16 dev $ETH_IF; ip link set $ETH_IF up; fi; fi'$'\n'
-    sleep 2
-    
-    # Set default root password for development
-    print_status "Setting default root password to 'admin'..."
     sudo screen -S libremesh -X stuff 'echo -e "admin\\nadmin" | passwd root'$'\n'
     sleep 2
-    
-    # Start uHTTPd if not running
-    sudo screen -S libremesh -X stuff '/etc/init.d/uhttpd start'$'\n'
+    sudo screen -S libremesh -X stuff '/etc/init.d/uhttpd start; /etc/init.d/ubus start'$'\n'
     sleep 2
     
-    # Ensure ubus is running for API access
-    sudo screen -S libremesh -X stuff '/etc/init.d/ubus start'$'\n'
-    sleep 2
-    
-    # Verify network configuration
-    print_status "Verifying network configuration..."
-    sudo screen -S libremesh -X stuff 'echo "=== Network Status ==="; ip addr show | grep -A1 "10.13.0.1"; echo "=== uHTTPd Status ==="; ps | grep uhttpd || echo "uHTTPd not running"; echo "=== Default Credentials ==="; echo "Username: root, Password: admin"'$'\n'
-    sleep 2
-    
-    print_status "Network and authentication configuration completed"
     sudo rm -f /tmp/boot_check.txt 2>/dev/null || true
 }
 
@@ -186,62 +156,41 @@ kill_qemu_processes() {
     print_status "QEMU processes and network cleanup completed"
 }
 
-# Check prerequisites
+# Check prerequisites with image configuration support
 check_prerequisites() {
     if [ ! -d "$LIME_PACKAGES_DIR" ]; then
         print_error "lime-packages directory not found at $LIME_PACKAGES_DIR"
         exit 1
     fi
     
-    # Validate that we have a compatible rootfs (must be tar.gz, not squashfs img.gz)
-    if [[ "$ROOTFS_PATH" == *.img.gz ]]; then
-        print_error "Detected squashfs image format: $(basename "$ROOTFS_PATH")"
-        print_error "QEMU development requires tar.gz format rootfs, not squashfs img.gz"
-        print_error "Please use LibreMesh 2020.4 images or convert the image format"
-        # Try fallback to 2020.4 if it exists
-        FALLBACK_ROOTFS="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-rootfs.tar.gz"
-        FALLBACK_KERNEL="$LIME_PACKAGES_DIR/build/libremesh-2020.4-ow19-x86-64-ramfs.bzImage"
-        if [ -f "$FALLBACK_ROOTFS" ] && [ -f "$FALLBACK_KERNEL" ]; then
-            print_status "Falling back to LibreMesh 2020.4 compatible images"
-            ROOTFS_PATH="$FALLBACK_ROOTFS"
-            KERNEL_PATH="$FALLBACK_KERNEL"
-        else
-            print_error "No compatible tar.gz rootfs images found"
-            exit 1
-        fi
-    fi
+    # Auto-detect and configure image setup
+    auto_detect_image_config
+    validate_image_config
     
-    if [ ! -f "$ROOTFS_PATH" ]; then
-        print_error "LibreMesh rootfs not found at $ROOTFS_PATH"
-        print_error "Available images:"
-        ls -la "$LIME_PACKAGES_DIR/build/" | grep -E "\.(img\.gz|tar\.gz)$" || echo "No images found"
-        exit 1
-    fi
-    
-    if [ ! -f "$KERNEL_PATH" ]; then
-        print_error "LibreMesh kernel not found at $KERNEL_PATH"
-        print_error "Available kernels:"
-        ls -la "$LIME_PACKAGES_DIR/build/" | grep -E "\.(bin|bzImage)$" || echo "No kernels found"
-        exit 1
-    fi
-    
-    # Test if rootfs can be extracted with tar
-    if ! tar -tf "$ROOTFS_PATH" >/dev/null 2>&1; then
-        print_error "Rootfs file $ROOTFS_PATH is not a valid tar archive"
-        print_error "QEMU development requires extractable tar.gz format"
-        exit 1
-    fi
+    print_status "Using configuration: $IMAGE_NAME"
+    print_status "Telnet port: $TELNET_PORT (for console access)"
 }
 
 # Start QEMU
 start_qemu() {
-    print_status "Starting QEMU LibreMesh..."
+    print_status "Starting QEMU with $IMAGE_NAME..."
     
     check_prerequisites
     
     if check_qemu_running; then
         print_warning "QEMU already running at $QEMU_IP"
         return 0
+    fi
+    
+    # Pre-create required TAP interfaces to prevent QEMU startup failure
+    print_status "Preparing QEMU network interfaces..."
+    if [ ! -e "/sys/class/net/lime_tap00_1" ]; then
+        sudo ip tuntap add name lime_tap00_1 mode tap 2>/dev/null || true
+        sudo ip link set lime_tap00_1 up 2>/dev/null || true
+    fi
+    if [ ! -e "/sys/class/net/lime_tap00_2" ]; then
+        sudo ip tuntap add name lime_tap00_2 mode tap 2>/dev/null || true
+        sudo ip link set lime_tap00_2 up 2>/dev/null || true
     fi
     
     cd "$LIME_PACKAGES_DIR"
@@ -272,9 +221,9 @@ start_qemu() {
         return 1
     fi
     
-    # Auto-configure LibreMesh network
-    print_status "Auto-configuring LibreMesh network..."
-    setup_libremesh_network
+    # Auto-configure network based on image type
+    print_status "Auto-configuring network for $IMAGE_NAME..."
+    setup_network_for_image
     
     # Verify it's working
     if check_qemu_running; then
@@ -410,22 +359,32 @@ case "${1:-help}" in
     deploy)
         deploy_to_qemu
         ;;
+    configs)
+        show_available_configs
+        ;;
     help|--help|-h)
-        echo "Usage: $0 {start|stop|restart|status|deploy}"
+        echo "Usage: $0 {start|stop|restart|status|deploy|configs}"
         echo ""
         echo "Commands:"
-        echo "  start    - Start QEMU LibreMesh"
-        echo "  stop     - Stop QEMU LibreMesh"
-        echo "  restart  - Restart QEMU LibreMesh"
+        echo "  start    - Start QEMU with auto-detected or specified image"
+        echo "  stop     - Stop QEMU"
+        echo "  restart  - Restart QEMU"
         echo "  status   - Show QEMU and lime-app status"
-        echo "  deploy   - Build and deploy lime-app using official LibreMesh method"
+        echo "  deploy   - Build and deploy lime-app"
+        echo "  configs  - Show available image configurations"
         echo "  help     - Show this help message"
         echo ""
+        echo "Image Selection:"
+        echo "  QEMU_IMAGE_CONFIG=libremesh-2305 $0 start      # Use LibreMesh 23.05 (stable)"
+        echo "  QEMU_IMAGE_CONFIG=librerouteros-2410 $0 start  # Use LibreRouterOS 24.10 (dev)"
+        echo "  $0 start                                        # Auto-detect (prefers stable)"
+        echo ""
         echo "Examples:"
-        echo "  $0 start     # Start QEMU"
-        echo "  $0 deploy    # Deploy lime-app using official LibreMesh method"
-        echo "  $0 status    # Check status"
-        echo "  $0 restart   # Restart QEMU"
+        echo "  $0 configs                                      # Show available configurations"
+        echo "  $0 start                                        # Start with auto-detection"
+        echo "  QEMU_IMAGE_CONFIG=librerouteros-2410 $0 start  # Use fresh LibreRouterOS build"
+        echo "  $0 deploy                                       # Deploy lime-app"
+        echo "  $0 status                                       # Check status"
         ;;
     *)
         print_error "Unknown command: $1"
