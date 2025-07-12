@@ -110,6 +110,15 @@ const App = () => {
     const { data: boardData } = useBoardData({
         enabled: session?.username != null,
     });
+    const { mutate: login } = useLogin();
+    const [autoLoginAttempted, setAutoLoginAttempted] = useState(false);
+
+    // Auto-login configuration for guest access
+    const AUTO_LOGIN_CONFIG = {
+        enabled: true, // Enable auto-login as lime-app user
+        username: "lime-app", // LibreMesh guest user (no password required)
+        delay: 800, // Delay before auto-login attempt (ms)
+    };
 
     // Allow firstbootwizard to render even without session/boardData
     const isOnFbwRoute =
@@ -128,21 +137,49 @@ const App = () => {
         (window.location.hash.includes("login") ||
             window.location.hash === "#/login");
 
-    // If not authenticated and not on login/fbw routes, redirect to login
+    // Auto-login as lime-app user for guest access
     useEffect(() => {
-        // Only redirect after session check is complete (not loading)
+        if (
+            AUTO_LOGIN_CONFIG.enabled &&
+            !sessionLoading &&
+            !session?.username &&
+            !autoLoginAttempted &&
+            !isOnLoginRoute &&
+            !isOnFbwRoute &&
+            !isLocalDev
+        ) {
+            setAutoLoginAttempted(true);
+            
+            // Attempt auto-login after a short delay
+            setTimeout(() => {
+                if (process.env.NODE_ENV !== "production") {
+                    console.log(`Auto-login as ${AUTO_LOGIN_CONFIG.username} for guest access`);
+                }
+                login({
+                    username: AUTO_LOGIN_CONFIG.username,
+                    password: "", // lime-app user doesn't require password
+                });
+            }, AUTO_LOGIN_CONFIG.delay);
+        }
+    }, [session, sessionLoading, autoLoginAttempted, isOnLoginRoute, isOnFbwRoute, isLocalDev, login]);
+
+    // If not authenticated and not on login/fbw routes, redirect to login
+    // This now happens only if auto-login is disabled or failed
+    useEffect(() => {
+        // Only redirect after session check is complete and auto-login attempted
         if (
             !sessionLoading &&
             (sessionError || !session?.username) &&
             !isOnFbwRoute &&
-            !isOnLoginRoute
+            !isOnLoginRoute &&
+            (!AUTO_LOGIN_CONFIG.enabled || autoLoginAttempted)
         ) {
             route("/login", true);
         }
-    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute]);
+    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute, autoLoginAttempted]);
 
-    // Show loading while checking session
-    if (sessionLoading) {
+    // Show loading while checking session or attempting auto-login
+    if (sessionLoading || (AUTO_LOGIN_CONFIG.enabled && !autoLoginAttempted && !session?.username && !isOnLoginRoute && !isOnFbwRoute && !isLocalDev)) {
         return <div>Loading...</div>;
     }
 
