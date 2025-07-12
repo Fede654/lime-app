@@ -105,10 +105,10 @@ const App = () => {
     const [autoLoginAttempted, setAutoLoginAttempted] = useState(false);
     const [autoLoginFailed, setAutoLoginFailed] = useState(false);
 
-    // Auto-login configuration for guest access
+    // Auto-login configuration for guest access (restored v3-candidate behavior)
     const AUTO_LOGIN_CONFIG = {
         enabled: true, // Enable auto-login as lime-app user
-        username: "lime-app", // LibreMesh guest user (no password required)
+        username: "lime-app", // LibreMesh guest user (now has proper session ACL access)
         delay: 800, // Delay before auto-login attempt (ms)
         fallbackToLogin: true, // If auto-login fails, show login page instead of error
     };
@@ -151,7 +151,7 @@ const App = () => {
                 login(
                     {
                         username: AUTO_LOGIN_CONFIG.username,
-                        password: "", // lime-app user doesn't require password
+                        password: "lime-app", // Default lime-app password (ACL fixed)
                     },
                     {
                         onError: (error) => {
