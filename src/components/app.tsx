@@ -101,14 +101,16 @@ const App = () => {
     const { data: boardData } = useBoardData({
         enabled: session?.username != null,
     });
-    const { mutate: login } = useLogin();
+    const { mutate: login, isError: loginError } = useLogin();
     const [autoLoginAttempted, setAutoLoginAttempted] = useState(false);
+    const [autoLoginFailed, setAutoLoginFailed] = useState(false);
 
     // Auto-login configuration for guest access
     const AUTO_LOGIN_CONFIG = {
         enabled: true, // Enable auto-login as lime-app user
         username: "lime-app", // LibreMesh guest user (no password required)
         delay: 800, // Delay before auto-login attempt (ms)
+        fallbackToLogin: true, // If auto-login fails, show login page instead of error
     };
 
     // Allow firstbootwizard to render even without session/boardData
@@ -146,10 +148,25 @@ const App = () => {
                 if (process.env.NODE_ENV !== "production") {
                     console.log(`Auto-login as ${AUTO_LOGIN_CONFIG.username} for guest access`);
                 }
-                login({
-                    username: AUTO_LOGIN_CONFIG.username,
-                    password: "", // lime-app user doesn't require password
-                });
+                login(
+                    {
+                        username: AUTO_LOGIN_CONFIG.username,
+                        password: "", // lime-app user doesn't require password
+                    },
+                    {
+                        onError: (error) => {
+                            if (process.env.NODE_ENV !== "production") {
+                                console.warn(`Auto-login failed: ${error.message}. This system may not have lime-app user configured.`);
+                            }
+                            setAutoLoginFailed(true);
+                        },
+                        onSuccess: () => {
+                            if (process.env.NODE_ENV !== "production") {
+                                console.log(`Auto-login successful as ${AUTO_LOGIN_CONFIG.username}`);
+                            }
+                        }
+                    }
+                );
             }, AUTO_LOGIN_CONFIG.delay);
         }
     }, [session, sessionLoading, autoLoginAttempted, isOnLoginRoute, isOnFbwRoute, isLocalDev, login]);
@@ -157,20 +174,27 @@ const App = () => {
     // If not authenticated and not on login/fbw routes, redirect to login
     // This now happens only if auto-login is disabled or failed
     useEffect(() => {
-        // Only redirect after session check is complete and auto-login attempted
+        // Only redirect after session check is complete and auto-login attempted or failed
         if (
             !sessionLoading &&
             (sessionError || !session?.username) &&
             !isOnFbwRoute &&
             !isOnLoginRoute &&
-            (!AUTO_LOGIN_CONFIG.enabled || autoLoginAttempted)
+            (!AUTO_LOGIN_CONFIG.enabled || autoLoginAttempted || autoLoginFailed)
         ) {
-            route("/login", true);
+            // If auto-login failed and fallback is enabled, redirect to login
+            if (autoLoginFailed && AUTO_LOGIN_CONFIG.fallbackToLogin) {
+                route("/login?auto_login_failed=true", true);
+            }
+            // If auto-login not attempted or disabled, redirect normally
+            else if (!AUTO_LOGIN_CONFIG.enabled || autoLoginAttempted) {
+                route("/login", true);
+            }
         }
-    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute, autoLoginAttempted]);
+    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute, autoLoginAttempted, autoLoginFailed]);
 
     // Show loading while checking session or attempting auto-login
-    if (sessionLoading || (AUTO_LOGIN_CONFIG.enabled && !autoLoginAttempted && !session?.username && !isOnLoginRoute && !isOnFbwRoute && !isLocalDev)) {
+    if (sessionLoading || (AUTO_LOGIN_CONFIG.enabled && !autoLoginAttempted && !autoLoginFailed && !session?.username && !isOnLoginRoute && !isOnFbwRoute && !isLocalDev)) {
         return <div>Loading...</div>;
     }
 
