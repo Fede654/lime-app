@@ -5,6 +5,7 @@ import { Button } from "components/buttons/button";
 
 import {
     IconsClassName,
+    LoadingCard,
     Section,
     SectionTitle,
 } from "plugins/lime-plugin-rx/src/components/components";
@@ -45,70 +46,88 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
             1024
     );
     return (
-        <div className={"flex flex-row mt-6 justify-between gap-8 px-10"}>
+        <div className="section-content">
             {hasMostActive && (
                 <Fragment>
-                    <div className={"flex-1 text-7xl text-center text-primary"}>
-                        <SignalColor
-                            className={"font-bold"}
-                            signal={+status.most_active.signal}
-                        />
-                        <div className={"text-3xl"}>
-                            {status.most_active?.chains &&
-                                Array.isArray(status.most_active.chains) &&
-                                status.most_active.chains.map((chain, i) => (
-                                    <span key={i}>
-                                        <SignalColor
-                                            className={"font-bold"}
-                                            signal={chain}
-                                        />
-                                        {i !==
-                                            (status.most_active.chains?.length || 0) -
-                                                1 && " / "}
+                    <div className="responsive-flex">
+                        {/* Signal strength display */}
+                        <div className="dashboard-card-primary card-content-padding flex flex-col items-center text-center w-full xl:w-auto xl:min-w-[220px] xl:flex-shrink-0">
+                            <div className="text-7xl lg:text-8xl text-primary-600 font-black mb-3 icon-enhanced">
+                                <SignalColor
+                                    className="font-black"
+                                    signal={+status.most_active.signal}
+                                />
+                            </div>
+                            <div className="text-2xl lg:text-3xl text-primary-500 font-bold">
+                                {status.most_active?.chains &&
+                                    Array.isArray(status.most_active.chains) &&
+                                    status.most_active.chains.map((chain, i) => (
+                                        <span key={i}>
+                                            <SignalColor
+                                                className="font-bold"
+                                                signal={chain}
+                                            />
+                                            {i !==
+                                                (status.most_active.chains?.length || 0) -
+                                                    1 && " / "}
+                                        </span>
+                                    ))}
+                            </div>
+                            <div className="text-sm text-primary-400 font-medium mt-2 tracking-wide uppercase">
+                                <Trans>Signal Strength</Trans>
+                            </div>
+                        </div>
+                        
+                        {/* Connection details */}
+                        <div className="dashboard-card-gray card-content-padding flex-1 flex flex-col gap-4 text-lg lg:text-xl text-center lg:text-left">
+                            <div className="card-title text-center lg:text-left mb-2">
+                                <Trans>Most active link</Trans>
+                            </div>
+                            <div className="text-primary-600 font-bold text-xl">
+                                {bathost && bathost.hostname ? (
+                                    <span>{stripIface(bathost.hostname)}</span>
+                                ) : (
+                                    <span className="withLoadingEllipsis text-primary-400">
+                                        <Trans>Fetching name</Trans>
                                     </span>
-                                ))}
+                                )}
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <div className="text-gray-700 text-lg">
+                                    <span className="text-gray-500 font-medium">
+                                        <Trans>Interface: </Trans>
+                                    </span>
+                                    <span className="font-bold text-primary-600">
+                                        {status.most_active.iface}
+                                    </span>
+                                </div>
+                                <div className="text-gray-700 text-lg">
+                                    <span className="text-gray-500 font-medium">
+                                        <Trans>Traffic: </Trans>
+                                    </span>
+                                    <span className="font-bold text-primary-600">{traffic}MB/s</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className={"flex-1 flex flex-col text-2xl "}>
-                        <div className={"font-bold"}>
-                            <Trans>Most active link</Trans>
-                        </div>
-                        <div className={"text-primary font-bold"}>
-                            {bathost && bathost.hostname ? (
-                                <span>{stripIface(bathost.hostname)}</span>
-                            ) : (
-                                <span className="withLoadingEllipsis">
-                                    <Trans>Fetching name</Trans>
-                                </span>
-                            )}
-                        </div>
-                        <div>
-                            <Trans>Interface: </Trans>
-                            <span className={"font-bold"}>
-                                {status.most_active.iface}
-                            </span>
-                        </div>
-                        <div>
-                            <Trans>Traffic: </Trans>
-                            <span className={"font-bold"}> {traffic}MB/s</span>
+                        
+                        {/* Action button */}
+                        <div className="flex justify-center items-center xl:flex-shrink-0">
+                            <Button size="lg" color="secondary" href="/align" className="button-enhanced px-10">
+                                <Trans>
+                                    Check
+                                    <br />
+                                    Alignment
+                                </Trans>
+                            </Button>
                         </div>
                     </div>
                 </Fragment>
             )}
             {!hasMostActive && (
-                <div className={"flex-1 flex justify-center"}>
-                    No most active iface
+                <div className="dashboard-card-gray card-content-padding flex-1 flex justify-center items-center py-16 text-gray-500 text-xl">
+                    <Trans>No most active interface detected</Trans>
                 </div>
             )}
-            <div className={"flex justify-center"}>
-                <Button size={"lg"} color={"secondary"} href={"/align"}>
-                    <Trans>
-                        Check
-                        <br />
-                        Alignment
-                    </Trans>
-                </Button>
-            </div>
         </div>
     );
 };
@@ -117,23 +136,15 @@ export const Alignment = () => {
     const { data: status, isLoading } = useNodeStatus();
 
     return (
-        <div
-            className={
-                "w-full min-h-min bg-primary-card border-b-2 border-primary-600 pb-10 pr-2"
-            }
-        >
-            <Section>
-                <SectionTitle icon={<AlignIcon className={IconsClassName} />}>
-                    <Trans>Your Alignment</Trans>
-                </SectionTitle>
-                {isLoading ? (
-                    <div className={"flex-1 flex justify-center text-xl px-6"}>
-                        Loading...
-                    </div>
-                ) : (
-                    <AlignmentCard status={status} />
-                )}
-            </Section>
-        </div>
+        <Section className="">
+            <SectionTitle icon={<AlignIcon className={IconsClassName} />}>
+                <Trans>Your Alignment</Trans>
+            </SectionTitle>
+            {isLoading ? (
+                <LoadingCard message="Loading alignment data..." />
+            ) : (
+                <AlignmentCard status={status} />
+            )}
+        </Section>
     );
 };

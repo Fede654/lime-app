@@ -45,6 +45,7 @@ module.exports = {
                 primary: {
                     DEFAULT: "#38927f",
                     50: "#f0f9f7",
+                    75: "#e8f5f2", // Missing color that was breaking the gradient
                     100: "#ddf2ed",
                     200: "#bce4dc",
                     300: "#8cd0c4",

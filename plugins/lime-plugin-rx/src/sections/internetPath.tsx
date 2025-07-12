@@ -121,27 +121,29 @@ export const InternetPath = () => {
     }
 
     return (
-        <Section>
+        <Section className="">
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
-            <div className="flex flex-row items-start justify-center space-x-8 pt-6 px-10 pb-6">
-                <div className="flex-1">{pathComponent}</div>
-                <div className="flex flex-col justify-center gap-6 min-w-[120px]">
-                    <Button
-                        href={"/metrics"}
-                        color={"secondary"}
-                        className="py-3 px-6 text-lg"
-                    >
-                        <Trans>Diagnose</Trans>
-                    </Button>
-                    <Button
-                        href={"/locate"}
-                        color={"secondary"}
-                        className="py-3 px-6 text-lg"
-                    >
-                        <Trans>Map</Trans>
-                    </Button>
+            <div className="section-content">
+                <div className="responsive-flex">
+                    <div className="dashboard-card-gray p-6 flex-1 w-full">{pathComponent}</div>
+                    <div className="flex flex-col xl:flex-row gap-4 justify-center items-center xl:flex-shrink-0">
+                        <Button
+                            href={"/metrics"}
+                            color={"secondary"}
+                            className="button-enhanced min-w-[140px]"
+                        >
+                            <Trans>Diagnose</Trans>
+                        </Button>
+                        <Button
+                            href={"/locate"}
+                            color={"secondary"}
+                            className="button-enhanced min-w-[140px]"
+                        >
+                            <Trans>Map</Trans>
+                        </Button>
+                    </div>
                 </div>
             </div>
             <InternetStatus data={internet} nodeIps={nodeStatus?.ips} />

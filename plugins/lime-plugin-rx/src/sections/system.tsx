@@ -3,6 +3,7 @@ import { Fragment } from "preact";
 
 import {
     IconsClassName,
+    LoadingCard,
     Section,
     SectionTitle,
 } from "plugins/lime-plugin-rx/src/components/components";
@@ -44,23 +45,35 @@ const SystemInfo = () => {
         {
             label: t`Uptime`,
             value: toHHMMSS(node?.uptime, 0),
+            icon: "⏱️",
         },
-        { label: t`Device`, value: boardData.board_name },
-        { label: t`Firmware`, value: boardData.release.description },
+        { 
+            label: t`Device`, 
+            value: boardData?.board_name || "Unknown",
+            icon: "📱",
+        },
+        { 
+            label: t`Firmware`, 
+            value: boardData?.release?.description || "Unknown",
+            icon: "💾",
+        },
     ];
 
     return (
-        <div className="flex justify-start px-10 py-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+        <div className="section-content">
+            <div className="responsive-grid">
                 {systemAttributes.map((attribute, i) => (
                     <div
                         key={i}
-                        className="flex flex-col space-y-3 bg-gray-50 p-6 rounded-lg border border-gray-200"
+                        className="dashboard-card-primary-lift card-content-padding"
                     >
-                        <div className="text-xl font-semibold text-gray-700">
-                            {attribute.label}
+                        <div className="flex items-center gap-4 mb-4">
+                            <span className="text-3xl icon-enhanced">{attribute.icon}</span>
+                            <div className="card-title text-xl">
+                                {attribute.label}
+                            </div>
                         </div>
-                        <div className="text-2xl text-gray-900 break-words font-medium">
+                        <div className="text-lg text-gray-800 break-words font-semibold leading-relaxed">
                             {attribute.value || "N/A"}
                         </div>
                     </div>
@@ -77,13 +90,13 @@ export const System = () => {
     const isLoading = isLoadingBoardData || isLoadingNodeStatus;
 
     return (
-        <Section>
+        <Section className="">
             <SectionTitle icon={<GearIcon className={IconsClassName} />}>
                 <Trans>System</Trans>
             </SectionTitle>
-            <div className={"mt-2"}>
+            <div className="pb-4">
                 {isLoading ? (
-                    <span className="px-6 text-xl">Loading...</span>
+                    <LoadingCard message="Loading system information..." />
                 ) : (
                     <SystemInfo />
                 )}

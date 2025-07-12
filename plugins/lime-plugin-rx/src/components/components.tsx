@@ -12,21 +12,33 @@ export const SectionTitle: FunctionalComponent<SectionTitleProps> = ({
     icon,
 }) => {
     return (
-        <div className="flex items-center gap-x-4 ml-8 mt-6 mb-4">
-            <span className={"text-primary-600 fill-current"}>{icon}</span>
-            <h1 className="text-3xl font-semibold text-left">{children}</h1>
+        <div className="section-header">
+            <span className={"text-primary-600 fill-current icon-enhanced"}>{icon}</span>
+            <h1 className="section-title">{children}</h1>
         </div>
     );
 };
 
 export const Section = ({ className, ...props }) => {
     return (
-        <div className={"w-full container mb-8"}>
+        <div className="section-container">
             <div
-                className={`w-full bg-white rounded-lg shadow-sm border-2 border-primary-600 py-6 ${className || ''}`}
+                className={`dashboard-card backdrop-blur-sm ${className || ''}`}
                 {...props}
             >
                 {props.children}
+            </div>
+        </div>
+    );
+};
+
+// Unified loading component for consistent loading states
+export const LoadingCard = ({ message = "Loading..." }: { message?: string }) => {
+    return (
+        <div className="flex justify-center items-center py-20">
+            <div className="flex flex-col items-center gap-5">
+                <div className="spinner-enhanced"></div>
+                <div className="text-lg text-primary-600 font-semibold tracking-wide">{message}</div>
             </div>
         </div>
     );

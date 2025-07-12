@@ -33,11 +33,21 @@ body {
 }
 
 #content {
-    flex: auto;
+    flex: 1;
     display: flex;
-    overflow: auto;
+    flex-direction: column;
+
+    /* Ensure child elements can take full height */
+    > div {
+        width: 100%;
+        min-height: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
 }
 
+/* Legacy utility classes - maintained for compatibility */
 .d-flex {
     display: flex;
 }
@@ -54,33 +64,12 @@ body {
     justify-content: center;
 }
 
-.ml-auto {
-    margin-left: auto;
-}
-
-.container-padded {
-    padding: 1em;
-}
-
-.align-items-baseline {
-    align-items: baseline;
-}
-
 .align-items-center {
     align-items: center;
 }
 
 .overflow-auto {
     overflow: auto;
-}
-
-.p-t-sm {
-    padding-top: 0.5em;
-}
-
-.p-y-sm {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
 }
 
 .container-center {
@@ -156,6 +145,7 @@ body {
     border-radius: 0.25rem;
 }
 
+/* Status background utilities */
 .bg-success {
     background-color: theme("colors.success.DEFAULT");
     color: white;
@@ -169,37 +159,6 @@ body {
 .bg-error {
     background-color: theme("colors.danger.DEFAULT");
     color: white;
-}
-
-.bg-gray {
-    background-color: theme("colors.gray.400");
-}
-.p-05 {
-    padding: 0.5em;
-}
-
-.p-05-1 {
-    padding: 0.5em 1em;
-}
-
-.mt-1 {
-    margin-top: 1em;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.font-size-2 {
-    font-size: 2em;
-}
-
-.rounded {
-    border-radius: 0.5em;
-}
-
-.border {
-    border: 0.1em solid #444;
 }
 
 /* Modern Menu Scrollbar Styling */
@@ -230,4 +189,182 @@ body {
     &::-webkit-scrollbar-thumb:active {
         background-color: #6b7280;
     }
+}
+
+/* =============================================================================
+   DASHBOARD UTILITY CLASSES - Consolidated CSS System
+   ============================================================================= */
+
+/* Background Gradient Utilities */
+.bg-primary-gradient {
+    @apply bg-gradient-to-br from-primary-50 to-primary-100;
+}
+
+.bg-gray-gradient {
+    @apply bg-gradient-to-br from-gray-50 to-gray-100;
+}
+
+.bg-primary-white-gradient {
+    @apply bg-gradient-to-r from-primary-50 to-white;
+}
+
+.bg-white-primary-gradient {
+    @apply bg-gradient-to-br from-white to-primary-50;
+}
+
+/* Card System */
+.dashboard-card {
+    @apply w-full bg-white rounded-2xl shadow-lg border border-primary-200/80 overflow-hidden;
+    @apply hover:shadow-xl hover:border-primary-300/60 transition-all duration-300;
+}
+
+.dashboard-card-primary {
+    @apply dashboard-card bg-primary-gradient;
+}
+
+.dashboard-card-gray {
+    @apply dashboard-card bg-gray-gradient border-gray-200/70;
+    @apply hover:border-gray-300/60;
+}
+
+.dashboard-card-lift {
+    @apply dashboard-card transform hover:-translate-y-1;
+}
+
+.dashboard-card-primary-lift {
+    @apply dashboard-card-primary transform hover:-translate-y-1;
+}
+
+/* Section Layout Utilities */
+.section-container {
+    @apply w-full max-w-6xl mx-auto;
+}
+
+.section-content {
+    @apply px-4 sm:px-6 lg:px-8 py-7;
+}
+
+.section-header {
+    @apply flex items-center justify-center gap-x-4 px-4 sm:px-6 py-5;
+    @apply border-b border-primary-200/60 bg-primary-white-gradient;
+}
+
+/* Padding Utilities */
+.card-content-padding {
+    @apply p-8;
+}
+
+.responsive-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+}
+
+/* Typography Utilities */
+.section-title {
+    @apply text-3xl font-bold text-center text-primary-800 tracking-tight;
+}
+
+.card-title {
+    @apply text-2xl font-bold text-primary-800 tracking-tight;
+}
+
+.status-label {
+    @apply font-bold uppercase tracking-wide text-sm;
+}
+
+/* Status Indicator System */
+.status-indicator {
+    @apply flex flex-col items-center gap-5 p-6 rounded-2xl border-2 shadow-md hover:shadow-lg transition-all duration-300 min-w-0 overflow-hidden;
+}
+
+.status-indicator.success {
+    @apply bg-gradient-to-br from-green-50 to-green-100 border-green-200/70 hover:border-green-300/60;
+}
+
+.status-indicator.error {
+    @apply bg-gradient-to-br from-red-50 to-red-100 border-red-200/70 hover:border-red-300/60;
+}
+
+.status-indicator.loading {
+    @apply bg-gray-gradient border-gray-200/70 hover:border-gray-300/60;
+}
+
+/* Grid System */
+.responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mx-auto;
+}
+
+.responsive-grid-dense {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-6 w-full mx-auto;
+}
+
+.responsive-flex {
+    @apply flex flex-col xl:flex-row items-center justify-center gap-10 w-full min-w-0;
+}
+
+/* Button Utilities */
+.button-enhanced {
+    @apply py-4 px-8 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200;
+}
+
+/* Icon and Image Utilities */
+.icon-enhanced {
+    @apply drop-shadow-sm;
+}
+
+.image-hover {
+    @apply transition-transform duration-300 hover:scale-110 drop-shadow-md;
+}
+
+/* Loading Utilities */
+.spinner-enhanced {
+    @apply animate-spin rounded-full h-14 w-14 border-4 border-primary-200/60 border-t-primary-600 shadow-lg;
+}
+
+/* Overflow Prevention Utilities */
+.prevent-overflow {
+    @apply min-w-0 overflow-hidden;
+}
+
+.text-overflow-safe {
+    @apply break-all text-ellipsis overflow-hidden;
+}
+
+/* Full Height Layout Utilities */
+.full-height-page {
+    @apply flex flex-col;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.dashboard-height {
+    min-height: 100vh; /* Full viewport height for proper background coverage */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Expand to fill parent */
+    background-attachment: local; /* Ensure background stays during scroll */
+}
+
+.dashboard-height-with-subheader {
+    min-height: calc(
+        100vh - 56px - 48px
+    ); /* Account for header + potential subheader */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Force override any conflicting legacy styles */
+.override-legacy-floats {
+    float: none !important;
+    clear: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Ensure proper flexbox behavior without legacy interference */
+.force-flex-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-height: 100vh !important;
 }

@@ -2,6 +2,7 @@ import { Trans } from "@lingui/macro";
 
 import {
     IconsClassName,
+    LoadingCard,
     Section,
     SectionTitle,
 } from "plugins/lime-plugin-rx/src/components/components";
@@ -21,46 +22,44 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
             return acc;
         }, {});
     return (
-        <div
-            className={"flex flex-wrap px-10 gap-8 justify-center"}
-            data-testid="ports-container"
-        >
-            {Object.keys(ports).map((role) => {
-                if (role.toLowerCase() === "cpu") return null;
-                return (
-                    <div
-                        key={role}
-                        className={
-                            "flex flex-col h-fit bg-gray-50 p-6 rounded-lg border border-gray-200 min-w-[150px]"
-                        }
-                    >
-                        <h2 className={"font-bold text-xl text-center mb-2"}>
-                            {role.toUpperCase()}
-                        </h2>
-                        <h2
-                            className={"text-lg text-center mb-4 text-gray-600"}
+        <div className="section-content">
+            <div className="responsive-grid-dense" data-testid="ports-container">
+                {Object.keys(ports).map((role) => {
+                    if (role.toLowerCase() === "cpu") return null;
+                    return (
+                        <div
+                            key={role}
+                            className="dashboard-card-gray card-content-padding transform hover:-translate-y-1 min-w-[200px]"
                         >
-                            {ports[role][0]?.device?.toLowerCase() ||
-                                "Unknown Device"}
-                        </h2>
-                        <div className={"flex flex-row gap-3 justify-center"}>
-                            {ports[role].map((port, index) => {
-                                const link =
-                                    port?.link?.toLowerCase() === "up"
-                                        ? "fill-primary-600"
-                                        : "fill-disabled";
-                                return (
-                                    <div key={`${role}-${port?.num || index}`}>
-                                        <PortsIcon
-                                            className={`h-10 w-10 ${link}`}
-                                        />
-                                    </div>
-                                );
-                            })}
+                            <h2 className="card-title text-center mb-3">
+                                {role.toUpperCase()}
+                            </h2>
+                            <h3 className="text-lg text-center mb-6 text-gray-600 font-semibold">
+                                {ports[role][0]?.device?.toLowerCase() || "Unknown Device"}
+                            </h3>
+                            <div className="flex flex-row gap-4 justify-center items-center">
+                                {ports[role].map((port, index) => {
+                                    const link =
+                                        port?.link?.toLowerCase() === "up"
+                                            ? "fill-primary-600"
+                                            : "fill-gray-400";
+                                    const statusText = port?.link?.toLowerCase() === "up" ? "Connected" : "Disconnected";
+                                    return (
+                                        <div key={`${role}-${port?.num || index}`} className="flex flex-col items-center gap-2">
+                                            <PortsIcon className={`h-14 w-14 ${link} transition-colors duration-200 icon-enhanced`} />
+                                            <span className={`text-sm font-bold ${
+                                                port?.link?.toLowerCase() === "up" ? "text-primary-600" : "text-gray-400"
+                                            }`}>
+                                                Port {port?.num || index + 1}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })}
+            </div>
         </div>
     );
 };
@@ -71,21 +70,21 @@ export const Wired = () => {
     const switches = status?.switch_status || [];
 
     return (
-        <Section>
+        <Section className="">
             <SectionTitle icon={<PortsIcon className={IconsClassName} />}>
                 <Trans>Wired connections</Trans>
             </SectionTitle>
-            <div className={"mt-4"}>
-                {isLoading ? (
-                    <span className="text-xl px-6">Loading...</span>
-                ) : switches.length ? (
-                    <Ports switches={switches} />
-                ) : (
-                    <div className={"flex-1 flex justify-center"}>
-                        No wired connections found
+            {isLoading ? (
+                <LoadingCard message="Loading wired connections..." />
+            ) : switches.length ? (
+                <Ports switches={switches} />
+            ) : (
+                <div className="flex justify-center items-center py-16 responsive-padding">
+                    <div className="text-xl text-gray-500 dashboard-card-gray card-content-padding">
+                        <Trans>No wired connections found</Trans>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </Section>
     );
 };
