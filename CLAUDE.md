@@ -418,6 +418,21 @@ git commit -m "feat(component): agregar visualización de estado de nodo mesh
 🤖 Asistido por IA con: Claude Code para estrategia de testing"
 ```
 
+## 🎨 Criterios de Diseño Establecidos
+
+### 🎯 Identidad Visual Consensuada
+- **Colores**: Mantener paleta actual (primary #38927f con variantes 50-950)
+- **Filosofía**: Simplicidad y minimalismo 
+- **Organización**: Recuadros/tarjetas existentes (MenuGroup) son efectivos
+- **Cambios**: Solo adoptar optimizaciones técnicas sin impacto visual
+- **Evolución**: Gradual, consultando antes de modificar elementos consensuados
+
+### 🚫 Evitar en Backports/Cambios
+- Modificaciones de paleta de colores sin consulta
+- Cambios arquitecturales de UI/UX establecidos
+- Sobrecarga visual o complejidad innecesaria
+- Eliminación de elementos organizacionales efectivos
+
 ## 🧠 Sabiduría de Desarrollo y Mejores Prácticas
 
 ### 🎯 Perspectivas Estratégicas de Desarrollo

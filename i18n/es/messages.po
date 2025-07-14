@@ -233,7 +233,7 @@ msgstr "Volver"
 msgid "Background Color"
 msgstr "Color de fondo"
 
-#: src/containers/Login/Login.tsx:116
+#: src/containers/Login/Login.tsx:128
 msgid "Basic access: username \"lime-app\" (no password)"
 msgstr ""
 
@@ -523,7 +523,7 @@ msgstr "Fecha de creación: {0}"
 msgid "Currently your node has version:"
 msgstr "Actualmente tu nodo tiene la versión:"
 
-#: src/containers/Login/Login.tsx:112
+#: src/containers/Login/Login.tsx:124
 msgid "Default credentials:"
 msgstr ""
 
@@ -807,7 +807,7 @@ msgstr "Versión de sistema (firmware)."
 msgid "From"
 msgstr "Desde"
 
-#: src/containers/Login/Login.tsx:119
+#: src/containers/Login/Login.tsx:133
 msgid "Full access: username \"root\" with community password"
 msgstr ""
 
@@ -819,7 +819,7 @@ msgstr "Medir todo el recorrido"
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Consiga otro teléfono que tenga conexión a internet por datos móviles."
 
-#: src/components/NotFound.tsx:46
+#: src/components/NotFound.tsx:49
 msgid "Go Back"
 msgstr ""
 
@@ -921,7 +921,7 @@ msgstr "Conexión a<0/>internet"
 msgid "Invalid Nodes"
 msgstr "Nodos no válidos"
 
-#: src/containers/Login/Login.tsx:90
+#: src/containers/Login/Login.tsx:96
 msgid "Invalid username or password. Please try again."
 msgstr ""
 
@@ -1030,11 +1030,11 @@ msgstr "Localizar"
 msgid "Logging in"
 msgstr "Iniciando sesión"
 
-#: src/containers/Login/Login.tsx:102
+#: src/containers/Login/Login.tsx:114
 msgid "Logging in..."
 msgstr ""
 
-#: src/containers/Login/Login.tsx:105
+#: src/containers/Login/Login.tsx:117
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:63
 msgid "Login"
 msgstr "Ingresar"
@@ -1145,7 +1145,7 @@ msgstr "Debes elegir un nombre de host válido."
 msgid "Navigation"
 msgstr ""
 
-#: src/components/NotFound.tsx:53
+#: src/components/NotFound.tsx:56
 msgid "Need help? Check the network status or contact your network administrator."
 msgstr ""
 
@@ -1425,7 +1425,7 @@ msgstr "Recargar"
 msgid "Reload page"
 msgstr "Recargar página"
 
-#: src/containers/Login/Login.tsx:83
+#: src/containers/Login/Login.tsx:89
 msgid "Remember me"
 msgstr ""
 
@@ -2300,7 +2300,6 @@ msgstr "{0, plural, =0 {Nadie se ha unido aún.} one {Una persona se ha unido.} 
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:48
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:52
 #: src/containers/Menu/MenuGroup.tsx:69
-#: src/containers/Menu/MenuGroup.tsx:72
 msgid "{0}"
 msgstr "{0}"
 

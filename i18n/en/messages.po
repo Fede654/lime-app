@@ -245,7 +245,7 @@ msgstr "Back"
 msgid "Background Color"
 msgstr "Background Color"
 
-#: src/containers/Login/Login.tsx:116
+#: src/containers/Login/Login.tsx:128
 msgid "Basic access: username \"lime-app\" (no password)"
 msgstr "Basic access: username \"lime-app\" (no password)"
 
@@ -535,7 +535,7 @@ msgstr "Creation date: {0}"
 msgid "Currently your node has version:"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:112
+#: src/containers/Login/Login.tsx:124
 msgid "Default credentials:"
 msgstr "Default credentials:"
 
@@ -831,7 +831,7 @@ msgstr "Firmware version"
 msgid "From"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:119
+#: src/containers/Login/Login.tsx:133
 msgid "Full access: username \"root\" with community password"
 msgstr "Full access: username \"root\" with community password"
 
@@ -843,7 +843,7 @@ msgstr ""
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 
-#: src/components/NotFound.tsx:46
+#: src/components/NotFound.tsx:49
 msgid "Go Back"
 msgstr "Go Back"
 
@@ -945,7 +945,7 @@ msgstr "Internet<0/>connection"
 msgid "Invalid Nodes"
 msgstr "Invalid Nodes"
 
-#: src/containers/Login/Login.tsx:90
+#: src/containers/Login/Login.tsx:96
 msgid "Invalid username or password. Please try again."
 msgstr "Invalid username or password. Please try again."
 
@@ -1062,11 +1062,11 @@ msgstr "Locate"
 msgid "Logging in"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:102
+#: src/containers/Login/Login.tsx:114
 msgid "Logging in..."
 msgstr "Logging in..."
 
-#: src/containers/Login/Login.tsx:105
+#: src/containers/Login/Login.tsx:117
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:63
 msgid "Login"
 msgstr ""
@@ -1181,7 +1181,7 @@ msgstr "Must select a valid hostname"
 msgid "Navigation"
 msgstr "Navigation"
 
-#: src/components/NotFound.tsx:53
+#: src/components/NotFound.tsx:56
 msgid "Need help? Check the network status or contact your network administrator."
 msgstr "Need help? Check the network status or contact your network administrator."
 
@@ -1461,7 +1461,7 @@ msgstr ""
 msgid "Reload page"
 msgstr ""
 
-#: src/containers/Login/Login.tsx:83
+#: src/containers/Login/Login.tsx:89
 msgid "Remember me"
 msgstr "Remember me"
 
@@ -2340,7 +2340,6 @@ msgstr ""
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:48
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:52
 #: src/containers/Menu/MenuGroup.tsx:69
-#: src/containers/Menu/MenuGroup.tsx:72
 msgid "{0}"
 msgstr "{0}"
 

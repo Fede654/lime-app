@@ -65,7 +65,7 @@ export const MenuGroup = ({
 
                     {/* Group Info */}
                     <div className="text-left flex-1 min-w-0">
-                        <h3 className="text-4xl font-bold text-gray-900 text-left truncate">
+                        <h3 className="text-3xl font-bold text-gray-900 text-left truncate">
                             <Trans>{groupConfig.label}</Trans>
                         </h3>
                     </div>

@@ -1,0 +1,67 @@
+=== BASELINE v0.2.27 Bundle Size ===
+build/bundle.bcca5.js - 441.018 KB
+build/bundle.f30ed.css - 46.3164 KB
+=== BASELINE Performance Test ===
+--- Baseline Run 1 ---
+
+     time_total: 0.003023s
+--- Baseline Run 2 ---
+
+     time_total: 0.002817s
+--- Baseline Run 3 ---
+
+     time_total: 0.003068s
+=== BASELINE v0.2.27 Production Build ===
+build/bundle.69540.css - 46.2852 KB
+build/bundle.db6f1.js - 438.937 KB
+build/vendors.chunk.496f8.js - 424.131 KB
+TOTAL: 909.353 KB
+=== Deploying to LibreRouter 10.13.74.126 ===
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:CIf8IuR16naDMzAgEjg1oNapO+vxjaXSKwz/nktLhrQ.
+Please contact your system administrator.
+Add correct host key in /home/pablo/.ssh/known_hosts to get rid of this message.
+Offending ED25519 key in /home/pablo/.ssh/known_hosts:10
+  remove with:
+  ssh-keygen -f '/home/pablo/.ssh/known_hosts' -R '10.13.74.126'
+Host key for 10.13.74.126 has changed and you have requested strict checking.
+Host key verification failed.
+scp: Connection closed
+Warning: Permanently added '10.13.74.126' (ED25519) to the list of known hosts.
+ash: /usr/libexec/sftp-server: not found
+scp: Connection closed
+=== Trying tar+ssh deployment ===
+rm: can't remove '1.chunk.29011.js': No space left on device
+rm: can't remove '200.html': No space left on device
+rm: can't remove '2b3e1faf89f94a4835397e7a43b4f77d.png': No space left on device
+rm: can't remove '4.chunk.88905.js': No space left on device
+rm: can't remove '416d91365b44e4b4f4777663e6f009f3.png': No space left on device
+rm: can't remove '5.chunk.becc6.js': No space left on device
+rm: can't remove '6.chunk.bb9fb.js': No space left on device
+rm: can't remove '8f2c4d11474275fbc1614b9098334eae.png': No space left on device
+rm: can't remove 'asset-manifest.json': No space left on device
+rm: can't remove 'assets/.gitkeep': No space left on device
+rm: can't remove 'assets/icons/AlterMundiLogo.svg': No space left on device
+rm: can't remove 'assets/icons/LibreRouterLogo.svg': No space left on device
+rm: can't remove 'assets/icons/android-chrome-512x512.png': No space left on device
+rm: can't remove 'assets/icons/favicon-16x16.png': No space left on device
+rm: can't remove 'assets/icons/mstile-150x150.png': No space left on device
+rm: can't remove 'bundle.bcca5.js': No space left on device
+rm: can't remove 'bundle.f30ed.css': No space left on device
+rm: can't remove 'index.html': No space left on device
+rm: can't remove 'manifest.json': No space left on device
+rm: can't remove 'polyfills.28592.js': No space left on device
+rm: can't remove 'push-manifest.json': No space left on device
+rm: can't remove 'vendors.chunk.48702.js': No space left on device
+rm: can't remove 'vendors.chunk.7f00f.css': No space left on device
+=== FINAL TESTING SUMMARY ===
+LibreRouter Storage: 448KB overlay, 52KB available
+Bundle Size: 909KB (vendors: 424KB, bundle: 439KB, CSS: 46KB)
+Constraint: Bundle exceeds storage by 2x
+Recommendation: Optimize fcb8384 before backport
