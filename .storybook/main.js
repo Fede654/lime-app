@@ -1,6 +1,6 @@
 const path = require("path");
-const clientConfig = require("preact-cli/lib/lib/webpack/webpack-client-config");
-const transformConfig = require("preact-cli/lib/lib/webpack/transform-config");
+const clientConfig = require("preact-cli/src/lib/webpack/webpack-client-config");
+const transformConfig = require("preact-cli/src/lib/webpack/transform-config");
 
 module.exports = {
     framework: "@storybook/preact",
@@ -14,6 +14,7 @@ module.exports = {
         "@storybook/addon-actions",
         "@storybook/addon-controls",
         "@storybook/addon-essentials",
+        "@storybook/addon-postcss",
     ],
     features: {
         interactionsDebugger: true,
