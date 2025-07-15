@@ -67,7 +67,10 @@ export function logout() {
 export function useLogout() {
     return useMutation(logout, {
         onSuccess: () => {
-            // Fix: go to root path with login hash
+            // Clear session cache to trigger auto-login
+            queryCache.removeQueries(["session", "get"]);
+            // Redirect to login page to allow user to choose guest or root access
+            // This gives users the option to stay as guest or login as root again
             const baseUrl = `${window.location.origin}/`;
             window.location.href = `${baseUrl}#/login`;
         },
