@@ -17,30 +17,34 @@ import Rx from "plugins/lime-plugin-rx";
 
 // REGISTER PLUGINS WITH SMART GROUPING
 export const plugins: LimePlugin[] = [
-    // Network Status Group
+    // Network Status Group (PUBLIC - accessible to lime-app user)
     { ...Rx, menuGroup: "status" },
     { ...Metrics, menuGroup: "status" },
     { ...Locate, menuGroup: "status" },
 
-    // Administration Group
-    { ...NodeAdmin, menuGroup: "administration" },
-    { ...NetworkAdmin, menuGroup: "administration" },
-    { ...Firmware, menuGroup: "administration" },
+    // Administration Group (PROTECTED - requires root authentication)
+    { ...NodeAdmin, menuGroup: "administration", isCommunityProtected: true },
+    {
+        ...NetworkAdmin,
+        menuGroup: "administration",
+        isCommunityProtected: true,
+    },
+    { ...Firmware, menuGroup: "administration", isCommunityProtected: true },
 
-    // Mesh Network Group
-    { ...MeshWide, menuGroup: "meshwide" },
-    { ...MeshConfigPage, menuGroup: "meshwide" },
-    { ...MeshUpgrade, menuGroup: "meshwide" },
+    // Mesh Network Group (PROTECTED - requires root authentication)
+    { ...MeshWide, menuGroup: "meshwide", isCommunityProtected: true },
+    { ...MeshConfigPage, menuGroup: "meshwide", isCommunityProtected: true },
+    { ...MeshUpgrade, menuGroup: "meshwide", isCommunityProtected: true },
 
-    // Tools & Utilities Group
-    { ...Align, menuGroup: "tools" },
-    { ...ChangeNode, menuGroup: "tools" },
-    { ...GroundRouting, menuGroup: "tools" },
-    { ...RemoteSupport, menuGroup: "tools" },
+    // Tools & Utilities Group (MIXED - some public, some protected)
+    { ...Align, menuGroup: "tools" }, // Public - network alignment info
+    { ...ChangeNode, menuGroup: "tools" }, // Public - change connected node
+    { ...GroundRouting, menuGroup: "tools", isCommunityProtected: true }, // Protected - routing config
+    { ...RemoteSupport, menuGroup: "tools", isCommunityProtected: true }, // Protected - remote access
 
-    // Community Group
+    // Community Group (PUBLIC - community features)
     { ...Notes, menuGroup: "community" },
-    { ...Pirania, menuGroup: "community" },
+    { ...Pirania, menuGroup: "community", isCommunityProtected: true }, // Protected - captive portal config
 
     // No menu item
     Fbw,
