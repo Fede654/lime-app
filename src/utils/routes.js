@@ -33,8 +33,18 @@ export const CommunityProtectedRoute = ({
     children,
     ...childrenProps
 }) => {
-    const { data: session } = useSession();
+    const { data: session, isLoading: sessionLoading } = useSession();
     const childrenWithProps = cloneElement(children, { ...childrenProps });
+
+    // Show loading while session is being fetched
+    if (sessionLoading) {
+        return (
+            <Route path={path}>
+                <div>Loading...</div>
+            </Route>
+        );
+    }
+
     if (!session || session.username !== "root") {
         return (
             <Route path={path}>

@@ -67,7 +67,7 @@ export const Wired = () => {
             <div className={"mt-4"}>
                 {isLoading ? (
                     <span>Loading...</span>
-                ) : switches.length ? (
+                ) : switches?.length ? (
                     <Ports switches={status.switch_status} />
                 ) : (
                     <div className={"flex-1 flex justify-center"}>
