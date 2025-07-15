@@ -1,19 +1,21 @@
 # ACL Authentication Analysis: lime-app User Login Issue
 
-> **Estado**: RESUELTO  
+> **Estado**: ✅ **RESUELTO E IMPLEMENTADO**  
 > **Fecha**: Julio 2025  
 > **Contexto**: Análisis completo del sistema de autenticación ACL en LibreMesh/LibreRouterOS
 
 ## 🎯 Resumen Ejecutivo
 
-### Problema Identificado
-El usuario `lime-app` falla consistentemente en autenticación con **error ubus código 6** (Permission denied), impidiendo el auto-login diseñado para acceso público sin contraseña.
+### ✅ Problema Resuelto
+El usuario `lime-app` fallaba consistentemente en autenticación con **error ubus código 6** (Permission denied), impidiendo el auto-login diseñado para acceso público sin contraseña.
 
-### Causa Raíz
-**Falla de diseño ACL**: El usuario lime-app requiere acceso al servicio `session` para autenticarse, pero la configuración ACL no le otorga estos permisos, creando un catch-22 de autenticación.
+### ✅ Causa Raíz Identificada
+**Falla de diseño ACL**: El usuario lime-app requería acceso al servicio `session` para autenticarse, pero la configuración ACL no le otorgaba estos permisos, creando un catch-22 de autenticación.
 
-### Solución Implementada
-Adición de permisos de sesión al archivo ACL `lime-utils.json` en el paquete `ubus-lime-utils` de lime-packages.
+### ✅ Solución Implementada y Desplegada
+**Adición de permisos de sesión** al archivo ACL `lime-utils.json` en el paquete `ubus-lime-utils` de lime-packages.
+
+**Estado actual:** Auto-login funcional en LibreMesh v4 con modelo de acceso dual (invitado/administrador).
 
 ---
 
@@ -140,6 +142,61 @@ sequenceDiagram
     RPCD->>ACL: Check permissions for user "lime-app" on service "session"
     ACL-->>RPCD: ✅ ALLOWED - lime-app has session login access
     RPCD-->>App: Success + session token
+```
+
+---
+
+## ✅ Estado Final Implementado (Julio 2025)
+
+### 🎯 Funcionalidad Restaurada
+
+**Auto-login operativo:** El sistema ahora implementa el comportamiento v3-candidate donde:
+
+1. **Carga de página** → Auto-login automático como `lime-app` (800ms delay)
+2. **Acceso invitado** → Funciones públicas disponibles inmediatamente
+3. **Funciones protegidas** → Redirección a login para acceso root
+4. **Logout de root** → Regreso automático a modo invitado
+
+### 🔐 Modelo de Acceso Dual
+
+```javascript
+// Configuración actual en lime-app
+AUTO_LOGIN_CONFIG = {
+    enabled: true,
+    username: "lime-app",
+    password: "generic",
+    delay: 800,
+    fallbackToLogin: true
+}
+
+// Control de acceso por plugins
+export const plugins = [
+    // Públicos (acceso lime-app)
+    { ...NetworkStatus, menuGroup: "status" },
+    { ...CommunityNotes, menuGroup: "community" },
+    { ...BasicTools, menuGroup: "tools" },
+    
+    // Protegidos (requieren root)
+    { ...NodeAdmin, menuGroup: "admin", isCommunityProtected: true },
+    { ...MeshConfig, menuGroup: "meshwide", isCommunityProtected: true },
+    { ...FirmwareUpdate, menuGroup: "admin", isCommunityProtected: true }
+];
+```
+
+### 🛠️ Integración Técnica
+
+**Ubicación del fix:**
+- **lime-packages**: `packages/ubus-lime-utils/files/usr/share/rpcd/acl.d/lime-utils.json`
+- **Estado**: ✅ Integrado en branch final-release de javierbrk/lime-packages
+- **Builds**: Automáticamente incluido en nuevas compilaciones LibreMesh
+
+**Verificación:**
+```bash
+# Verificar permisos ACL en router
+cat /usr/share/rpcd/acl.d/lime-utils.json
+
+# Verificar auto-login en lime-app
+# Debe mostrar "Auto-login successful as lime-app" en consola
 ```
 
 ---
