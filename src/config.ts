@@ -2,7 +2,6 @@ import Align from "plugins/lime-plugin-align";
 import ChangeNode from "plugins/lime-plugin-changeNode";
 import Fbw from "plugins/lime-plugin-fbw";
 import Firmware from "plugins/lime-plugin-firmware";
-import GroundRouting from "plugins/lime-plugin-ground-routing";
 import Locate from "plugins/lime-plugin-locate";
 import MeshWide from "plugins/lime-plugin-mesh-wide";
 import MeshConfigPage from "plugins/lime-plugin-mesh-wide-config";
@@ -39,7 +38,6 @@ export const plugins: LimePlugin[] = [
     // Tools & Utilities Group (MIXED - some public, some protected)
     { ...Align, menuGroup: "tools" }, // Public - network alignment info
     { ...ChangeNode, menuGroup: "tools" }, // Public - change connected node
-    { ...GroundRouting, menuGroup: "tools", isCommunityProtected: true }, // Protected - routing config
     { ...RemoteSupport, menuGroup: "tools", isCommunityProtected: true }, // Protected - remote access
 
     // Community Group (PUBLIC - community features)

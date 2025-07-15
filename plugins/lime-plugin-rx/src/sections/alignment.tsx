@@ -45,10 +45,18 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
             1024
     );
     return (
-        <div className={"flex flex-row mt-1 justify-between items-center px-6 py-1"}>
+        <div
+            className={
+                "flex flex-row mt-1 justify-between items-center px-6 py-1"
+            }
+        >
             {hasMostActive && (
                 <Fragment>
-                    <div className={"flex-shrink-0 text-7xl text-center text-primary pr-6 w-28"}>
+                    <div
+                        className={
+                            "flex-shrink-0 text-7xl text-center text-primary pr-6 w-28"
+                        }
+                    >
                         <SignalColor
                             className={"font-bold"}
                             signal={+status.most_active.signal}
@@ -68,7 +76,11 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                                 ))}
                         </div>
                     </div>
-                    <div className={"flex flex-col text-lg px-4 space-y-1 flex-1"}>
+                    <div
+                        className={
+                            "flex flex-col text-lg px-4 space-y-1 flex-1"
+                        }
+                    >
                         <div className={"font-bold"}>
                             <Trans>Most active link</Trans>
                         </div>

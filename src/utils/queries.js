@@ -58,13 +58,16 @@ export function useLogin() {
                     }
                 }
                 // Legacy fallback for other response structures
-                else if (response.data && response.data.username) {
-                    username = response.data.username;
-                } else if (response.acls && response.acls["access-group"]) {
+                else if (response["data"] && response["data"]["username"]) {
+                    username = response["data"]["username"];
+                } else if (
+                    response["acls"] &&
+                    response["acls"]["access-group"]
+                ) {
                     // Check access groups to determine username
-                    if (response.acls["access-group"]["root"]) {
+                    if (response["acls"]["access-group"]["root"]) {
                         username = "root";
-                    } else if (response.acls["access-group"]["lime-app"]) {
+                    } else if (response["acls"]["access-group"]["lime-app"]) {
                         username = "lime-app";
                     }
                 }

@@ -34,7 +34,6 @@ export const MenuGroup = ({
 }: MenuGroupProps) => {
     const [isHovered, setIsHovered] = useState(false);
 
-
     return (
         <div className="mb-4">
             {/* Group Header */}
@@ -104,7 +103,7 @@ export const MenuGroup = ({
                 <div className="mt-2 ml-2 mr-2 space-y-0.5 overflow-hidden">
                     {components.map((item, index) => {
                         const { component: Component, name } = item;
-                        
+
                         return (
                             <div
                                 key={index}
@@ -120,7 +119,7 @@ export const MenuGroup = ({
                                 <div className="flex items-center flex-1 min-w-0 overflow-hidden">
                                     <Component />
                                 </div>
-                                
+
                                 {/* Simple hover indicator */}
                                 <div
                                     className="

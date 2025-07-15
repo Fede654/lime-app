@@ -26,22 +26,54 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
             {Object.keys(ports).map((role) => {
                 if (role.toLowerCase() === "cpu") return null;
                 return (
-                    <div key={role} className={`flex flex-col h-fit space-y-2 items-center ${role.toLowerCase() === 'lan' ? 'bg-primary-50 p-4 rounded-lg border border-primary-200' : 'p-2'}`}>
-                        <h2 className={`font-bold ${role.toLowerCase() === 'lan' ? 'text-xl text-primary-dark' : 'text-lg'}`}>{role.toUpperCase()}</h2>
-                        <h2 className={`text-base ${role.toLowerCase() === 'lan' ? 'text-primary-600' : 'text-gray-600'}`}>
+                    <div
+                        key={role}
+                        className={`flex flex-col h-fit space-y-2 items-center ${
+                            role.toLowerCase() === "lan"
+                                ? "bg-primary-50 p-4 rounded-lg border border-primary-200"
+                                : "p-2"
+                        }`}
+                    >
+                        <h2
+                            className={`font-bold ${
+                                role.toLowerCase() === "lan"
+                                    ? "text-xl text-primary-dark"
+                                    : "text-lg"
+                            }`}
+                        >
+                            {role.toUpperCase()}
+                        </h2>
+                        <h2
+                            className={`text-base ${
+                                role.toLowerCase() === "lan"
+                                    ? "text-primary-600"
+                                    : "text-gray-600"
+                            }`}
+                        >
                             {ports[role][0]?.device?.toLowerCase() ||
                                 "Unknown Device"}
                         </h2>
-                        <div className={"flex flex-row gap-4 pt-2 justify-center"}>
+                        <div
+                            className={
+                                "flex flex-row gap-4 pt-2 justify-center"
+                            }
+                        >
                             {ports[role].map((port) => {
                                 const link =
                                     port.link?.toLowerCase() === "up"
                                         ? "fill-primary-dark"
                                         : "fill-disabled";
                                 return (
-                                    <div key={`${role}-${port.num}`} className="transform hover:scale-110 transition-transform">
+                                    <div
+                                        key={`${role}-${port.num}`}
+                                        className="transform hover:scale-110 transition-transform"
+                                    >
                                         <PortsIcon
-                                            className={`${role.toLowerCase() === 'lan' ? 'h-10 w-10' : 'h-8 w-8'} ${link}`}
+                                            className={`${
+                                                role.toLowerCase() === "lan"
+                                                    ? "h-10 w-10"
+                                                    : "h-8 w-8"
+                                            } ${link}`}
                                         />
                                     </div>
                                 );

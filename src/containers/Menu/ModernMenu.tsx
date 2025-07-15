@@ -2,7 +2,6 @@ import { Trans } from "@lingui/macro";
 import { useEffect, useState } from "preact/hooks";
 
 import { menuGroups, plugins } from "../../config";
-import { useSession } from "../../utils/queries";
 import { MenuGroup } from "./MenuGroup";
 
 export interface ModernMenuProps {
@@ -14,9 +13,6 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
     const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(
         new Set()
     );
-    const [searchTerm, setSearchTerm] = useState("");
-    const [focusedItem, setFocusedItem] = useState<string | null>(null);
-    const { data: session } = useSession();
 
     // Group plugins by menuGroup with smart organization
     const groupedPlugins = plugins
@@ -43,7 +39,7 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
             }
             groups[group].push({
                 component: plugin.menu,
-                name: plugin.name
+                name: plugin.name,
             });
             return groups;
         }, {} as Record<string, any[]>);
@@ -132,13 +128,27 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                 {/* Menu Header */}
                 <div className="p-4 border-b border-gray-200 bg-white">
                     <div className="flex items-center justify-between">
-                        <div>
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                <Trans>Navigation</Trans>
+                        <div className="flex items-center space-x-3">
+                            {/* Menu Icon */}
+                            <div className="p-2 rounded-lg bg-gradient-to-br from-primary-100 to-primary-200">
+                                <svg
+                                    className="w-6 h-6 text-primary-dark"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M4 6h16M4 12h16M4 18h16"
+                                    />
+                                </svg>
+                            </div>
+                            {/* Menu Title */}
+                            <h2 className="text-3xl font-bold text-gray-900">
+                                <Trans>Menu</Trans>
                             </h2>
-                            <p className="text-sm text-gray-500">
-                                <Trans>Manage your LibreMesh network</Trans>
-                            </p>
                         </div>
                         <button
                             onClick={toggle}
@@ -164,45 +174,6 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             </svg>
                         </button>
                     </div>
-
-                    {/* Search Bar */}
-                    <div className="mt-4">
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg
-                                    className="w-4 h-4 text-gray-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    />
-                                </svg>
-                            </div>
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={(e) =>
-                                    setSearchTerm(
-                                        (e.target as HTMLInputElement).value
-                                    )
-                                }
-                                className="
-                                    w-full pl-10 pr-4 py-2 text-sm
-                                    border border-gray-300 rounded-lg
-                                    focus:outline-none focus:ring-2 focus:ring-primary
-                                    focus:border-transparent
-                                    placeholder-gray-400
-                                "
-                                placeholder="Search features..."
-                                aria-label="Search menu items"
-                            />
-                        </div>
-                    </div>
                 </div>
 
                 {/* Menu Content */}
@@ -218,23 +189,8 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             const groupConfig = menuGroups[groupKey];
                             if (!groupConfig) return null;
 
-                            // Filter components based on search
-                            const filteredComponents = searchTerm
-                                ? components.filter(
-                                      (comp) =>
-                                          // This is a simplified search - in a real app you'd search the actual component text
-                                          groupConfig.label
-                                              .toLowerCase()
-                                              .includes(
-                                                  searchTerm.toLowerCase()
-                                              ) ||
-                                          groupConfig.description
-                                              .toLowerCase()
-                                              .includes(
-                                                  searchTerm.toLowerCase()
-                                              )
-                                  )
-                                : components;
+                            // Show all components without search filtering
+                            const filteredComponents = components;
 
                             if (filteredComponents.length === 0) return null;
 
@@ -251,18 +207,6 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                             );
                         })}
                     </div>
-
-                    {/* Empty state for search */}
-                    {searchTerm && sortedGroups.length === 0 && (
-                        <div className="text-center py-8 text-gray-500">
-                            <div className="text-4xl mb-2">🔍</div>
-                            <p className="text-sm">
-                                <Trans>
-                                    No menu items found for "{searchTerm}"
-                                </Trans>
-                            </p>
-                        </div>
-                    )}
                 </div>
 
                 {/* Menu Footer */}

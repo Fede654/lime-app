@@ -145,11 +145,13 @@ const App = () => {
         ) {
             setAutoLoginAttempted(true);
             setAutoLoginInProgress(true);
-            
+
             // Attempt auto-login after a short delay
             setTimeout(() => {
                 if (process.env.NODE_ENV !== "production") {
-                    console.log(`Auto-login as ${AUTO_LOGIN_CONFIG.username} for guest access`);
+                    console.log(
+                        `Auto-login as ${AUTO_LOGIN_CONFIG.username} for guest access`
+                    );
                 }
                 login(
                     {
@@ -160,12 +162,20 @@ const App = () => {
                         onError: (error: any) => {
                             if (process.env.NODE_ENV !== "production") {
                                 console.warn("Auto-login failed:", error);
-                                console.warn(`Error details: ${error?.message || JSON.stringify(error)}`);
-                                
+                                console.warn(
+                                    `Error details: ${
+                                        error?.message || JSON.stringify(error)
+                                    }`
+                                );
+
                                 // Decode ubus error codes
                                 if (error?.result?.[0] === 6) {
-                                    console.warn("❌ Error code 6: Permission denied - lime-app user lacks session ACL permissions");
-                                    console.warn("💡 Solution: Update ACL file with session permissions and rebuild LibreMesh");
+                                    console.warn(
+                                        "❌ Error code 6: Permission denied - lime-app user lacks session ACL permissions"
+                                    );
+                                    console.warn(
+                                        "💡 Solution: Update ACL file with session permissions and rebuild LibreMesh"
+                                    );
                                 }
                             }
                             setAutoLoginFailed(true);
@@ -173,20 +183,36 @@ const App = () => {
                         },
                         onSuccess: () => {
                             if (process.env.NODE_ENV !== "production") {
-                                console.log(`Auto-login successful as ${AUTO_LOGIN_CONFIG.username}`);
+                                console.log(
+                                    `Auto-login successful as ${AUTO_LOGIN_CONFIG.username}`
+                                );
                             }
                             setAutoLoginInProgress(false);
-                        }
+                        },
                     }
                 );
             }, AUTO_LOGIN_CONFIG.delay);
         }
-    }, [session, sessionLoading, autoLoginAttempted, autoLoginInProgress, isOnLoginRoute, isOnFbwRoute, isLocalDev, login]);
+    }, [
+        session,
+        sessionLoading,
+        autoLoginAttempted,
+        autoLoginInProgress,
+        isOnLoginRoute,
+        isOnFbwRoute,
+        isLocalDev,
+        login,
+    ]);
 
     // Reset auto-login state when session changes (after logout)
     useEffect(() => {
         // If session becomes null/undefined after being authenticated, reset auto-login state
-        if (!sessionLoading && !session?.username && autoLoginAttempted && !autoLoginInProgress) {
+        if (
+            !sessionLoading &&
+            !session?.username &&
+            autoLoginAttempted &&
+            !autoLoginInProgress
+        ) {
             if (process.env.NODE_ENV !== "production") {
                 console.log("Session cleared - resetting auto-login state");
             }
@@ -205,7 +231,9 @@ const App = () => {
             (sessionError || !session?.username) &&
             !isOnFbwRoute &&
             !isOnLoginRoute &&
-            (!AUTO_LOGIN_CONFIG.enabled || autoLoginAttempted || autoLoginFailed)
+            (!AUTO_LOGIN_CONFIG.enabled ||
+                autoLoginAttempted ||
+                autoLoginFailed)
         ) {
             // If auto-login failed and fallback is enabled, redirect to login
             if (autoLoginFailed && AUTO_LOGIN_CONFIG.fallbackToLogin) {
@@ -216,10 +244,29 @@ const App = () => {
                 route("/login", true);
             }
         }
-    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute, autoLoginAttempted, autoLoginFailed, autoLoginInProgress]);
+    }, [
+        session,
+        sessionLoading,
+        sessionError,
+        isOnFbwRoute,
+        isOnLoginRoute,
+        autoLoginAttempted,
+        autoLoginFailed,
+        autoLoginInProgress,
+    ]);
 
     // Show loading while checking session or attempting auto-login
-    if (sessionLoading || autoLoginInProgress || (AUTO_LOGIN_CONFIG.enabled && !autoLoginAttempted && !autoLoginFailed && !session?.username && !isOnLoginRoute && !isOnFbwRoute && !isLocalDev)) {
+    if (
+        sessionLoading ||
+        autoLoginInProgress ||
+        (AUTO_LOGIN_CONFIG.enabled &&
+            !autoLoginAttempted &&
+            !autoLoginFailed &&
+            !session?.username &&
+            !isOnLoginRoute &&
+            !isOnFbwRoute &&
+            !isLocalDev)
+    ) {
         return <div>Loading...</div>;
     }
 
@@ -256,10 +303,10 @@ const AppDefault = () => {
     // Initialize i18n synchronously before rendering
     if (!i18n.locale || i18n.locale === "") {
         // Load empty messages for English as fallback with basic plural rules
-        i18n.loadLocaleData({ 
-            en: { 
-                plurals: (n: number) => (n === 1 ? "one" : "other") as any // Basic English plural rule
-            } 
+        i18n.loadLocaleData({
+            en: {
+                plurals: (n: number) => (n === 1 ? "one" : "other") as any, // Basic English plural rule
+            },
         });
         i18n.load("en", {});
         i18n.activate("en");
