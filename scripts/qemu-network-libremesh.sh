@@ -33,12 +33,43 @@ setup_libremesh_network() {
     sudo screen -S libremesh -X stuff 'echo "=== LibreMesh Network Setup ==="; ip link show'$'\n'
     sleep 2
     
-    # Configure br-lan (primary mesh interface)
-    sudo screen -S libremesh -X stuff 'if ip link show br-lan >/dev/null 2>&1; then echo "Configuring br-lan for mesh"; ip addr add 10.13.0.1/16 dev br-lan 2>/dev/null || ip addr replace 10.13.0.1/16 dev br-lan; ip link set br-lan up; echo "br-lan configured"; else echo "br-lan not found"; fi'$'\n'
+    # Auto-detect and configure available network interfaces
+    sudo screen -S libremesh -X stuff 'echo "=== Auto-detecting network interfaces ==="'$'\n'
+    sleep 1
+    
+    # Show all available interfaces for debugging
+    sudo screen -S libremesh -X stuff 'echo "Available interfaces:"; ip link show | grep -E "^[0-9]+:"'$'\n'
+    sleep 2
+    
+    # Find the first non-loopback interface
+    sudo screen -S libremesh -X stuff 'MAIN_IFC=$(ip link show | grep -E "^[0-9]+: " | grep -v "lo:" | head -1 | cut -d: -f2 | tr -d " "); echo "Main interface: $MAIN_IFC"'$'\n'
+    sleep 2
+    
+    # Configure the main interface with IP
+    sudo screen -S libremesh -X stuff 'if [ -n "$MAIN_IFC" ]; then echo "Configuring $MAIN_IFC with 10.13.0.1/16..."; ip link set $MAIN_IFC up; ip addr add 10.13.0.1/16 dev $MAIN_IFC 2>/dev/null || ip addr replace 10.13.0.1/16 dev $MAIN_IFC; echo "$MAIN_IFC configured"; else echo "No network interface found"; fi'$'\n'
     sleep 3
     
-    # Fallback to eth0 if br-lan doesn't work
-    sudo screen -S libremesh -X stuff 'if ! ip addr show br-lan | grep -q "10.13.0.1" 2>/dev/null; then echo "Fallback: configuring eth0"; ip addr add 10.13.0.1/16 dev eth0 2>/dev/null || ip addr replace 10.13.0.1/16 dev eth0; ip link set eth0 up 2>/dev/null; echo "eth0 configured"; fi'$'\n'
+    # More aggressive network interface configuration
+    # Try multiple approaches to ensure connectivity
+    
+    # Configure eth0 directly (most reliable with virtio)
+    sudo screen -S libremesh -X stuff 'echo "=== Configuring eth0 (primary) ==="; if ip link show eth0 >/dev/null 2>&1; then echo "Configuring eth0..."; ip link set eth0 up; ip addr flush dev eth0; ip addr add 10.13.0.1/16 dev eth0; echo "eth0 configured with 10.13.0.1/16"; ip addr show eth0; else echo "eth0 not found"; fi'$'\n'
+    sleep 3
+    
+    # Configure br-lan if it exists (LibreMesh mesh bridge)
+    sudo screen -S libremesh -X stuff 'echo "=== Configuring br-lan (mesh bridge) ==="; if ip link show br-lan >/dev/null 2>&1; then echo "Configuring br-lan for mesh..."; ip link set br-lan up; ip addr add 10.13.0.1/16 dev br-lan 2>/dev/null || echo "br-lan IP already set"; echo "br-lan configured"; ip addr show br-lan; else echo "br-lan not available"; fi'$'\n'
+    sleep 3
+    
+    # Try wan interface (common in LibreRouterOS)
+    sudo screen -S libremesh -X stuff 'echo "=== Checking wan interface ==="; if ip link show wan >/dev/null 2>&1; then echo "Configuring wan..."; ip link set wan up; ip addr add 10.13.0.1/16 dev wan 2>/dev/null || echo "wan IP set"; ip addr show wan; else echo "wan not available"; fi'$'\n'
+    sleep 2
+    
+    # Force route configuration
+    sudo screen -S libremesh -X stuff 'echo "=== Setting up routing ==="; ip route add 10.13.0.0/16 dev eth0 2>/dev/null || echo "Route already exists"; ip route show | grep 10.13.0'$'\n'
+    sleep 2
+    
+    # Verify IP configuration
+    sudo screen -S libremesh -X stuff 'echo "=== IP Configuration Verification ==="; ip addr show | grep -A1 "10.13.0.1"'$'\n'
     sleep 2
     
     # LibreMesh-specific services setup
@@ -56,7 +87,7 @@ setup_libremesh_network() {
     sleep 2
     
     # LibreMesh specific: Start lime-system if available
-    sudo screen -S libremesh -X stuff 'if [ -f /etc/init.d/limed ]; then echo "Starting LibreMesh daemon..."; /etc/init.d/limed start; else echo "LibreMesh daemon not found (expected in minimal builds)"; fi'$'\n'
+    sudo screen -S libremesh -X stuff 'if [ -f /etc/init.d/limed ]; then echo "Starting LibreMesh daemon..."; /etc/init.d/limed start; else echo "LibreMesh daemon not found - expected in minimal builds"; fi'$'\n'
     sleep 2
     
     # Enable batman-adv if available (mesh networking)

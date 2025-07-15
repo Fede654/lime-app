@@ -32,20 +32,32 @@ setup_librerouteros_network() {
     sudo screen -S libremesh -X stuff 'echo "=== LibreRouterOS Network Discovery ==="; echo "Available interfaces:"; ip link show | grep -E "^[0-9]+:" | head -5'$'\n'
     sleep 3
     
-    # First try eth0 (LibreRouterOS primary interface)
-    sudo screen -S libremesh -X stuff 'echo "Configuring eth0 (primary)..."; if ip link show eth0 >/dev/null 2>&1; then ip addr flush dev eth0 2>/dev/null; ip addr add 10.13.0.1/16 dev eth0; ip link set eth0 up; echo "eth0 configured: 10.13.0.1"; else echo "eth0 not available"; fi'$'\n'
-    sleep 3
+    # Auto-detect and configure available network interfaces (LibreRouterOS)
+    sudo screen -S libremesh -X stuff 'echo "=== LibreRouterOS Interface Auto-Detection ==="'$'\n'
+    sleep 1
     
-    # Try to create or configure br-lan if available
-    sudo screen -S libremesh -X stuff 'echo "Checking br-lan..."; if ip link show br-lan >/dev/null 2>&1; then echo "br-lan exists, configuring..."; ip addr add 10.13.0.1/16 dev br-lan 2>/dev/null || ip addr replace 10.13.0.1/16 dev br-lan; ip link set br-lan up; echo "br-lan configured"; elif which brctl >/dev/null 2>&1; then echo "Creating br-lan bridge..."; brctl addbr br-lan 2>/dev/null || echo "Bridge creation failed"; ip addr add 10.13.0.1/16 dev br-lan 2>/dev/null; ip link set br-lan up 2>/dev/null; echo "br-lan created and configured"; else echo "br-lan not available, using eth0"; fi'$'\n'
-    sleep 3
-    
-    # LibreRouterOS might need manual interface bringing up
-    sudo screen -S libremesh -X stuff 'echo "Ensuring interfaces are up..."; for ifc in eth0 br-lan lan; do if ip link show $ifc >/dev/null 2>&1; then ip link set $ifc up 2>/dev/null; echo "$ifc brought up"; fi; done'$'\n'
+    # Show all available interfaces for debugging
+    sudo screen -S libremesh -X stuff 'echo "Available interfaces:"; ip link show | grep -E "^[0-9]+:"'$'\n'
     sleep 2
     
-    # Set up routing if needed
-    sudo screen -S libremesh -X stuff 'echo "Setting up routing..."; ip route add default dev eth0 2>/dev/null || echo "Default route already exists or failed"'$'\n'
+    # Find the first non-loopback interface
+    sudo screen -S libremesh -X stuff 'MAIN_IFC=$(ip link show | grep -E "^[0-9]+: " | grep -v "lo:" | head -1 | cut -d: -f2 | tr -d " "); echo "Main interface detected: $MAIN_IFC"'$'\n'
+    sleep 2
+    
+    # Configure the main interface with IP
+    sudo screen -S libremesh -X stuff 'if [ -n "$MAIN_IFC" ]; then echo "Configuring $MAIN_IFC with 10.13.0.1/16..."; ip link set $MAIN_IFC up; ip addr add 10.13.0.1/16 dev $MAIN_IFC 2>/dev/null || ip addr replace 10.13.0.1/16 dev $MAIN_IFC; echo "$MAIN_IFC configured"; else echo "No network interface found"; fi'$'\n'
+    sleep 3
+    
+    # Configure eth0 directly (most reliable with virtio)
+    sudo screen -S libremesh -X stuff 'if ip link show eth0 >/dev/null 2>&1; then echo "Configuring eth0..."; ip link set eth0 up; ip addr add 10.13.0.1/16 dev eth0 2>/dev/null || ip addr replace 10.13.0.1/16 dev eth0; echo "eth0 configured with 10.13.0.1/16"; else echo "eth0 not found"; fi'$'\n'
+    sleep 3
+    
+    # Try to configure br-lan if available
+    sudo screen -S libremesh -X stuff 'if ip link show br-lan >/dev/null 2>&1; then echo "br-lan found, configuring..."; ip addr add 10.13.0.1/16 dev br-lan 2>/dev/null || ip addr replace 10.13.0.1/16 dev br-lan; ip link set br-lan up; echo "br-lan configured"; else echo "br-lan not available (normal for LibreRouterOS)"; fi'$'\n'
+    sleep 2
+    
+    # Verify IP configuration
+    sudo screen -S libremesh -X stuff 'echo "=== LibreRouterOS IP Configuration ==="; ip addr show | grep -A1 "10.13.0.1"'$'\n'
     sleep 2
     
     # LibreRouterOS services configuration

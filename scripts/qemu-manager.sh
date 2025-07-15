@@ -37,6 +37,10 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+print_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
+
 # Check if QEMU is running by testing connectivity and process
 check_qemu_running() {
     # First check if QEMU process is running
@@ -171,7 +175,7 @@ check_prerequisites() {
     print_status "Telnet port: $TELNET_PORT (for console access)"
 }
 
-# Start QEMU
+# Start QEMU using official LibreMesh method
 start_qemu() {
     print_status "Starting QEMU with $IMAGE_NAME..."
     
@@ -182,33 +186,37 @@ start_qemu() {
         return 0
     fi
     
-    # Pre-create required TAP interfaces to prevent QEMU startup failure
-    print_status "Preparing QEMU network interfaces..."
-    if [ ! -e "/sys/class/net/lime_tap00_1" ]; then
-        sudo ip tuntap add name lime_tap00_1 mode tap 2>/dev/null || true
-        sudo ip link set lime_tap00_1 up 2>/dev/null || true
-    fi
-    if [ ! -e "/sys/class/net/lime_tap00_2" ]; then
-        sudo ip tuntap add name lime_tap00_2 mode tap 2>/dev/null || true
-        sudo ip link set lime_tap00_2 up 2>/dev/null || true
-    fi
-    
     cd "$LIME_PACKAGES_DIR"
     
-    # Start QEMU in a screen session for proper console interaction
-    print_status "Starting QEMU in screen session 'libremesh'..."
-    sudo screen -dmS libremesh ./tools/qemu_dev_start \
-        --libremesh-workdir . \
-        "$ROOTFS_PATH" \
-        "$KERNEL_PATH"
+    # Use official LibreMesh QEMU startup (same as npm scripts)
+    print_status "Using official LibreMesh QEMU startup method..."
+    print_status "This creates proper bridge (lime_br0) and TAP interfaces automatically"
     
-    print_status "QEMU starting in screen session..."
-    print_status "Use 'sudo screen -r libremesh' to access console"
+    # Start QEMU using the official script directly (background with nohup)
+    print_status "Starting QEMU with official tools/qemu_dev_start..."
     
-    # Wait for QEMU to be ready and auto-configure network
-    print_status "Waiting for QEMU to boot..."
-    for i in {1..8}; do
+    if [ "$IMAGE_TYPE" = "librerouteros-2410" ]; then
+        print_status "Using LibreRouterOS-specific QEMU startup script..."
+        nohup sudo ./tools/qemu_dev_start_librerouteros \
+            --libremesh-workdir . \
+            "$ROOTFS_PATH" \
+            "$KERNEL_PATH" > /tmp/qemu-libremesh.log 2>&1 &
+    else
+        nohup sudo ./tools/qemu_dev_start \
+            --libremesh-workdir . \
+            "$ROOTFS_PATH" \
+            "$KERNEL_PATH" > /tmp/qemu-libremesh.log 2>&1 &
+    fi
+    
+    QEMU_PID=$!
+    print_status "QEMU started with PID: $QEMU_PID"
+    print_status "Log file: /tmp/qemu-libremesh.log"
+    
+    # Wait for QEMU process to be ready
+    print_status "Waiting for QEMU to initialize..."
+    for i in {1..10}; do
         if pgrep -f "qemu-system-x86_64" >/dev/null 2>&1; then
+            print_status "✓ QEMU process is running"
             break
         fi
         sleep 2
@@ -218,31 +226,56 @@ start_qemu() {
     if ! pgrep -f "qemu-system-x86_64" >/dev/null 2>&1; then
         echo
         print_error "QEMU process failed to start"
+        print_error "Check logs: cat /tmp/qemu-libremesh.log"
         return 1
     fi
     
-    # Auto-configure network based on image type
-    print_status "Auto-configuring network for $IMAGE_NAME..."
-    setup_network_for_image
+    # Wait for bridge interface to be created
+    print_status "Waiting for network bridge to be ready..."
+    for i in {1..15}; do
+        if ip link show lime_br0 >/dev/null 2>&1; then
+            print_status "✓ Bridge interface lime_br0 created"
+            break
+        fi
+        sleep 2
+        echo -n "."
+    done
     
-    # Verify it's working
-    if check_qemu_running; then
-        print_status "✓ QEMU LibreMesh ready at http://$QEMU_IP"
-        print_status "✓ lime-app available at http://$QEMU_IP/app"
-        print_status "✓ Default credentials: root/admin"
-        print_status "✓ Console accessible via: sudo screen -r libremesh"
-        return 0
-    else
-        print_warning "LibreMesh started but network not fully ready"
-        print_status "✓ Default credentials: root/admin"
-        print_status "✓ Console accessible via: sudo screen -r libremesh"
-        return 0
-    fi
+    # Test connectivity (the bridge should provide connectivity)
+    print_status "Testing network connectivity..."
+    for i in {1..20}; do
+        if ping -c 1 -W 1 "$QEMU_IP" >/dev/null 2>&1; then
+            print_status "✓ QEMU LibreMesh ready at http://$QEMU_IP"
+            print_status "✓ lime-app available at http://$QEMU_IP/app"
+            print_status "✓ Default credentials: root/admin"
+            print_status "✓ Host bridge IP: 10.13.0.2 (lime_br0)"
+            print_status "✓ VM IP: 10.13.0.1 (LibreMesh)"
+            print_info "Console access: Connect via telnet localhost 4540"
+            return 0
+        fi
+        
+        if [ $i -eq 10 ]; then
+            print_warning "Still waiting for LibreMesh to boot..."
+            print_info "Bridge status:"
+            ip addr show lime_br0 2>/dev/null || print_warning "Bridge not ready yet"
+        fi
+        
+        sleep 3
+        echo -n "."
+    done
     
     echo
-    print_error "QEMU failed to start or become ready"
-    print_error "Check logs: cat /tmp/qemu-libremesh.log"
-    return 1
+    print_warning "Network connectivity verification timed out"
+    print_status "✓ QEMU process running (PID: $(pgrep -f "qemu-system-x86_64" | head -1))"
+    print_status "✓ Check bridge status: ip addr show lime_br0"
+    print_status "✓ Console access: telnet localhost 4540"
+    print_warning "LibreMesh may still be booting - try waiting 1-2 minutes"
+    print_info "Troubleshooting options:"
+    print_info "  1. Wait longer: LibreMesh boot can take 2-3 minutes"
+    print_info "  2. Check bridge: ip addr show lime_br0"
+    print_info "  3. Console access: telnet localhost 4540"
+    print_info "  4. Check logs: cat /tmp/qemu-libremesh.log"
+    return 0
 }
 
 # Stop QEMU
