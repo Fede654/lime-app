@@ -2,7 +2,7 @@ import { fromNavigator } from "@lingui/detect-locale";
 import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import Router, { route } from "preact-router";
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 
 import { ToastProvider } from "components/toast/toastProvider";
 
@@ -104,6 +104,7 @@ const App = () => {
     const { mutate: login, isError: loginError } = useLogin();
     const [autoLoginAttempted, setAutoLoginAttempted] = useState(false);
     const [autoLoginFailed, setAutoLoginFailed] = useState(false);
+    const [autoLoginInProgress, setAutoLoginInProgress] = useState(false);
 
     // Auto-login configuration for guest access (restored v3-candidate behavior)
     const AUTO_LOGIN_CONFIG = {
@@ -137,11 +138,13 @@ const App = () => {
             !sessionLoading &&
             !session?.username &&
             !autoLoginAttempted &&
+            !autoLoginInProgress &&
             !isOnLoginRoute &&
             !isOnFbwRoute &&
             !isLocalDev
         ) {
             setAutoLoginAttempted(true);
+            setAutoLoginInProgress(true);
             
             // Attempt auto-login after a short delay
             setTimeout(() => {
@@ -151,25 +154,46 @@ const App = () => {
                 login(
                     {
                         username: AUTO_LOGIN_CONFIG.username,
-                        password: "lime-app", // Default lime-app password (ACL fixed)
+                        password: "generic", // Default lime-app password (ACL fixed)
                     },
                     {
-                        onError: (error) => {
+                        onError: (error: any) => {
                             if (process.env.NODE_ENV !== "production") {
-                                console.warn(`Auto-login failed: ${error.message}. This system may not have lime-app user configured.`);
+                                console.warn("Auto-login failed:", error);
+                                console.warn(`Error details: ${error?.message || JSON.stringify(error)}`);
+                                
+                                // Decode ubus error codes
+                                if (error?.result?.[0] === 6) {
+                                    console.warn("❌ Error code 6: Permission denied - lime-app user lacks session ACL permissions");
+                                    console.warn("💡 Solution: Update ACL file with session permissions and rebuild LibreMesh");
+                                }
                             }
                             setAutoLoginFailed(true);
+                            setAutoLoginInProgress(false);
                         },
                         onSuccess: () => {
                             if (process.env.NODE_ENV !== "production") {
                                 console.log(`Auto-login successful as ${AUTO_LOGIN_CONFIG.username}`);
                             }
+                            setAutoLoginInProgress(false);
                         }
                     }
                 );
             }, AUTO_LOGIN_CONFIG.delay);
         }
-    }, [session, sessionLoading, autoLoginAttempted, isOnLoginRoute, isOnFbwRoute, isLocalDev, login]);
+    }, [session, sessionLoading, autoLoginAttempted, autoLoginInProgress, isOnLoginRoute, isOnFbwRoute, isLocalDev, login]);
+
+    // Reset auto-login state when session changes (after logout)
+    useEffect(() => {
+        // If session becomes null/undefined after being authenticated, reset auto-login state
+        if (!sessionLoading && !session?.username && autoLoginAttempted && !autoLoginInProgress) {
+            if (process.env.NODE_ENV !== "production") {
+                console.log("Session cleared - resetting auto-login state");
+            }
+            setAutoLoginAttempted(false);
+            setAutoLoginFailed(false);
+        }
+    }, [session, sessionLoading, autoLoginAttempted, autoLoginInProgress]);
 
     // If not authenticated and not on login/fbw routes, redirect to login
     // This now happens only if auto-login is disabled or failed
@@ -177,6 +201,7 @@ const App = () => {
         // Only redirect after session check is complete and auto-login attempted or failed
         if (
             !sessionLoading &&
+            !autoLoginInProgress &&
             (sessionError || !session?.username) &&
             !isOnFbwRoute &&
             !isOnLoginRoute &&
@@ -191,10 +216,10 @@ const App = () => {
                 route("/login", true);
             }
         }
-    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute, autoLoginAttempted, autoLoginFailed]);
+    }, [session, sessionLoading, sessionError, isOnFbwRoute, isOnLoginRoute, autoLoginAttempted, autoLoginFailed, autoLoginInProgress]);
 
     // Show loading while checking session or attempting auto-login
-    if (sessionLoading || (AUTO_LOGIN_CONFIG.enabled && !autoLoginAttempted && !autoLoginFailed && !session?.username && !isOnLoginRoute && !isOnFbwRoute && !isLocalDev)) {
+    if (sessionLoading || autoLoginInProgress || (AUTO_LOGIN_CONFIG.enabled && !autoLoginAttempted && !autoLoginFailed && !session?.username && !isOnLoginRoute && !isOnFbwRoute && !isLocalDev)) {
         return <div>Loading...</div>;
     }
 
@@ -230,7 +255,12 @@ const App = () => {
 const AppDefault = () => {
     // Initialize i18n synchronously before rendering
     if (!i18n.locale || i18n.locale === "") {
-        // Load empty messages for English as fallback
+        // Load empty messages for English as fallback with basic plural rules
+        i18n.loadLocaleData({ 
+            en: { 
+                plurals: (n: number) => (n === 1 ? "one" : "other") as any // Basic English plural rule
+            } 
+        });
         i18n.load("en", {});
         i18n.activate("en");
     }
