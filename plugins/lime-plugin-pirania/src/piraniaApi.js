@@ -3,13 +3,25 @@ import Compressor from "compressorjs";
 import api from "utils/uhttpd.service";
 
 export const getPortalConfig = () =>
-    api.call("pirania", "get_portal_config", {});
+    api.call("pirania", "get_portal_config", {}).catch((error) => {
+        // Handle case where pirania service is not available
+        if (error.message && error.message.includes('"code":-32000')) {
+            return Promise.resolve(null);
+        }
+        throw error;
+    });
 
 export const setPortalConfig = (config) =>
     api.call("pirania", "set_portal_config", config);
 
 export const getPortalContent = () =>
-    api.call("pirania", "get_portal_page_content", {});
+    api.call("pirania", "get_portal_page_content", {}).catch((error) => {
+        // Handle case where pirania service is not available
+        if (error.message && error.message.includes('"code":-32000')) {
+            return Promise.resolve(null);
+        }
+        throw error;
+    });
 
 export const setPortalContent = (content) =>
     api.call("pirania", "set_portal_page_content", content);

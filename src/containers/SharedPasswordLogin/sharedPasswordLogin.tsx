@@ -89,6 +89,9 @@ const TryToLoginAutomatically = () => {
     const { isError, mutate: login } = useLogin();
 
     useEffect(() => {
+        // Try to login as root with empty password first
+        // This is common in LibreMesh/OpenWrt default configurations
+        // If it fails, we'll show the password input form
         login({ username: "root", password: "" });
     }, [login]);
 

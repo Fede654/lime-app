@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { Fragment } from "preact";
+import { route } from "preact-router";
 import { useState } from "preact/hooks";
 
 import { useBoardData, useLogin, useLogout, useSession } from "utils/queries";
@@ -37,7 +38,16 @@ export const Header = ({ Menu }) => {
     return (
         <Fragment>
             <header className={style.header}>
-                {boardData && <h1>{boardData.hostname}</h1>}
+                {boardData && (
+                    <h1
+                        onClick={() => route("/rx")}
+                        className="clickable"
+                        style={{ cursor: "pointer" }}
+                        title="Go to home dashboard"
+                    >
+                        {boardData.hostname}
+                    </h1>
+                )}
                 {session?.username && (
                     <div className={style.userInfo}>
                         <span className={style.username}>

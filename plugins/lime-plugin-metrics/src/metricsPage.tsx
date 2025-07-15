@@ -1,5 +1,6 @@
 import { i18n } from "@lingui/core";
 import { Trans, defineMessage } from "@lingui/macro";
+import { route } from "preact-router";
 
 import { useBoardData } from "utils/queries";
 import queryCache from "utils/queryCache";
@@ -41,7 +42,7 @@ const style = {
 };
 
 export const Metrics = () => {
-    const { data: boardData } = useBoardData();
+    const { data: boardData, isLoading: boardDataIsLoading } = useBoardData();
 
     const {
         data: internet,
@@ -139,7 +140,7 @@ export const Metrics = () => {
         return hostname === gateway;
     }
 
-    const isLoading = gatewayIsLoading || pathIsLoading || metricsIsLoading;
+    const isLoading = boardDataIsLoading || gatewayIsLoading || pathIsLoading || metricsIsLoading;
 
     return (
         <div
@@ -148,7 +149,14 @@ export const Metrics = () => {
         >
             {isLoading ? showLoading(isLoading) : showError()}
             <div style={style.box}>
-                <Trans>From</Trans> {boardData.hostname}
+                <Trans>From</Trans>{" "}
+                <a 
+                    onClick={() => route("/rx")} 
+                    className="clickable" 
+                    style={{ cursor: "pointer", textDecoration: "underline" }}
+                >
+                    {boardData?.hostname || "..."}
+                </a>
             </div>
             {path &&
                 path.map((station, key) => (

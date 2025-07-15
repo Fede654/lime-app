@@ -148,6 +148,15 @@ const App = () => {
 
             // Attempt auto-login after a short delay
             setTimeout(() => {
+                // Double-check conditions before attempting login to prevent duplicates
+                if (session?.username || autoLoginInProgress) {
+                    if (process.env.NODE_ENV !== "production") {
+                        console.log("Auto-login cancelled - session already exists or in progress");
+                    }
+                    setAutoLoginInProgress(false);
+                    return;
+                }
+                
                 if (process.env.NODE_ENV !== "production") {
                     console.log(
                         `Auto-login as ${AUTO_LOGIN_CONFIG.username} for guest access`
