@@ -49,14 +49,14 @@ const SystemInfo = () => {
         { label: t`Firmware`, value: boardData.release.description },
     ];
     return (
-        <div className="flex justify-start px-10">
-            <div className="grid grid-cols-4 gap-4">
+        <div className="flex justify-start px-8 py-4">
+            <div className="grid grid-cols-3 gap-x-8 gap-y-3 w-full">
                 {attributes.map((attribute, i) => (
                     <Fragment key={i}>
-                        <div className="col-span-1 text-left pr-4 font-bold">
+                        <div className="col-span-1 text-left pr-4 font-semibold text-xl text-gray-700">
                             {attribute.label}:
                         </div>
-                        <div className="col-span-3 text-left">
+                        <div className="col-span-2 text-left text-xl font-medium text-gray-900">
                             {attribute.value}
                         </div>
                     </Fragment>
@@ -77,8 +77,14 @@ export const System = () => {
             <SectionTitle icon={<GearIcon className={IconsClassName} />}>
                 <Trans>System</Trans>
             </SectionTitle>
-            <div className={"mt-4"}>
-                {isLoading ? <span>Loading...</span> : <SystemInfo />}
+            <div className={"mt-1 mb-2"}>
+                {isLoading ? (
+                    <div className="flex justify-center py-3">
+                        <span>Loading...</span>
+                    </div>
+                ) : (
+                    <SystemInfo />
+                )}
             </div>
         </Section>
     );

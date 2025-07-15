@@ -12,7 +12,7 @@ export const SectionTitle: FunctionalComponent<SectionTitleProps> = ({
     icon,
 }) => {
     return (
-        <div className="flex items-center gap-x-4 ml-6 mt-6">
+        <div className="flex items-center gap-x-4 ml-6 mt-3 mb-3">
             <span className={"text-primary-dark fill-current"}>{icon}</span>
             <h1 className="text-4xl font-bold text-left">{children}</h1>
         </div>
@@ -21,8 +21,8 @@ export const SectionTitle: FunctionalComponent<SectionTitleProps> = ({
 
 export const Section = ({ ...props }) => {
     return (
-        <div className={"w-full container "}>
-            <div className="w-full" {...props}>
+        <div className={"w-full container"}>
+            <div className="w-full py-2" {...props}>
                 {props.children}
             </div>
         </div>
