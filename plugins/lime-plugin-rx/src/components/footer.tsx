@@ -1,11 +1,11 @@
 import { Trans } from "@lingui/macro";
 
 export const Footer = () => {
-    const imgClass = "h-16";
+    const imgClass = "h-12";
     return (
         <div
             className={
-                "z-50 fixed bottom-0 w-full flex justify-around content-center items-center"
+                "w-full flex justify-around content-center items-center bg-primary-lighter border-t border-primary-200 py-3 mt-6"
             }
         >
             <div>

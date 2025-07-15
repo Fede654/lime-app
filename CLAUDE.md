@@ -7,6 +7,10 @@
 
 LiMeApp es una aplicación web moderna construida con **Preact** para la gestión de routers LibreMesh. Proporciona una interfaz libre de complejidades técnicas para configuración y mantenimiento de nodos LibreMesh, con arquitectura de plugins que se comunica con servicios del router via llamadas ubus JSON-RPC.
 
+### 🔐 Sistema de Autenticación Restaurado
+
+**Estado:** ✅ **Auto-login funcional** - Restaurado comportamiento v3-candidate con autenticación automática como usuario `lime-app` (invitado) al cargar la página.
+
 ### 🌟 Estado Actual del Proyecto
 
 - **Rama activa**: `f/v4-foundation` 
@@ -14,6 +18,36 @@ LiMeApp es una aplicación web moderna construida con **Preact** para la gestió
 - **Desarrollo colaborativo**: Framework IA+Humano completamente implementado
 - **Testing**: Integración QEMU con 140+ tests y cobertura 85%+
 - **Internacionalización**: 24 idiomas soportados (Español 100%, Inglés 100%)
+- **Autenticación**: ✅ Auto-login restaurado con control de acceso por plugins
+
+### 🔐 Sistema de Autenticación v4-foundation
+
+**Modelo de Acceso Dual:**
+```javascript
+// Usuario invitado (auto-login)
+lime-app: {
+    acceso: "automático al cargar página",
+    permisos: ["status", "comunidad", "herramientas básicas"],
+    restricciones: ["administración", "configuración mesh", "firmware"]
+}
+
+// Usuario administrador (login manual)
+root: {
+    acceso: "login manual con contraseña",
+    permisos: ["acceso completo", "configuración sistema", "gestión mesh"],
+    logout: "regreso a modo invitado"
+}
+```
+
+**Flujo de Autenticación:**
+1. **Carga de página** → Auto-login como `lime-app` (800ms delay)
+2. **Funciones protegidas** → Redirección a página de login para acceso root
+3. **Logout de root** → Regreso automático a modo invitado
+
+**Implementación ACL:**
+- **Archivo**: `lime-packages/packages/ubus-lime-utils/files/usr/share/rpcd/acl.d/lime-utils.json`
+- **Permisos sesión**: `session: ["access", "login", "destroy"]` para usuario lime-app
+- **Estado**: ✅ Integrado en lime-packages final-release branch
 
 ## 📚 Navegación de Documentación
 

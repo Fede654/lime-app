@@ -33,11 +33,7 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                 return false;
             }
 
-            // Authentication filter - hide community protected items for non-root users
-            if (plugin.isCommunityProtected && session?.username !== "root") {
-                return false;
-            }
-
+            // Show all plugins - protected ones will redirect to login if needed
             return true;
         })
         .reduce((groups, plugin) => {
@@ -45,7 +41,10 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
             if (!groups[group]) {
                 groups[group] = [];
             }
-            groups[group].push(plugin.menu);
+            groups[group].push({
+                component: plugin.menu,
+                name: plugin.name
+            });
             return groups;
         }, {} as Record<string, any[]>);
 
@@ -247,6 +246,7 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                                     components={filteredComponents}
                                     isCollapsed={collapsedGroups.has(groupKey)}
                                     onToggle={handleGroupToggle}
+                                    onCloseMenu={toggle}
                                 />
                             );
                         })}

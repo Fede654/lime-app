@@ -15,9 +15,13 @@ export interface MenuGroupProps {
         color: string;
         priority: number;
     };
-    components: any[];
+    components: Array<{
+        component: any;
+        name: string;
+    }>;
     isCollapsed: boolean;
     onToggle: (groupKey: string) => void;
+    onCloseMenu?: () => void;
 }
 
 export const MenuGroup = ({
@@ -26,8 +30,10 @@ export const MenuGroup = ({
     components,
     isCollapsed,
     onToggle,
+    onCloseMenu,
 }: MenuGroupProps) => {
     const [isHovered, setIsHovered] = useState(false);
+
 
     return (
         <div className="mb-4">
@@ -96,54 +102,35 @@ export const MenuGroup = ({
                 aria-hidden={isCollapsed}
             >
                 <div className="mt-2 ml-2 mr-2 space-y-0.5 overflow-hidden">
-                    {components.map((Component, index) => {
-                        // Create a wrapper that handles the click for the entire menu item
-                        const MenuItemWrapper = () => {
-                            const handleClick = (e: Event) => {
-                                e.preventDefault();
-                                // Find the clickable link inside the component and trigger its click
-                                const clickableElement = (
-                                    e.currentTarget as HTMLElement
-                                )?.querySelector("a[onClick], .clickable");
-                                if (clickableElement) {
-                                    (clickableElement as HTMLElement).click();
-                                }
-                            };
-
-                            return (
+                    {components.map((item, index) => {
+                        const { component: Component, name } = item;
+                        
+                        return (
+                            <div
+                                key={index}
+                                className="
+                                    flex items-center py-2 px-3 rounded-md 
+                                    hover:bg-gray-50 hover:shadow-sm 
+                                    transition-all duration-150
+                                    min-h-[44px] group
+                                    border border-transparent hover:border-gray-200
+                                    overflow-hidden
+                                "
+                            >
+                                <div className="flex items-center flex-1 min-w-0 overflow-hidden">
+                                    <Component />
+                                </div>
+                                
+                                {/* Simple hover indicator */}
                                 <div
                                     className="
-                                        flex items-center py-2 px-3 rounded-md 
-                                        hover:bg-gray-50 hover:shadow-sm 
-                                        transition-all duration-150
-                                        min-h-[44px] group cursor-pointer
-                                        border border-transparent hover:border-gray-200
-                                        overflow-hidden
-                                    "
-                                    onClick={handleClick}
-                                >
-                                    <div
-                                        className="
-                                        flex items-center flex-1 min-w-0 overflow-hidden
-                                        pointer-events-none
-                                    "
-                                    >
-                                        <Component />
-                                    </div>
-
-                                    {/* Status indicator placeholder */}
-                                    <div
-                                        className="
-                                        flex-shrink-0 w-2 h-2 rounded-full ml-2
-                                        bg-gray-300 opacity-0 group-hover:opacity-50
-                                        transition-opacity duration-200
-                                    "
-                                    />
-                                </div>
-                            );
-                        };
-
-                        return <MenuItemWrapper key={index} />;
+                                    flex-shrink-0 w-2 h-2 rounded-full ml-2
+                                    bg-gray-300 opacity-0 group-hover:opacity-50
+                                    transition-opacity duration-200
+                                "
+                                />
+                            </div>
+                        );
                     })}
                 </div>
             </div>

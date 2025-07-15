@@ -45,15 +45,15 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
             1024
     );
     return (
-        <div className={"flex flex-row mt-6 justify-between md:px-8"}>
+        <div className={"flex flex-row mt-1 justify-between items-center px-6 py-1"}>
             {hasMostActive && (
                 <Fragment>
-                    <div className={"flex-1 text-7xl text-center text-primary"}>
+                    <div className={"flex-shrink-0 text-7xl text-center text-primary pr-6 w-28"}>
                         <SignalColor
                             className={"font-bold"}
                             signal={+status.most_active.signal}
                         />
-                        <div className={"text-3xl"}>
+                        <div className={"text-3xl mt-1"}>
                             {status.most_active?.chains &&
                                 status.most_active.chains.map((chain, i) => (
                                     <span key={i}>
@@ -68,7 +68,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                                 ))}
                         </div>
                     </div>
-                    <div className={"flex-1 flex flex-col text-xl "}>
+                    <div className={"flex flex-col text-lg px-4 space-y-1 flex-1"}>
                         <div className={"font-bold"}>
                             <Trans>Most active link</Trans>
                         </div>
@@ -95,11 +95,11 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                 </Fragment>
             )}
             {!hasMostActive && (
-                <div className={"flex-1 flex justify-center"}>
+                <div className={"flex-1 flex justify-center py-3"}>
                     No most active iface
                 </div>
             )}
-            <div className={"flex justify-center"}>
+            <div className={"flex-shrink-0"}>
                 <Button size={"lg"} color={"secondary"} href={"/align"}>
                     <Trans>
                         Check
@@ -118,20 +118,22 @@ export const Alignment = () => {
     return (
         <div
             className={
-                "w-full min-h-min bg-primary-card border-b-2 border-primary-dark pb-10 pr-2"
+                "w-full min-h-min bg-primary-card border-b-2 border-primary-dark pb-4 pr-2"
             }
         >
             <Section>
                 <SectionTitle icon={<AlignIcon className={IconsClassName} />}>
                     <Trans>Your Alignment</Trans>
                 </SectionTitle>
-                {isLoading ? (
-                    <div className={"flex-1 flex justify-center"}>
-                        Loading...
-                    </div>
-                ) : (
-                    <AlignmentCard status={status} />
-                )}
+                <div className={"mt-1 mb-2"}>
+                    {isLoading ? (
+                        <div className="flex justify-center py-3">
+                            <span>Loading...</span>
+                        </div>
+                    ) : (
+                        <AlignmentCard status={status} />
+                    )}
+                </div>
             </Section>
         </div>
     );

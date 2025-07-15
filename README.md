@@ -34,6 +34,7 @@
 - 🔌 **Plugin architecture** - Extensible and modular
 - ⚡ **Optimized bundle** - <1MB total size, fast loading on limited bandwidth
 - 🔒 **Secure by design** - Built-in authentication and validation
+- 🎯 **Auto-login guest access** - Automatic lime-app user authentication for seamless UX
 
 ---
 
@@ -203,6 +204,58 @@ Interactive component development with **Storybook**:
 npm run storybook
 # 🎨 http://localhost:8081 - Isolated component playground
 ```
+
+---
+
+## 🔐 Authentication System
+
+### 🎯 Auto-login Guest Access
+
+LiMeApp implements **automatic guest authentication** for seamless user experience:
+
+```javascript
+// Automatic lime-app user authentication
+AUTO_LOGIN_CONFIG = {
+    enabled: true,
+    username: "lime-app",     // Guest user with limited permissions
+    delay: 800,               // Auto-login delay in milliseconds
+    fallbackToLogin: true     // Show login form if auto-login fails
+}
+```
+
+### 👥 User Access Levels
+
+**🟢 Guest Access (lime-app user)**
+- ✅ Network status and monitoring
+- ✅ Community features (notes, basic info)
+- ✅ Basic network tools (alignment, node switching)
+- ❌ System administration
+
+**🔴 Administrator Access (root user)**
+- ✅ Full system administration
+- ✅ Network configuration  
+- ✅ Firmware management
+- ✅ Advanced mesh tools
+
+### 🛡️ Security Model
+
+```javascript
+// Plugin access control
+export const plugins = [
+    // Public - accessible to lime-app user
+    { ...NetworkStatus, menuGroup: "status" },
+    { ...CommunityNotes, menuGroup: "community" },
+    
+    // Protected - requires root authentication  
+    { ...SystemAdmin, menuGroup: "admin", isCommunityProtected: true },
+    { ...FirmwareUpdate, menuGroup: "admin", isCommunityProtected: true }
+];
+```
+
+**How it works:**
+1. **Page load** → Automatic lime-app authentication
+2. **Protected features** → Redirect to login page for root access
+3. **Logout** → Return to guest access mode
 
 ---
 

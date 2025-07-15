@@ -119,9 +119,9 @@ export const InternetPath = () => {
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
-            <div className="flex flex-row items-start justify-center space-x-6 pt-8 px-8">
+            <div className="flex flex-row items-start justify-center space-x-6 pt-4 px-6 pb-3">
                 {pathComponent}
-                <div className="flex flex-col justify-center gap-8">
+                <div className="flex flex-col justify-center gap-3">
                     <Button href={"/metrics"}>
                         <Trans>Diagnose</Trans>
                     </Button>

@@ -42,8 +42,36 @@ export function login({ username, password, customApi = null }) {
 export function useLogin() {
     return useMutation(login, {
         onSuccess: (res) => {
-            // @ts-ignore
-            queryCache.setQueryData(["session", "get"], () => res.data);
+            // Extract username from login response and set session data
+            let username = null;
+
+            // Cast to any to avoid TypeScript errors on dynamic response structure
+            const response = res;
+
+            if (response && typeof response === "object") {
+                // Check if response has access-group (matching getSession API structure)
+                if (response["access-group"]) {
+                    if (response["access-group"]["root"]) {
+                        username = "root";
+                    } else if (response["access-group"]["lime-app"]) {
+                        username = "lime-app";
+                    }
+                }
+                // Legacy fallback for other response structures
+                else if (response.data && response.data.username) {
+                    username = response.data.username;
+                } else if (response.acls && response.acls["access-group"]) {
+                    // Check access groups to determine username
+                    if (response.acls["access-group"]["root"]) {
+                        username = "root";
+                    } else if (response.acls["access-group"]["lime-app"]) {
+                        username = "lime-app";
+                    }
+                }
+            }
+
+            // Set session data in query cache
+            queryCache.setQueryData(["session", "get"], () => ({ username }));
         },
     });
 }
@@ -67,9 +95,12 @@ export function logout() {
 export function useLogout() {
     return useMutation(logout, {
         onSuccess: () => {
-            // Fix: go to root path with login hash
-            const baseUrl = `${window.location.origin}/`;
-            window.location.href = `${baseUrl}#/login`;
+            // Clear session cache to trigger auto-login
+            queryCache.removeQueries(["session", "get"]);
+            // Clear all queries to prevent access denied errors
+            queryCache.clear();
+            // Force a full page refresh to reset auto-login state and trigger fresh auto-login
+            window.location.reload();
         },
     });
 }
