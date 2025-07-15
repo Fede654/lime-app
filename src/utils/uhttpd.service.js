@@ -29,7 +29,13 @@ export class UhttpdService {
         this.jsonrpc = "2.0";
         this.sec = 0;
         this.requestList = [];
-        this.sidKey = `sid-${customIp}`; // Store sid by url to be able to use multiple instances of uhttpdService
+        // Extract hostname from customIp or window.origin for session key
+        const hostname =
+            customIp ||
+            (typeof window !== "undefined"
+                ? window.location.hostname
+                : "localhost");
+        this.sidKey = `sid-${hostname}`; // Store sid by url to be able to use multiple instances of uhttpdService
     }
 
     sid() {
