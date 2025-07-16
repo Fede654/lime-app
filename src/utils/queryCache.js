@@ -63,9 +63,17 @@ const queryCache = new QueryClient({
                             errorMessage.includes("error_download")));
 
                 if (isExpectedServiceError) {
-                    logger.warn("api", "Expected service error", {
-                        error: errorMessage,
-                    });
+                    // Add specific context for lime-metrics gateway errors
+                    const context =
+                        errorMessage.includes("lime-metrics") &&
+                        errorMessage.includes("No gateway available")
+                            ? {
+                                  error: errorMessage,
+                                  hint: "This usually means /etc/last_internet_path file is missing. Check if 'last_internet save' cron job is running or if there's internet connectivity.",
+                              }
+                            : { error: errorMessage };
+
+                    logger.warn("api", "Expected service error", context);
                 } else {
                     // Then check if it's a network error that should be handled specially
                     const isNetworkError =
