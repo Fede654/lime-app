@@ -26,36 +26,34 @@ const queryCache = new QueryClient({
 
             // Use centralized logging for query errors
             if (error && error !== undefined) {
-                // Check if it's a network error that should be handled specially
-                const isNetworkError =
-                    error.status ||
-                    error.endpoint ||
-                    (error.message &&
-                        (error.message.includes("Network error") ||
-                            error.message.includes("HTTP error") ||
-                            error.message.includes("Request failed")));
+                // First check for expected service-specific errors (higher priority)
+                const errorMessage = error.message || error.toString();
+                const isExpectedServiceError =
+                    (errorMessage.includes("lime-metrics") &&
+                        (errorMessage.includes("No known Internet path") ||
+                            errorMessage.includes("No gateway available") ||
+                            errorMessage.includes("Not found") ||
+                            errorMessage.includes("No target specified"))) ||
+                    (errorMessage.includes("pirania") &&
+                        errorMessage.includes("Object not found"));
 
-                if (isNetworkError) {
-                    // Use the network-specific logger which handles throttling
-                    logNetworkError(error, error.endpoint);
+                if (isExpectedServiceError) {
+                    logger.warn("api", "Expected service error", {
+                        error: errorMessage,
+                    });
                 } else {
-                    // Check for expected service-specific errors
-                    const errorMessage = error.message || error.toString();
-                    const isExpectedServiceError =
-                        (errorMessage.includes("lime-metrics") &&
-                            (errorMessage.includes("No known Internet path") ||
-                                errorMessage.includes("No gateway available") ||
-                                errorMessage.includes("Not found") ||
-                                errorMessage.includes(
-                                    "No target specified"
-                                ))) ||
-                        (errorMessage.includes("pirania") &&
-                            errorMessage.includes("Object not found"));
+                    // Then check if it's a network error that should be handled specially
+                    const isNetworkError =
+                        error.status ||
+                        error.endpoint ||
+                        (error.message &&
+                            (error.message.includes("Network error") ||
+                                error.message.includes("HTTP error") ||
+                                error.message.includes("Request failed")));
 
-                    if (isExpectedServiceError) {
-                        logger.warn("api", "Expected service error", {
-                            error: errorMessage,
-                        });
+                    if (isNetworkError) {
+                        // Use the network-specific logger which handles throttling
+                        logNetworkError(error, error.endpoint);
                     } else {
                         logger.error("api", "Query error", { error });
                     }
