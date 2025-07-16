@@ -29,13 +29,38 @@ const queryCache = new QueryClient({
                 // First check for expected service-specific errors (higher priority)
                 const errorMessage = error.message || error.toString();
                 const isExpectedServiceError =
+                    // lime-metrics expected errors (network topology states)
                     (errorMessage.includes("lime-metrics") &&
                         (errorMessage.includes("No known Internet path") ||
                             errorMessage.includes("No gateway available") ||
                             errorMessage.includes("Not found") ||
-                            errorMessage.includes("No target specified"))) ||
+                            errorMessage.includes("No interface found") ||
+                            errorMessage.includes("No target specified") ||
+                            errorMessage.includes(
+                                "No lime-proto-bmx6 or lime-proto-babeld found"
+                            ))) ||
+                    // pirania expected errors (captive portal states)
                     (errorMessage.includes("pirania") &&
-                        errorMessage.includes("Object not found"));
+                        errorMessage.includes("Object not found")) ||
+                    // lime-utils expected errors (service states)
+                    (errorMessage.includes("lime-utils") &&
+                        (errorMessage.includes("No metadata available") ||
+                            errorMessage.includes(
+                                "No new version is available"
+                            ) ||
+                            errorMessage.includes(
+                                "No new config available"
+                            ))) ||
+                    // lime-utils-admin expected errors (admin operations)
+                    (errorMessage.includes("lime-utils-admin") &&
+                        (errorMessage.includes("No metadata available") ||
+                            errorMessage.includes(
+                                "No new version is available"
+                            ))) ||
+                    // first-boot-wizard expected errors (setup states)
+                    (errorMessage.includes("firstbootwizard") &&
+                        (errorMessage.includes("error_not_configured") ||
+                            errorMessage.includes("error_download")));
 
                 if (isExpectedServiceError) {
                     logger.warn("api", "Expected service error", {
