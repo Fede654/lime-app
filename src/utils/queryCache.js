@@ -43,7 +43,12 @@ const queryCache = new QueryClient({
                     const errorMessage = error.message || error.toString();
                     const isExpectedServiceError =
                         (errorMessage.includes("lime-metrics") &&
-                            errorMessage.includes("No known Internet path")) ||
+                            (errorMessage.includes("No known Internet path") ||
+                                errorMessage.includes("No gateway available") ||
+                                errorMessage.includes("Not found") ||
+                                errorMessage.includes(
+                                    "No target specified"
+                                ))) ||
                         (errorMessage.includes("pirania") &&
                             errorMessage.includes("Object not found"));
 
