@@ -125,57 +125,6 @@ export const ModernMenu = ({ opened, toggle }: ModernMenuProps) => {
                 aria-label="Main menu"
                 aria-hidden={!opened}
             >
-                {/* Menu Header */}
-                <div className="p-4 border-b border-gray-200 bg-white">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                            {/* Menu Icon */}
-                            <div className="p-2 rounded-lg bg-gradient-to-br from-primary-100 to-primary-200">
-                                <svg
-                                    className="w-6 h-6 text-primary-dark"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                </svg>
-                            </div>
-                            {/* Menu Title */}
-                            <h2 className="text-3xl font-bold text-gray-900">
-                                <Trans>Menu</Trans>
-                            </h2>
-                        </div>
-                        <button
-                            onClick={toggle}
-                            className="
-                                p-2 rounded-full hover:bg-gray-100 
-                                transition-colors duration-200
-                                focus:outline-none focus:ring-2 focus:ring-primary
-                            "
-                            aria-label="Close menu"
-                        >
-                            <svg
-                                className="w-5 h-5 text-gray-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
                 {/* Menu Content */}
                 <div
                     className="flex-1 overflow-y-auto overflow-x-hidden p-4 min-h-0 menu-scrollbar"
