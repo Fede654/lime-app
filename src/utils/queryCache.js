@@ -1,5 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 
+import { logNetworkError, logger } from "./logger";
+
 const queryCache = new QueryClient({
     defaultOptions: {
         queries: {
@@ -11,7 +13,7 @@ const queryCache = new QueryClient({
     logger: {
         log: console.log,
         warn: console.warn,
-        // ✅ no more errors on the console for tests
+        // Enhanced error logging with centralized handling
         error: (error) => {
             // Skip logging in test environment (Jest sets NODE_ENV)
             if (
@@ -22,50 +24,36 @@ const queryCache = new QueryClient({
                 return;
             }
 
-            // Only log if error is meaningful and not expected development errors
+            // Use centralized logging for query errors
             if (error && error !== undefined) {
-                // Better error message extraction
-                let errorMessage = "Unknown error";
+                // Check if it's a network error that should be handled specially
+                const isNetworkError =
+                    error.status ||
+                    error.endpoint ||
+                    (error.message &&
+                        (error.message.includes("Network error") ||
+                            error.message.includes("HTTP error") ||
+                            error.message.includes("Request failed")));
 
-                if (typeof error === "string") {
-                    errorMessage = error;
-                } else if (error.message) {
-                    errorMessage = error.message;
-                } else if (
-                    error.toString &&
-                    error.toString() !== "[object Object]"
-                ) {
-                    errorMessage = error.toString();
+                if (isNetworkError) {
+                    // Use the network-specific logger which handles throttling
+                    logNetworkError(error, error.endpoint);
                 } else {
-                    // If it's an object without a useful toString, stringify it
-                    try {
-                        errorMessage = JSON.stringify(error);
-                    } catch (e) {
-                        errorMessage = "Unparseable error object";
+                    // Check for expected service-specific errors
+                    const errorMessage = error.message || error.toString();
+                    const isExpectedServiceError =
+                        (errorMessage.includes("lime-metrics") &&
+                            errorMessage.includes("No known Internet path")) ||
+                        (errorMessage.includes("pirania") &&
+                            errorMessage.includes("Object not found"));
+
+                    if (isExpectedServiceError) {
+                        logger.warn("api", "Expected service error", {
+                            error: errorMessage,
+                        });
+                    } else {
+                        logger.error("api", "Query error", { error });
                     }
-                }
-
-                // Filter out common expected errors in development mode
-                const isExpectedError =
-                    errorMessage.includes(
-                        "Network error or server unreachable"
-                    ) ||
-                    errorMessage.includes("HTTP error! status: 500") ||
-                    errorMessage.includes("Request failed") ||
-                    // Only specific expected service errors
-                    (errorMessage.includes("lime-metrics") &&
-                        errorMessage.includes("No known Internet path")) ||
-                    (errorMessage.includes("pirania") &&
-                        errorMessage.includes("Object not found"));
-
-                if (!isExpectedError) {
-                    console.error(error);
-                } else {
-                    // Extract just the error part after the context prefix
-                    const parts = errorMessage.split("] ");
-                    const cleanMessage =
-                        parts.length > 1 ? parts[1] : errorMessage;
-                    console.warn(`API Error: ${cleanMessage}`);
                 }
             }
         },

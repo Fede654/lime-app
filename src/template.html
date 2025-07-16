@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Dynamic base href to prevent bundle.js 404 on deep routes -->
+    <base href="<%= htmlWebpackPlugin.options.basePath || '/app/' %>">
     <% preact.headEnd %>
   </head>
   <body>

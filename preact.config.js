@@ -17,13 +17,14 @@ export default function (config, env, helpers) {
     const { source, isProd } = env;
     // Allow overriding production path for local development serve
     const useLocalPaths = process.env.LOCAL_SERVE === "true";
-    config.output.publicPath = isProd && !useLocalPaths ? "/app/" : "";
+    const basePath = isProd && !useLocalPaths ? "/app/" : "/";
+    config.output.publicPath = basePath;
 
     const host = process.env.NODE_HOST || "localhost";
     config.devServer = {
         ...config.devServer,
         historyApiFallback: {
-            index: isProd && !useLocalPaths ? "/app/" : "/",
+            index: basePath,
         },
         proxy: [
             {
@@ -107,5 +108,14 @@ export default function (config, env, helpers) {
                 !pkg.includes("critters")
             );
         });
+    }
+
+    // Pass basePath to HTML template for dynamic base href
+    const htmlPlugin = helpers.getPluginsByName(config, "HtmlWebpackPlugin")[0];
+    if (htmlPlugin) {
+        htmlPlugin.plugin.options = {
+            ...htmlPlugin.plugin.options,
+            basePath,
+        };
     }
 }

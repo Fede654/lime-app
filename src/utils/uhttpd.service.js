@@ -1,3 +1,5 @@
+import { logNetworkError } from "./logger";
+
 const UNAUTH_SESSION_ID = "00000000000000000000000000000000";
 const DEFAULT_SESSION_TIMEOUT = 5000;
 
@@ -148,32 +150,22 @@ export class UhttpdService {
                 .then(parseResult)
                 .catch((error) => {
                     // Add context about which API call failed
-                    const apiContext = `[${action}.${method}]`;
+                    const apiContext = `${action}.${method}`;
+                    const endpoint = `${action}.${method}`;
 
-                    // Handle various error types gracefully
-                    if (error.name === "AbortError") {
-                        throw new Error(`${apiContext} Request timeout`);
-                    }
-                    if (error instanceof SyntaxError) {
-                        throw new Error(
-                            `${apiContext} Invalid JSON response from server`
-                        );
-                    }
-                    if (error instanceof TypeError) {
-                        throw new Error(
-                            `${apiContext} Network error or server unreachable`
-                        );
-                    }
+                    // Use centralized logging for network errors
+                    logNetworkError(error, endpoint);
 
-                    // If error already has context, don't add it again
-                    if (error.message && error.message.includes(apiContext)) {
-                        throw error;
-                    }
-
-                    // Add context to other errors with better object handling
+                    // Handle various error types gracefully with enhanced error context
                     let errorMessage = "Request failed";
 
-                    if (typeof error === "string") {
+                    if (error.name === "AbortError") {
+                        errorMessage = "Request timeout";
+                    } else if (error instanceof SyntaxError) {
+                        errorMessage = "Invalid JSON response from server";
+                    } else if (error instanceof TypeError) {
+                        errorMessage = "Network error or server unreachable";
+                    } else if (typeof error === "string") {
                         errorMessage = error;
                     } else if (
                         error.message &&
@@ -184,7 +176,6 @@ export class UhttpdService {
                         error.message &&
                         typeof error.message === "object"
                     ) {
-                        // Handle case where error.message is an object
                         try {
                             errorMessage = JSON.stringify(error.message);
                         } catch (e) {
@@ -198,7 +189,16 @@ export class UhttpdService {
                         errorMessage = error.toString();
                     }
 
-                    throw new Error(`${apiContext} ${errorMessage}`);
+                    // Create enhanced error with context
+                    const enhancedError = new Error(
+                        `[${apiContext}] ${errorMessage}`
+                    );
+                    // Add custom properties to the error object
+                    // @ts-ignore - Adding custom properties to Error
+                    if (error.status) enhancedError.status = error.status;
+                    // @ts-ignore - Adding custom properties to Error
+                    enhancedError.endpoint = endpoint;
+                    throw enhancedError;
                 })
                 // @ts-ignore
                 .finally(() => clearTimeout(id))

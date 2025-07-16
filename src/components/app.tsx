@@ -12,6 +12,7 @@ import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
 
 import { AppContextProvider } from "utils/app.context";
+import { logAuthEvent } from "utils/logger";
 import { useBoardData, useLogin, useSession } from "utils/queries";
 import queryCache from "utils/queryCache";
 import { CommunityProtectedRoute, Redirect, Route } from "utils/routes";
@@ -150,18 +151,17 @@ const App = () => {
             setTimeout(() => {
                 // Double-check conditions before attempting login to prevent duplicates
                 if (session?.username || autoLoginInProgress) {
-                    if (process.env.NODE_ENV !== "production") {
-                        console.log("Auto-login cancelled - session already exists or in progress");
-                    }
+                    logAuthEvent("auto_login", {
+                        status: "cancelled",
+                        reason: "session_exists_or_in_progress",
+                    });
                     setAutoLoginInProgress(false);
                     return;
                 }
-                
-                if (process.env.NODE_ENV !== "production") {
-                    console.log(
-                        `Auto-login as ${AUTO_LOGIN_CONFIG.username} for guest access`
-                    );
-                }
+
+                logAuthEvent("auto_login", {
+                    username: AUTO_LOGIN_CONFIG.username,
+                });
                 login(
                     {
                         username: AUTO_LOGIN_CONFIG.username,
@@ -169,33 +169,34 @@ const App = () => {
                     },
                     {
                         onError: (error: any) => {
-                            if (process.env.NODE_ENV !== "production") {
-                                console.warn("Auto-login failed:", error);
-                                console.warn(
-                                    `Error details: ${
-                                        error?.message || JSON.stringify(error)
-                                    }`
-                                );
+                            // Use centralized logging for auth failures
+                            const errorDetails = {
+                                message: error?.message,
+                                status: error?.status,
+                                endpoint: error?.endpoint,
+                            };
 
-                                // Decode ubus error codes
-                                if (error?.result?.[0] === 6) {
-                                    console.warn(
-                                        "❌ Error code 6: Permission denied - lime-app user lacks session ACL permissions"
-                                    );
-                                    console.warn(
-                                        "💡 Solution: Update ACL file with session permissions and rebuild LibreMesh"
-                                    );
-                                }
+                            // Handle specific error codes with helpful context
+                            if (error?.result?.[0] === 6) {
+                                logAuthEvent("login_failure", {
+                                    ...errorDetails,
+                                    code: 6,
+                                    reason: "permission_denied",
+                                    suggestion:
+                                        "Update ACL file with session permissions and rebuild LibreMesh",
+                                });
+                            } else {
+                                logAuthEvent("login_failure", errorDetails);
                             }
+
                             setAutoLoginFailed(true);
                             setAutoLoginInProgress(false);
                         },
                         onSuccess: () => {
-                            if (process.env.NODE_ENV !== "production") {
-                                console.log(
-                                    `Auto-login successful as ${AUTO_LOGIN_CONFIG.username}`
-                                );
-                            }
+                            logAuthEvent("login_success", {
+                                username: AUTO_LOGIN_CONFIG.username,
+                                type: "auto_login",
+                            });
                             setAutoLoginInProgress(false);
                         },
                     }
@@ -222,9 +223,10 @@ const App = () => {
             autoLoginAttempted &&
             !autoLoginInProgress
         ) {
-            if (process.env.NODE_ENV !== "production") {
-                console.log("Session cleared - resetting auto-login state");
-            }
+            logAuthEvent("logout", {
+                reason: "session_cleared",
+                reset_auto_login: true,
+            });
             setAutoLoginAttempted(false);
             setAutoLoginFailed(false);
         }

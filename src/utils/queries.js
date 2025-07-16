@@ -102,8 +102,18 @@ export function useLogout() {
             queryCache.removeQueries(["session", "get"]);
             // Clear all queries to prevent access denied errors
             queryCache.clear();
-            // Force a full page refresh to reset auto-login state and trigger fresh auto-login
-            window.location.reload();
+
+            // Redirect to root path before reloading to avoid 404 errors on protected routes
+            if (typeof window !== "undefined") {
+                // Change URL to root path first to avoid bundle.js 404 errors
+                window.location.hash = "#/";
+
+                // Use a small delay to ensure hash change is processed
+                setTimeout(() => {
+                    // Force a full page refresh to reset auto-login state and trigger fresh auto-login
+                    window.location.reload();
+                }, 100);
+            }
         },
     });
 }

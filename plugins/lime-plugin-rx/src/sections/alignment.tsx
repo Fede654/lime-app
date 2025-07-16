@@ -20,24 +20,24 @@ function stripIface(hostIface) {
 }
 
 export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
-    // Handle null/undefined status
-    if (!status) {
-        return null;
-    }
-
-    const hasMostActive = !!status.most_active?.iface;
+    const hasMostActive = !!status?.most_active?.iface;
     // Validate MAC address format (XX:XX:XX:XX:XX:XX)
     const hasValidMac =
-        status.most_active?.station_mac &&
+        status?.most_active?.station_mac &&
         /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/.test(
             status.most_active.station_mac
         );
 
     const { data: bathost } = useBatHost(
-        status.most_active && status.most_active.station_mac,
-        status.most_active && status.most_active.iface,
+        status?.most_active && status.most_active.station_mac,
+        status?.most_active && status.most_active.iface,
         { enabled: hasMostActive && hasValidMac }
     );
+
+    // Handle null/undefined status
+    if (!status) {
+        return null;
+    }
 
     const traffic = Math.round(
         (status.most_active.rx_bytes + status.most_active.tx_bytes) /
