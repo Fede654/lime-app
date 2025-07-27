@@ -13,6 +13,10 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: src/components/header/index.js:67
+msgid "(Guest Access)"
+msgstr "(Guest Access)"
+
 #: plugins/lime-plugin-mesh-wide-config/src/components/FormOption.tsx:75
 msgid "(List)"
 msgstr "(List)"
@@ -265,7 +269,7 @@ msgstr ""
 msgid "Board"
 msgstr "Board"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.tsx:96
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:97
 msgid "Calculating network path"
 msgstr ""
 
@@ -330,7 +334,7 @@ msgstr "Check if network is working properly and confirm the new configuration<0
 msgid "Check if network is working properly and confirm the upgrade<0/>If not confirmed, the upgrade will be rolled back after a while"
 msgstr "Check if network is working properly and confirm the upgrade<0/>If not confirmed, the upgrade will be rolled back after a while"
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:104
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:116
 msgid "Check<0/>Alignment"
 msgstr "Check<0/>Alignment"
 
@@ -797,7 +801,7 @@ msgstr "Expires {0}"
 
 #: plugins/lime-plugin-align/src/alignPage.js:37
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:80
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:92
 msgid "Fetching name"
 msgstr ""
 
@@ -827,7 +831,7 @@ msgstr "Firmware downloaded"
 msgid "Firmware version"
 msgstr "Firmware version"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.tsx:151
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:152
 msgid "From"
 msgstr ""
 
@@ -924,7 +928,7 @@ msgstr "In the reference state this node is on"
 #~ msgid "Interface"
 #~ msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:85
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:97
 msgid "Interface:"
 msgstr "Interface:"
 
@@ -1014,7 +1018,7 @@ msgstr "Last seen"
 msgid "LiMeApp Login"
 msgstr "LiMeApp Login"
 
-#: src/containers/Menu/ModernMenu.tsx:272
+#: src/containers/Menu/ModernMenu.tsx:165
 msgid "LibreMesh Network"
 msgstr "LibreMesh Network"
 
@@ -1034,7 +1038,7 @@ msgstr "Link from <0>{0}</0> to <1>{1}</1>"
 msgid "Link {0} {1}"
 msgstr "Link {0} {1}"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.tsx:106
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:107
 msgid "Load last known Internet path"
 msgstr ""
 
@@ -1071,7 +1075,7 @@ msgstr "Logging in..."
 msgid "Login"
 msgstr ""
 
-#: src/components/header/index.js:38
+#: src/components/header/index.js:62
 msgid "Logout"
 msgstr "Logout"
 
@@ -1092,8 +1096,8 @@ msgid "Manage Vouchers"
 msgstr "Manage Vouchers"
 
 #: src/containers/Menu/ModernMenu.tsx:141
-msgid "Manage your LibreMesh network"
-msgstr "Manage your LibreMesh network"
+#~ msgid "Manage your LibreMesh network"
+#~ msgstr "Manage your LibreMesh network"
 
 #: plugins/lime-plugin-rx/src/sections/internetPath.tsx:129
 msgid "Map"
@@ -1103,7 +1107,7 @@ msgstr ""
 msgid "Max. {length} characters"
 msgstr "Max. {length} characters"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.tsx:101
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:102
 msgid "Measuring links"
 msgstr ""
 
@@ -1111,11 +1115,11 @@ msgstr ""
 msgid "Mesh Map"
 msgstr "Mesh Map"
 
-#: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:10
+#: plugins/lime-plugin-mesh-wide-config/src/meshConfigMenu.tsx:13
 msgid "Mesh Wide Config"
 msgstr "Mesh Wide Config"
 
-#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:10
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:13
 msgid "Mesh Wide Upgrade"
 msgstr "Mesh Wide Upgrade"
 
@@ -1165,7 +1169,7 @@ msgstr ""
 #~ msgid "Most Active"
 #~ msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:73
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:85
 msgid "Most active link"
 msgstr "Most active link"
 
@@ -1178,8 +1182,8 @@ msgstr "Must select a valid hostname"
 #~ msgstr "Name"
 
 #: src/containers/Menu/ModernMenu.tsx:138
-msgid "Navigation"
-msgstr "Navigation"
+#~ msgid "Navigation"
+#~ msgstr "Navigation"
 
 #: src/components/NotFound.tsx:56
 msgid "Need help? Check the network status or contact your network administrator."
@@ -1231,8 +1235,8 @@ msgid "No changes made"
 msgstr "No changes made"
 
 #: src/containers/Menu/ModernMenu.tsx:260
-msgid "No menu items found for \"{searchTerm}\""
-msgstr "No menu items found for \"{searchTerm}\""
+#~ msgid "No menu items found for \"{searchTerm}\""
+#~ msgstr "No menu items found for \"{searchTerm}\""
 
 #: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:34
 msgid "No new version available is found"
@@ -1465,7 +1469,7 @@ msgstr ""
 msgid "Remember me"
 msgstr "Remember me"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:10
+#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:13
 msgid "Remote Support"
 msgstr ""
 
@@ -1578,7 +1582,7 @@ msgstr "Search by"
 msgid "Search network"
 msgstr "Search network"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.tsx:91
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:92
 msgid "Searching gateway"
 msgstr ""
 
@@ -2040,7 +2044,7 @@ msgstr "This will the abort current configuration update process on all nodes. A
 msgid "This will the abort current upgrade process on all nodes. Are you sure you want to proceed?"
 msgstr "This will the abort current upgrade process on all nodes. Are you sure you want to proceed?"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.tsx:120
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:121
 msgid "This your last working path to the Internet"
 msgstr ""
 
@@ -2048,7 +2052,7 @@ msgstr ""
 msgid "Title"
 msgstr "Title"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.tsx:163
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:171
 msgid "To Internet"
 msgstr ""
 
@@ -2060,7 +2064,7 @@ msgstr "To enable remote access an internet connection is needed"
 #~ msgid "Traffic"
 #~ msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:91
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:103
 msgid "Traffic:"
 msgstr "Traffic:"
 
@@ -2139,7 +2143,7 @@ msgstr ""
 msgid "Use vouchers for access"
 msgstr "Use vouchers for access"
 
-#: src/components/header/index.js:32
+#: src/components/header/index.js:54
 msgid "User:"
 msgstr "User:"
 
@@ -2214,7 +2218,7 @@ msgstr "Wifi Links Reference"
 msgid "Wifi Password"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/wired.tsx:65
+#: plugins/lime-plugin-rx/src/sections/wired.tsx:97
 msgid "Wired connections"
 msgstr "Wired connections"
 
@@ -2271,7 +2275,7 @@ msgstr ""
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/sections/alignment.tsx:126
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:138
 msgid "Your Alignment"
 msgstr "Your Alignment"
 
@@ -2327,7 +2331,7 @@ msgstr ""
 msgid "to the previous configuration"
 msgstr ""
 
-#: src/containers/Menu/ModernMenu.tsx:275
+#: src/containers/Menu/ModernMenu.tsx:168
 msgid "v4.0"
 msgstr "v4.0"
 
@@ -2339,7 +2343,7 @@ msgstr ""
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:44
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:48
 #: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:52
-#: src/containers/Menu/MenuGroup.tsx:69
+#: src/containers/Menu/MenuGroup.tsx:76
 msgid "{0}"
 msgstr "{0}"
 
