@@ -1,8 +1,8 @@
 import { Trans } from "@lingui/macro";
-import colorScale from "simple-color-scale";
 
 import Loading from "components/loading";
 
+import colorScale from "utils/colorScale";
 import { useCommunitySettings } from "utils/queries";
 
 import { useMetrics } from "../../metricsQueries";

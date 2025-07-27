@@ -1,5 +1,5 @@
 import { useEffect } from "preact/hooks";
-import colorScale from "simple-color-scale";
+import colorScale from "utils/colorScale";
 
 import { useCommunitySettings } from "utils/queries";
 

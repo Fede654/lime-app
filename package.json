@@ -128,8 +128,6 @@
     },
     "dependencies": {
         "@tanstack/react-query": "^4.6.0",
-        "bundlephobia": "^0.1.0",
-        "compressorjs": "^1.1.1",
         "leaflet": "^1.9.3",
         "preact": "^10.11.0",
         "preact-i18nline": "^2.0.0",
@@ -137,7 +135,6 @@
         "react-hook-form": "^7.36.1",
         "react-leaflet": "^4.2.1",
         "react-spring": "^9.7.1",
-        "simple-color-scale": "^1.0.1",
         "tailwindcss": "^3.2.6"
     },
     "husky": {

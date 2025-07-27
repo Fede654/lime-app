@@ -1,5 +1,4 @@
-import Compressor from "compressorjs";
-
+import { createCompression } from "utils/imageCompression";
 import api from "utils/uhttpd.service";
 
 export const getPortalConfig = () =>
@@ -26,21 +25,7 @@ export const getPortalContent = () =>
 export const setPortalContent = (content) =>
     api.call("pirania", "set_portal_page_content", content);
 
-export const createCompression = (file) =>
-    new Promise((res) => {
-        new Compressor(file, {
-            quality: 0.6,
-            maxHeight: 150,
-            maxWidth: 150,
-            success: (result) => {
-                const reader = new FileReader();
-                reader.onloadend = function () {
-                    res(reader.result);
-                };
-                reader.readAsDataURL(result);
-            },
-        });
-    });
+export { createCompression };
 export function listVouchers() {
     return api
         .call("pirania", "list_vouchers", {})
