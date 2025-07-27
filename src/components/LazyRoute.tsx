@@ -1,9 +1,8 @@
 import { Suspense, useState, useEffect } from "preact/compat";
-import { h } from "preact";
 
 interface LazyRouteProps {
   component: any; // Lazy component
-  fallback?: h.JSX.Element;
+  fallback?: JSX.Element;
   [key: string]: any; // Pass through other props
 }
 

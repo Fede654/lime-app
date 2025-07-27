@@ -5,6 +5,8 @@ import Router, { route } from "preact-router";
 import { useEffect, useState } from "preact/hooks";
 
 import { ToastProvider } from "components/toast/toastProvider";
+import LazyRoute from "components/LazyRoute";
+import { Suspense } from "preact/compat";
 
 import { Login } from "containers/Login";
 import { Menu } from "containers/Menu";
@@ -17,7 +19,7 @@ import { useBoardData, useLogin, useSession } from "utils/queries";
 import queryCache from "utils/queryCache";
 import { CommunityProtectedRoute, Redirect, Route } from "utils/routes";
 
-import { plugins } from "../config";
+import { plugins, isLazyPlugin } from "../config-lazy";
 import i18n, { dynamicActivate } from "../i18n";
 import { NotFound } from "./NotFound";
 import { Header } from "./header";
@@ -35,31 +37,79 @@ const Routes = () => {
                 .filter(
                     (plugin) =>
                         !plugin.isCommunityProtected &&
-                        plugin.name &&
-                        plugin.page
+                        plugin.name
                 )
-                .map((Component, i) => (
-                    <Route
-                        key={i}
-                        path={Component.name?.toLowerCase() || `route-${i}`}
-                    >
-                        <Component.page />
-                    </Route>
-                ))}
+                .map((plugin, i) => {
+                    const path = plugin.name?.toLowerCase() || `route-${i}`;
+                    
+                    if (isLazyPlugin(plugin)) {
+                        return (
+                            <Route key={i} path={path}>
+                                <LazyRoute 
+                                    component={() => {
+                                        const LazyComponent = ({ ...props }) => {
+                                            const [PageComponent, setPageComponent] = useState(null);
+                                            
+                                            useEffect(() => {
+                                                plugin.component().then((module: any) => {
+                                                    setPageComponent(() => module.default.page);
+                                                });
+                                            }, []);
+                                            
+                                            if (!PageComponent) return null;
+                                            return <PageComponent {...props} />;
+                                        };
+                                        return LazyComponent;
+                                    }}
+                                />
+                            </Route>
+                        );
+                    } else {
+                        const Component = plugin as any;
+                        return (
+                            <Route key={i} path={path}>
+                                <Component.page />
+                            </Route>
+                        );
+                    }
+                })}
             {/* Protected pages, need to be authenticated */}
             {plugins
                 .filter((plugin) => plugin.isCommunityProtected && plugin.name)
-                .map((Component, i) => (
-                    <CommunityProtectedRoute
-                        key={i}
-                        path={
-                            Component.name?.toLowerCase() ||
-                            `protected-route-${i}`
-                        }
-                    >
-                        <Component.page />
-                    </CommunityProtectedRoute>
-                ))}
+                .map((plugin, i) => {
+                    const path = plugin.name?.toLowerCase() || `protected-route-${i}`;
+                    
+                    if (isLazyPlugin(plugin)) {
+                        return (
+                            <CommunityProtectedRoute key={i} path={path}>
+                                <LazyRoute 
+                                    component={() => {
+                                        const LazyComponent = ({ ...props }) => {
+                                            const [PageComponent, setPageComponent] = useState(null);
+                                            
+                                            useEffect(() => {
+                                                plugin.component().then((module: any) => {
+                                                    setPageComponent(() => module.default.page);
+                                                });
+                                            }, []);
+                                            
+                                            if (!PageComponent) return null;
+                                            return <PageComponent {...props} />;
+                                        };
+                                        return LazyComponent;
+                                    }}
+                                />
+                            </CommunityProtectedRoute>
+                        );
+                    } else {
+                        const Component = plugin as any;
+                        return (
+                            <CommunityProtectedRoute key={i} path={path}>
+                                <Component.page />
+                            </CommunityProtectedRoute>
+                        );
+                    }
+                })}
             {/* Additional plugins routes */}
             {plugins
                 .filter((plugin) => plugin.additionalRoutes)
@@ -285,7 +335,9 @@ const App = () => {
     if (isOnLoginRoute) {
         return (
             <div id="app">
-                <Routes />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes />
+                </Suspense>
             </div>
         );
     }
@@ -294,7 +346,9 @@ const App = () => {
     if ((!session?.username || !boardData) && !isOnFbwRoute && !isLocalDev) {
         return (
             <div id="app">
-                <Routes />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes />
+                </Suspense>
             </div>
         );
     }
@@ -304,7 +358,9 @@ const App = () => {
             <Header Menu={Menu} />
             <SubHeader />
             <div id="content">
-                <Routes />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes />
+                </Suspense>
             </div>
         </div>
     );
